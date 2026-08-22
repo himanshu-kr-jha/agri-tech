@@ -1,6 +1,6 @@
 # Demo Context — Prayagraj, Uttar Pradesh
 
-Version 1.2 · 2026-08-22 · Resolves open question **O-1**
+Version 1.3 · 2026-08-22 · Resolves open question **O-1**
 
 > **v1.1** applies a first verification pass against primary sources. It corrected the
 > agro-climatic zone, replaced a partly invented block list with the district
@@ -9,6 +9,9 @@ Version 1.2 · 2026-08-22 · Resolves open question **O-1**
 >
 > **v1.2** unblocks the mandi list: five real Agmarknet markets for Prayagraj, plus a
 > working fetch path for price and arrival series (§6.1).
+>
+> **v1.3** completes the 24-month backfill. All five crops have real series, and the
+> potato price collapse turns out to be sharper than the demo script assumed (§6.1).
 
 The demo organization is anchored to **Prayagraj district, Uttar Pradesh**. This document
 specifies the district profile that the seed generator, the agronomic coefficients, the mandi
@@ -312,30 +315,54 @@ That **Sirsa APMC sits in Meja** is a gift for the demo: the rain-fed southern t
 mandi, so the Market module can compare a local Yamuna-par outlet against the main Prayagraj yard
 using real market identities rather than invented ones.
 
-#### What the real data shows (14-day sample, 8–21 Aug 2026, 341 rows)
+#### What the real data shows — 24 months, 2024-08-22 → 2026-08-22, 23,460 rows ✅
 
-| Commodity | Market | Arrivals (MT) | Modal ₹/qtl |
-|---|---|---:|---:|
-| **Potato** | Prayagraj APMC | 3,063 | 700 (flat) |
-| Wheat | Prayagraj APMC | 1,290 | 2,383 |
-| Tomato | Prayagraj APMC | 1,287 | 2,049 |
-| Onion | Prayagraj APMC | 1,077 | 906 |
-| Paddy (Common) | Prayagraj APMC | 730 | 2,061 |
+All five demo crops have a real price and arrival series. Backfill complete.
 
-Three things this tells us:
+| Commodity | Rows | Trading days | Modal ₹/qtl mean (min–max) | Arrivals (MT) |
+|---|---:|---:|---:|---:|
+| **Potato** | 1,596 | 707 | **1,219** (400–2,930) | 185,510 |
+| Wheat | 1,878 | 613 | 2,495 (2,250–3,125) | 212,500 |
+| Rice | 1,174 | 532 | 3,410 (2,000–10,366) | 204,775 |
+| Paddy (Common) | 974 | 470 | 2,208 (1,850–6,000) | 328,980 |
+| Tomato | 1,580 | 643 | 2,249 (450–5,460) | 40,485 |
+| Onion | 1,454 | 646 | 1,913 (900–4,680) | 75,778 |
+| **Mustard** | 163 | 139 | 6,193 (5,200–9,000) | 8,868 |
+| **Guava** | 93 | 93 | 2,320 (1,800–2,880) | 2,952 |
 
-1. **Potato is the largest agricultural arrival by volume** — the hero-crop choice (D-25) is now
-   backed by real district data, not just reasoning.
-2. **The August potato price is flat at ₹700/qtl.** August is out of season; the crop is sitting
-   in cold storage. That is precisely the hold-vs-sell situation the Market module exists to
-   reason about, and it is visible in the real series.
-3. **Mustard and guava do not appear in an August sample**, which is seasonally correct — mustard
-   is harvested Feb–Mar, guava Nov–Feb. The 24-month backfill is required before either crop has
-   a real price basis.
+#### The potato collapse is real, and it is the demo
 
-**Before seeding:** run `python seed/fetch_agmarknet.py --from <24mo ago> --to <today>`. The
-script caches one JSON payload per date and flattens to CSV. Keep the payloads — the offline demo
-requirement (NFR-303) depends on them, not on the API being up on the day.
+Monthly modal price at Prayagraj APMC:
+
+```
+2024-08  ₹2,351  ███████████████████████████████████████
+2024-12  ₹1,990  █████████████████████████████████
+2025-02  ₹1,028  █████████████████
+2025-08  ₹  994  ████████████████
+2025-12  ₹  931  ███████████████
+2026-02  ₹  544  █████████
+2026-04  ₹  503  ████████        ← trough, inside the harvest window
+2026-08  ₹  700  ███████████
+```
+
+**A 79% fall from the Aug-2024 peak to the Apr-2026 trough**, with the floor landing squarely in
+the **Jan–Apr harvest and cold-storage window**. Three consequences:
+
+1. **The hold-vs-sell dilemma is not hypothetical.** A farmer harvesting in February 2026 faced
+   ₹544/qtl. The Market module's break-even-holding-period analysis (FR-547) has a real,
+   dramatic case to reason about — one a UP judge may recognise from the news.
+2. **The oversupply warning writes itself.** We do not need an invented "demand down 22%";
+   the actual series shows the collapse, and the Risk module can cite the record.
+3. **D-25 is settled.** Potato is the district's largest agricultural arrival by volume *and*
+   carries the sharpest price story. It is the hero crop on the evidence, not on reasoning.
+
+Mustard (139 days) and guava (93 days) trade thinly, which is seasonally correct and itself
+useful: the Market module has to reason about a **thin market** for the GI crop, where a single
+buyer moves the price.
+
+**Regenerate with:** `make agmarknet from=2024-08-22 to=2026-08-22`. The script caches one JSON
+payload per date and flattens to CSV. Keep the payloads — the offline demo requirement (NFR-303)
+depends on them, not on the API being up on the day.
 
 ### 6.2 Buyers 🔧
 
@@ -420,8 +447,8 @@ Nothing marked ⚠️ may enter `seed/` until it is checked off here.
 - [ ] IMD/Open-Meteo rainfall, temperature and humidity normals for the Prayagraj grid
 - [x] ~~Agmarknet market list~~ → **verified** (2026-08-22): 5 markets, §6.1. The API route is
       documented in `seed/sources.md` §10 and wrapped by `seed/fetch_agmarknet.py`.
-- [ ] 24 months of price and arrival series — **path proven**, backfill not yet run
-      (mustard and guava need it; they are out of season in the sample)
+- [x] ~~24 months of price and arrival series~~ → **done** (2026-08-22): 23,460 rows, all five
+      crops present, 721 trading days
 - [ ] District landholding distribution and irrigation coverage statistics
 - [ ] Crop calendar for the **Central Plain Zone** (sowing/harvest windows)
 - [ ] Base yield coefficients per crop per zone

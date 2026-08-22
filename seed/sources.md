@@ -113,12 +113,12 @@ No exception. See `docs/ARCHITECTURE.md` §4.2.
 | # | What | Value | Source | Retrieved | Status |
 |---|---|---|---|---|---|
 | M1 | Agmarknet market list for Prayagraj district | **5 markets, verified.** `298 Prayagraj APMC`, `1724 Ajuha APMC`, `1749 Sirsa APMC`, `1764 Jasra APMC` (all *Principal Market Yard*), `4389 Lediyari APMC` (*Other*). district_id 646, state_id 34. **Note: "Mundera Mandi" is not an Agmarknet market name** — the Agmarknet key for that site is *Prayagraj APMC*. | `GET https://api.agmarknet.gov.in/v1/market-district-state` | 2026-08-22 | OK |
-| M2 | 24 months price series — paddy | **Available.** Paddy(Common) id 2 — 730 MT over 14 Aug days at Prayagraj APMC, modal ~₹2,061/qtl. | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
-| M3 | 24 months price series — wheat | **Available.** Wheat id 1 — 1,290 MT, modal ~₹2,383/qtl; also trades at Jasra, Ajuha, Sirsa, Lediyari. | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
-| M4 | 24 months price series — potato | **Available.** Potato id 24 — 3,063 MT at Prayagraj APMC, modal ₹700/qtl (flat; August is out of season, crop is in cold storage). | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
-| M5 | 24 months price series — mustard | **Not seen in the 14-day August sample** — Rabi crop, harvested Feb–Mar. Needs the 24-month backfill. Commodity id 12. | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
-| M6 | 24 months price series — guava | **Not seen in the 14-day August sample** — winter crop, Nov–Feb. Needs the 24-month backfill. Commodity id 156. | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
-| M7 | Arrivals series for the same | **Available** — arrivals in Metric Tonnes come back on the same rows as price. | as M2–M6 | 2026-08-22 | PARTIAL — backfill still to run |
+| M2 | 24 months price series  | **Done.** Paddy(Common) id 2 — 974 rows / 470 days, modal mean ₹2,208/qtl, 328,980 MT. | `seed/fetch_agmarknet.py`, 2024-08-22..2026-08-22 | 2026-08-22 | OK |
+| M3 | 24 months price series  | **Done.** Wheat id 1 — 1,878 rows / 613 days, modal mean ₹2,495/qtl, 212,500 MT. | `seed/fetch_agmarknet.py`, 2024-08-22..2026-08-22 | 2026-08-22 | OK |
+| M4 | 24 months price series  | **Done.** Potato id 24 — 1,596 rows / 707 days, modal mean ₹1,219/qtl (range 400–2,930), 185,510 MT. Shows a 79% fall from Aug-2024 to Apr-2026. | `seed/fetch_agmarknet.py`, 2024-08-22..2026-08-22 | 2026-08-22 | OK |
+| M5 | 24 months price series  | **Done.** Mustard id 12 — 163 rows / 139 days, modal mean ₹6,193/qtl. Thin market, seasonally correct. | `seed/fetch_agmarknet.py`, 2024-08-22..2026-08-22 | 2026-08-22 | OK |
+| M6 | 24 months price series  | **Done.** Guava id 156 — 93 rows / 93 days, modal mean ₹2,320/qtl, 2,952 MT. Thin market. | `seed/fetch_agmarknet.py`, 2024-08-22..2026-08-22 | 2026-08-22 | OK |
+| M7 | Arrivals series for the same | **Done.** Arrivals in Metric Tonnes arrive on the same rows as price. | as M2–M6 | 2026-08-22 | OK |
 | M8 | MSP — paddy & wheat, current season | | CACP / FCI | | TODO |
 | M9 | Cold-storage capacity, Prayagraj district | | UP Horticulture Dept. / NHB | | TODO |
 | M10 | Cold-storage rental rates | | | | TODO |
@@ -222,12 +222,14 @@ Daily-report payload: `{"date": "YYYY-MM-DD", "marketIds": [...], "stateIds": [.
 > payloads**. `seed/generated/agmarknet/daily/*.json` is the durable artifact, and the offline
 > demo requirement (NFR-303) depends on it, not on the API being up on the day.
 
-### Still open here
+### Backfill complete
 
-- The 24-month backfill has not been run — only a 14-day August sample (341 rows) to prove
-  the path. **Mustard and guava do not appear in it**, which is seasonally correct (Rabi and
-  winter crops respectively) but means the backfill is required before those two crops have any
-  real price basis.
-- All five Prayagraj markets report `api_allowed_market: false`, meaning they do not push
-  through the state API integration. Coverage may be patchier than a daily series implies —
-  check for gaps across the backfill rather than assuming continuity.
+**2026-08-22.** 731 days requested, 721 with data, **23,460 rows**. All five demo crops have a
+real series; mustard (139 days) and guava (93 days) trade thinly, which is seasonally correct.
+
+Coverage note: all five Prayagraj markets report `api_allowed_market: false` — they do not push
+through the state API integration — yet the series is dense for the main commodities at Prayagraj
+APMC. The thin ones are thin because the commodity trades rarely, not because the feed is broken.
+
+The payloads under `seed/generated/agmarknet/daily/` are the durable artifact and must be
+committed as the offline fixture bundle before the demo (NFR-303).

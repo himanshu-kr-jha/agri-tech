@@ -46,6 +46,13 @@ downgrade: ## Roll back one migration
 seed: ## Load the synthetic Prayagraj FPO
 	cd $(API) && .venv/bin/python -m agrivardhak.seed
 
+seed-reset: ## Truncate all data and re-seed (faster than db-reset; keeps the schema)
+	cd $(API) && .venv/bin/python -m agrivardhak.seed --reset
+
+agmarknet: ## Backfill real Agmarknet price/arrival data:  make agmarknet from=2024-08-22 to=2026-08-22
+	@test -n "$(from)" -a -n "$(to)" || (echo 'usage: make agmarknet from=YYYY-MM-DD to=YYYY-MM-DD' && exit 1)
+	python3 seed/fetch_agmarknet.py --from $(from) --to $(to)
+
 # ------------------------------------------------------------------ dev servers
 
 dev: ## Run API and web together
