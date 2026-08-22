@@ -1,0 +1,29 @@
+name: agrivardhak
+
+services:
+  db:
+    # PostGIS + pgvector in one image — see infra/Dockerfile.db for why we build it.
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    image: agrivardhak/postgis-pgvector:16
+    container_name: agrivardhak-db
+    environment:
+      POSTGRES_USER: agrivardhak
+      POSTGRES_PASSWORD: agrivardhak
+      POSTGRES_DB: agrivardhak
+      # Deterministic collation so seed hashes are reproducible across machines (DR-09).
+      POSTGRES_INITDB_ARGS: "--locale=C --encoding=UTF8"
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agrivardhak -d agrivardhak"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:

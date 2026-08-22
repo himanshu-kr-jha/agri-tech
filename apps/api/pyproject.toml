@@ -1,0 +1,68 @@
+[project]
+name = "agrivardhak-api"
+version = "0.1.0"
+description = "AgriVardhak — AI decision & orchestration platform for farmer collectives"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "sqlalchemy>=2.0.36",
+    "alembic>=1.14",
+    "psycopg[binary]>=3.2",
+    "geoalchemy2>=0.15",
+    "pgvector>=0.3",
+    "python-jose[cryptography]>=3.3",
+    "httpx>=0.27",
+    "anthropic>=0.40",
+    "apscheduler>=3.10",
+    "uuid-utils>=0.10",
+    "structlog>=24.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "mypy>=1.13",
+    "ruff>=0.8",
+    "syrupy>=4.8",
+    "httpx>=0.27",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["agrivardhak"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+ignore = [
+    "B008",  # FastAPI Depends() in argument defaults is idiomatic
+    "N818",  # ScopeViolation is the term the docs use; "...Error" adds noise
+]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+warn_unused_configs = true
+
+# INV-3 and the replay property depend on these two packages being airtight.
+[[tool.mypy.overrides]]
+module = ["agrivardhak.domain.*", "agrivardhak.intelligence.*"]
+strict = true
+
+[[tool.mypy.overrides]]
+module = ["geoalchemy2.*", "pgvector.*", "uuid_utils.*", "apscheduler.*", "jose.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
