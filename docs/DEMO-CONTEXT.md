@@ -381,8 +381,43 @@ beat 7):
 | B8 | Institutional/e-commerce | Guava, vegetables | 140 km | 45 days | Strict grade, high rejection risk |
 
 The B1-vs-B2 pair is the demo's effective-price moment: **B2 offers more per kg and lands less
-in the farmer's hand** once logistics, storage, financing on a 60-day delay and rejection risk
-are netted out.
+in the farmer's hand** once logistics, financing on a 60-day delay and rejection risk are
+netted out.
+
+#### The gap has to be ₹4/kg, not ₹5 — and the reason is not distance
+
+Building the Market module (M7) forced the arithmetic to be honest:
+
+| Buyer | Headline | Freight | Financing | Rejection | Handling+fees | **Effective** |
+|---|---:|---:|---:|---:|---:|---:|
+| B1 Ganga Cold Store (22 km, 15 d, 3%) | ₹30.00 | ₹0.10 | ₹0.17 | ₹0.90 | ₹0.55 | **₹28.28** |
+| B2 Kanpur Wholesale (180 km, 60 d, 11%) | ₹34.00 | ₹0.81 | ₹0.78 | ₹3.74 | ₹0.55 | **₹28.12** |
+
+Two corrections this forces on the demo script:
+
+1. **An earlier draft used ₹35 vs ₹30 and the reversal simply does not happen.** Freight over
+   180 km is about ₹0.81/kg at a realistic ₹4.50/tonne-km — nowhere near enough to close a
+   ₹5/kg gap. The reversal is real at a **₹4/kg gap**, which is still a striking 13% spread.
+2. **It is not the distance that kills the distant buyer — it is the rejection risk.** An 11%
+   rejection rate on ₹34/kg costs ₹3.74/kg, more than four times the freight. That is the
+   better line to say on stage, and it is the one the numbers actually support: *produce a
+   buyer rejects is produce the farmer is not paid for.*
+
+Had this been discovered during the demo rather than in a unit test, beat 7 would have failed
+live with the audience watching the two numbers not cross.
+
+#### Buyer offers must be anchored to the real mandi price
+
+A second trap, found smoke-testing M7 against the backfill. **Agmarknet reports ₹/quintal,
+which is numerically identical to paise/kg** — ₹700/qtl *is* ₹7.00/kg. The conversion looks
+like a missing multiplication, so it now lives in a named function with a test
+(`units.rupees_per_quintal_to_paise_per_kg`) rather than as an implicit assignment.
+
+The consequence for the seed: **potato traded at ₹7/kg in August 2026**, not ₹30. Buyer offers
+in `seed/reference.py` must be anchored within a plausible band of the actual modal price for
+the crop and month, or the demo shows an FPO negotiating at four times the market. At real
+prices the reversal still works — better, in fact, since fixed costs (handling ₹0.30 + fees
+₹0.25 = ₹0.55/kg) are ~8% of a ₹7/kg price rather than 2% of ₹30.
 
 ---
 

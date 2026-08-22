@@ -157,7 +157,7 @@ decision. Canonical example agreed in the session:
 | D-08 | AI **recommends + explains**; a human approves | Accountability stays with the FPO decision-maker. |
 | D-09 | The AI never says **"don't invest in this farmer"** | Explicit product requirement. Framing is always constructive: reprioritize, phase, de-risk — never exclude a farmer by name. |
 | D-10 | **Full audit trail** on every consequential decision | Directly addresses the "FPO disputes cause farmers to lose their share" pain. Strong audit trail, not blockchain. |
-| D-11 | **Effective price**, not headline price | `buyer price − logistics − handling − quality loss − transaction costs − storage − financing − payment-delay risk − rejection risk`. |
+| D-11 | **Effective price**, not headline price | `buyer price − logistics − handling − quality loss − transaction costs − storage − financing − rejection risk`. Implemented in M7; the arithmetic showed **rejection risk is the largest term**, several times freight, so it is priced into the subtraction rather than only scored as risk. See `docs/DEMO-CONTEXT.md` §6.2. |
 | D-12 | Buyer recommendation ships with **alternatives + a negotiation brief** | "Recommend buyer + prepare negotiation brief also provide alternatives." |
 | D-13 | **News → causal chain → FPO impact → recommended action** | Not a news feed. Petrol ↑ → logistics cost ↑ → distant buyer less attractive → nearby buyer more competitive → recommendation changes. |
 | D-14 | **IPM-first crop protection** | Natural/preventive methods by default; chemicals only in dire need; ranked by effectiveness + cost + sustainability + resistance risk. |

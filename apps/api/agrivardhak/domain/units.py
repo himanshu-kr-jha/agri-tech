@@ -82,6 +82,25 @@ def format_inr(paise: int, *, indian_grouping: bool = True) -> str:
 # --------------------------------------------------------------------------- mass
 
 
+def rupees_per_quintal_to_paise_per_kg(rs_per_qtl: Decimal | float | int) -> int:
+    """Agmarknet publishes ₹/quintal; our canonical unit is paise/kg.
+
+    **The two are numerically identical**, and that is a trap rather than a convenience::
+
+        ₹700/qtl  ->  70,000 paise/qtl  ->  70,000 / 100 kg  =  700 paise/kg
+
+    Because the conversion looks like a no-op, someone will eventually "fix" the missing
+    multiplication and be wrong by a factor of 100. This function exists so the conversion
+    has a name, a docstring and a test — call it rather than assigning the value across.
+    """
+    return round(Decimal(str(rs_per_qtl)) * 100 / KG_PER_QUINTAL)
+
+
+def paise_per_kg_to_rupees_per_quintal(paise_per_kg: int) -> Decimal:
+    """Inverse of :func:`rupees_per_quintal_to_paise_per_kg`, for display in mandi terms."""
+    return Decimal(paise_per_kg) * KG_PER_QUINTAL / 100
+
+
 def kg_to_quintal(kg: Decimal | float | int) -> Decimal:
     return Decimal(str(kg)) / KG_PER_QUINTAL
 
