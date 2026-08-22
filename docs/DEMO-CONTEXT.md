@@ -1,6 +1,11 @@
 # Demo Context — Prayagraj, Uttar Pradesh
 
-Version 1.0 · 2026-08-22 · Resolves open question **O-1**
+Version 1.1 · 2026-08-22 · Resolves open question **O-1**
+
+> **v1.1** applies a first verification pass against primary sources. It corrected the
+> agro-climatic zone, replaced a partly invented block list with the district
+> administration's own, and moved the guava belt from the doab to Ganga-par. See
+> `seed/sources.md` §10 for what was checked and what is still open.
 
 The demo organization is anchored to **Prayagraj district, Uttar Pradesh**. This document
 specifies the district profile that the seed generator, the agronomic coefficients, the mandi
@@ -26,9 +31,10 @@ Three properties make Prayagraj a better demo anchor than a generic "Indian dist
    three agriculturally distinct tracts (§2). One FPO can therefore contain irrigated
    paddy–wheat farmers *and* rain-fed Vindhyan farmers — so the Risk module has something real
    to differentiate, and the drill-down shows a meaningful pattern rather than noise.
-2. **A GI-tagged crop.** Prayagraj guava carries a Geographical Indication ⚠️. The discovery
-   session named *"sudden turbulence like GI tags"* as a specific FPO pain — this district lets
-   us demo that with a real crop rather than a hypothetical.
+2. **A GI-tagged crop, verified.** *Allahabad Surkha Guava* holds GI application no. 50 ✅,
+   and two of its named production blocks — Kaurihar and Phulpur — are in Prayagraj. The
+   discovery session named *"sudden turbulence like GI tags"* as a specific FPO pain; this
+   district lets us demo it with a real registration and a real compliance question (§4.2).
 3. **Smallholder-dominant.** Eastern UP is overwhelmingly small and marginal farmers ✅, which
    is exactly the underserved population the challenge brief targets.
 
@@ -39,23 +45,53 @@ Three properties make Prayagraj a better demo anchor than a generic "Indian dist
 Prayagraj sits at the Ganga–Yamuna confluence. The rivers divide it into three tracts with
 materially different agriculture ✅:
 
-| Tract | Blocks (indicative ⚠️) | Character | Irrigation | Implication for the demo |
+The district administration lists **8 tehsils and 23 development blocks** ✅ — verified against
+`prayagraj.nic.in`, retrieved 2026-08-22:
+
+| Tehsil | Development blocks |
+|---|---|
+| Sadar | *(none listed separately)* |
+| Soraon | Kaurihar, Holagarh, Mauaima, Soraon, Shringverpur Dham, Bhagwatpur |
+| Phulpur | Bahariya, Phulpur, Bahadurpur, Sahson |
+| Handia | Pratappur, Saidabad, Dhanupur, Handia |
+| Karchhana | Chaka, Karchhana, Kaundhiyara |
+| Bara | Jasra, Shankargarh |
+| Meja | Uruwa, Meja, Manda |
+| Koraon | Koraon |
+
+Grouped into the three tracts:
+
+| Tract | Tehsils | Character | Irrigation | Implication for the demo |
 |---|---|---|---|---|
-| **Ganga-par** (north / trans-Ganga) | Phulpur, Soraon, Handia, Pratappur, Bahria | Alluvial plain, deep fertile soil | Canal + tubewell, reliable | Paddy–wheat belt. Low weather exposure. |
-| **Doab** (central, between the rivers) | Chaka, Kaundhiyara, Karchhana, Shankargarh fringe | Good alluvium, peri-urban market access | Tubewell, generally good | Vegetables, potato, **guava belt**. Best market access. |
-| **Yamuna-par** (south / trans-Yamuna, Vindhyan) | Bara, Meja, Koraon, Shankargarh | Rocky, red/lateritic, undulating, shallow soils | Largely rain-fed | Gram, arhar, bajra, mustard. **High rainfall exposure.** |
+| **Ganga-par** (north / trans-Ganga) | Soraon, Phulpur, Handia | Alluvial plain, deep fertile soil | Canal + tubewell, reliable | Paddy–wheat belt. Low weather exposure. **Contains the district's GI guava blocks** (§4.2). |
+| **Doab** (central, between the rivers) | Sadar, Karchhana | Good alluvium, peri-urban market access | Tubewell, generally good | Vegetables and potato. Best market access. |
+| **Yamuna-par** (south / trans-Yamuna, Vindhyan) | Bara, Meja, Koraon | Rocky, red/lateritic, undulating, shallow soils | Largely rain-fed | Gram, arhar, bajra, mustard. **High rainfall exposure.** |
+
+⚠️ The **tehsil→tract grouping above is still a judgement call.** The block names are now
+authoritative, but which side of which river each block sits on must be confirmed against the
+district map before the seed places farmers geographically — Sadar and Karchhana in particular
+straddle the doab and the Yamuna's south bank.
 
 **This is the demo's backbone.** When the Risk module says *"312 farmers / 740 acres exposed"*,
 those farmers should cluster in Yamuna-par — and the drill-down should make that visible on the
 map. A uniform farmer population would make the drill-down look like a list; this makes it look
 like an insight.
 
-### Agro-climatic classification ⚠️
+### Agro-climatic classification — **corrected**
 
-Prayagraj is generally placed in Uttar Pradesh's **Eastern Plain Zone**, with the trans-Yamuna
-southern blocks falling into the **Vindhyan Zone**. This split must be verified against the UP
-Department of Agriculture's zone map before it is used to select yield coefficients, because the
-two zones carry different base yields.
+Uttar Pradesh is divided into **9 agro-climatic zones**. Prayagraj falls in the
+**Central Plain Zone** (with Kanpur, Lucknow, Unnao, Raebareilly, Fatehpur, Kaushambi and
+others), and its southern trans-Yamuna portion falls in the **Vindhyachal Zone** (with Mirzapur
+and Sonbhadra) ⚠️.
+
+> **This corrects an earlier assumption in this document**, which placed Prayagraj in the
+> *Eastern Plain Zone*. It does not. Base yield coefficients must be drawn for **Central Plain**
+> and **Vindhyachal**, not Eastern Plain — the two carry different numbers, and a whole demo
+> built on the wrong zone's yields would be quietly wrong in every production figure.
+
+The zone assignment is corroborated across several secondary sources but has **not** yet been
+confirmed against the UP Department of Agriculture's own zone map. Confirm before the yield
+coefficients are seeded (`seed/sources.md` G1).
 
 ---
 
@@ -86,7 +122,7 @@ Five core crops, chosen so that each one carries a *different* part of the produ
 | 2 | **Wheat** | Rabi (Nov–Apr) | All tracts | Baseline scale; MSP/procurement contrast with open market |
 | 3 | **Potato** | Rabi (Oct–Mar) | Doab | **The hero crop** — storage decisions, price crash risk, late blight |
 | 4 | **Mustard** | Rabi (Oct–Mar) | Yamuna-par | Rain-fed exposure; the low-input/low-risk alternative |
-| 5 | **Guava** | Perennial, winter harvest | Doab (Kaundhiyara/Chaka belt ⚠️) | **Quality intelligence + GI** — grade prediction, premium buyers |
+| 5 | **Guava** | Perennial, winter harvest | **Ganga-par — Kaurihar and Phulpur blocks** ✅ | **Quality intelligence + GI** — grade prediction, premium buyers (§4.2) |
 
 Optional sixth for contrast: **tomato** 🔧 — a perishable with *no* storage option, used to
 show the urgency case against potato's hold-or-sell choice.
@@ -116,7 +152,72 @@ buyer-allocation beat. **Potato is the stronger choice for a Prayagraj demo**, f
 **Action:** switch the hero crop in the demo script and the override example. Tomato is retained
 as the perishable contrast. *(Applied — see §9.)*
 
-### 4.2 Crop calendar ⚠️
+### 4.2 The guava GI — verified from the primary source ✅
+
+Retrieved from the **Geographical Indications Journal No. 19, October 2007** (GI Registry,
+Chennai) via the UP Directorate of Horticulture & Food Processing, 2026-08-22.
+
+| Field | Value |
+|---|---|
+| GI name | **Allahabad Surkha Guava** |
+| Application no. | **50** |
+| Class / goods | 31 / Guava fruits |
+| Applicant | Allahabadi Surkha Amrood Utpadak Welfare Association — Allahabad |
+| Applicant address | Bankarabad, Bamroli Janpath, Allahabad |
+| Advertised | Accepted under s.13(1), GI Act 1999; Journal 19, Oct 2007 |
+| Origin | Chance seedling in village **Abubakkarpur**; a 4-year seedling spotted at village **Sulemsarai** |
+
+**Registered quality specification** — real numbers, usable directly by the Quality module:
+
+| Parameter | Value |
+|---|---|
+| Average fruit weight | 200 g |
+| Size | 7.20 cm |
+| Seeds per fruit | 280 |
+| Yield in 6th year | 120 kg/tree |
+| TSS | 13.75 % |
+| Acidity | 0.40 |
+| pH | 3.5 |
+| Total sugar | 10.2 % |
+| Vitamin C | 150 mg/100 g |
+| Fruit | Large, slightly depressed at both ends; skin thin, uniform pink; flesh thick, whitish sometimes pink; sweet |
+
+**Geographical area of production**, as stated in the application:
+
+> Villages of **Chail, Muratganj, Newada, Manjhanpur** blocks of Allahabad District
+
+with area tables naming:
+
+| Block | Villages | Area (ha) | Avg. production (qtl/yr) |
+|---|---|---:|---:|
+| **Kaurihar II** (Chail area) | Bakarbad, Begambazar, Bamraulli, Makanpur, Janka | 25.5 | 4,190 |
+| **Phulpur** | Korapur, others | 3.5 | 445 |
+| *(Kaushambi section)* | Sudwar, Vihika, Koylaha, Fatehpur, Puramufti | 25.0 | 4,155 |
+| **Muratganj** | Mahgaon, Sayad, Gauspur, Bhitti, Pattinarwar, Shrohi | 19.0 | 3,158 |
+
+#### Two corrections this forces
+
+1. **The guava belt is not in the doab.** The two blocks inside present-day Prayagraj —
+   **Kaurihar** and **Phulpur** — are both in the **Ganga-par** tract. An earlier draft of this
+   document placed the guava belt in Kaundhiyara/Chaka in the doab. That was wrong, and would
+   have put the demo's guava growers on the wrong side of the Ganga.
+
+2. **The GI area straddles a district boundary.** Chail, Muratganj, Newada and Manjhanpur are
+   named as *Allahabad District* in the 2007 application, but **Kaushambi district was carved
+   out of Allahabad in 1997** and those blocks sit in Kaushambi today. So the registered
+   "Allahabad Surkha" area now spans two districts.
+
+   This is not a problem — it is the best policy story in the whole demo, and it is *real*.
+   A Prayagraj FPO with growers in Kaurihar and Phulpur has a legitimate claim to the GI; the
+   compliance question of who may use the mark, and on what evidence, is exactly the
+   *"sudden turbulence like GI tags"* pain the discovery session named. Build the policy event
+   on this, not on an invented notification.
+
+3. **The documented area is small.** The application's own tables total roughly **73 ha**.
+   Secondary sources claiming ~1,000 ha under Surkha guava are describing something broader.
+   The demo FPO's guava area should be modest — a premium sliver, not a major crop by acreage.
+
+### 4.3 Crop calendar ⚠️
 
 | Crop | Sowing | Harvest | Notes |
 |---|---|---|---|
@@ -126,8 +227,8 @@ as the perishable contrast. *(Applied — see §9.)*
 | Mustard | Oct | Feb–Mar | Frost risk at flowering |
 | Guava | Perennial | **Winter crop Nov–Feb** (quality), rainy crop Aug–Sep (lower grade) | The two-crop split is the quality story |
 
-Exact dates must come from the UP Department of Agriculture crop calendar for the Eastern Plain
-Zone before seeding.
+Exact dates must come from the UP Department of Agriculture crop calendar for the **Central
+Plain Zone** before seeding.
 
 ---
 
@@ -265,7 +366,7 @@ point in the pitch instead of the strongest.
 | `context.md` | O-1 resolved; decision D-24 recorded |
 | `docs/MVP-SCOPE.md` | Demo script: hero crop tomato → **potato**; beats 4, 6, 7 rewritten for Prayagraj |
 | `docs/ARCHITECTURE.md` | Cross-domain override example rewritten for potato + Feb hail window |
-| `seed/sources.md` | Created — citation checklist gating everything above |
+| `seed/sources.md` | Created — citation checklist gating everything above; §10 records the 2026-08-22 verification pass |
 
 ---
 
@@ -273,15 +374,19 @@ point in the pitch instead of the strongest.
 
 Nothing marked ⚠️ may enter `seed/` until it is checked off here.
 
-- [ ] UP agro-climatic zone assignment for Prayagraj, including the trans-Yamuna split
-- [ ] Block-to-tract mapping (the block lists in §2 are indicative only)
+- [x] ~~UP agro-climatic zone assignment~~ → **Central Plain + Vindhyachal** (2026-08-22); still
+      confirm against the official UP Dept. of Agriculture zone map before seeding yields
+- [x] ~~Block list~~ → **verified** against `prayagraj.nic.in` (2026-08-22): 8 tehsils, 23 blocks
+- [ ] Block-to-**tract** mapping — which side of which river each block sits on
 - [ ] IMD/Open-Meteo rainfall, temperature and humidity normals for the Prayagraj grid
-- [ ] Agmarknet market list for Prayagraj district — **actual names**
+- [ ] **Agmarknet market list — still blocked.** The hard blocker: it gates every price and
+      arrival series, and therefore the whole Market demo. See `seed/sources.md` §10.
 - [ ] 24 months of price and arrival series for the five crops
 - [ ] District landholding distribution and irrigation coverage statistics
-- [ ] Crop calendar for the Eastern Plain Zone (sowing/harvest windows)
+- [ ] Crop calendar for the **Central Plain Zone** (sowing/harvest windows)
 - [ ] Base yield coefficients per crop per zone
-- [ ] Guava GI registration status, registered name(s), and the geographic area covered
+- [x] ~~Guava GI registration, name, area~~ → **verified** from GI Journal 19 (2026-08-22);
+      see §4.2. Quality spec now usable directly by the Quality module.
 - [ ] Current eligibility text for every central and state scheme in §7
 - [ ] Cold-storage capacity and rental rates for the district
 - [ ] At least one Prayagraj-area FPO or agronomist contact to sanity-check the profile (**O-2**)

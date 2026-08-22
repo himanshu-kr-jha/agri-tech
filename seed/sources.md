@@ -41,9 +41,10 @@ UI-labelled · `DROPPED` could not source, feature removed
 
 | # | What | Value | Source | Retrieved | Status |
 |---|---|---|---|---|---|
-| G1 | UP agro-climatic zone containing Prayagraj | | UP Dept. of Agriculture zone map | | TODO |
-| G2 | Trans-Yamuna (Vindhyan) zone split within the district | | | | TODO |
-| G3 | Block list and block→tract mapping | | District administration / census | | TODO |
+| G1 | UP agro-climatic zone containing Prayagraj | **Central Plain Zone** (not Eastern Plain — earlier assumption was wrong) | Multiple secondary sources, consistent; UP Dept. of Agriculture map still to confirm | 2026-08-22 | PARTIAL — confirm against the official zone map before seeding yields |
+| G2 | Trans-Yamuna zone split within the district | **Vindhyachal Zone** (Mirzapur, Sonbhadra, southern Allahabad/Prayagraj) | as G1 | 2026-08-22 | PARTIAL |
+| G3 | Block list | **8 tehsils, 23 development blocks** — full list in `docs/DEMO-CONTEXT.md` §2 | https://prayagraj.nic.in/administrative-setup/ | 2026-08-22 | OK |
+| G3b | Block→tract (Ganga-par / doab / Yamuna-par) mapping | Tehsil-level grouping proposed; block-level assignment unconfirmed | District map needed | | TODO |
 | G4 | Block boundary geometries (for PostGIS plots) | | Survey of India / district GIS / OSM | | TODO |
 | G5 | Predominant soil types per tract | | ICAR / NBSS&LUP soil survey | | TODO |
 
@@ -75,12 +76,12 @@ demo** — they are the highest-risk items in this register.
 
 | # | What | Value | Source | Retrieved | Status |
 |---|---|---|---|---|---|
-| A1 | Base yield — paddy, Eastern Plain Zone | | UP Dept. of Agriculture / ICAR | | TODO |
+| A1 | Base yield — paddy, **Central Plain Zone** (and Vindhyachal for the trans-Yamuna tract) | | UP Dept. of Agriculture / ICAR | | TODO |
 | A2 | Base yield — wheat | | | | TODO |
 | A3 | Base yield — potato | | | | TODO |
 | A4 | Base yield — mustard | | | | TODO |
 | A5 | Base yield — guava (per tree / per ha) | | ICAR-CISH Lucknow | | TODO |
-| A6 | Crop calendar — sowing & harvest windows, all five crops | | UP Dept. of Agriculture | | TODO |
+| A6 | Crop calendar — sowing & harvest windows, all five crops | | UP Dept. of Agriculture, **Central Plain Zone** | | TODO |
 | A7 | Crop duration by variety | | Variety release notifications | | TODO |
 | A8 | Water requirement per crop | | ICAR / FAO CROPWAT | | TODO |
 | A9 | Nutrient recommendation (NPK) per crop | | UP soil-health recommendations | | TODO |
@@ -111,7 +112,7 @@ No exception. See `docs/ARCHITECTURE.md` §4.2.
 
 | # | What | Value | Source | Retrieved | Status |
 |---|---|---|---|---|---|
-| M1 | Agmarknet market list for Prayagraj district — **actual names** | | Agmarknet | | TODO |
+| M1 | Agmarknet market list for Prayagraj district — **actual names** | **BLOCKED.** `api.data.gov.in` did not respond from this environment and the Agmarknet portal needs an interactive ASP.NET session. Partial signals only: *Mundera Mandi* is a Prayagraj Mandi Samiti (houses a Naveen Fal Mandi); *Jasra* appears as an Agmarknet market and is a real block in Bara tehsil. **Neither is confirmed as an Agmarknet market key.** | Agmarknet portal — must be pulled interactively or from an India-routable host | 2026-08-22 | TODO — see note below |
 | M2 | 24 months price series — paddy | | Agmarknet | | TODO |
 | M3 | 24 months price series — wheat | | Agmarknet | | TODO |
 | M4 | 24 months price series — potato | | Agmarknet | | TODO |
@@ -154,10 +155,10 @@ cannot be confirmed is **dropped**, not carried forward on the assumption that i
 
 | # | What | Value | Source | Retrieved | Status |
 |---|---|---|---|---|---|
-| Q1 | Guava GI registration — registered name(s), applicant, year | | GI Registry, Chennai | | TODO |
-| Q2 | Geographic area covered by the GI | | GI Registry journal entry | | TODO |
-| Q3 | Quality specification in the GI application | | GI Registry | | TODO |
-| Q4 | Any recent notification affecting GI produce labelling | | | | TODO |
+| Q1 | Guava GI registration | **Allahabad Surkha Guava**, GI application no. **50**, Class 31 (guava fruits). Applicant: Allahabadi Surkha Amrood Utpadak Welfare Association — Allahabad, Bankarabad, Bamroli Janpath. Advertised as accepted under s.13(1) of the GI Act 1999. | GI Journal No. 19, Oct 2007 / Jyaistha-11, Saka 1929 — https://www.upkrishivipran.in/GI/images/AllahabadSurkha/AllahabadSurkha.pdf | 2026-08-22 | OK |
+| Q2 | Geographic area covered by the GI | "Villages of **Chail, Muratganj, Newada, Manjhanpur** blocks of Allahabad District", with area tables for **Kaurihar II (Chail area)** 25.5 ha / 4,190 qtl, **Phulpur** 3.5 ha / 445 qtl, a Kaushambi section 25.0 ha / 4,155 qtl, and **Muratganj** 19.0 ha / 3,158 qtl. **Note:** Chail/Muratganj/Newada/Manjhanpur are in **Kaushambi district today** (carved out of Allahabad in 1997); the Prayagraj blocks are **Kaurihar and Phulpur**. Total documented area ≈ **73 ha**. | as Q1 | 2026-08-22 | OK |
+| Q3 | Quality specification in the GI application | Avg weight 200 g · size 7.20 cm · 280 seeds/fruit · yield 120 kg/tree in 6th year · TSS 13.75% · acidity 0.40 · pH 3.5 · total sugar 10.2% · vitamin C 150 mg/100 g. Fruit: large, slightly depressed both ends, thin skin, uniform pink, thick whitish-to-pink flesh, sweet. | as Q1 | 2026-08-22 | OK |
+| Q4 | Any recent notification affecting GI produce labelling | Not found. **Do not invent one.** Build the policy event on the real cross-district compliance question (`DEMO-CONTEXT.md` §4.2) instead. | | 2026-08-22 | DROPPED as a "recent notification"; reframed |
 
 This underwrites the demo's policy-event beat. If Q1–Q3 cannot be sourced, the GI event becomes
 synthetic and must be relabelled — it should not be presented as a real regulatory change.
@@ -180,3 +181,34 @@ and invented is explicit rather than implied.
 
 X8 carries the most risk of over-claiming. Each event's *mechanism* should be real; only the
 instance is constructed — and the UI must not present a constructed event as a real headline.
+
+
+---
+
+## 10. Verification pass — 2026-08-22
+
+A first pass against primary sources. Results and what they changed:
+
+| Item | Outcome |
+|---|---|
+| **Guava GI** | **Fully verified** from the GI Journal itself. Yielded the registered quality spec as usable numbers, and corrected the production area — the belt is in **Kaurihar and Phulpur (Ganga-par)**, not the doab. |
+| **Blocks** | **Verified** against the district administration: 8 tehsils, 23 blocks. The earlier block list in `DEMO-CONTEXT.md` was partly invented and has been replaced. |
+| **Agro-climatic zone** | **Corrected.** Prayagraj is **Central Plain**, not Eastern Plain. Yield coefficients must be drawn for Central Plain + Vindhyachal. |
+| **Mandi names** | **Still blocked.** Neither the data.gov.in API nor the Agmarknet portal was reachable from this environment. |
+
+### The mandi list is the remaining hard blocker
+
+`M1` gates M2–M7 — every price and arrival series, and therefore the Market module's entire
+demo. Three ways to unblock it, best first:
+
+1. **Pull it from the Agmarknet portal directly** (`agmarknet.gov.in` → Price and Arrivals →
+   select Uttar Pradesh → Prayagraj). This needs a browser session; the site is ASP.NET with
+   postbacks and does not answer a plain GET.
+2. **Register for a personal data.gov.in API key** and query resource
+   `9ef84268-d588-465a-a308-a864a43d0070` filtered to `state=Uttar Pradesh`,
+   `district=Prayagraj`. The widely circulated sample key did not respond here.
+3. **Ask the local contact (O-2).** Anyone farming in Prayagraj knows which mandi they sell at.
+
+Until then, **do not put market names in the seed.** Use `market_id` placeholders labelled
+`FIXTURE`, and let the UI say so. An invented mandi name is the single most likely thing to be
+recognised as fake by a judge from UP, and it would discredit every other number on the screen.

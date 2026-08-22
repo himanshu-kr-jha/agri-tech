@@ -151,7 +151,7 @@ auditable decisions.
 | A-2 | Farmer data is entered primarily by the FPO/field officer, not by farmers themselves. |
 | A-3 | Government/agricultural record integration is POST-MVP; MVP uses manual + self-reported + AI-inferred data. |
 | A-4 | Buyers provide quantity, price, quality requirement, delivery date, location and payment terms. |
-| A-5 | Open-Meteo (weather), Agmarknet (mandi prices) and myScheme (scheme text) are reachable for the Prayagraj district / Eastern Plain Zone; each has a cited-shape fixture fallback. |
+| A-5 | Open-Meteo (weather), Agmarknet (mandi prices) and myScheme (scheme text) are reachable for the Prayagraj district / Central Plain Zone; each has a cited-shape fixture fallback. |
 | A-6 | Anthropic API access is available for the orchestrator and assistants. |
 
 ---
