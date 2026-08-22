@@ -22,7 +22,7 @@ from sqlalchemy.orm import Session
 from agrivardhak.domain import enums
 from agrivardhak.domain.models.crops import Crop, CropCycle, Variety
 from agrivardhak.domain.models.land import Farm, Plot, PlotTenure
-from agrivardhak.domain.models.market import Buyer
+from agrivardhak.domain.models.market import Buyer, DemandSignal, Lot, LotItem
 from agrivardhak.domain.models.organization import (
     Farmer,
     Membership,
@@ -33,6 +33,7 @@ from agrivardhak.domain.models.organization import (
 )
 from agrivardhak.domain.models.provenance import AttributePolicy, DataSource
 from agrivardhak.domain.units import hectares_to_sqm
+from agrivardhak.ingestion.agmarknet import latest_modal_paise_per_kg, load_series
 from agrivardhak.provenance import resolver, trust
 from agrivardhak.seed import reference as ref
 
@@ -108,6 +109,9 @@ class SeedResult:
     observations: int
     discrepancies: int
     total_area_sqm: float
+    price_records: int = 0
+    lots: int = 0
+    offers: int = 0
 
 
 # --------------------------------------------------------------------------- helpers
@@ -161,6 +165,12 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
     cycles = _seed_crop_cycles(session, plots, crops, rng)
     obs, disc = _seed_observations(session, plots, cycles, sources, rng)
 
+    # Real prices first: the buyer offers below are anchored to them, so an FPO is never
+    # shown negotiating at four times what the crop actually trades at.
+    price_records = load_series(session)
+    lots = _seed_lots(session, org, cycles, rng)
+    offers = _seed_offers(session, org, lots, rng)
+
     session.flush()
     return SeedResult(
         organization_id=org.id,
@@ -170,6 +180,9 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
         observations=obs,
         discrepancies=disc,
         total_area_sqm=sum(float(p.area_sqm) for p in plots),
+        price_records=price_records,
+        lots=len(lots),
+        offers=offers,
     )
 
 
@@ -654,3 +667,171 @@ def _seed_observations(
 
     session.flush()
     return count, len(discrepancy_ids)
+
+
+# --------------------------------------------------------------------------- lots & offers
+
+#: Where each buyer sits relative to the mandi modal price, and why. Multipliers, not
+#: absolute rupees — so the seed tracks the real market instead of drifting away from it
+#: (docs/DEMO-CONTEXT.md §6.2).
+BUYER_PRICING: dict[str, tuple[float, str]] = {
+    "Ganga Cold Store Aggregator": (1.00, "pays the mandi rate, close by, settles fast"),
+    "Kanpur Wholesale Traders": (1.13, "pays above the rate to pull volume 180 km"),
+    "Northern Foods Processing": (1.07, "premium for Grade A, but rejects off-spec"),
+    "Handia Rice Mill": (1.02, "local miller, reliable"),
+    "Govt Procurement Centre": (1.05, "MSP-linked"),
+    "Meja Oil Mill": (1.01, "the Yamuna-par outlet"),
+    "Sangam Premium Fruit Traders": (1.18, "GI guava premium"),
+    "Metro E-Commerce Sourcing": (1.15, "pays well, rejects hard, pays late"),
+}
+
+#: Which buyers bid for which crop.
+BUYER_CROPS: dict[str, tuple[str, ...]] = {
+    "Ganga Cold Store Aggregator": ("Potato",),
+    "Kanpur Wholesale Traders": ("Potato", "Onion"),
+    "Northern Foods Processing": ("Potato",),
+    "Handia Rice Mill": ("Paddy", "Rice"),
+    "Govt Procurement Centre": ("Wheat", "Paddy"),
+    "Meja Oil Mill": ("Mustard",),
+    "Sangam Premium Fruit Traders": ("Guava",),
+    "Metro E-Commerce Sourcing": ("Guava", "Tomato"),
+}
+
+#: Agmarknet commodity names differ from our crop names in one place.
+AGMARKNET_NAME = {"Paddy": "Paddy(Common)"}
+
+
+def _seed_lots(
+    session: Session, org: Organization, cycles: list[CropCycle], rng: random.Random
+) -> list[Lot]:
+    """Aggregate harvested crop cycles into sellable lots.
+
+    Lots are grouped by crop, which is what an FPO actually does — the whole point of the
+    collective is that 400 scattered smallholdings become one consignment a serious buyer
+    will talk to. ``LotItem`` keeps each farmer's contribution, so a share dispute stays
+    resolvable and the farmer can see their own produce in the match (FR-546).
+    """
+    harvested = [c for c in cycles if c.status is enums.CropCycleStatus.CLOSED]
+    if not harvested:
+        return []
+
+    crops_by_id = {c.id: c for c in session.execute(select(Crop)).scalars()}
+    varieties = list(session.execute(select(Variety)).scalars())
+    variety_crop = {v.id: crops_by_id[v.crop_id] for v in varieties if v.crop_id in crops_by_id}
+    variety_yield = {v.id: float(v.base_yield_kg_per_ha or 0) for v in varieties}
+    plot_farmer = {
+        plot.id: farm.operator_farmer_id
+        for plot, farm in session.execute(
+            select(Plot, Farm).join(Farm, Plot.farm_id == Farm.id)
+        ).all()
+    }
+
+    by_crop: dict[str, list[CropCycle]] = {}
+    for cycle in harvested:
+        crop = variety_crop.get(cycle.variety_id)
+        if crop is not None:
+            by_crop.setdefault(crop.name, []).append(cycle)
+
+    lots: list[Lot] = []
+    for crop_name, crop_cycles in by_crop.items():
+        crop = next(c for c in crops_by_id.values() if c.name == crop_name)
+        # Most recent season only — older harvests are history, not inventory.
+        latest_year = max(c.season_year for c in crop_cycles)
+        current = [c for c in crop_cycles if c.season_year == latest_year][:400]
+        if not current:
+            continue
+
+        grade = rng.choices(["A", "B"], weights=[70, 30])[0]
+        lot = Lot(
+            organization_id=org.id,
+            crop_id=crop.id,
+            label=f"{crop_name} {latest_year} aggregate",
+            quantity_kg=Decimal("0"),
+            grade=grade,
+            ready_date=max(
+                (c.actual_harvest_date for c in current if c.actual_harvest_date),
+                default=TODAY,
+            ),
+            origin_location=ref.ORG_DISTRICT,
+        )
+        session.add(lot)
+        session.flush()
+
+        total = Decimal("0")
+        for cycle in current:
+            farmer_id = plot_farmer.get(cycle.plot_id)
+            if farmer_id is None:
+                continue
+            # Contribution = area x the variety's base yield. Crude — it applies the same
+            # yield to every plot regardless of health, water or weather, which is exactly
+            # what the Quality module (M6) exists to fix. But using the per-variety
+            # coefficient rather than one flat number keeps the ratios between crops
+            # honest: paddy at ~4,200 kg/ha does not produce potato-sized tonnage.
+            base_yield = variety_yield.get(cycle.variety_id) or 0
+            if base_yield <= 0:
+                continue
+            contribution = (Decimal(str(cycle.area_sqm)) / Decimal("10000")) * Decimal(
+                str(base_yield)
+            )
+            contribution = contribution.quantize(Decimal("0.001"))
+            session.add(
+                LotItem(
+                    lot_id=lot.id,
+                    crop_cycle_id=cycle.id,
+                    farmer_id=farmer_id,
+                    quantity_kg=contribution,
+                    grade=grade,
+                )
+            )
+            total += contribution
+
+        lot.quantity_kg = float(total)
+        lots.append(lot)
+    session.flush()
+    return lots
+
+
+def _seed_offers(session: Session, org: Organization, lots: list[Lot], rng: random.Random) -> int:
+    """Buyer offers, anchored to the real mandi modal price for each crop.
+
+    Prices are multipliers on what the crop actually traded at (``BUYER_PRICING``), never
+    absolute rupees. A crop with no price in the loaded window gets **no offer** rather than
+    an invented one — an FPO shown a fabricated bid is worse off than one shown nothing.
+    """
+    buyers = list(session.execute(select(Buyer).where(Buyer.organization_id == org.id)).scalars())
+    crops = {c.id: c.name for c in session.execute(select(Crop)).scalars()}
+    created = 0
+
+    for lot in lots:
+        crop_name = crops.get(lot.crop_id)
+        if crop_name is None:
+            continue
+        anchor = latest_modal_paise_per_kg(
+            session, commodity_name=AGMARKNET_NAME.get(crop_name, crop_name)
+        )
+        if anchor is None:
+            continue
+        modal, _evidence = anchor
+
+        for buyer in buyers:
+            if crop_name not in BUYER_CROPS.get(buyer.name, ()):
+                continue
+            multiplier, _why = BUYER_PRICING.get(buyer.name, (1.0, ""))
+            # A little jitter so the demo is not suspiciously tidy, but deterministic.
+            price = round(modal * multiplier * rng.uniform(0.98, 1.02))
+            session.add(
+                DemandSignal(
+                    organization_id=org.id,
+                    buyer_id=buyer.id,
+                    crop_id=lot.crop_id,
+                    quantity_kg=buyer.max_quantity_kg,
+                    grade=buyer.quality_requirement or lot.grade,
+                    price_paise_per_kg=price,
+                    window_start=lot.ready_date,
+                    window_end=(lot.ready_date + dt.timedelta(days=45)) if lot.ready_date else None,
+                    confidence=0.7,
+                )
+            )
+            created += 1
+    session.flush()
+    return created

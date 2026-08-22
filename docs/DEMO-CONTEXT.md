@@ -419,6 +419,28 @@ the crop and month, or the demo shows an FPO negotiating at four times the marke
 prices the reversal still works — better, in fact, since fixed costs (handling ₹0.30 + fees
 ₹0.25 = ₹0.55/kg) are ~8% of a ₹7/kg price rather than 2% of ₹30.
 
+Offers are now seeded as **multipliers on the actual modal price** rather than absolute
+rupees, so the seed tracks the market instead of drifting from it. A crop with no price in
+the loaded window gets **no offer** rather than an invented one.
+
+#### Lot tonnage must use per-crop yields
+
+The same class of error, one level down. An early draft aggregated lots at a flat
+20,000 kg/ha for every crop — potato-scale applied to cereals, which made paddy produce
+4,600 tonnes from 1,000 smallholders. Using each variety's own coefficient restores honest
+ratios:
+
+| Crop | Lot | Contributors | Yield basis |
+|---|---:|---:|---:|
+| Potato | 5,604 t | 400 | 25,000 kg/ha |
+| Paddy | 1,005 t | 400 | 4,200 kg/ha |
+| Wheat | 1,001 t | 400 | 4,000 kg/ha |
+| Mustard | 339 t | 395 | 1,400 kg/ha |
+| **Guava** | **223 t** | **16** | 30,000 kg/ha — the premium sliver |
+
+This is still crude: it applies one yield to every plot regardless of health, water or
+weather. Fixing that is exactly what the Quality module (M6) is for.
+
 ---
 
 ## 7. Government schemes
