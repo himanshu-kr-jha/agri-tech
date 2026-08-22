@@ -657,8 +657,10 @@ def _seed_observations(
             unit="pct",
             source_type=source_type,
             source=sources[source_key],
-            observed_at=NOW - dt.timedelta(days=rng.randint(0, 25)),
-            recorded_at=NOW - dt.timedelta(days=rng.randint(0, 25)),
+            # Skewed recent: an active season gets visited, and a uniform 0-25 day spread
+            # made most readings older than their own freshness window.
+            observed_at=NOW - dt.timedelta(days=min(rng.randint(0, 12), rng.randint(0, 12))),
+            recorded_at=NOW - dt.timedelta(days=min(rng.randint(0, 12), rng.randint(0, 12))),
             reported_confidence=rng.uniform(0.55, 0.9)
             if source_type is enums.SourceType.AI_INFERENCE
             else None,

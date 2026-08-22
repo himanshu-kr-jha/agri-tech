@@ -63,7 +63,10 @@ class AttributeDecayPolicy:
 #: Seed defaults (DATA-MODEL.md §4.3). Judgement calls, deliberately configuration rather
 #: than constants so they can be refined as outcome data accumulates.
 DEFAULT_POLICIES: dict[str, AttributeDecayPolicy] = {
-    "crop_health_pct": AttributeDecayPolicy("crop_health_pct", 7, 21, 10),
+    # 14, not 7: a week-old field-officer reading is still worth a great deal. The
+    # earlier 7-day half-life conflated how fast a crop changes with how fast our
+    # information about it decays, and drove every aggregate forecast to ~0 confidence.
+    "crop_health_pct": AttributeDecayPolicy("crop_health_pct", 14, 30, 10),
     "crop_stage": AttributeDecayPolicy("crop_stage", 10, 30, 0),
     "soil_moisture": AttributeDecayPolicy("soil_moisture", 3, 10, 15),
     "expected_yield_kg": AttributeDecayPolicy("expected_yield_kg", 14, 45, 15),

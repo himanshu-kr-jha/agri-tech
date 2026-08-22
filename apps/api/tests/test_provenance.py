@@ -64,12 +64,17 @@ def test_verification_raises_confidence() -> None:
 
 
 def test_confidence_halves_over_one_half_life() -> None:
+    """Crop health is on a 14-day half-life.
+
+    Raised from 7 after it drove aggregate forecasts to near-zero confidence: 7 days
+    conflated how fast a *crop* changes with how fast our *information about it* decays. A
+    week-old field-officer reading is still worth a great deal.
+    """
     policy = trust.policy_for("crop_health_pct")
-    assert policy.half_life_days == 7
-    fresh = trust.decay_factor(NOW, NOW, policy)
-    one_half_life = trust.decay_factor(NOW - dt.timedelta(days=7), NOW, policy)
-    assert fresh == pytest.approx(1.0)
-    assert one_half_life == pytest.approx(0.5)
+    assert policy.half_life_days == 14
+    assert trust.decay_factor(NOW, NOW, policy) == pytest.approx(1.0)
+    assert trust.decay_factor(NOW - dt.timedelta(days=14), NOW, policy) == pytest.approx(0.5)
+    assert trust.decay_factor(NOW - dt.timedelta(days=28), NOW, policy) == pytest.approx(0.25)
 
 
 def test_slow_attributes_barely_decay_over_a_season() -> None:
@@ -78,8 +83,9 @@ def test_slow_attributes_barely_decay_over_a_season() -> None:
     health = trust.decay_factor(
         NOW - dt.timedelta(days=90), NOW, trust.policy_for("crop_health_pct")
     )
-    assert area > 0.8
-    assert health < 0.001
+    assert area > 0.8, "a plot does not change size because a season passed"
+    assert health < 0.05, "a three-month-old health reading tells you almost nothing"
+    assert area > health * 15
 
 
 def test_future_observation_does_not_exceed_full_confidence() -> None:
@@ -89,9 +95,11 @@ def test_future_observation_does_not_exceed_full_confidence() -> None:
 
 
 def test_staleness_uses_its_own_threshold() -> None:
+    """Staleness is a separate threshold from decay — a value can be weak but not yet stale."""
     policy = trust.policy_for("crop_health_pct")
-    assert not trust.is_stale(NOW - dt.timedelta(days=20), NOW, policy)
-    assert trust.is_stale(NOW - dt.timedelta(days=22), NOW, policy)
+    assert policy.stale_after_days == 30
+    assert not trust.is_stale(NOW - dt.timedelta(days=29), NOW, policy)
+    assert trust.is_stale(NOW - dt.timedelta(days=31), NOW, policy)
 
 
 def test_unmodelled_attribute_decays_conservatively() -> None:
