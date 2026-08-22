@@ -1,11 +1,14 @@
 # Demo Context — Prayagraj, Uttar Pradesh
 
-Version 1.1 · 2026-08-22 · Resolves open question **O-1**
+Version 1.2 · 2026-08-22 · Resolves open question **O-1**
 
 > **v1.1** applies a first verification pass against primary sources. It corrected the
 > agro-climatic zone, replaced a partly invented block list with the district
 > administration's own, and moved the guava belt from the doab to Ganga-par. See
 > `seed/sources.md` §10 for what was checked and what is still open.
+>
+> **v1.2** unblocks the mandi list: five real Agmarknet markets for Prayagraj, plus a
+> working fetch path for price and arrival series (§6.1).
 
 The demo organization is anchored to **Prayagraj district, Uttar Pradesh**. This document
 specifies the district profile that the seed generator, the agronomic coefficients, the mandi
@@ -288,15 +291,51 @@ At least **12 plots** are seeded with tenure shares that do not sum to 100%, so 
 
 ## 6. Markets
 
-### 6.1 Mandis ⚠️
+### 6.1 Mandis — verified ✅
 
-Agmarknet publishes arrivals and prices per market for the district. The principal market is the
-Prayagraj (Mundera) mandi ⚠️; secondary markets in the district need to be enumerated from
-Agmarknet's own market list rather than from memory.
+Agmarknet lists **five markets** in Prayagraj district (district_id 646, state_id 34), retrieved
+2026-08-22 from `api.agmarknet.gov.in/v1/market-district-state`:
 
-**Before seeding:** pull the actual Agmarknet market list for Prayagraj district, take 24 months
-of modal/min/max price and arrival series for paddy, wheat, potato, mustard and guava, and record
-each series in `seed/sources.md`. Do not invent market names — a judge from UP will notice.
+| market_id | Market name | Category | Location note |
+|---:|---|---|---|
+| **298** | **Prayagraj APMC** | Principal Market Yard | The main yard. Carries the widest commodity range. |
+| 1724 | Ajuha APMC | Principal Market Yard | |
+| 1749 | Sirsa APMC | Principal Market Yard | Tehsil **Meja** — i.e. a real mandi in the rain-fed Yamuna-par tract |
+| 1764 | Jasra APMC | Principal Market Yard | Jasra is also a block of Bara tehsil |
+| 4389 | Lediyari APMC | Other | |
+
+> **"Mundera Mandi" is not an Agmarknet market name.** It is the local name for the Prayagraj
+> yard site; Agmarknet's key is **Prayagraj APMC**. Seeding "Mundera" as a market would have been
+> exactly the kind of plausible-sounding fabrication the source register exists to prevent.
+
+That **Sirsa APMC sits in Meja** is a gift for the demo: the rain-fed southern tract has its own
+mandi, so the Market module can compare a local Yamuna-par outlet against the main Prayagraj yard
+using real market identities rather than invented ones.
+
+#### What the real data shows (14-day sample, 8–21 Aug 2026, 341 rows)
+
+| Commodity | Market | Arrivals (MT) | Modal ₹/qtl |
+|---|---|---:|---:|
+| **Potato** | Prayagraj APMC | 3,063 | 700 (flat) |
+| Wheat | Prayagraj APMC | 1,290 | 2,383 |
+| Tomato | Prayagraj APMC | 1,287 | 2,049 |
+| Onion | Prayagraj APMC | 1,077 | 906 |
+| Paddy (Common) | Prayagraj APMC | 730 | 2,061 |
+
+Three things this tells us:
+
+1. **Potato is the largest agricultural arrival by volume** — the hero-crop choice (D-25) is now
+   backed by real district data, not just reasoning.
+2. **The August potato price is flat at ₹700/qtl.** August is out of season; the crop is sitting
+   in cold storage. That is precisely the hold-vs-sell situation the Market module exists to
+   reason about, and it is visible in the real series.
+3. **Mustard and guava do not appear in an August sample**, which is seasonally correct — mustard
+   is harvested Feb–Mar, guava Nov–Feb. The 24-month backfill is required before either crop has
+   a real price basis.
+
+**Before seeding:** run `python seed/fetch_agmarknet.py --from <24mo ago> --to <today>`. The
+script caches one JSON payload per date and flattens to CSV. Keep the payloads — the offline demo
+requirement (NFR-303) depends on them, not on the API being up on the day.
 
 ### 6.2 Buyers 🔧
 
@@ -379,9 +418,10 @@ Nothing marked ⚠️ may enter `seed/` until it is checked off here.
 - [x] ~~Block list~~ → **verified** against `prayagraj.nic.in` (2026-08-22): 8 tehsils, 23 blocks
 - [ ] Block-to-**tract** mapping — which side of which river each block sits on
 - [ ] IMD/Open-Meteo rainfall, temperature and humidity normals for the Prayagraj grid
-- [ ] **Agmarknet market list — still blocked.** The hard blocker: it gates every price and
-      arrival series, and therefore the whole Market demo. See `seed/sources.md` §10.
-- [ ] 24 months of price and arrival series for the five crops
+- [x] ~~Agmarknet market list~~ → **verified** (2026-08-22): 5 markets, §6.1. The API route is
+      documented in `seed/sources.md` §10 and wrapped by `seed/fetch_agmarknet.py`.
+- [ ] 24 months of price and arrival series — **path proven**, backfill not yet run
+      (mustard and guava need it; they are out of season in the sample)
 - [ ] District landholding distribution and irrigation coverage statistics
 - [ ] Crop calendar for the **Central Plain Zone** (sowing/harvest windows)
 - [ ] Base yield coefficients per crop per zone

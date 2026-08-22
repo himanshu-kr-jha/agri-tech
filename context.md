@@ -238,5 +238,6 @@ Each of these was discussed and consciously deferred. See `docs/MVP-SCOPE.md#cut
 | O-2 | Is there a real FPO contact or agronomist in the Prayagraj area who can sanity-check the profile? | Judge credibility — this is now the highest-value open item; one conversation catches more errors than the entire `seed/sources.md` checklist |
 | O-3 | Is WhatsApp Business API sandbox access already provisioned? | ADR-0008 depth; go/no-go at build hour 24 |
 | O-4 | Team skill split (frontend / backend / ML / data) | Task assignment in MVP-SCOPE §5 |
+| O-5 | Run the 24-month Agmarknet backfill (`seed/fetch_agmarknet.py`) — mustard and guava have no price basis without it | Market module realism; commit the payloads as the offline fixture bundle |
 
 Answer these in this file rather than in chat, so the decision survives the session.

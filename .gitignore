@@ -27,6 +27,8 @@ out/
 *.db
 *.sqlite3
 pgdata/
+# Fetched Agmarknet payloads. The FINAL fixture bundle must be committed —
+# NFR-303 requires the demo to run with the network disabled.
 seed/generated/
 
 # Editors

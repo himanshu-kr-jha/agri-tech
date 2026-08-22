@@ -112,13 +112,13 @@ No exception. See `docs/ARCHITECTURE.md` §4.2.
 
 | # | What | Value | Source | Retrieved | Status |
 |---|---|---|---|---|---|
-| M1 | Agmarknet market list for Prayagraj district — **actual names** | **BLOCKED.** `api.data.gov.in` did not respond from this environment and the Agmarknet portal needs an interactive ASP.NET session. Partial signals only: *Mundera Mandi* is a Prayagraj Mandi Samiti (houses a Naveen Fal Mandi); *Jasra* appears as an Agmarknet market and is a real block in Bara tehsil. **Neither is confirmed as an Agmarknet market key.** | Agmarknet portal — must be pulled interactively or from an India-routable host | 2026-08-22 | TODO — see note below |
-| M2 | 24 months price series — paddy | | Agmarknet | | TODO |
-| M3 | 24 months price series — wheat | | Agmarknet | | TODO |
-| M4 | 24 months price series — potato | | Agmarknet | | TODO |
-| M5 | 24 months price series — mustard | | Agmarknet | | TODO |
-| M6 | 24 months price series — guava | | Agmarknet / horticulture board | | TODO |
-| M7 | Arrivals series for the same | | Agmarknet | | TODO |
+| M1 | Agmarknet market list for Prayagraj district | **5 markets, verified.** `298 Prayagraj APMC`, `1724 Ajuha APMC`, `1749 Sirsa APMC`, `1764 Jasra APMC` (all *Principal Market Yard*), `4389 Lediyari APMC` (*Other*). district_id 646, state_id 34. **Note: "Mundera Mandi" is not an Agmarknet market name** — the Agmarknet key for that site is *Prayagraj APMC*. | `GET https://api.agmarknet.gov.in/v1/market-district-state` | 2026-08-22 | OK |
+| M2 | 24 months price series — paddy | **Available.** Paddy(Common) id 2 — 730 MT over 14 Aug days at Prayagraj APMC, modal ~₹2,061/qtl. | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
+| M3 | 24 months price series — wheat | **Available.** Wheat id 1 — 1,290 MT, modal ~₹2,383/qtl; also trades at Jasra, Ajuha, Sirsa, Lediyari. | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
+| M4 | 24 months price series — potato | **Available.** Potato id 24 — 3,063 MT at Prayagraj APMC, modal ₹700/qtl (flat; August is out of season, crop is in cold storage). | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
+| M5 | 24 months price series — mustard | **Not seen in the 14-day August sample** — Rabi crop, harvested Feb–Mar. Needs the 24-month backfill. Commodity id 12. | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
+| M6 | 24 months price series — guava | **Not seen in the 14-day August sample** — winter crop, Nov–Feb. Needs the 24-month backfill. Commodity id 156. | `POST /prices-and-arrivals/market-report/daily` via `seed/fetch_agmarknet.py` | 2026-08-22 | PARTIAL — backfill still to run |
+| M7 | Arrivals series for the same | **Available** — arrivals in Metric Tonnes come back on the same rows as price. | as M2–M6 | 2026-08-22 | PARTIAL — backfill still to run |
 | M8 | MSP — paddy & wheat, current season | | CACP / FCI | | TODO |
 | M9 | Cold-storage capacity, Prayagraj district | | UP Horticulture Dept. / NHB | | TODO |
 | M10 | Cold-storage rental rates | | | | TODO |
@@ -126,7 +126,8 @@ No exception. See `docs/ARCHITECTURE.md` §4.2.
 | M12 | Diesel price series | | OMC published prices | | TODO |
 
 **Do not invent mandi names.** A judge from UP will recognize a fabricated market immediately,
-and it discredits every other number on the screen.
+and it discredits every other number on the screen. The five names above are the real ones —
+and note that the obvious guess, *Mundera Mandi*, is **not** among them.
 
 ## 7. Government schemes
 
@@ -196,19 +197,37 @@ A first pass against primary sources. Results and what they changed:
 | **Agro-climatic zone** | **Corrected.** Prayagraj is **Central Plain**, not Eastern Plain. Yield coefficients must be drawn for Central Plain + Vindhyachal. |
 | **Mandi names** | **Still blocked.** Neither the data.gov.in API nor the Agmarknet portal was reachable from this environment. |
 
-### The mandi list is the remaining hard blocker
+### The mandi blocker is cleared
 
-`M1` gates M2–M7 — every price and arrival series, and therefore the Market module's entire
-demo. Three ways to unblock it, best first:
+**Resolved 2026-08-22.** Agmarknet has been rebuilt as *Agmarknet 2.0*, a React SPA — which is
+why the old `SearchCmmMkt.aspx` GET no longer renders and why `data.gov.in`'s legacy resource
+proxy returns 500. The SPA is backed by a JSON API at **`https://api.agmarknet.gov.in/v1`**
+that needs **no authentication**. Endpoints in use:
 
-1. **Pull it from the Agmarknet portal directly** (`agmarknet.gov.in` → Price and Arrivals →
-   select Uttar Pradesh → Prayagraj). This needs a browser session; the site is ASP.NET with
-   postbacks and does not answer a plain GET.
-2. **Register for a personal data.gov.in API key** and query resource
-   `9ef84268-d588-465a-a308-a864a43d0070` filtered to `state=Uttar Pradesh`,
-   `district=Prayagraj`. The widely circulated sample key did not respond here.
-3. **Ask the local contact (O-2).** Anyone farming in Prayagraj knows which mandi they sell at.
+| Endpoint | Method | Gives |
+|---|---|---|
+| `/market-district-state` | GET | Full market → district → state master (~4,600 markets) |
+| `/dashboard-market-filter` | GET | Market category, address, API-integration flag |
+| `/location/state?page_size=100` | GET | States with nested districts and codes |
+| `/daily-price-arrival/filters` | GET | Commodity, variety, grade and group ids |
+| `/prices-and-arrivals/market-report/daily` | POST | Daily arrivals + min/max/modal price |
 
-Until then, **do not put market names in the seed.** Use `market_id` placeholders labelled
-`FIXTURE`, and let the UI say so. An invented mandi name is the single most likely thing to be
-recognised as fake by a judge from UP, and it would discredit every other number on the screen.
+Daily-report payload: `{"date": "YYYY-MM-DD", "marketIds": [...], "stateIds": [...],
+"includeExcel": false}`. Response nests `states → markets → commodities → data`.
+
+`seed/fetch_agmarknet.py` wraps all of this, caches one JSON file per date and flattens to CSV.
+
+> **Caveat — this is not a documented public API.** It was found by reading the published
+> front-end bundle. It may change or start rate-limiting without notice. So: **keep the fetched
+> payloads**. `seed/generated/agmarknet/daily/*.json` is the durable artifact, and the offline
+> demo requirement (NFR-303) depends on it, not on the API being up on the day.
+
+### Still open here
+
+- The 24-month backfill has not been run — only a 14-day August sample (341 rows) to prove
+  the path. **Mustard and guava do not appear in it**, which is seasonally correct (Rabi and
+  winter crops respectively) but means the backfill is required before those two crops have any
+  real price basis.
+- All five Prayagraj markets report `api_allowed_market: false`, meaning they do not push
+  through the state API integration. Coverage may be patchier than a daily series implies —
+  check for gaps across the backfill rather than assuming continuity.
