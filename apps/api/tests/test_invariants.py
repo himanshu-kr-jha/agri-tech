@@ -229,10 +229,9 @@ def test_no_execution_without_approval() -> None:
     raise AssertionError("not implemented")
 
 
-@pytest.mark.xfail(strict=True, reason="Phase 1: provenance resolution not implemented yet")
-def test_conflicting_sources_create_discrepancy() -> None:
-    """INV-4: divergent observations produce a DataDiscrepancy and lower confidence."""
-    raise AssertionError("not implemented")
+# INV-4 is implemented as of Phase 1. Its assertions live in tests/test_provenance.py:
+#   TestResolver::test_three_way_conflict_raises_a_discrepancy_and_picks_no_winner
+#   TestResolver::test_human_resolution_closes_the_conflict_and_keeps_the_trail
 
 
 @pytest.mark.xfail(strict=True, reason="Phase 3: attribution not implemented yet")
