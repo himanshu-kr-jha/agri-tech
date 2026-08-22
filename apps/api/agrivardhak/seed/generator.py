@@ -588,7 +588,9 @@ def _seed_observations(
     show, and the discrepancy machinery is untested against real data.
     """
     count = 0
-    discrepancies = 0
+    # Track ids, not increments: one conflict is touched by each of its claims,
+    # and counting hits would report three where there is one.
+    discrepancy_ids: set[uuid.UUID] = set()
 
     conflicted = set(rng.sample(range(len(plots)), CONFLICTED_AREA_PLOTS))
     for index, plot in enumerate(plots):
@@ -619,7 +621,7 @@ def _seed_observations(
             )
             count += 1
             if discrepancy is not None:
-                discrepancies += 1
+                discrepancy_ids.add(discrepancy.id)
 
     # Crop health on the active cycles only — a health reading on a closed cycle is history,
     # not a current fact, and would decay to irrelevance anyway.
@@ -651,4 +653,4 @@ def _seed_observations(
         count += 1
 
     session.flush()
-    return count, discrepancies
+    return count, len(discrepancy_ids)

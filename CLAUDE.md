@@ -73,6 +73,7 @@ pricing, or caching questions from memory.
 agrivadhak/
 ├── CLAUDE.md              ← you are here
 ├── context.md             ← product context + decision log (read first)
+├── PROGRESS.md            ← what is built vs left (`make progress`)
 ├── docs/
 │   ├── SRS.md             ← requirements, FR-/NFR- IDs, acceptance criteria
 │   ├── DATA-MODEL.md      ← entities, events, provenance, the 8 resolved decisions
@@ -177,14 +178,19 @@ a longer incantation.
 
 1. **Docs are the spec.** If you change behaviour that `docs/SRS.md` describes, update the
    FR/NFR entry in the same change. Requirement IDs are stable — never renumber.
-2. **Decisions get ADRs.** Any choice a future reader would ask "why?" about goes in
+2. **Finish a deliverable, run `make progress`.** `PROGRESS.md` is the shared view of what
+   is built. Its lower half is generated from evidence — a symbol that must import, a test
+   that must pass, a row count that must hold — so you cannot mark something done by editing
+   the table. Starting something new? Add a `Deliverable(...)` to `scripts/progress.py` with
+   the evidence that will prove it, *then* build it.
+3. **Decisions get ADRs.** Any choice a future reader would ask "why?" about goes in
    `docs/adr/NNNN-title.md` using the existing template. Link it from `context.md`.
-3. **Scope discipline.** This is a 48–72 hour build for 3–5 people. `docs/MVP-SCOPE.md`
+4. **Scope discipline.** This is a 48–72 hour build for 3–5 people. `docs/MVP-SCOPE.md`
    has an explicit cut list. Do not implement anything marked `POST-MVP` without being asked.
-4. **Never fabricate agronomy.** Yield coefficients, pesticide guidance, scheme eligibility
+5. **Never fabricate agronomy.** Yield coefficients, pesticide guidance, scheme eligibility
    rules and mandi prices must come from a cited source in `seed/sources.md` or be clearly
    labelled `SYNTHETIC — DEMO ONLY` in both the data and the UI.
-5. **The demo is a deliverable.** Changes must keep `make seed && make dev` reproducing the
+6. **The demo is a deliverable.** Changes must keep `make seed && make dev` reproducing the
    killer demo in `docs/MVP-SCOPE.md#demo-script`.
-6. RTK is available for token-efficient shell ops (see the global instructions); the hook
+7. RTK is available for token-efficient shell ops (see the global instructions); the hook
    rewrites commands transparently.

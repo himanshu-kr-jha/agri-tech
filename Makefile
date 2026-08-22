@@ -86,6 +86,12 @@ test: test-api ## Run all tests
 test-api: ## pytest
 	cd $(API) && .venv/bin/python -m pytest -q
 
+progress: ## Regenerate PROGRESS.md from what the repo can prove
+	$(API)/.venv/bin/python scripts/progress.py
+
+progress-check: ## Fail if PROGRESS.md is stale (for CI)
+	$(API)/.venv/bin/python scripts/progress.py --check
+
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
 	rm -rf $(API)/.pytest_cache $(API)/.mypy_cache $(API)/.ruff_cache

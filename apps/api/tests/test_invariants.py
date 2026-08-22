@@ -147,77 +147,77 @@ def test_platform_admin_bypasses_narrowing() -> None:
 # ------------------------------------------------------------------- DR-04 append-only
 
 
-@pytest.mark.usefixtures("db")
 class TestAppendOnly:
-    """DR-04 / INV-2: immutable tables are immutable in the database, not by convention."""
+    """DR-04 / INV-2: immutable tables are immutable in the database, not by convention.
 
-    def test_observation_value_cannot_be_updated(self, db) -> None:
-        obs_id = _insert_observation(db)
-        with pytest.raises(Exception, match="append-only violation"), db.begin() as conn:
-            conn.execute(
+    These use the rolled-back ``session`` fixture rather than committing. The triggers fire
+    on the statement, not on commit, so a savepoint proves the same thing — and the tests
+    leave no residue in a database the demo and `make progress` both read.
+    """
+
+    def test_observation_value_cannot_be_updated(self, session) -> None:
+        obs_id = _insert_observation(session)
+        with pytest.raises(Exception, match="append-only violation"):
+            session.execute(
                 text("update observation set value_numeric = 1 where id = :i"), {"i": obs_id}
             )
 
-    def test_observation_cannot_be_deleted(self, db) -> None:
-        obs_id = _insert_observation(db)
-        with pytest.raises(Exception, match="append-only violation"), db.begin() as conn:
-            conn.execute(text("delete from observation where id = :i"), {"i": obs_id})
+    def test_observation_cannot_be_deleted(self, session) -> None:
+        obs_id = _insert_observation(session)
+        with pytest.raises(Exception, match="append-only violation"):
+            session.execute(text("delete from observation where id = :i"), {"i": obs_id})
 
-    def test_verification_transition_is_allowed(self, db) -> None:
+    def test_verification_transition_is_allowed(self, session) -> None:
         """A human verifying a claim does not change the claim."""
-        obs_id = _insert_observation(db)
-        with db.begin() as conn:
-            conn.execute(
-                text(
-                    "update observation set verification_status = "
-                    "cast(:v as verification_status) where id = :i"
-                ),
-                {"i": obs_id, "v": "VERIFIED"},
-            )
-        with db.connect() as conn:
-            status = conn.execute(
-                text("select verification_status from observation where id = :i"), {"i": obs_id}
-            ).scalar_one()
+        obs_id = _insert_observation(session)
+        session.execute(
+            text(
+                "update observation set verification_status = "
+                "cast(:v as verification_status) where id = :i"
+            ),
+            {"i": obs_id, "v": "VERIFIED"},
+        )
+        status = session.execute(
+            text("select verification_status from observation where id = :i"), {"i": obs_id}
+        ).scalar_one()
         assert status == "VERIFIED"
 
-    def test_evidence_snapshot_cannot_be_updated(self, db) -> None:
+    def test_evidence_snapshot_cannot_be_updated(self, session) -> None:
         """INV-2: the frozen evidence stays frozen."""
-        with db.begin() as conn:
-            snap_id = conn.execute(
-                text(
-                    "insert into evidence_snapshot (captured_at, payload, content_hash, "
-                    "payload_version) values (now(), '{}'::jsonb, :h, '1') returning id"
-                ),
-                {"h": uuid.uuid4().hex * 2},
-            ).scalar_one()
-        with pytest.raises(Exception, match="append-only violation"), db.begin() as conn:
-            conn.execute(
+        snap_id = session.execute(
+            text(
+                "insert into evidence_snapshot (captured_at, payload, content_hash, "
+                "payload_version) values (now(), '{}'::jsonb, :h, '1') returning id"
+            ),
+            {"h": uuid.uuid4().hex * 2},
+        ).scalar_one()
+        with pytest.raises(Exception, match="append-only violation"):
+            session.execute(
                 text("update evidence_snapshot set payload = cast(:p as jsonb) where id = :i"),
                 {"i": snap_id, "p": '{"tampered": true}'},
             )
 
 
-def _insert_observation(db) -> uuid.UUID:
-    with db.begin() as conn:
-        conn.execute(
-            text(
-                "insert into data_source (key, label, source_type, base_trust, is_fixture) "
-                "values (:k, 'test', 'FIELD_OFFICER', 0.95, false) on conflict (key) do nothing"
-            ),
-            {"k": "test-source"},
-        )
-        source_id = conn.execute(
-            text("select id from data_source where key = :k"), {"k": "test-source"}
-        ).scalar_one()
-        return conn.execute(
-            text(
-                "insert into observation (subject_type, subject_id, attribute, value_numeric, "
-                "unit, source_type, source_id, observed_at, recorded_at, confidence, "
-                "verification_status) values ('plot', uuid_generate_v7(), 'area_sqm', 8093.7, "
-                "'sqm', 'FIELD_OFFICER', :s, now(), now(), 0.95, 'UNVERIFIED') returning id"
-            ),
-            {"s": source_id},
-        ).scalar_one()
+def _insert_observation(session) -> uuid.UUID:
+    session.execute(
+        text(
+            "insert into data_source (key, label, source_type, base_trust, is_fixture) "
+            "values (:k, 'test', 'FIELD_OFFICER', 0.95, false) on conflict (key) do nothing"
+        ),
+        {"k": "test-source"},
+    )
+    source_id = session.execute(
+        text("select id from data_source where key = :k"), {"k": "test-source"}
+    ).scalar_one()
+    return session.execute(
+        text(
+            "insert into observation (subject_type, subject_id, attribute, value_numeric, "
+            "unit, source_type, source_id, observed_at, recorded_at, confidence, "
+            "verification_status) values ('plot', uuid_generate_v7(), 'area_sqm', 8093.7, "
+            "'sqm', 'FIELD_OFFICER', :s, now(), now(), 0.95, 'UNVERIFIED') returning id"
+        ),
+        {"s": source_id},
+    ).scalar_one()
 
 
 # ------------------------------------------------- invariants awaiting later phases

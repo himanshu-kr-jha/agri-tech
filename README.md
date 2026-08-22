@@ -52,6 +52,7 @@ demands it, and produces a **Decision Packet** where every claim carries its evi
 
 | Read this | For |
 |---|---|
+| [`PROGRESS.md`](PROGRESS.md) | **What is built and what is left** — the lower half is machine-verified |
 | [`context.md`](context.md) | Product thesis, decision log, why everything is the way it is — **start here** |
 | [`CLAUDE.md`](CLAUDE.md) | The rules: invariants, stack, conventions, working agreements |
 | [`docs/SRS.md`](docs/SRS.md) | Full requirements with stable FR/NFR ids and acceptance criteria |
@@ -71,8 +72,9 @@ Claude (Anthropic API) for orchestration.
 
 ## Status
 
-**Design complete, implementation not started.** The product direction is locked, the data
-model is resolved, and the 72-hour build plan is in `docs/MVP-SCOPE.md`.
+**Phase 1 in progress.** Schema, provenance layer and seed are done; the intelligence modules
+and orchestrator are next. See [`PROGRESS.md`](PROGRESS.md) for the current picture — its
+lower half is generated from what the repository can prove, not from what someone typed.
 
 ## A note on the data
 
