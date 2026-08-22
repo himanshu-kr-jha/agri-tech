@@ -34,6 +34,7 @@ from agrivardhak.domain.models.organization import (
 from agrivardhak.domain.models.provenance import AttributePolicy, DataSource
 from agrivardhak.domain.units import hectares_to_sqm
 from agrivardhak.ingestion.agmarknet import latest_modal_paise_per_kg, load_series
+from agrivardhak.ingestion.weather import load_weather
 from agrivardhak.provenance import resolver, trust
 from agrivardhak.seed import reference as ref
 
@@ -110,6 +111,7 @@ class SeedResult:
     discrepancies: int
     total_area_sqm: float
     price_records: int = 0
+    weather_records: int = 0
     lots: int = 0
     offers: int = 0
 
@@ -168,6 +170,7 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
     # Real prices first: the buyer offers below are anchored to them, so an FPO is never
     # shown negotiating at four times what the crop actually trades at.
     price_records = load_series(session)
+    weather_records = load_weather(session)
     lots = _seed_lots(session, org, cycles, rng)
     offers = _seed_offers(session, org, lots, rng)
 
@@ -181,6 +184,7 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
         discrepancies=disc,
         total_area_sqm=sum(float(p.area_sqm) for p in plots),
         price_records=price_records,
+        weather_records=weather_records,
         lots=len(lots),
         offers=offers,
     )

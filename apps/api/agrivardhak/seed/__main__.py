@@ -58,6 +58,7 @@ def main() -> int:
     print(f"  discrepancies  {result.discrepancies:,}  (deliberate — the demo needs them)")
     print(f"  total area     {acres:,.0f} acres ({result.total_area_sqm / 10_000:,.1f} ha)")
     print(f"  price records  {result.price_records:,}  (real Agmarknet, not synthetic)")
+    print(f"  weather days   {result.weather_records:,}  (real Open-Meteo, 3 tracts)")
     print(f"  lots           {result.lots:,}")
     print(f"  buyer offers   {result.offers:,}  (anchored to real modal prices)")
     return 0

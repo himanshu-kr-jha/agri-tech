@@ -108,8 +108,11 @@ DELIVERABLES: list[Deliverable] = [
                          rows={"farmer": 1000, "crop_cycle": 7000})),
     Deliverable("M4b", "Agmarknet ingestion + 24-month backfill", "1", "FR-402, EXT-02",
                 Evidence(files=["seed/fetch_agmarknet.py", "seed/generated/agmarknet/series.csv"])),
-    Deliverable("M4c", "Weather adapter (Open-Meteo) + fixture fallback", "1", "FR-401, FR-406",
-                Evidence(symbols=["agrivardhak.ingestion.weather:fetch_weather"])),
+    Deliverable("M4c", "Weather ingestion + crop-stress index", "1", "FR-401, FR-406",
+                Evidence(symbols=["agrivardhak.ingestion.weather:load_weather",
+                                  "agrivardhak.ingestion.weather:stress_index"],
+                         tests=["test_monsoon_reads_wetter_than_the_dry_season",
+                                "test_composite_does_not_let_stresses_cancel"])),
     Deliverable("M6", "Quality Intelligence module", "1", "FR-531…534",
                 Evidence(symbols=["agrivardhak.intelligence.quality:run",
                                   "agrivardhak.intelligence.quality:predict_cycle",
@@ -132,9 +135,19 @@ DELIVERABLES: list[Deliverable] = [
                                 "test_offers_are_anchored_to_the_real_modal_price",
                                 "test_lot_quantity_equals_the_sum_of_its_items"])),
     Deliverable("M15a", "FPO dashboard: 10 cards", "1", "UI-01",
-                Evidence(files=["apps/web/src/app/(fpo)/dashboard/page.tsx"])),
+                Evidence(files=["apps/web/src/app/(fpo)/dashboard/page.tsx",
+                                "apps/api/agrivardhak/api/dashboard.py"],
+                         tests=["test_dashboard_returns_exactly_ten_cards",
+                                "test_dashboard_distinguishes_unknown_from_zero"])),
     Deliverable("M15b", "Farmer list + drill-down", "1", "FR-806, NFR-103",
-                Evidence(files=["apps/web/src/app/(fpo)/farmers/page.tsx"])),
+                Evidence(files=["apps/web/src/app/(fpo)/farmers/page.tsx",
+                                "apps/web/src/app/(fpo)/farmers/[id]/page.tsx"],
+                         tests=["test_farmer_list_filters_by_tract",
+                                "test_farmer_detail_carries_provenance_on_every_plot"])),
+    Deliverable("M15f", "Information boundary enforced at the API", "1", "INV-5, FR-809",
+                Evidence(tests=["test_farmer_is_refused_organization_wide_views",
+                                "test_farmer_may_not_open_another_farmers_record",
+                                "test_unauthenticated_and_forbidden_are_distinguished"])),
 
     # ---- Phase 2
     Deliverable("M8", "Risk Intelligence module", "2", "FR-551…555",
@@ -239,9 +252,12 @@ def collect_passing_tests() -> tuple[set[str], dict[str, int]]:
          "-p", "no:cacheprovider", "--no-header"],
         cwd=API, capture_output=True, text=True,
     )
+    # "tests/test_x.py::test_name PASSED [ 12%]"          -> "test_name"
+    # "tests/test_x.py::test_name[/some/path] PASSED [12%]" -> "test_name"
+    # The parametrize suffix is stripped so a parametrized test can be named as evidence;
+    # a partly-failing parametrization simply will not appear, since only PASSED is read.
     passing = {
-        # "tests/test_x.py::test_name PASSED [ 12%]" -> "test_name"
-        line.split("::")[-1].split(" PASSED")[0].strip()
+        line.split("::")[-1].split(" PASSED")[0].split("[")[0].strip()
         for line in proc.stdout.splitlines()
         if "::" in line and " PASSED" in line
     }

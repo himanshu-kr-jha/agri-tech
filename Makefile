@@ -49,6 +49,21 @@ seed: ## Load the synthetic Prayagraj FPO
 seed-reset: ## Truncate all data and re-seed (faster than db-reset; keeps the schema)
 	cd $(API) && .venv/bin/python -m agrivardhak.seed --reset
 
+weather: ## Fetch real Open-Meteo weather:  make weather from=2024-06-01 to=2026-08-22
+	@test -n "$(from)" -a -n "$(to)" || (echo 'usage: make weather from=YYYY-MM-DD to=YYYY-MM-DD' && exit 1)
+	python3 seed/fetch_weather.py --from $(from) --to $(to)
+
+dev-token: ## Print a CEO bearer token for local UI work (export AGRI_DEV_TOKEN=...)
+	@cd $(API) && .venv/bin/python -c "from sqlalchemy import select; \
+	from agrivardhak.api.auth import issue_token; \
+	from agrivardhak.db.session import session_scope; \
+	from agrivardhak.domain.enums import Role; \
+	from agrivardhak.domain.models.organization import Organization, RoleGrant; \
+	s=session_scope().__enter__(); \
+	org=s.execute(select(Organization)).scalars().one(); \
+	g=s.execute(select(RoleGrant).where(RoleGrant.role==Role.FPO_CEO)).scalars().one(); \
+	print(issue_token(user_id=g.user_id, roles={Role.FPO_CEO}, organization_id=org.id))"
+
 agmarknet: ## Backfill real Agmarknet price/arrival data:  make agmarknet from=2024-08-22 to=2026-08-22
 	@test -n "$(from)" -a -n "$(to)" || (echo 'usage: make agmarknet from=YYYY-MM-DD to=YYYY-MM-DD' && exit 1)
 	python3 seed/fetch_agmarknet.py --from $(from) --to $(to)

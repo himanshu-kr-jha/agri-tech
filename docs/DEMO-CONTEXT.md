@@ -73,6 +73,12 @@ Grouped into the three tracts:
 | **Doab** (central, between the rivers) | Sadar, Karchhana | Good alluvium, peri-urban market access | Tubewell, generally good | Vegetables and potato. Best market access. |
 | **Yamuna-par** (south / trans-Yamuna, Vindhyan) | Bara, Meja, Koraon | Rocky, red/lateritic, undulating, shallow soils | Largely rain-fed | Gram, arhar, bajra, mustard. **High rainfall exposure.** |
 
+> **Weather does not differentiate the tracts** — found building the weather adapter (M4c).
+> Their centroids are ~40 km apart and ERA5's grid is coarse, so Kharif 2025 scored 0.95 /
+> 0.90 / 1.05 SD of stress across the three. The tract model still holds, but the mechanism
+> is **irrigation, not rainfall**: 31% of Yamuna-par is irrigated against 85% of Ganga-par,
+> so an identical deficit hurts far more. Do not claim the weather differs by tract.
+
 ⚠️ The **tehsil→tract grouping above is still a judgement call.** The block names are now
 authoritative, but which side of which river each block sits on must be confirmed against the
 district map before the seed places farmers geographically — Sadar and Karchhana in particular
