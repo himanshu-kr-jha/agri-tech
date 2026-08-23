@@ -15,9 +15,11 @@ import random
 import uuid
 from dataclasses import dataclass
 from decimal import Decimal
+from typing import Any
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.elements import ColumnElement
 
 from agrivardhak.domain import enums
 from agrivardhak.domain.models.crops import Crop, CropCycle, Variety
@@ -194,17 +196,43 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
 
 
 def _summarize(session: Session, org: Organization) -> SeedResult:
-    from agrivardhak.domain.models.provenance import DataDiscrepancy, Observation
+    """Count what is actually in the database, for the already-seeded path.
 
-    farmers = session.execute(
-        select(func.count()).select_from(Membership).where(Membership.organization_id == org.id)
-    ).scalar_one()
-    plots = session.execute(select(func.count()).select_from(Plot)).scalar_one()
-    cycles = session.execute(select(func.count()).select_from(CropCycle)).scalar_one()
-    obs = session.execute(select(func.count()).select_from(Observation)).scalar_one()
-    disc = session.execute(select(func.count()).select_from(DataDiscrepancy)).scalar_one()
+    Every field is counted, including prices, weather, lots and offers. An earlier version
+    left those at their zero defaults, so running ``make seed`` a second time printed
+    "price records 0 / weather days 0 / lots 0" — and anyone following the README would
+    reasonably conclude the seed had broken. It had not; the summary was lying by omission.
+    """
+    from agrivardhak.domain.models.provenance import (
+        DataDiscrepancy,
+        ExternalRecord,
+        Observation,
+    )
+
+    def count(model: type[Any], *where: ColumnElement[bool]) -> int:
+        stmt = select(func.count()).select_from(model)
+        for clause in where:
+            stmt = stmt.where(clause)
+        return int(session.execute(stmt).scalar_one())
+
     area = session.execute(select(func.coalesce(func.sum(Plot.area_sqm), 0))).scalar_one()
-    return SeedResult(org.id, farmers, plots, cycles, obs, disc, float(area))
+    return SeedResult(
+        organization_id=org.id,
+        farmers=count(Membership, Membership.organization_id == org.id),
+        plots=count(Plot),
+        crop_cycles=count(CropCycle),
+        observations=count(Observation),
+        discrepancies=count(DataDiscrepancy),
+        total_area_sqm=float(area),
+        price_records=count(
+            ExternalRecord, ExternalRecord.kind == enums.ExternalRecordKind.MARKET_PRICE
+        ),
+        weather_records=count(
+            ExternalRecord, ExternalRecord.kind == enums.ExternalRecordKind.WEATHER
+        ),
+        lots=count(Lot, Lot.organization_id == org.id),
+        offers=count(DemandSignal, DemandSignal.organization_id == org.id),
+    )
 
 
 def _seed_attribute_policies(session: Session) -> None:

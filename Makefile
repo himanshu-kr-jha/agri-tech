@@ -1,4 +1,4 @@
-.PHONY: help setup dev api web db-up db-down db-reset migrate upgrade downgrade seed check lint fmt typecheck test test-api clean
+.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed seed-reset check lint fmt typecheck test test-api progress progress-check clean
 
 API := apps/api
 PY  := $(API)/.venv/bin/python
@@ -10,14 +10,37 @@ help:
 
 # ------------------------------------------------------------------ setup
 
-setup: ## Install deps and start the database
+setup: ## Install deps, start the database, apply migrations
 	cd $(API) && $(UV) venv --python 3.12 --quiet || true
 	cd $(API) && $(UV) pip install --quiet -e ".[dev]"
 	cd apps/web && npm install
 	$(COMPOSE) up -d --build
 	@sleep 5
 	$(MAKE) upgrade
-	@echo "Setup complete. Run 'make dev'."
+	@echo ""
+	@echo "Dependencies installed and the schema is up. Next:  make demo"
+
+demo: ## One command from a fresh clone to a running demo
+	$(MAKE) seed
+	$(MAKE) dev-env
+	@echo ""
+	@echo "  Ready. Run 'make dev', then open http://localhost:3000/assistant"
+	@echo ""
+
+dev-env: ## Write apps/web/.env.local with a fresh CEO token (needs a seeded database)
+	@cd $(API) && .venv/bin/python -c "import sys; sys.path.insert(0,'.'); 	from sqlalchemy import select; 	from agrivardhak.api.auth import issue_token; 	from agrivardhak.db.session import session_scope; 	from agrivardhak.domain.enums import Role; 	from agrivardhak.domain.models.organization import Organization, RoleGrant; 	s=session_scope().__enter__(); 	org=s.execute(select(Organization)).scalars().first(); 	g=s.execute(select(RoleGrant).where(RoleGrant.role==Role.FPO_CEO)).scalars().first(); 	print(issue_token(user_id=g.user_id, roles={Role.FPO_CEO}, organization_id=org.id))" 	> /tmp/agrivardhak-token || (echo "No seeded organization found. Run 'make seed' first." && exit 1)
+	@printf 'AGRI_DEV_TOKEN=%s\nNEXT_PUBLIC_API_URL=http://localhost:8000\n' \
+	  "$$(cat /tmp/agrivardhak-token)" > apps/web/.env.local
+	@rm -f /tmp/agrivardhak-token
+	@echo "Wrote apps/web/.env.local (CEO token, expires in 12h — re-run this if the UI says 403)."
+
+farmer-env: ## Swap apps/web/.env.local to a FARMER token, for the boundary demo
+	@cd $(API) && .venv/bin/python -c "import uuid, sys; sys.path.insert(0,'.'); 	from sqlalchemy import select; 	from agrivardhak.api.auth import issue_token; 	from agrivardhak.db.session import session_scope; 	from agrivardhak.domain.enums import Role; 	from agrivardhak.domain.models.organization import Organization, Farmer; 	s=session_scope().__enter__(); 	org=s.execute(select(Organization)).scalars().first(); 	f=s.execute(select(Farmer)).scalars().first(); 	print(issue_token(user_id=uuid.uuid4(), roles={Role.FARMER}, organization_id=org.id, farmer_id=f.id))" 	> /tmp/agrivardhak-token || (echo "No seeded farmer found. Run 'make seed' first." && exit 1)
+	@printf 'AGRI_DEV_TOKEN=%s\nNEXT_PUBLIC_API_URL=http://localhost:8000\n' \
+	  "$$(cat /tmp/agrivardhak-token)" > apps/web/.env.local
+	@rm -f /tmp/agrivardhak-token
+	@echo "Wrote a FARMER token. Restart the web server, then open /today."
+	@echo "Every /fpo/* and /decisions route will now return 403 — that is the point (INV-5)."
 
 # ------------------------------------------------------------------ database
 

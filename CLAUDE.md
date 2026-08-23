@@ -52,7 +52,7 @@ These are product law. If a change would violate one, stop and raise it instead 
 
 | Layer | Choice | Notes |
 |---|---|---|
-| Web app | **Next.js 15 (App Router) + TypeScript + Tailwind + shadcn/ui** | FPO console, farmer portal, field-officer screens. Server Components by default. |
+| Web app | **Next.js 16 (App Router) + TypeScript + Tailwind + shadcn/ui** | FPO console, farmer portal, field-officer screens. Server Components by default. |
 | API / AI | **Python 3.12 + FastAPI + Pydantic v2** | Intelligence modules, orchestrator, ingestion workers. |
 | DB | **PostgreSQL 16 + PostGIS + pgvector** | One store: relational + geospatial plots + embeddings for scheme/news RAG. |
 | ORM / migrations | **SQLAlchemy 2.x + Alembic** | Python owns the schema. Next.js reads through the FastAPI API only — no direct DB access from the web tier. |

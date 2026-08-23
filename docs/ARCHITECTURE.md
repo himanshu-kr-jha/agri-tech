@@ -68,7 +68,7 @@ in a Decision Packet reproducible and every recommendation defensible.
 
 ```
                     ┌───────────────────────┐
-  Browser ─────────▶│  Next.js 15 (node)    │  SSR, RSC, auth session
+  Browser ─────────▶│  Next.js 16 (node)    │  SSR, RSC, auth session
   (FPO / farmer)    │  :3000                │
                     └───────────┬───────────┘
                                 │ REST + SSE, JWT bearer
