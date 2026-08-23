@@ -1,0 +1,245 @@
+{
+ "success": true,
+ "message": "Data fetched successfully.",
+ "title": "Market-wise, Commodity-wise Daily Report on: 21-Sep-2025",
+ "columns": [
+  {
+   "key": "marketCenter",
+   "title": "Market Center"
+  },
+  {
+   "key": "arrivals",
+   "title": "Arrivals"
+  },
+  {
+   "key": "unitOfArrivals",
+   "title": "Unit of Arrivals"
+  },
+  {
+   "key": "variety",
+   "title": "Variety"
+  },
+  {
+   "key": "grade",
+   "title": "Grade"
+  },
+  {
+   "key": "minimumPrice",
+   "title": "Minimum Price"
+  },
+  {
+   "key": "maximumPrice",
+   "title": "Maximum Price"
+  },
+  {
+   "key": "modalPrice",
+   "title": "Modal Price"
+  },
+  {
+   "key": "unitOfPrice",
+   "title": "Unit of Price"
+  }
+ ],
+ "states": [
+  {
+   "stateId": 34,
+   "stateName": "Uttar Pradesh",
+   "markets": [
+    {
+     "marketId": 1724,
+     "marketName": "Ajuha APMC",
+     "commodities": [
+      {
+       "commodityId": 23,
+       "commodityName": "Onion",
+       "total_arrivals": 8.0,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 8.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Red",
+         "grade": "FAQ",
+         "minimumPrice": 1280.0,
+         "maximumPrice": 1400.0,
+         "modalPrice": 1350.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 24,
+       "commodityName": "Potato",
+       "total_arrivals": 17.0,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 17.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Desi",
+         "grade": "FAQ",
+         "minimumPrice": 890.0,
+         "maximumPrice": 1000.0,
+         "modalPrice": 940.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 65,
+       "commodityName": "Tomato",
+       "total_arrivals": 3.0,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 3.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Deshi",
+         "grade": "FAQ",
+         "minimumPrice": 2300.0,
+         "maximumPrice": 2400.0,
+         "modalPrice": 2350.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 1764,
+     "marketName": "Jasra APMC",
+     "commodities": [
+      {
+       "commodityId": 23,
+       "commodityName": "Onion",
+       "total_arrivals": 1.2,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 1.2,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Red",
+         "grade": "FAQ",
+         "minimumPrice": 1220.0,
+         "maximumPrice": 1390.0,
+         "modalPrice": 1335.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 24,
+       "commodityName": "Potato",
+       "total_arrivals": 27.0,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 27.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Desi",
+         "grade": "FAQ",
+         "minimumPrice": 825.0,
+         "maximumPrice": 990.0,
+         "modalPrice": 915.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 65,
+       "commodityName": "Tomato",
+       "total_arrivals": 2.9,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 2.9,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Hybrid",
+         "grade": "FAQ",
+         "minimumPrice": 2210.0,
+         "maximumPrice": 2380.0,
+         "modalPrice": 2330.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 4389,
+     "marketName": "Lediyari APMC",
+     "commodities": []
+    },
+    {
+     "marketId": 298,
+     "marketName": "Prayagraj APMC",
+     "commodities": [
+      {
+       "commodityName": "NIL Transaction - Weekend Holiday"
+      }
+     ]
+    },
+    {
+     "marketId": 1749,
+     "marketName": "Sirsa APMC",
+     "commodities": [
+      {
+       "commodityId": 23,
+       "commodityName": "Onion",
+       "total_arrivals": 3.0,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 3.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Red",
+         "grade": "FAQ",
+         "minimumPrice": 1200.0,
+         "maximumPrice": 1400.0,
+         "modalPrice": 1300.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 65,
+       "commodityName": "Tomato",
+       "total_arrivals": 3.6,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 3.6,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Deshi",
+         "grade": "FAQ",
+         "minimumPrice": 2300.0,
+         "maximumPrice": 2500.0,
+         "modalPrice": 2400.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 1,
+       "commodityName": "Wheat",
+       "total_arrivals": 5.0,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 5.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Dara",
+         "grade": "FAQ",
+         "minimumPrice": 2500.0,
+         "maximumPrice": 2700.0,
+         "modalPrice": 2600.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

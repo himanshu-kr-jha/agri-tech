@@ -1,0 +1,873 @@
+{
+ "success": true,
+ "message": "Data fetched successfully.",
+ "title": "Market-wise, Commodity-wise Daily Report on: 05-May-2025",
+ "columns": [
+  {
+   "key": "marketCenter",
+   "title": "Market Center"
+  },
+  {
+   "key": "arrivals",
+   "title": "Arrivals"
+  },
+  {
+   "key": "unitOfArrivals",
+   "title": "Unit of Arrivals"
+  },
+  {
+   "key": "variety",
+   "title": "Variety"
+  },
+  {
+   "key": "grade",
+   "title": "Grade"
+  },
+  {
+   "key": "minimumPrice",
+   "title": "Minimum Price"
+  },
+  {
+   "key": "maximumPrice",
+   "title": "Maximum Price"
+  },
+  {
+   "key": "modalPrice",
+   "title": "Modal Price"
+  },
+  {
+   "key": "unitOfPrice",
+   "title": "Unit of Price"
+  }
+ ],
+ "states": [
+  {
+   "stateId": 34,
+   "stateName": "Uttar Pradesh",
+   "markets": [
+    {
+     "marketId": 1724,
+     "marketName": "Ajuha APMC",
+     "commodities": [
+      {
+       "commodityId": 71,
+       "commodityName": "Bhindi(Ladies Finger)",
+       "total_arrivals": 1.6,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 1.6,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Bhindi",
+         "grade": "FAQ",
+         "minimumPrice": 1730.0,
+         "maximumPrice": 1870.0,
+         "modalPrice": 1800.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 67,
+       "commodityName": "Bitter gourd",
+       "total_arrivals": 1.6,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 1.6,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Bitter Gourd",
+         "grade": "FAQ",
+         "minimumPrice": 1740.0,
+         "maximumPrice": 1880.0,
+         "modalPrice": 1800.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 68,
+       "commodityName": "Bottle gourd",
+       "total_arrivals": 1.7,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 1.7,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Bottle Gourd",
+         "grade": "FAQ",
+         "minimumPrice": 830.0,
+         "maximumPrice": 970.0,
+         "modalPrice": 900.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 32,
+       "commodityName": "Brinjal",
+       "total_arrivals": 1.2,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 1.2,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Brinjal",
+         "grade": "FAQ",
+         "minimumPrice": 1100.0,
+         "maximumPrice": 1200.0,
+         "modalPrice": 1150.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 131,
+       "commodityName": "Cucumbar(Kheera)",
+       "total_arrivals": 3.8,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 3.8,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Cucumbar",
+         "grade": "FAQ",
+         "minimumPrice": 950.0,
+         "maximumPrice": 1100.0,
+         "modalPrice": 1020.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 73,
+       "commodityName": "Green Chilli",
+       "total_arrivals": 1.5,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 1.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Green Chilly",
+         "grade": "FAQ",
+         "minimumPrice": 1930.0,
+         "maximumPrice": 2080.0,
+         "modalPrice": 2000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 23,
+       "commodityName": "Onion",
+       "total_arrivals": 14.0,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 14.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Red",
+         "grade": "FAQ",
+         "minimumPrice": 1200.0,
+         "maximumPrice": 1340.0,
+         "modalPrice": 1270.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 24,
+       "commodityName": "Potato",
+       "total_arrivals": 18.0,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 18.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Desi",
+         "grade": "FAQ",
+         "minimumPrice": 1090.0,
+         "maximumPrice": 1210.0,
+         "modalPrice": 1160.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 70,
+       "commodityName": "Pumpkin",
+       "total_arrivals": 3.5,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 3.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Pumpkin",
+         "grade": "FAQ",
+         "minimumPrice": 700.0,
+         "maximumPrice": 800.0,
+         "modalPrice": 750.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 3,
+       "commodityName": "Rice",
+       "total_arrivals": 31.0,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 31.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Common",
+         "grade": "FAQ",
+         "minimumPrice": 3060.0,
+         "maximumPrice": 3120.0,
+         "modalPrice": 3100.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 65,
+       "commodityName": "Tomato",
+       "total_arrivals": 2.6,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 2.6,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Deshi",
+         "grade": "FAQ",
+         "minimumPrice": 700.0,
+         "maximumPrice": 800.0,
+         "modalPrice": 750.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 1,
+       "commodityName": "Wheat",
+       "total_arrivals": 120.0,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 120.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Dara",
+         "grade": "FAQ",
+         "minimumPrice": 2420.0,
+         "maximumPrice": 2470.0,
+         "modalPrice": 2450.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 1764,
+     "marketName": "Jasra APMC",
+     "commodities": [
+      {
+       "commodityId": 71,
+       "commodityName": "Bhindi(Ladies Finger)",
+       "total_arrivals": 1.0,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 1.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Bhindi",
+         "grade": "FAQ",
+         "minimumPrice": 1770.0,
+         "maximumPrice": 1900.0,
+         "modalPrice": 1835.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 131,
+       "commodityName": "Cucumbar(Kheera)",
+       "total_arrivals": 0.8,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 0.8,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Cucumbar",
+         "grade": "FAQ",
+         "minimumPrice": 950.0,
+         "maximumPrice": 1100.0,
+         "modalPrice": 1025.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 73,
+       "commodityName": "Green Chilli",
+       "total_arrivals": 0.6,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 0.6,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Green Chilly",
+         "grade": "FAQ",
+         "minimumPrice": 1960.0,
+         "maximumPrice": 2100.0,
+         "modalPrice": 2035.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 4389,
+     "marketName": "Lediyari APMC",
+     "commodities": [
+      {
+       "commodityId": 1,
+       "commodityName": "Wheat",
+       "total_arrivals": 58.5,
+       "data": [
+        {
+         "marketCenter": "Lediyari APMC",
+         "arrivals": 58.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Dara",
+         "grade": "FAQ",
+         "minimumPrice": 2435.0,
+         "maximumPrice": 2500.0,
+         "modalPrice": 2450.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 298,
+     "marketName": "Prayagraj APMC",
+     "commodities": [
+      {
+       "commodityId": 76,
+       "commodityName": "Banana - Green",
+       "total_arrivals": 95.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 95.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Banana - Green",
+         "grade": "FAQ",
+         "minimumPrice": 1800.0,
+         "maximumPrice": 1900.0,
+         "modalPrice": 1845.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 71,
+       "commodityName": "Bhindi(Ladies Finger)",
+       "total_arrivals": 17.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 17.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Bhindi",
+         "grade": "FAQ",
+         "minimumPrice": 2200.0,
+         "maximumPrice": 2270.0,
+         "modalPrice": 2230.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 67,
+       "commodityName": "Bitter gourd",
+       "total_arrivals": 15.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 15.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Bitter Gourd",
+         "grade": "FAQ",
+         "minimumPrice": 1915.0,
+         "maximumPrice": 2020.0,
+         "modalPrice": 1970.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 68,
+       "commodityName": "Bottle gourd",
+       "total_arrivals": 20.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 20.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Bottle Gourd",
+         "grade": "FAQ",
+         "minimumPrice": 825.0,
+         "maximumPrice": 930.0,
+         "modalPrice": 875.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 32,
+       "commodityName": "Brinjal",
+       "total_arrivals": 23.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 23.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Round/Long",
+         "grade": "FAQ",
+         "minimumPrice": 930.0,
+         "maximumPrice": 1050.0,
+         "modalPrice": 980.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 136,
+       "commodityName": "Capsicum",
+       "total_arrivals": 17.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 17.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Capsicum",
+         "grade": "FAQ",
+         "minimumPrice": 2200.0,
+         "maximumPrice": 2270.0,
+         "modalPrice": 2240.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 131,
+       "commodityName": "Cucumbar(Kheera)",
+       "total_arrivals": 25.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 25.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Cucumbar",
+         "grade": "FAQ",
+         "minimumPrice": 970.0,
+         "maximumPrice": 1035.0,
+         "modalPrice": 1000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 87,
+       "commodityName": "Ginger(Green)",
+       "total_arrivals": 10.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 10.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Green Ginger",
+         "grade": "FAQ",
+         "minimumPrice": 3600.0,
+         "maximumPrice": 3700.0,
+         "modalPrice": 3670.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 73,
+       "commodityName": "Green Chilli",
+       "total_arrivals": 12.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 12.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Green Chilly",
+         "grade": "FAQ",
+         "minimumPrice": 1910.0,
+         "maximumPrice": 1980.0,
+         "modalPrice": 1930.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 153,
+       "commodityName": "Jack Fruit(Ripe)",
+       "total_arrivals": 18.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 18.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Jack Fruit",
+         "grade": "Medium",
+         "minimumPrice": 2270.0,
+         "maximumPrice": 2335.0,
+         "modalPrice": 2300.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 157,
+       "commodityName": "Karbuja(Musk Melon)",
+       "total_arrivals": 108.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 108.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Karbhuja",
+         "grade": "Medium",
+         "minimumPrice": 1650.0,
+         "maximumPrice": 1775.0,
+         "modalPrice": 1750.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 283,
+       "commodityName": "Mahua",
+       "total_arrivals": 80.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 80.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Mahua Flower",
+         "grade": "FAQ",
+         "minimumPrice": 3150.0,
+         "maximumPrice": 3200.0,
+         "modalPrice": 3175.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 20,
+       "commodityName": "Mango",
+       "total_arrivals": 45.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 45.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Badami",
+         "grade": "Medium",
+         "minimumPrice": 5615.0,
+         "maximumPrice": 5685.0,
+         "modalPrice": 5640.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 144,
+       "commodityName": "Mango(Raw-Ripe)",
+       "total_arrivals": 18.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 18.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Mango - Raw-Ripe",
+         "grade": "FAQ",
+         "minimumPrice": 3370.0,
+         "maximumPrice": 3480.0,
+         "modalPrice": 3450.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 23,
+       "commodityName": "Onion",
+       "total_arrivals": 150.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 150.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Red",
+         "grade": "FAQ",
+         "minimumPrice": 1200.0,
+         "maximumPrice": 1300.0,
+         "modalPrice": 1275.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 254,
+       "commodityName": "Pointed gourd(Parval)",
+       "total_arrivals": 18.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 18.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Pointed gourd (Parval)",
+         "grade": "FAQ",
+         "minimumPrice": 2900.0,
+         "maximumPrice": 2950.0,
+         "modalPrice": 2920.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 24,
+       "commodityName": "Potato",
+       "total_arrivals": 750.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 750.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Chandermukhi",
+         "grade": "FAQ",
+         "minimumPrice": 1100.0,
+         "maximumPrice": 1170.0,
+         "modalPrice": 1145.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 70,
+       "commodityName": "Pumpkin",
+       "total_arrivals": 35.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 35.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Pumpkin",
+         "grade": "FAQ",
+         "minimumPrice": 550.0,
+         "maximumPrice": 685.0,
+         "modalPrice": 600.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 3,
+       "commodityName": "Rice",
+       "total_arrivals": 800.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 800.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Common",
+         "grade": "FAQ",
+         "minimumPrice": 3100.0,
+         "maximumPrice": 3180.0,
+         "modalPrice": 3145.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 290,
+       "commodityName": "Spinach",
+       "total_arrivals": 3.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 3.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Spinach",
+         "grade": "FAQ",
+         "minimumPrice": 1080.0,
+         "maximumPrice": 1150.0,
+         "modalPrice": 1100.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 262,
+       "commodityName": "Sponge gourd",
+       "total_arrivals": 15.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 15.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Sponge gourd",
+         "grade": "FAQ",
+         "minimumPrice": 2350.0,
+         "maximumPrice": 2450.0,
+         "modalPrice": 2430.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 65,
+       "commodityName": "Tomato",
+       "total_arrivals": 100.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 100.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Hybrid",
+         "grade": "FAQ",
+         "minimumPrice": 700.0,
+         "maximumPrice": 770.0,
+         "modalPrice": 715.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 60,
+       "commodityName": "Water Melon",
+       "total_arrivals": 185.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 185.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Water Melon",
+         "grade": "Medium",
+         "minimumPrice": 650.0,
+         "maximumPrice": 750.0,
+         "modalPrice": 725.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 1,
+       "commodityName": "Wheat",
+       "total_arrivals": 1000.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 1000.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Dara",
+         "grade": "FAQ",
+         "minimumPrice": 2425.0,
+         "maximumPrice": 2500.0,
+         "modalPrice": 2435.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 1749,
+     "marketName": "Sirsa APMC",
+     "commodities": [
+      {
+       "commodityId": 73,
+       "commodityName": "Green Chilli",
+       "total_arrivals": 1.5,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 1.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Green Chilly",
+         "grade": "FAQ",
+         "minimumPrice": 1450.0,
+         "maximumPrice": 1550.0,
+         "modalPrice": 1500.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 23,
+       "commodityName": "Onion",
+       "total_arrivals": 7.0,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 7.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Red",
+         "grade": "Non-FAQ",
+         "minimumPrice": 950.0,
+         "maximumPrice": 1050.0,
+         "modalPrice": 1000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 65,
+       "commodityName": "Tomato",
+       "total_arrivals": 6.0,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 6.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Deshi",
+         "grade": "Non-FAQ",
+         "minimumPrice": 400.0,
+         "maximumPrice": 500.0,
+         "modalPrice": 450.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 1,
+       "commodityName": "Wheat",
+       "total_arrivals": 90.0,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 90.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Dara",
+         "grade": "FAQ",
+         "minimumPrice": 2435.0,
+         "maximumPrice": 2500.0,
+         "modalPrice": 2450.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

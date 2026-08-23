@@ -1,0 +1,752 @@
+{
+ "success": true,
+ "message": "Data fetched successfully.",
+ "title": "Market-wise, Commodity-wise Daily Report on: 30-Jul-2026",
+ "columns": [
+  {
+   "key": "marketCenter",
+   "title": "Market Center"
+  },
+  {
+   "key": "arrivals",
+   "title": "Arrivals"
+  },
+  {
+   "key": "unitOfArrivals",
+   "title": "Unit of Arrivals"
+  },
+  {
+   "key": "variety",
+   "title": "Variety"
+  },
+  {
+   "key": "grade",
+   "title": "Grade"
+  },
+  {
+   "key": "minimumPrice",
+   "title": "Minimum Price"
+  },
+  {
+   "key": "maximumPrice",
+   "title": "Maximum Price"
+  },
+  {
+   "key": "modalPrice",
+   "title": "Modal Price"
+  },
+  {
+   "key": "unitOfPrice",
+   "title": "Unit of Price"
+  }
+ ],
+ "states": [
+  {
+   "stateId": 34,
+   "stateName": "Uttar Pradesh",
+   "markets": [
+    {
+     "marketId": 1724,
+     "marketName": "Ajuha APMC",
+     "commodities": [
+      {
+       "commodityId": 163,
+       "commodityName": "Wood",
+       "total_arrivals": 24.8,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 24.8,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 500.0,
+         "maximumPrice": 500.0,
+         "modalPrice": 500.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 390,
+       "commodityName": "gulli",
+       "total_arrivals": 21.09,
+       "data": [
+        {
+         "marketCenter": "Ajuha APMC",
+         "arrivals": 21.09,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 5000.0,
+         "maximumPrice": 5000.0,
+         "modalPrice": 5000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 1764,
+     "marketName": "Jasra APMC",
+     "commodities": [
+      {
+       "commodityId": 24,
+       "commodityName": "Potato",
+       "total_arrivals": 150.0,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 150.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 500.0,
+         "maximumPrice": 600.0,
+         "modalPrice": 513.32,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 1,
+       "commodityName": "Wheat",
+       "total_arrivals": 13.0,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 13.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Dara",
+         "grade": "FAQ",
+         "minimumPrice": 2400.0,
+         "maximumPrice": 2400.0,
+         "modalPrice": 2400.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 163,
+       "commodityName": "Wood",
+       "total_arrivals": 12.53,
+       "data": [
+        {
+         "marketCenter": "Jasra APMC",
+         "arrivals": 12.53,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 600.0,
+         "maximumPrice": 600.0,
+         "modalPrice": 600.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 4389,
+     "marketName": "Lediyari APMC",
+     "commodities": [
+      {
+       "commodityId": 166,
+       "commodityName": "Firewood",
+       "total_arrivals": 44.0,
+       "data": [
+        {
+         "marketCenter": "Lediyari APMC",
+         "arrivals": 44.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Firewood",
+         "grade": "FAQ",
+         "minimumPrice": 400.0,
+         "maximumPrice": 410.0,
+         "modalPrice": 405.32,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 2,
+       "commodityName": "Paddy(Common)",
+       "total_arrivals": 20.0,
+       "data": [
+        {
+         "marketCenter": "Lediyari APMC",
+         "arrivals": 20.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Masuri",
+         "grade": "FAQ",
+         "minimumPrice": 2125.0,
+         "maximumPrice": 2125.0,
+         "modalPrice": 2125.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 163,
+       "commodityName": "Wood",
+       "total_arrivals": 39.23,
+       "data": [
+        {
+         "marketCenter": "Lediyari APMC",
+         "arrivals": 39.23,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 400.0,
+         "maximumPrice": 400.0,
+         "modalPrice": 400.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 298,
+     "marketName": "Prayagraj APMC",
+     "commodities": [
+      {
+       "commodityId": 28,
+       "commodityName": "Bajra(Pearl Millet/Cumbu)",
+       "total_arrivals": 25.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 25.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 1850.0,
+         "maximumPrice": 1850.0,
+         "modalPrice": 1850.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 217,
+       "commodityName": "Bengal Gram Dal(Chana Dal)",
+       "total_arrivals": 10.02,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 10.02,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 7201.0,
+         "maximumPrice": 7201.0,
+         "modalPrice": 7201.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 218,
+       "commodityName": "Black Gram Dal(Urd Dal)",
+       "total_arrivals": 4.5,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 4.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 10566.6,
+         "maximumPrice": 10566.6,
+         "modalPrice": 10566.6,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 166,
+       "commodityName": "Firewood",
+       "total_arrivals": 34.875,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 34.875,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Firewood",
+         "grade": "FAQ",
+         "minimumPrice": 350.0,
+         "maximumPrice": 610.0,
+         "modalPrice": 436.52,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 313,
+       "commodityName": "Fish",
+       "total_arrivals": 0.5,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 0.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 4000.0,
+         "maximumPrice": 4000.0,
+         "modalPrice": 4000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 87,
+       "commodityName": "Ginger(Green)",
+       "total_arrivals": 72.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 72.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 8000.0,
+         "maximumPrice": 8000.0,
+         "modalPrice": 8000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 306,
+       "commodityName": "Gram Raw(Chholia)",
+       "total_arrivals": 50.1,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 50.1,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 6100.0,
+         "maximumPrice": 7199.36,
+         "modalPrice": 7031.89,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 73,
+       "commodityName": "Green Chilli",
+       "total_arrivals": 20.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 20.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 1600.0,
+         "maximumPrice": 1600.0,
+         "modalPrice": 1600.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 557,
+       "commodityName": "Makhana(Foxnut)",
+       "total_arrivals": 3.438,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 3.438,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 40000.0,
+         "maximumPrice": 40000.0,
+         "modalPrice": 40000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 213,
+       "commodityName": "Masur Dal",
+       "total_arrivals": 1.95,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 1.95,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 8000.0,
+         "maximumPrice": 8000.0,
+         "modalPrice": 8000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 23,
+       "commodityName": "Onion",
+       "total_arrivals": 280.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 280.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 900.0,
+         "maximumPrice": 1001.0,
+         "modalPrice": 901.08,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 2,
+       "commodityName": "Paddy(Common)",
+       "total_arrivals": 121.4,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 29.82,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Paddy fine",
+         "grade": "FAQ",
+         "minimumPrice": 2400.0,
+         "maximumPrice": 2450.0,
+         "modalPrice": 2433.47,
+         "unitOfPrice": "Rs./Quintal"
+        },
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 91.58,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Common",
+         "grade": "FAQ",
+         "minimumPrice": 1850.0,
+         "maximumPrice": 2300.0,
+         "modalPrice": 1896.49,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 295,
+       "commodityName": "Peas(Dry)",
+       "total_arrivals": 41.01,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 41.01,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 3935.0,
+         "maximumPrice": 3935.0,
+         "modalPrice": 3935.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 24,
+       "commodityName": "Potato",
+       "total_arrivals": 279.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 279.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 700.0,
+         "maximumPrice": 700.0,
+         "modalPrice": 700.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 3,
+       "commodityName": "Rice",
+       "total_arrivals": 160.954,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 25.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Common",
+         "grade": "FAQ",
+         "minimumPrice": 2310.0,
+         "maximumPrice": 2310.0,
+         "modalPrice": 2310.0,
+         "unitOfPrice": "Rs./Quintal"
+        },
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 36.36,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Sona Raw Old",
+         "grade": "FAQ",
+         "minimumPrice": 5024.63,
+         "maximumPrice": 5024.63,
+         "modalPrice": 5024.63,
+         "unitOfPrice": "Rs./Quintal"
+        },
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 15.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Basmati Golden Sela New",
+         "grade": "FAQ",
+         "minimumPrice": 3550.0,
+         "maximumPrice": 3550.0,
+         "modalPrice": 3550.0,
+         "unitOfPrice": "Rs./Quintal"
+        },
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 84.094,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 4548.75,
+         "maximumPrice": 9009.49,
+         "modalPrice": 6736.16,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 65,
+       "commodityName": "Tomato",
+       "total_arrivals": 52.8,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 52.8,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 2500.0,
+         "maximumPrice": 2500.0,
+         "modalPrice": 2500.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 35,
+       "commodityName": "Turmeric",
+       "total_arrivals": 1.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 1.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 21698.0,
+         "maximumPrice": 21698.0,
+         "modalPrice": 21698.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 1,
+       "commodityName": "Wheat",
+       "total_arrivals": 220.8,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 40.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Medium Fine",
+         "grade": "FAQ",
+         "minimumPrice": 2250.0,
+         "maximumPrice": 2250.0,
+         "modalPrice": 2250.0,
+         "unitOfPrice": "Rs./Quintal"
+        },
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 6.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Medium",
+         "grade": "FAQ",
+         "minimumPrice": 2450.0,
+         "maximumPrice": 2450.0,
+         "modalPrice": 2450.0,
+         "unitOfPrice": "Rs./Quintal"
+        },
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 104.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Dara",
+         "grade": "FAQ",
+         "minimumPrice": 2250.0,
+         "maximumPrice": 2500.0,
+         "modalPrice": 2356.32,
+         "unitOfPrice": "Rs./Quintal"
+        },
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 70.3,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 2300.0,
+         "maximumPrice": 2510.0,
+         "modalPrice": 2435.63,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 163,
+       "commodityName": "Wood",
+       "total_arrivals": 56.24,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 56.24,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 500.0,
+         "maximumPrice": 650.0,
+         "modalPrice": 594.28,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 390,
+       "commodityName": "gulli",
+       "total_arrivals": 4.0,
+       "data": [
+        {
+         "marketCenter": "Prayagraj APMC",
+         "arrivals": 4.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 3000.0,
+         "maximumPrice": 3000.0,
+         "modalPrice": 3000.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "marketId": 1749,
+     "marketName": "Sirsa APMC",
+     "commodities": [
+      {
+       "commodityId": 313,
+       "commodityName": "Fish",
+       "total_arrivals": 3.0,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 3.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 3200.0,
+         "maximumPrice": 3200.0,
+         "modalPrice": 3200.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 23,
+       "commodityName": "Onion",
+       "total_arrivals": 60.0,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 60.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 1800.0,
+         "maximumPrice": 1800.0,
+         "modalPrice": 1800.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 24,
+       "commodityName": "Potato",
+       "total_arrivals": 85.0,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 85.0,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 700.0,
+         "maximumPrice": 700.0,
+         "modalPrice": 700.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 65,
+       "commodityName": "Tomato",
+       "total_arrivals": 3.5,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 3.5,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Other",
+         "grade": "FAQ",
+         "minimumPrice": 2500.0,
+         "maximumPrice": 2600.0,
+         "modalPrice": 2570.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      },
+      {
+       "commodityId": 1,
+       "commodityName": "Wheat",
+       "total_arrivals": 30.9,
+       "data": [
+        {
+         "marketCenter": "Sirsa APMC",
+         "arrivals": 30.9,
+         "unitOfArrivals": "Metric Tonnes",
+         "variety": "Dara",
+         "grade": "FAQ",
+         "minimumPrice": 2500.0,
+         "maximumPrice": 2500.0,
+         "modalPrice": 2500.0,
+         "unitOfPrice": "Rs./Quintal"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

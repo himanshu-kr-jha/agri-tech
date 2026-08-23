@@ -233,3 +233,100 @@ APMC. The thin ones are thin because the commodity trades rarely, not because th
 
 The payloads under `seed/generated/agmarknet/daily/` are the durable artifact and must be
 committed as the offline fixture bundle before the demo (NFR-303).
+
+---
+
+## 11. Hazard climatology — added 2026-08-23
+
+The Risk module needs to answer *how likely is unseasonal rain during the potato harvest
+window?* Nothing in this register gives a half-month hazard frequency for Prayagraj, and
+CLAUDE.md rule 5 forbids inventing one. So it is **derived from a real record** instead of
+asserted.
+
+| id | Value | Source | Status |
+|---|---|---|---|
+| **C8** | Half-month hazard frequencies (heavy rain, very heavy rain, frost, heat stress) at three tract points, 1995–2024 | ERA5 reanalysis via Open-Meteo archive API, `seed/fetch_climatology.py` | ✅ derived from a cited source |
+| **C9** | Hazard thresholds: heavy rain ≥15 mm/day, very heavy ≥40 mm/day, frost min ≤4 °C, heat stress max ≥40 °C | Judgement, stated in `seed/fetch_climatology.py` | ⚠️ documented judgement, not a standard |
+
+"Unseasonal rain probability 0.167" here means something checkable: *in 30 years of record,
+17% of them saw a heavy-rain day somewhere in that half-month at that point*. It is a
+frequency, not a forecast, and every finding built on it says so.
+
+### What the record actually showed, including where it contradicted us
+
+**The architecture sketch used an illustrative 0.71 for the February potato window. The real
+figure is 0.167.** Building on the invented number would have made a better story and a false
+one. The correction is recorded in `docs/ARCHITECTURE.md` §5.2 rather than quietly patched,
+because "a fabricated 0.7 is indistinguishable from a measured 0.7 once it is on a screen" is
+the whole reason this register exists.
+
+Three further things the 30-year record settled:
+
+| Finding | Consequence |
+|---|---|
+| **Frost is p = 0.00 in every window.** ERA5 tmin never reaches ≤4 °C at these grid points. | The weather module's cold-wave detection is chasing a hazard this dataset does not show. Kept — a coarse reanalysis grid smooths extremes and a real gauge may differ — but it must not be presented as a demonstrated risk. |
+| **Heat stress in late April is p = 0.967, and p = 1.00 over a multi-week window.** | That is not a hazard, it is the climate. A probability of 1.0 carries no decision information, and ranked naively it beat a 1,868-tonne price exposure to the top of the packet. `HAZARD_IS_CLIMATE_ABOVE = 0.90` now demotes these to standing conditions. |
+| **The real Kharif hazard is October rain on standing paddy** — p = 0.367 heavy, 0.167 very heavy in the first half of October. | This, not February, is where the district's harvest exposure actually sits. |
+
+## 12. Cost of cultivation & farm economics — OPEN
+
+Everything in this section is **SYNTHETIC — DEMO ONLY** and is labelled as such in the data,
+in `ModuleOutput.degraded_inputs`, and on every screen that renders a figure derived from it.
+The Farm module's confidence is capped at 0.62 because of it.
+
+| id | Value | Where | Status |
+|---|---|---|---|
+| **E1–E6** | Per-hectare seed / nutrient / protection / labour / irrigation / other cost, five crops | `intelligence/farm.py:CROP_ECONOMICS` | ❌ TODO — needs a cited cost-of-cultivation survey |
+| **A14** | Damage ratio if a weather hazard lands (15% of exposed value) | `intelligence/risk.py` | ❌ TODO |
+| **A15** | Manure nitrogen and fodder demand per head per year | `orchestrator/gather.py:LIVESTOCK_COEFFICIENTS` | ❌ TODO |
+| **A16** | Yield lost per missing irrigation (12%) | `intelligence/farm.py` | ❌ TODO |
+| **G4** | Irrigations a tract's water supports per season | `orchestrator/gather.py:IRRIGATIONS_AVAILABLE` | ⚠️ scaled from the irrigation-coverage figures in DEMO-CONTEXT §2, not a water budget |
+
+A correction worth recording: an earlier version of **G4** excluded paddy from Ganga-par,
+which is simply false — irrigated paddy is what that tract grows. A constraint tuned until it
+produced an interesting result produced an interesting *wrong* result. The current numbers
+exclude paddy only from Yamuna-par, where 31% irrigation coverage makes that true.
+
+A second one: guava's per-hectare cost was copied from the annual crops, which gave an
+orchard a return of **eleven rupees per rupee** — a number that should stop a reviewer rather
+than excite them. Picking and packing 30 t of fruit by hand is the dominant cost of an
+orchard, and establishment capital has to be amortised or a perennial looks free to plant.
+Perennials are now reported separately and never ranked against annual crops, because an
+orchard's return on *annual operating cost* is high precisely because the capital was spent
+three years ago.
+
+## 13. Crop protection knowledge base — OPEN, and gating
+
+| id | Value | Where | Status |
+|---|---|---|---|
+| **P1–P7** | Symptom→condition associations, favourable conditions, spread rates for six conditions across five crops | `intelligence/crop_health.py:CONDITIONS` | ❌ TODO — unverified against any authority |
+
+Until these are cited, every diagnosis this module emits carries the `SYNTHETIC — DEMO ONLY`
+marker and is **capped at 0.42 confidence** — deliberately below the orchestrator's 0.45
+floor, so an unsourced diagnosis is structurally incapable of driving a recommendation on its
+own. Filling in a citation lifts the cap for that entry alone.
+
+Regardless of citation status, INV-8 holds absolutely: crop-protection output is a chemical
+*class* plus "read the label and consult a local agronomist", never a product and a dose.
+That is not a limitation waiting to be lifted — it is the safety floor.
+
+## 14. Government schemes — real, rules simplified
+
+| id | Value | Source | Status |
+|---|---|---|---|
+| **S1** | PM-KISAN — ₹6,000/year income support | https://pmkisan.gov.in/ | ✅ scheme and benefit real; exclusion rules simplified |
+| **S2** | PMFBY — crop insurance, farmer premium capped at 2% Kharif / 1.5% Rabi / 5% commercial | https://pmfby.gov.in/ | ✅ scheme and premium caps real; **cut-off dates are notified per state and season and are NOT encoded** |
+| **S3** | Kisan Credit Card | https://www.myscheme.gov.in/schemes/kcc | ✅ real; limits and rates set by the lending bank |
+| **S4** | Soil Health Card | https://soilhealth.dac.gov.in/ | ✅ real; benefit is indirect and not estimated |
+| **S5** | Formation & Promotion of 10,000 FPOs | https://sfacindia.com/FPOS.aspx | ⚠️ real; membership norms differ plains vs hill/NE and the grant structure has been revised — threshold is indicative |
+| **S6** | Agriculture Infrastructure Fund | https://agriinfra.dac.gov.in/ | ✅ real; subvention rate and ceiling are in the operational guidelines |
+| **S7** | Sub-Mission on Agricultural Mechanization | https://agrimachinery.nic.in/ | ✅ real; subsidy rates vary by machine, category and state |
+| **S8** | PMKSY — Per Drop More Crop | https://pmksy.gov.in/ | ✅ real; rates set by state, holding-class differential is real |
+
+Every assessment carries `rules_verified=False` and is capped at 0.55 confidence. **No
+application is ever auto-submitted** (FR-567 / SAF-11) — the module prepares the paperwork and
+names the portal; a human files it.
+
+One exemption is deliberate: the *gap* findings ("one unrecorded fact blocks 812 assessments")
+sit **above** the cap. That is a count of our own data and is true whatever the scheme rules
+turn out to say, so capping it at the rules' confidence would understate something we know.

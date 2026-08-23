@@ -1,0 +1,405 @@
+{
+ "_tract": "DOAB",
+ "_point": {
+  "lat": 25.4358,
+  "lon": 81.8463
+ },
+ "_period": {
+  "from": "1995-01-01",
+  "to": "2024-12-31",
+  "years": 30
+ },
+ "_thresholds": {
+  "heavy_rain_mm": 15.0,
+  "very_heavy_rain_mm": 40.0,
+  "frost_max_c": 4.0,
+  "heat_stress_c": 40.0
+ },
+ "_source": "ERA5 reanalysis via Open-Meteo archive API",
+ "windows": {
+  "01A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.167,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 5,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.62
+  },
+  "01B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.167,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 5,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.71
+  },
+  "02A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.167,
+    "very_heavy_rain": 0.033,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 5,
+    "very_heavy_rain": 1,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.86
+  },
+  "02B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.1,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 3,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.44
+  },
+  "03A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.067,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 2,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.55
+  },
+  "03B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.033,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.167
+   },
+   "years_with_hazard": {
+    "heavy_rain": 1,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 5
+   },
+   "mean_rain_mm_per_day": 0.28
+  },
+  "04A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.033,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.667
+   },
+   "years_with_hazard": {
+    "heavy_rain": 1,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 20
+   },
+   "mean_rain_mm_per_day": 0.2
+  },
+  "04B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.0,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.967
+   },
+   "years_with_hazard": {
+    "heavy_rain": 0,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 29
+   },
+   "mean_rain_mm_per_day": 0.21
+  },
+  "05A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.0,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.933
+   },
+   "years_with_hazard": {
+    "heavy_rain": 0,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 28
+   },
+   "mean_rain_mm_per_day": 0.38
+  },
+  "05B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.033,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.967
+   },
+   "years_with_hazard": {
+    "heavy_rain": 1,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 29
+   },
+   "mean_rain_mm_per_day": 0.4
+  },
+  "06A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.267,
+    "very_heavy_rain": 0.033,
+    "frost": 0.0,
+    "heat_stress": 0.867
+   },
+   "years_with_hazard": {
+    "heavy_rain": 8,
+    "very_heavy_rain": 1,
+    "frost": 0,
+    "heat_stress": 26
+   },
+   "mean_rain_mm_per_day": 1.53
+  },
+  "06B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.833,
+    "very_heavy_rain": 0.267,
+    "frost": 0.0,
+    "heat_stress": 0.567
+   },
+   "years_with_hazard": {
+    "heavy_rain": 25,
+    "very_heavy_rain": 8,
+    "frost": 0,
+    "heat_stress": 17
+   },
+   "mean_rain_mm_per_day": 8.15
+  },
+  "07A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.9,
+    "very_heavy_rain": 0.333,
+    "frost": 0.0,
+    "heat_stress": 0.067
+   },
+   "years_with_hazard": {
+    "heavy_rain": 27,
+    "very_heavy_rain": 10,
+    "frost": 0,
+    "heat_stress": 2
+   },
+   "mean_rain_mm_per_day": 10.67
+  },
+  "07B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.933,
+    "very_heavy_rain": 0.233,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 28,
+    "very_heavy_rain": 7,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 9.78
+  },
+  "08A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.933,
+    "very_heavy_rain": 0.233,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 28,
+    "very_heavy_rain": 7,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 9.68
+  },
+  "08B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.867,
+    "very_heavy_rain": 0.1,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 26,
+    "very_heavy_rain": 3,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 7.9
+  },
+  "09A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.767,
+    "very_heavy_rain": 0.233,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 23,
+    "very_heavy_rain": 7,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 7.45
+  },
+  "09B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.533,
+    "very_heavy_rain": 0.2,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 16,
+    "very_heavy_rain": 6,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 4.98
+  },
+  "10A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.367,
+    "very_heavy_rain": 0.167,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 11,
+    "very_heavy_rain": 5,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 2.25
+  },
+  "10B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.067,
+    "very_heavy_rain": 0.033,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 2,
+    "very_heavy_rain": 1,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.43
+  },
+  "11A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.033,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 1,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.13
+  },
+  "11B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.033,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 1,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.17
+  },
+  "12A": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.067,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 2,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.27
+  },
+  "12B": {
+   "years_observed": 30,
+   "probability": {
+    "heavy_rain": 0.067,
+    "very_heavy_rain": 0.0,
+    "frost": 0.0,
+    "heat_stress": 0.0
+   },
+   "years_with_hazard": {
+    "heavy_rain": 2,
+    "very_heavy_rain": 0,
+    "frost": 0,
+    "heat_stress": 0
+   },
+   "mean_rain_mm_per_day": 0.21
+  }
+ }
+}

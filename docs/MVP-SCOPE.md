@@ -188,27 +188,35 @@ from the bottom of the M-list (M20 → M18 → M11 in that order).
 
 ## 6. Demo script {#demo-script}
 
-**Setup:** seeded organization **"Prayagraj Kisan Producer Company"** — 1,000 farmers,
+**Setup:** seeded organization **"Prayagraj Kisan Producer Company Limited"** — 1,000 farmers,
 2,412 acres across the district's three tracts (Ganga-par, doab, Yamuna-par), 5 crops
-(paddy, wheat, **potato**, mustard, guava), active Rabi 2026 cycle, 8 buyers, 12 schemes,
-20 news events. Two past seasons of outcomes exist so the learning loop has something real to
-show. Full profile: `docs/DEMO-CONTEXT.md`.
+(paddy, wheat, potato, mustard, guava), 1,282 active Kharif cycles, 8 buyers, 5 aggregated
+lots, 9 buyer offers anchored to real modal prices, 8 deliberate data conflicts.
+Full profile: `docs/DEMO-CONTEXT.md`.
+
+Everything the demo asserts about the *outside world* is real: 23,460 Agmarknet price rows
+from five real Prayagraj markets, 2,439 days of Open-Meteo weather at three tract points, and
+30 years of ERA5 hazard climatology. Everything about the *collective* is synthetic and
+labelled as such on every screen.
+
+**Run it:** `make seed && make dev`. The whole path works with the network disconnected
+(NFR-303) — there is a test that runs the pipeline with sockets blocked.
 
 | # | Beat | What the judge sees | Time |
 |---|---|---|---|
 | 1 | CEO logs in | 10-card dashboard + morning briefing: *"7 items need attention"*, priority-ordered, each with quantified impact | 0:30 |
 | 2 | The question | *"What should we do this season to maximize sustainable farmer income?"* — typed, or spoken in Hindi | 0:15 |
 | 3 | The packet streams | Nine sections appear in order. Every number has a confidence chip. | 1:00 |
-| 4 | **The override moment** | "The farm module preferred potato on the doab acreage. But UP arrivals are surging, the Feb price band is ₹8–12 not ₹14–17, and unseasonal-rain probability in the Feb–Mar harvest window is 0.71. Two domains, same crop, same window, both above the farm module's confidence. Here is the alternative and the trade-off." | 0:30 |
+| 4 | **The override moment** | The banner above the recommendations: *paddy is 99% of operated area across 749 farmers; it harvests into the annual price trough (₹20.30/kg in November against ₹23.69 in January); November arrivals run 36.6× the median month; and on both irrigated tracts it ranks last of four on return per rupee.* Four findings, two independent modules, same crop, same window. **Nobody proposed this cropping pattern — it is simply what is planted, which is why it would otherwise go unexamined.** The packet prices the alternative and explicitly declines to tell the board what to grow — and the finding itself notes that assured procurement and food security are real reasons to grow paddy that the cost model does not price. | 0:40 |
 | 5 | **Provenance moment** | Hover a number → source, observed date, verification status. Click a disputed plot area → three conflicting claims (farmer 2.0 ac / record 1.6 / officer 1.8), no silent winner. | 0:30 |
-| 6 | Drill-down | "Show affected farmers" → 312 farmers → 740 acres → plots → crop health → interventions. **The affected farmers cluster in rain-fed Yamuna-par** — the map makes the pattern visible, not just the list. | 0:45 |
-| 7 | Market depth | Distant wholesaler **₹34/kg** vs cold-storage aggregator 22 km away at ₹30/kg → **effective price flips the ranking**: ₹28.12 vs ₹28.28. The punchline is *which* cost does it — not the 180 km of freight (₹0.81/kg) but the 11% rejection rate (₹3.74/kg). Component breakdown visible; negotiation brief renders. | 0:45 |
+| 6 | Drill-down | The packet's drill-down resolves to 749 named farmers → their plots → crop cycles → health readings, each with its own provenance. Filter the member list by tract to see the exposure cluster. | 0:40 |
+| 7 | Market depth | Headline price versus what the collective actually banks. The punchline is *which* cost does it — not the 180 km of freight (₹0.81/kg) but the rejection rate (₹3.74/kg on ₹34), four times as much. Second punchline: months of accrued storage are shown and **deliberately not deducted** — sunk cost cannot inform a choice between buyers, and subtracting it once turned a fair ₹7.05/kg offer into a ruinous-looking ₹3.23. | 0:45 |
 | 8 | Approve with modification | ₹35,000 → ₹32,000. Both values persist. Tasks and calendar events are created, pending field approval. | 0:30 |
-| 9 | **Boundary moment** | Switch to a farmer account (Hindi). They see their own actions and the officially shared collective fertilizer price — and *not* the buyer negotiation. Show the query, not just the screen. | 0:45 |
-| 10 | Voice | Farmer asks in Hindi what to do this week; scoped answer returns | 0:20 |
-| 11 | **Audit moment** | Open a decision from six weeks ago. Frozen evidence renders the exact market and weather state as of that morning. Prices have changed since; the explanation has not. | 0:30 |
-| 12 | Learning loop | A past recommendation: adherence PARTIAL, fidelity 0.6, outcome recorded, attribution **MODERATE** with named confounders — *"we do not claim credit we cannot prove"* | 0:30 |
-| 13 | Impact | Five metrics, each labelled measured / estimated / proxy, formulas shown | 0:20 |
+| 9 | **Boundary moment** | Switch to a farmer token. They see their own crops in Hindi and English — and get **403 on the dashboard, the member list, the buyer negotiations and the decision history**. Show the status codes, not just the screen: the farmer view is built farmer-scoped from the start, so org-internal rows are never in the result set for a rendering bug to leak. | 0:45 |
+| 10 | *(cut)* | Voice was descoped — see §4. The bilingual farmer portal ships; telephony does not. | — |
+| 11 | **Audit moment** | Open a stored decision. The frozen-evidence panel shows the SHA-256 hash, the module versions and the coefficients in force — then **replays the packet from those bytes alone and reports whether it still matches**. "Explainable forever" is a claim most systems make and none can check; here it is a row on the page that is able to say no. | 0:40 |
+| 12 | Learning loop | Approve with a modified value (₹35,000 → ₹32,000): both numbers persist, and it is recorded as a *modification* so the system does not learn that its figure was accepted. Then the attribution rule: advice that was never followed is **not scored as failed**, and a favourable season **confounds** a good outcome rather than confirming it. | 0:40 |
+| 13 | Impact | The panel reports what it *could not* attribute as prominently as what it could. On a fresh install every figure is zero, and that is the correct thing to show. | 0:20 |
 
 **Optional beat (if S1 ships):** late-blight outbreak clustering across the doab potato belt —
 47 farms reporting similar symptoms in a humid window, geographic cluster detected, FPO alerted
@@ -217,6 +225,13 @@ detecting *organizational* risk rather than classifying a leaf.
 
 **Total ≈ 7 minutes.** Beats 4, 5, 9, 11 and 12 are the ones that separate this from a
 dashboard with a chatbot. If time is cut, drop 7 and 13 — never 4, 5, 9 or 11.
+
+**The line that ties it together, and it is true rather than a slogan:** every number on
+every screen can be traced to an observation or a fetched payload; every recommendation is
+frozen with the evidence that produced it; and nothing at all happens until a named human
+holding a named role says so. The invariant tests in `apps/api/tests/test_invariants.py` are
+what make that checkable — including one that asserts an unapproved recommendation *cannot*
+execute, and one that runs the entire pipeline with every socket blocked.
 
 ---
 

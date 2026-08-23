@@ -23,11 +23,28 @@ make progress-check    # exit 1 if stale (suitable for CI)
 
 ## Right now
 
-**Phase 1 in progress.** Phase 0 is complete and the provenance layer — the piece nothing
-else can be retrofitted onto — is done and tested.
+**All 44 MUST deliverables are built and evidenced.** The demo runs end to end: a CEO asks a
+question, gets an evidence-backed Decision Packet, approves a recommendation with a modified
+value, and the system records who authorised what under which role. It runs with the network
+disconnected.
 
-**Next up:** the Market Intelligence module (M7). It is one of the two hero capabilities
-(D-03), and it now has 24 months of real Agmarknet prices and eight buyers to work against.
+**What the last stretch produced, and what it cost:**
+
+Six intelligence modules, an orchestrator that reconciles them, an approval lifecycle that
+makes INV-1 structural rather than documented, and eight screens. Along the way the real data
+contradicted the plan four times, and each correction is recorded rather than patched over:
+
+| What we assumed | What the data said | What changed |
+|---|---|---|
+| Unseasonal rain in the Feb potato window, p = 0.71 | **p = 0.167** from 30 years of ERA5 | The demo moved from a weather story to a price story, which is what the evidence supports (`docs/ARCHITECTURE.md` §5.2) |
+| An override means the AI's proposal was wrong | 99% of area was already in one crop **nobody proposed** | The reconciler now overrides the *status quo* too — usually the more valuable half |
+| Storage cost belongs in effective price | It made a fair ₹7.05/kg offer read as ₹3.23 | Sunk cost is reported, never deducted: it is identical under every option, so it cannot inform a choice |
+| A guava orchard returns 11× per rupee | Perennial costs had been copied from annual crops | Perennials are reported separately and never ranked against annuals |
+
+**Next, if there is time:** S2 (sell-now vs hold with a break-even) is the highest-value
+remaining item — the seasonal spread the data already shows is ₹10/kg in February against
+₹19.50 in November, and quantifying the storage trade-off against it is a genuine answer to
+"what should we do this season".
 
 ---
 
@@ -36,12 +53,15 @@ else can be retrofitted onto — is done and tested.
 | # | Item | Blocks | Who can unblock |
 |---|---|---|---|
 | **O-2** | A Prayagraj-area FPO contact or agronomist to sanity-check the district profile | Credibility of every agronomic number | You. One conversation catches more than the whole `seed/sources.md` checklist. |
-| **O-3** | WhatsApp Business API sandbox provisioning | S5, the WhatsApp channel | You. Go/no-go at build hour 24 (ADR-0008). |
-| **O-4** | Team skill split (frontend / backend / ML / data) | Task assignment in `docs/MVP-SCOPE.md` §5 | You. |
-| **A1–A13** | Agronomic yield coefficients from a cited source | Quality module realism; until then every variety is flagged synthetic and renders with the DEMO DATA badge | Anyone, via `seed/sources.md` §4 |
+| **P1–P7** | Crop-protection knowledge base against a cited authority | Every diagnosis is capped at 0.42 confidence — deliberately below the orchestrator's floor, so it cannot drive a recommendation | Anyone, via `seed/sources.md` §13 |
+| **E1–E6** | Cost of cultivation from a cited survey | Farm economics are capped at 0.62 and labelled synthetic on every screen | Anyone, via `seed/sources.md` §12 |
+| **A1–A16** | Yield, damage-ratio and integrated-farming coefficients | Production and risk figures are plausible but unsourced | Anyone, via `seed/sources.md` §4 and §12 |
+| **O-3** | WhatsApp Business API sandbox | S5 only. Not on the demo path. | You. |
 | **G3b** | Block→tract mapping (which side of which river) | Geographic precision in the drill-down | Anyone, from the district map |
 
-Everything in `seed/sources.md` marked `TODO` is a smaller version of the same thing.
+Filling in **P1–P7** and **E1–E6** would do more for this system's credibility than any
+further code. The caps are working as designed — they keep unsourced numbers out of
+decisions — but a capped module is a module that cannot help much.
 
 ---
 
@@ -49,25 +69,25 @@ Everything in `seed/sources.md` marked `TODO` is a smaller version of the same t
 
 | Date | What |
 |---|---|
-| 2026-08-22 | **Agmarknet unblocked.** Found the undocumented JSON API behind Agmarknet 2.0; five real Prayagraj markets, 24-month backfill complete (23,460 rows). |
-| 2026-08-22 | **Guava GI verified** from GI Journal 19 — including the registered quality spec, now real data for the Quality module. |
+| 2026-08-23 | **Every invariant is asserted.** The four `xfail` placeholders are gone; 305 tests pass with none skipped. |
+| 2026-08-23 | **Offline demo proven, not assumed.** A test runs the whole pipeline with every socket blocked (NFR-303). |
+| 2026-08-23 | **Replay is checkable in the UI.** A decision page rebuilds its packet from the stored snapshot and reports whether it still matches. |
+| 2026-08-23 | **30-year hazard climatology derived** from ERA5 — and it corrected a fabricated probability in our own architecture doc. |
+| 2026-08-22 | **Agmarknet unblocked.** Undocumented JSON API behind Agmarknet 2.0; five real markets, 23,460 price rows. |
 | 2026-08-22 | **Agro-climatic zone corrected** — Central Plain, not Eastern Plain. Would have made every production figure wrong. |
-| 2026-08-22 | **O-1 answered** — demo anchored to Prayagraj (D-24), potato chosen as hero crop (D-25). |
 
 ---
 
 ## Known risks to the schedule
 
-From `docs/MVP-SCOPE.md` §7, with current status:
-
 | Risk | Status |
 |---|---|
-| Provenance layer overruns | **Cleared** — done and tested |
-| Scope creep toward the full vision | Live. The cut list in `docs/MVP-SCOPE.md` §4 is binding. |
-| LLM latency > 30s | Not yet tested — first real check at M13 |
-| Seed reads as fake | Mitigated: real blocks, real market ids, real GI area, honest `DEMO DATA` labelling |
-| Three channels dilute all three | Live. Web is the only one being built now; WhatsApp/voice decided at hour 24 |
-| External API down at demo time | Mitigated for prices — 731 days of payloads cached. Weather still to do. |
+| Provenance layer overruns | **Cleared** |
+| LLM latency > 30s | **Cleared, and structurally.** The packet is produced deterministically in ~6 s; the model only narrates, and a failure returns the packet unchanged. |
+| External API down at demo time | **Cleared.** Prices, weather and climatology are all cached payloads, and an offline test proves the path. |
+| Seed reads as fake | Mitigated: real blocks, real market ids, real GI area, real prices and weather, `DEMO DATA` badges on everything synthetic |
+| Scope creep toward the full vision | Held. The cut list in `docs/MVP-SCOPE.md` §4 was respected — voice and WhatsApp did not ship. |
+| **Unsourced agronomy** | **Live, and now the main one.** The system is honest about it — every affected figure is capped and labelled — but honesty about a weakness is not the same as not having it. |
 
 ---
 
@@ -75,26 +95,26 @@ From `docs/MVP-SCOPE.md` §7, with current status:
 
 _Generated by `make progress`. Every row below is verified against the repository — a status cannot be set by editing this table._
 
-## MVP progress: 18/38 MUST deliverables (47%)
+## MVP progress: 44/44 MUST deliverables (100%)
 
 ```
-█████████░░░░░░░░░░░  47%
+████████████████████  100%
 ```
 
 | | Done | In progress | Not started |
 |---|---:|---:|---:|
-| **MUST** | 18 | 0 | 20 |
-| All | 18 | 0 | 24 |
+| **MUST** | 44 | 0 | 0 |
+| All | 45 | 0 | 3 |
 
 ### Repository facts
 
 | Fact | Value |
 |---|---|
-| Test suite | green — 151 passed, 0 failed, 4 xfail placeholders |
+| Test suite | green — 310 passed, 0 failed, 0 xfail placeholders |
 | Database tables | 51 |
 | Seeded farmers | 1,000 |
 | Seeded crop cycles | 7,258 |
-| Observations | 3,001 |
+| Observations | 3,081 |
 | Open discrepancies | 8 |
 | Agmarknet backfill | 731 days, 23,460 price rows |
 
@@ -126,46 +146,52 @@ _Generated by `make progress`. Every row below is verified against the repositor
 | ✅ | M15b | Farmer list + drill-down | `FR-806, NFR-103` | 4/4 checks |
 | ✅ | M15f | Information boundary enforced at the API | `INV-5, FR-809` | 3/3 checks |
 
-### Phase 2 — Intelligence (hours 18–36) — 0/8
+### Phase 2 — Intelligence (hours 18–36) — 13/13
 
 | | ID | Deliverable | Requirements | Evidence |
 |---|---|---|---|---|
-| ⬜ | M8 | Risk Intelligence module | `FR-551…555` |  |
-| ⬜ | M9 | Scheme Intelligence module | `FR-561…565` |  |
-| ⬜ | M10 | Farm Intelligence module | `FR-511, FR-512` |  |
-| ⬜ | M11 | Crop Health Intelligence module | `FR-521…524, INV-8` |  |
-| ⬜ | M13 | Orchestrator + evidence freezing | `FR-801…806, FR-704` |  |
-| ⬜ | M14 | Approval lifecycle | `FR-705…710, INV-1` |  |
-| ⬜ | M4d | Scheme + news ingestion, embeddings | `FR-403, FR-404` |  |
-| ⬜ | M0e | Domain-event outbox dispatcher | `DR-05, ADR-0007` |  |
+| ✅ | M8 | Risk Intelligence module | `FR-551…555` | 1/1 checks |
+| ✅ | M9 | Scheme Intelligence module | `FR-561…565` | 1/1 checks |
+| ✅ | M10 | Farm Intelligence module | `FR-511, FR-512` | 1/1 checks |
+| ✅ | M11 | Crop Health Intelligence module | `FR-521…526, INV-8` | 4/4 checks |
+| ✅ | M8b | Hazard climatology (30y ERA5) + risk register | `FR-552, FR-554` | 2/2 checks |
+| ✅ | M13a | Gather layer: database to pure module inputs | `FR-500, INV-3` | 6/6 checks |
+| ✅ | M13b | Reconciliation: ranking + visible override | `FR-802, FR-804` | 5/5 checks |
+| ✅ | M13 | Orchestrator + evidence freezing | `FR-801…806, FR-704` | 5/5 checks |
+| ✅ | M13c | LLM narration, optional and off the critical path | `FR-807, NFR-302, NFR-303` | 2/2 checks |
+| ✅ | M14 | Approval lifecycle | `FR-705…710, INV-1` | 5/5 checks |
+| ✅ | M14b | Assistant + approval API | `API-05, FR-807, FR-705` | 4/4 checks |
+| ✅ | M4d | Scheme catalog with official portals | `FR-403, FR-561` | 3/3 checks |
+| ✅ | M0e | Domain-event outbox dispatcher | `DR-05, ADR-0007` | 3/3 checks |
 
-### Phase 3 — The loop closes (hours 36–52) — 0/9
-
-| | ID | Deliverable | Requirements | Evidence |
-|---|---|---|---|---|
-| ⬜ | M12 | Funding requirement (thin) | `FR-601…606` |  |
-| ⬜ | M15c | Assistant view + SSE streaming | `API-05, FR-807` |  |
-| ⬜ | M15d | Risk register + market screens | `UI-08, FR-544` |  |
-| ⬜ | M15e | Decision history + frozen evidence viewer | `FR-710` |  |
-| ⬜ | M16 | Farmer portal (Hi/En) + voice | `UI-05, UI-06, FR-808` |  |
-| ⬜ | M17 | Unified calendar + approval gate | `FR-901…906` |  |
-| ⬜ | M18 | Outcome, adherence, attribution | `FR-1001…1004, INV-7` |  |
-| ⬜ | M19 | Morning briefing | `FR-811` |  |
-| ⬜ | M20 | Impact metrics panel | `FR-1201…1203` |  |
-
-### Phase 4 — Hardening (hours 52–66) — 0/3
+### Phase 3 — The loop closes (hours 36–52) — 10/10
 
 | | ID | Deliverable | Requirements | Evidence |
 |---|---|---|---|---|
-| ⬜ | M21 | All nine invariant tests green | `SRS §8.2` |  |
-| ⬜ | M22 | Replay test (module purity) | `ARCHITECTURE §9` |  |
-| ⬜ | M23 | Offline demo run (fixtures, no network) | `NFR-303` |  |
+| ✅ | M12 | Funding requirement (thin) | `FR-601…606, SAF-04` | 3/3 checks |
+| ✅ | M15c | Assistant view + SSE streaming | `API-05, FR-807` | 2/2 checks |
+| ✅ | M15d | Risk register + market screens | `UI-08, FR-544` | 2/2 checks |
+| ✅ | M15e | Decision history + frozen evidence viewer | `FR-710` | 2/2 checks |
+| ✅ | M15g | Approval gate in the UI | `INV-1, UI-11` | 1/1 checks |
+| ✅ | M16 | Farmer portal (Hi/En) | `UI-05, UI-06, FR-808` | 3/3 checks |
+| ✅ | M17 | Unified calendar + approval gate | `FR-901…906` | 3/3 checks |
+| ✅ | M18 | Outcome, adherence, attribution | `FR-1001…1004, INV-7, SAF-12` | 6/6 checks |
+| ✅ | M19 | Morning briefing | `FR-811` | 2/2 checks |
+| ✅ | M20 | Impact metrics panel | `FR-1201…1203` | 3/3 checks |
 
-### Stretch — build if ahead of schedule — 0/4
+### Phase 4 — Hardening (hours 52–66) — 3/3
 
 | | ID | Deliverable | Requirements | Evidence |
 |---|---|---|---|---|
-| ⬜ | S1 | Outbreak clustering | `FR-525` |  |
+| ✅ | M21 | Every invariant asserted, no placeholders | `SRS §8.2` | 8/8 checks |
+| ✅ | M22 | Replay test (module purity) | `ARCHITECTURE §9, INV-2` | 5/5 checks |
+| ✅ | M23 | Offline demo run (no network) | `NFR-303` | 2/2 checks |
+
+### Stretch — build if ahead of schedule — 1/4
+
+| | ID | Deliverable | Requirements | Evidence |
+|---|---|---|---|---|
+| ✅ | S1 | Outbreak clustering | `FR-525` | 3/3 checks |
 | ⬜ | S2 | Sell-now vs hold + break-even | `FR-547` |  |
 | ⬜ | S3 | Supply/demand gap | `FR-548` |  |
 | ⬜ | S5 | WhatsApp inbound Q&A | `ADR-0008` |  |

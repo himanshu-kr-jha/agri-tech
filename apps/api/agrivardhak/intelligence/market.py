@@ -25,6 +25,7 @@ Two rules shape the output:
 from __future__ import annotations
 
 import datetime as dt
+import statistics
 import uuid
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -245,6 +246,21 @@ def financing_paise_per_kg(
 
 
 def storage_paise_per_kg(days_held: int, costs: CostModel) -> int:
+    """Storage cost already incurred on a lot. **Reported, never deducted.**
+
+    This was a deduction once, and it was wrong in a way worth recording. A potato lot held
+    292 days carried 292 paise/kg of accrued storage; subtracting that from a ₹7.05/kg offer
+    produced an effective price of ₹3.23/kg and made every buyer look ruinous.
+
+    The money is real and it is gone. It is *sunk*: identical under every option including
+    not selling at all, so it cannot inform the choice between them. An FPO shown ₹3.23/kg
+    would reasonably reject a fair offer and keep paying rent on the same potatoes.
+
+    So it is surfaced as ``storage_already_sunk`` — the CEO should absolutely know what the
+    holding has cost — and kept out of the arithmetic that ranks buyers. Storage *from here
+    on* is a different number and does belong in a hold-versus-sell comparison, which is
+    what :func:`allocate` uses it for.
+    """
     return max(0, days_held) * costs.storage_paise_per_kg_per_day
 
 
@@ -280,12 +296,13 @@ def effective_price(lot: Lot, offer: Offer, costs: CostModel) -> EffectivePrice:
         costs,
     )
     transaction = costs.transaction_paise_per_kg
-    storage = storage_paise_per_kg(lot.days_held, costs)
+    sunk_storage = storage_paise_per_kg(lot.days_held, costs)
     financing = financing_paise_per_kg(offer.price_paise_per_kg, offer.payment_terms_days, costs)
     rejection = rejection_paise_per_kg(offer.price_paise_per_kg, offer.rejection_rate)
 
+    # Sunk storage is deliberately absent from this sum. See storage_paise_per_kg.
     net = offer.price_paise_per_kg - (
-        logistics + handling + quality + transaction + storage + financing + rejection
+        logistics + handling + quality + transaction + financing + rejection
     )
     return EffectivePrice(
         buyer_id=offer.buyer_id,
@@ -298,13 +315,16 @@ def effective_price(lot: Lot, offer: Offer, costs: CostModel) -> EffectivePrice:
             "handling": handling,
             "quality_loss": quality,
             "transaction": transaction,
-            "storage": storage,
             "financing": financing,
             "rejection": rejection,
             "effective": net,
             "quantity_kg_used": float(quantity),
             "distance_km": offer.distance_km,
             "payment_terms_days": offer.payment_terms_days,
+            # Reported for visibility, excluded from `effective` on purpose: it is the same
+            # under every option, so it cannot discriminate between them.
+            "storage_already_sunk": sunk_storage,
+            "days_held": lot.days_held,
         },
     )
 
@@ -611,12 +631,70 @@ def run(inputs: ModuleInput) -> ModuleOutput:
         if trend is not None:
             findings.append(trend)
 
+        gap = _realisation_gap(lot, best, price_history.get(lot.crop_name, []))
+        if gap is not None:
+            findings.append(gap)
+
     return ModuleOutput(
         module=MODULE,
         version=VERSION,
         findings=findings,
         proposed_actions=actions,
         degraded_inputs=degraded,
+    )
+
+
+#: A crop plan costed at mandi prices is out by more than this much once the deductions
+#: are taken. 0.12 rather than any gap at all: freight and handling always cost something,
+#: and flagging a 3% gap would make the finding noise.
+REALISATION_GAP_THRESHOLD = 0.12
+
+
+def _realisation_gap(lot: Lot, best: BuyerScore, history: list[PricePoint]) -> Finding | None:
+    """What the mandi quotes versus what the FPO actually banks (FR-542).
+
+    This is the finding that keeps a crop plan honest. Farm economics are costed at the
+    published modal price, because that is the only price anyone publishes — but nobody
+    receives it. Freight, handling, grade loss, payment delay and rejection all come off
+    first, and on the Prayagraj data the gap between the two runs to roughly a third.
+
+    A plan showing a healthy margin at mandi prices can be underwater at realised ones, and
+    the collective would find that out at settlement. Naming the gap as its own finding is
+    what lets the orchestrator override a crop plan on evidence rather than on a hunch.
+    """
+    if not history:
+        return None
+    # Sorted here rather than trusted. `price_points` returns the series *ascending* by date,
+    # and an earlier version of this function read `history[:30]` as "the most recent 30" —
+    # so it compared today's offer against potato prices from two years earlier and reported
+    # a 74% realisation gap that did not exist. Cheap to sort; expensive to be wrong.
+    recent = [p.modal_paise_per_kg for p in sorted(history, key=lambda p: p.date)[-30:]]
+    if not recent:
+        return None
+    reference = int(statistics.median(recent))
+    if reference <= 0:
+        return None
+    realised = best.effective.effective_paise_per_kg
+    gap = (reference - realised) / reference
+    if gap < REALISATION_GAP_THRESHOLD:
+        return None
+    return Finding(
+        key=f"price_realisation_gap.{lot.crop_name.lower()}",
+        statement=(
+            f"{lot.crop_name} realises ₹{realised / 100:.2f}/kg after costs against a mandi "
+            f"modal of ₹{reference / 100:.2f}/kg — a {gap:.0%} gap. A plan costed at the "
+            f"published price overstates this crop's margin by that much."
+        ),
+        magnitude=Decimal(str(round(gap, 3))),
+        unit="share of mandi price lost to costs",
+        confidence=_confidence_for(best, CostModel()),
+        evidence=[history[0].evidence],
+        assumptions=[
+            "Compared against the median of the last 30 reported days, not a single day.",
+            "The deductions are itemised in the effective-price breakdown; they are "
+            "estimates from the cost model, not invoiced amounts.",
+        ],
+        affected=AffectedSet(lot_ids=[lot.id], quantity_kg=lot.quantity_kg),
     )
 
 

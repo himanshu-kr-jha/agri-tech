@@ -27,9 +27,15 @@ out/
 *.db
 *.sqlite3
 pgdata/
-# Fetched Agmarknet payloads. The FINAL fixture bundle must be committed —
-# NFR-303 requires the demo to run with the network disabled.
-seed/generated/
+# Fetched external payloads — Agmarknet prices, Open-Meteo weather, ERA5 hazard
+# climatology. **Committed on purpose** (14.7 MB): NFR-303 requires the demo to run with the
+# network disabled, and a fixture bundle that only exists on the machine that fetched it is
+# not a fixture bundle. `git clone && make seed` has to work on a train.
+#
+# Re-fetching is possible but not required: seed/fetch_agmarknet.py, fetch_weather.py and
+# fetch_climatology.py all write here, and the Agmarknet endpoint is undocumented and may
+# stop working — which is precisely why the responses are kept rather than the ability to
+# ask for them again.
 
 # Editors
 .vscode/

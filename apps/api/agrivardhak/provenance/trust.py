@@ -75,6 +75,10 @@ DEFAULT_POLICIES: dict[str, AttributeDecayPolicy] = {
     "soil_ph": AttributeDecayPolicy("soil_ph", 180, 540, 10),
     "water_availability": AttributeDecayPolicy("water_availability", 60, 180, 20),
     "livestock_count": AttributeDecayPolicy("livestock_count", 90, 365, 10),
+    # A symptom report is a statement about one morning in one field. It stops being a
+    # description of the crop very quickly — but it stays evidence that something was seen,
+    # which is why it goes stale at 21 days rather than being deleted.
+    "symptoms": AttributeDecayPolicy("symptoms", 7, 21, 0),
 }
 
 #: Used when an attribute has no policy row. Conservative: decays fast, so an unmodelled

@@ -8,12 +8,12 @@
 
 import Link from "next/link";
 
-import { ApiError, api, type Card } from "@/lib/api";
-import { ConfidenceChip, DemoDataBadge } from "@/components/invariants";
+import { ApiError, api, type Briefing, type Card } from "@/lib/api";
+import { ConfidenceChip, DemoDataBadge, formatValue } from "@/components/invariants";
 
 export const dynamic = "force-dynamic";
 
-function formatValue(card: Card): string {
+function formatCardValue(card: Card): string {
   if (card.value === null || card.value === undefined) return "—";
   if (typeof card.value === "number") {
     if (card.unit === "₹") {
@@ -34,7 +34,7 @@ function StatCard({ card }: { card: Card }) {
         {card.confidence !== null && <ConfidenceChip value={card.confidence} />}
       </div>
       <div className="mt-3">
-        <span className="text-2xl font-semibold tabular-nums">{formatValue(card)}</span>
+        <span className="text-2xl font-semibold tabular-nums">{formatCardValue(card)}</span>
         {card.unit && card.unit !== "₹" && (
           <span className="ml-1 text-sm text-neutral-500">{card.unit}</span>
         )}
@@ -56,10 +56,99 @@ function StatCard({ card }: { card: Card }) {
   );
 }
 
+/**
+ * The briefing, above the cards.
+ *
+ * It leads with what is waiting on a human because that is the only thing on this page that
+ * *stops* if it is ignored. Ten healthy totals underneath are context; an unapproved
+ * recommendation is work the collective has already paid for and is not yet getting.
+ */
+function BriefingPanel({ briefing }: { briefing: Briefing }) {
+  if (briefing.quiet) {
+    return (
+      <section className="mb-8 rounded-xl border border-neutral-200 p-4 text-sm text-neutral-600 dark:border-neutral-800 dark:text-neutral-400">
+        Nothing needs a decision today. That is a real answer, not an empty state — the
+        briefing stays short so that the day it is long, you read it.
+      </section>
+    );
+  }
+  return (
+    <section aria-label="Briefing" className="mb-8 space-y-4">
+      {briefing.needs_decision.length > 0 && (
+        <BriefingGroup
+          title="Waiting on you"
+          subtitle="Nothing here has happened yet"
+          items={briefing.needs_decision}
+          emphasis
+        />
+      )}
+      {briefing.closing_soon.length > 0 && (
+        <BriefingGroup title="Closing soon" items={briefing.closing_soon} />
+      )}
+      {briefing.watch.length > 0 && (
+        <BriefingGroup title="Worth watching" items={briefing.watch} />
+      )}
+      {briefing.data_health.length > 0 && (
+        <BriefingGroup title="Data health" items={briefing.data_health} />
+      )}
+    </section>
+  );
+}
+
+function BriefingGroup({
+  title,
+  subtitle,
+  items,
+  emphasis = false,
+}: {
+  title: string;
+  subtitle?: string;
+  items: Briefing["needs_decision"];
+  emphasis?: boolean;
+}) {
+  return (
+    <div
+      className={`rounded-xl border p-4 ${
+        emphasis
+          ? "border-amber-300 bg-amber-50 dark:border-amber-700 dark:bg-amber-950/40"
+          : "border-neutral-200 dark:border-neutral-800"
+      }`}
+    >
+      <h2 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
+        {title}
+      </h2>
+      {subtitle && <p className="mt-0.5 text-xs text-neutral-400">{subtitle}</p>}
+      <ul className="mt-2 space-y-1.5">
+        {items.map((item, i) => (
+          <li key={i} className="text-sm">
+            {item.href ? (
+              <Link href={item.href} className="font-medium underline-offset-2 hover:underline">
+                {item.headline}
+              </Link>
+            ) : (
+              <span className="font-medium">{item.headline}</span>
+            )}
+            {item.detail && (
+              <span className="ml-2 text-xs text-neutral-500">{item.detail}</span>
+            )}
+            {item.value_paise != null && item.unit !== "paise_per_kg" && (
+              <span className="ml-2 text-xs tabular-nums text-neutral-500">
+                {formatValue(item.value_paise, item.unit ?? null)}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default async function DashboardPage() {
   let data;
+  let briefing: Briefing | null = null;
   try {
     data = await api.dashboard();
+    briefing = await api.briefing().catch(() => null);
   } catch (error) {
     const status = error instanceof ApiError ? error.status : 0;
     return (
@@ -87,6 +176,8 @@ export default async function DashboardPage() {
           {organization.type} · {organization.district}, {organization.state}
         </p>
       </header>
+
+      {briefing && <BriefingPanel briefing={briefing} />}
 
       <section
         aria-label="Organization at a glance"

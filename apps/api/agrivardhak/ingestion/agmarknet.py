@@ -209,6 +209,10 @@ def price_points(
                 ),
             )
         )
+    # **Ascending by date.** Callers wanting the current price take the *last* element, not
+    # the first. This has already caused one bug (a realisation gap computed against
+    # two-year-old prices), so the ordering is part of the contract and is pinned by
+    # tests/test_market_data.py::test_price_points_come_back_oldest_first.
     return sorted(points, key=lambda p: p.date)
 
 

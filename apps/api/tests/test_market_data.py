@@ -246,3 +246,28 @@ def test_price_history_covers_a_usable_window(session, seeded) -> None:
     assert len(points) > 100
     span = points[-1].date - points[0].date
     assert span > dt.timedelta(days=180)
+
+
+def test_price_points_come_back_oldest_first(session, seeded) -> None:
+    """The ordering is part of the contract, and it has already caused one bug.
+
+    ``price_points`` returns the series **ascending** by date, so the current price is the
+    *last* element. Code that read ``history[:30]`` as "the most recent 30" compared today's
+    buyer offer against potato prices from two years earlier and reported a 74% realisation
+    gap that did not exist — a number large enough to change a recommendation and plausible
+    enough that nobody would query it.
+    """
+    points = agmarknet.price_points(session, commodity_name="Potato", limit=500)
+    assert len(points) > 30
+    dates = [p.date for p in points]
+    assert dates == sorted(dates), "price_points must return the series ascending by date"
+    assert points[-1].date > points[0].date
+
+
+def test_the_current_price_is_the_last_point_not_the_first(session, seeded) -> None:
+    """And it should agree with what the dedicated 'latest' helper says."""
+    points = agmarknet.price_points(session, commodity_name="Potato", limit=2000)
+    latest = agmarknet.latest_modal_paise_per_kg(session, commodity_name="Potato")
+    assert latest is not None
+    # Same day; the helper picks one market, the series carries several, so compare the day.
+    assert points[-1].date == latest[1].as_of.date()

@@ -97,10 +97,11 @@ def test_every_deduction_is_itemised() -> None:
         "handling",
         "quality_loss",
         "transaction",
-        "storage",
         "financing",
         "rejection",
         "effective",
+        # Reported but NOT part of the sum below — see the sunk-cost test that follows.
+        "storage_already_sunk",
     ):
         assert term in ep.components, f"missing component: {term}"
     total = sum(
@@ -110,7 +111,6 @@ def test_every_deduction_is_itemised() -> None:
             "handling",
             "quality_loss",
             "transaction",
-            "storage",
             "financing",
             "rejection",
         )
@@ -118,6 +118,29 @@ def test_every_deduction_is_itemised() -> None:
     assert ep.components["headline"] - total == ep.components["effective"], (
         "the itemised deductions must actually sum to the difference"
     )
+
+
+def test_storage_already_paid_does_not_reduce_what_a_buyer_is_worth() -> None:
+    """Sunk cost must not enter the buyer comparison, and this one nearly did.
+
+    A potato lot held 292 days had accrued 292 paise/kg of storage. Deducting it turned a
+    ₹7.05/kg offer into ₹3.23/kg effective — a number that would talk an FPO out of a fair
+    sale and into paying rent on the same potatoes for another season. The cost is real and
+    it is gone; it is identical whichever buyer is chosen, so it cannot discriminate between
+    them. It is reported, not subtracted.
+    """
+    fresh = market.effective_price(
+        _lot(days_held=0), _offer("B", 30.0, 100, 30), market.CostModel()
+    )
+    held = market.effective_price(
+        _lot(days_held=292), _offer("B", 30.0, 100, 30), market.CostModel()
+    )
+
+    assert held.effective_paise_per_kg == fresh.effective_paise_per_kg, (
+        "months in store must not change what this buyer's offer is worth today"
+    )
+    assert held.components["storage_already_sunk"] > 0, "but the CEO must still be told it"
+    assert held.components["days_held"] == 292
 
 
 def test_reversal_is_reported_as_a_finding() -> None:
@@ -179,7 +202,6 @@ def test_rejection_risk_dominates_the_deduction() -> None:
             "handling",
             "quality_loss",
             "transaction",
-            "storage",
             "financing",
             "rejection",
         )

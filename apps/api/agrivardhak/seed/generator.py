@@ -21,7 +21,7 @@ from sqlalchemy.orm import Session
 
 from agrivardhak.domain import enums
 from agrivardhak.domain.models.crops import Crop, CropCycle, Variety
-from agrivardhak.domain.models.land import Farm, Plot, PlotTenure
+from agrivardhak.domain.models.land import Farm, FarmResource, Plot, PlotTenure
 from agrivardhak.domain.models.market import Buyer, DemandSignal, Lot, LotItem
 from agrivardhak.domain.models.organization import (
     Farmer,
@@ -35,6 +35,7 @@ from agrivardhak.domain.models.provenance import AttributePolicy, DataSource
 from agrivardhak.domain.units import hectares_to_sqm
 from agrivardhak.ingestion.agmarknet import latest_modal_paise_per_kg, load_series
 from agrivardhak.ingestion.weather import load_weather
+from agrivardhak.orchestrator import gather
 from agrivardhak.provenance import resolver, trust
 from agrivardhak.seed import reference as ref
 
@@ -171,6 +172,8 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
     # shown negotiating at four times what the crop actually trades at.
     price_records = load_series(session)
     weather_records = load_weather(session)
+    weather_records += gather.load_climatology_files(session)
+    _seed_farm_resources(session, rng)
     lots = _seed_lots(session, org, cycles, rng)
     offers = _seed_offers(session, org, lots, rng)
 
@@ -671,8 +674,145 @@ def _seed_observations(
         )
         count += 1
 
+    count += _seed_symptom_reports(session, cycles, sources, rng)
+
     session.flush()
     return count, len(discrepancy_ids)
+
+
+#: Symptom pictures a field officer might actually record, per crop. The first entry in each
+#: pair is a clean single-condition picture; the second is deliberately ambiguous between two
+#: conditions, so FR-524's refusal-to-guess path is exercised by the seed rather than only by
+#: a unit test. A demo where the system never has to say "I cannot tell" would be hiding the
+#: most trustworthy thing it does.
+SYMPTOM_PICTURES: dict[str, list[tuple[str, ...]]] = {
+    "Potato": [
+        ("leaf_lesion_dark", "white_growth_underside", "rapid_spread"),
+        ("leaf_lesion_dark", "leaf_margin_necrosis"),
+        ("leaf_yellowing", "lower_leaves_first"),
+        ("concentric_rings", "lower_leaves_first", "leaf_lesion_dark"),
+    ],
+    "Wheat": [
+        ("yellow_stripes", "powder_on_leaf"),
+        ("leaf_yellowing", "lower_leaves_first"),
+        ("leaf_yellowing",),
+    ],
+    "Paddy": [
+        ("leaf_margin_necrosis", "wavy_lesion_edge"),
+        ("leaf_yellowing", "stunted_growth"),
+    ],
+    "Mustard": [("leaf_yellowing", "lower_leaves_first"), ("wilting", "leaf_curl")],
+    "Guava": [("wilting", "leaf_curl")],
+}
+
+#: Share of active cycles carrying a symptom report. Most fields are fine most of the time,
+#: and a seed where every plot is diseased would make the outbreak signal meaningless.
+SYMPTOMATIC_SHARE = 0.09
+
+
+def _seed_symptom_reports(
+    session: Session,
+    cycles: list[CropCycle],
+    sources: dict[str, DataSource],
+    rng: random.Random,
+) -> int:
+    """Symptom checklists on a minority of active cycles, clustered in a few villages.
+
+    Clustered rather than uniform on purpose. A uniform sprinkle would never trip the
+    outbreak detector, and an outbreak signal that has never fired on the seed is a feature
+    nobody has actually seen work.
+    """
+    active = [c for c in cycles if c.status is enums.CropCycleStatus.GROWING]
+    if not active:
+        return 0
+
+    crop_by_variety = {
+        variety_id: crop_name
+        for variety_id, crop_name in session.execute(
+            select(Variety.id, Crop.name).join(Crop, Variety.crop_id == Crop.id)
+        ).all()
+    }
+    plot_to_farmer = {
+        plot_id: (village or "")
+        for plot_id, village in session.execute(
+            select(Plot.id, Farmer.village)
+            .join(Farm, Plot.farm_id == Farm.id)
+            .join(Farmer, Farm.operator_farmer_id == Farmer.id)
+        ).all()
+    }
+
+    # Pick a few villages to be the outbreak, then bias selection toward them.
+    villages = sorted({v for v in plot_to_farmer.values() if v})
+    hot = set(rng.sample(villages, min(3, len(villages)))) if villages else set()
+
+    count = 0
+    for cycle in active:
+        village = plot_to_farmer.get(cycle.plot_id, "")
+        chance = SYMPTOMATIC_SHARE * (4.0 if village in hot else 0.6)
+        if rng.random() > chance:
+            continue
+        crop_name = crop_by_variety.get(cycle.variety_id)
+        pictures = SYMPTOM_PICTURES.get(crop_name or "")
+        if not pictures:
+            continue
+        source_key, source_type = rng.choices(
+            [
+                ("field-officer", enums.SourceType.FIELD_OFFICER),
+                ("farmer-app", enums.SourceType.FARMER_SELF_REPORT),
+            ],
+            weights=[70, 30],
+        )[0]
+        resolver.record_observation(
+            session,
+            subject_type="crop_cycle",
+            subject_id=cycle.id,
+            attribute="symptoms",
+            value_text=",".join(rng.choice(pictures)),
+            source_type=source_type,
+            source=sources[source_key],
+            observed_at=NOW - dt.timedelta(days=rng.randint(0, 14)),
+            recorded_at=NOW - dt.timedelta(days=rng.randint(0, 14)),
+        )
+        count += 1
+    return count
+
+
+#: Livestock and compost on a share of farms. Without these the Farm module cannot show the
+#: integrated-farming credit, which is the term that most distinguishes a mixed smallholding
+#: from a spreadsheet's view of it (D-15).
+LIVESTOCK_SHARE = 0.42
+COMPOST_SHARE = 0.18
+
+
+def _seed_farm_resources(session: Session, rng: random.Random) -> int:
+    count = 0
+    for farm_row in session.execute(select(Farm)).scalars():
+        if rng.random() < LIVESTOCK_SHARE:
+            session.add(
+                FarmResource(
+                    farm_id=farm_row.id,
+                    type=enums.FarmResourceType.LIVESTOCK,
+                    label="Cattle / buffalo",
+                    quantity=float(rng.choice([1, 1, 2, 2, 3, 4])),
+                    unit="head",
+                    attributes={"is_synthetic": True},
+                )
+            )
+            count += 1
+        if rng.random() < COMPOST_SHARE:
+            session.add(
+                FarmResource(
+                    farm_id=farm_row.id,
+                    type=enums.FarmResourceType.COMPOST,
+                    label="Compost pit",
+                    quantity=float(rng.choice([1, 1, 2])),
+                    unit="pit",
+                    attributes={"is_synthetic": True},
+                )
+            )
+            count += 1
+    session.flush()
+    return count
 
 
 # --------------------------------------------------------------------------- lots & offers

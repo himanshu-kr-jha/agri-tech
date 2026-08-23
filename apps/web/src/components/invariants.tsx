@@ -201,6 +201,33 @@ export function ApprovalGate({
 // --------------------------------------------------------------------------- formatting
 
 /** ADR-0009: money is paise on the wire; rupees only at the edge. */
+/**
+ * Render a paise value according to the unit it is actually in.
+ *
+ * This exists because of a bug it now prevents: a buyer-selection recommendation carries
+ * `recommended_value` in **paise per kilogram**, and the briefing rendered it as a rupee
+ * total — producing "Rs 0.0 lakh · ₹18.54" next to each other, both wrong in different ways.
+ *
+ * The API always sends the unit alongside the number. Ignoring it is how a price becomes a
+ * total, and money in this system is integer paise precisely so that nobody has to guess.
+ */
+export function formatValue(paise: number | null, unit: string | null): string | null {
+  if (paise == null) return null;
+  switch (unit) {
+    case "paise_per_kg":
+      return `₹${(paise / 100).toFixed(2)}/kg`;
+    case "probability":
+      return `${Math.round(paise)}%`;
+    case null:
+    case undefined:
+      return formatInr(paise);
+    default:
+      // Every other unit the modules emit is a paise total: paise_margin_low,
+      // paise_foregone, paise_at_risk, paise_shortfall, paise_per_year.
+      return formatInr(paise);
+  }
+}
+
 export function formatInr(paise: number, { indianGrouping = true } = {}): string {
   const rupees = paise / 100;
   return rupees.toLocaleString(indianGrouping ? "en-IN" : "en-US", {

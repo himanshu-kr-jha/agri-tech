@@ -3,8 +3,13 @@
 import Link from "next/link";
 
 const NAV = [
+  { href: "/assistant", label: "Ask" },
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/decisions", label: "Decisions" },
+  { href: "/risk", label: "Risk" },
+  { href: "/market", label: "Market" },
   { href: "/farmers", label: "Farmers" },
+  { href: "/impact", label: "Impact" },
 ];
 
 export default function FpoLayout({ children }: { children: React.ReactNode }) {

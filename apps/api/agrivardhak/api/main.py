@@ -16,7 +16,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from agrivardhak.api import dashboard
+from agrivardhak.api import assistant, dashboard
 from agrivardhak.api.auth import CurrentScope
 from agrivardhak.api.scope import ScopeViolation
 from agrivardhak.config import get_settings
@@ -112,3 +112,4 @@ def me(scope: CurrentScope) -> dict[str, Any]:
 
 app.include_router(v1)
 app.include_router(dashboard.router)
+app.include_router(assistant.router)

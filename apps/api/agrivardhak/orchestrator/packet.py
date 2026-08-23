@@ -14,7 +14,7 @@ from __future__ import annotations
 import datetime as dt
 import uuid
 from decimal import Decimal
-from typing import Any
+from typing import Any, ClassVar
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -156,7 +156,11 @@ class DecisionPacket(BaseModel):
     model_id: str
 
     #: Fixed section order, used by the renderer and by the SSE stream (FR-801).
-    SECTION_ORDER: tuple[str, ...] = (
+    #:
+    #: ``ClassVar`` and not a plain annotation: without it Pydantic treats this as a *field*,
+    #: so every packet carries a redundant copy of the section list, it lands in the frozen
+    #: snapshot, and ``DecisionPacket.SECTION_ORDER`` raises AttributeError on the class.
+    SECTION_ORDER: ClassVar[tuple[str, ...]] = (
         "situation",
         "impact",
         "recommendation",

@@ -293,30 +293,71 @@ schema-constrained tool use — never parsed free text (FR-803).
 
 ### 5.2 Cross-domain override
 
-The behaviour the session specifically asked for, on the Prayagraj demo data (D-24, D-25):
+**This section was rewritten once the real data arrived, and the correction is worth keeping.**
+
+The original sketch used an illustrative "unseasonal rain probability 0.71" for the February
+potato harvest window. The measured figure, from 30 years of ERA5 reanalysis at the tract
+point, is **0.167** — roughly one year in six. Building the demo on the invented number would
+have produced a more dramatic story and a false one, and it would have been indistinguishable
+from a measured number once it was on a screen.
+
+Correcting it changed the story from a weather story to a price story, which is what the data
+actually supports. On the seeded Prayagraj collective the modules produce this:
 
 ```
-Farm module      → "potato has the best income per rupee on these 740 doab acres"  conf 0.79
-Market module    → "UP potato arrivals surging; expected price band ₹8–12/kg
-                    at the Feb window, below the ₹14–17 assumed by the farm module" conf 0.84
-Risk module      → "unseasonal rain / hail probability 0.71 in the Feb–Mar harvest
-                    window; 740 acres of potato exposed"                            conf 0.68
+Farm module    → "Ganga-Par: Paddy — the crop actually planted here — ranks 4 of 4 on
+                  return per rupee (0.28 against Mustard's 1.93)"                 conf 0.58
+               → the same, on the doab                                            conf 0.58
+Risk module    → "Paddy harvests into its annual price trough: Rs 20.30/kg in November
+                  against Rs 23.69/kg in January, across 1,868 t"                 conf 0.70
+               → "November arrivals run 36.6x the year's median month — the trough is a
+                  glut, so it recurs rather than passing"                         conf 0.70
+               → "Paddy is 99% of operated area across 749 farmers"               conf 0.90
 
 Orchestrator output:
-  override: farm_intelligence.crop_choice.potato
-  reason:   "Market and climate evidence both exceed the farm module's confidence
-             and act in the same direction, on the same crop, in the same window.
-             Proposing the alternative with the better risk-adjusted outcome."
-  proposal: stagger the harvest and pre-book cold storage for the exposed acreage;
-            partial reallocation toward mustard on the rain-fed Yamuna-par plots,
-            with the quantified trade-off and what would reverse the call
+  override: current_cropping.paddy   (module: status_quo)
+  reason:   "The collective's current concentration in paddy is contradicted by 3 findings
+             from 2 independent modules, all pointing the same way about the same crop in
+             the same window. Nobody proposed this cropping pattern — it is what is already
+             planted, which is why it would otherwise go unexamined. This is not an
+             instruction to stop growing paddy: it is the case for the board to make that
+             choice deliberately, with the alternatives priced."
 ```
 
-The three findings converge because the district's real agronomy makes them converge — potato's
-harvest window genuinely sits inside UP's unseasonal-rain hazard window, and that is when
-arrivals genuinely peak. The override reads as inevitable rather than staged.
+**A third correction, and this one is about not cheating.** An earlier run *did* show a
+Market-module finding here — "paddy realises 33% below the mandi modal" — and it was an
+artifact of reading an ascending price series as if it were descending, so the comparison was
+against prices from two years earlier. Fixing that bug removed the finding, and with it the
+override, because only one module was left disagreeing.
 
-The override is rendered in the packet. A silent override would be a trust failure.
+The tempting repair was to lower `OVERRIDE_QUORUM` to 1 and get the demo beat back. What was
+done instead was to look for evidence that genuinely existed: the Farm module ranks every
+crop and was reporting only the winner, throwing away where the *incumbent* crop sat. Naming
+that is honest, independently useful — an FPO with 99% of its area in one crop wants to know
+where that crop ranks, not which crop wins in the abstract — and it makes the convergence
+real rather than manufactured.
+
+The real realisation gaps, for the record: paddy 9.8%, potato 12.1%, and wheat, mustard and
+guava all clear *above* the mandi modal. That last part is the better story anyway — it is
+the collective's aggregation premium showing up in the data.
+
+**The second correction is structural.** The original rule could only override something a
+*module* had proposed, which quietly assumed the risky plan is always the one the AI
+suggests. On real data the opposite held: 99% of operated area was already committed to a
+crop that two independent modules found problems with, and nobody had proposed it. So the
+reconciler now treats the **dominant planted crop** — named by the Risk module's concentration
+finding — as an implicit plan that can be overridden the same way.
+
+Overriding the plan nobody argued for is usually the more valuable half.
+
+An override fires only when at least `OVERRIDE_QUORUM` (2) *distinct modules* produce adverse
+findings about the same subject, each more confident than what they contradict by more than
+`OVERRIDE_MARGIN` (0.05). One module disagreeing with another is a difference of opinion; two
+agreeing against a third is a pattern.
+
+The override is rendered in the packet, above the recommendations. A silent override would be
+a trust failure — the CEO's ability to disagree is the whole human-in-the-loop guarantee, and
+it needs something visible to disagree with.
 
 ### 5.3 The Decision Packet schema
 

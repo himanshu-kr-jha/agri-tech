@@ -111,3 +111,25 @@ def kg_to_tonne(kg: Decimal | float | int) -> Decimal:
 
 def tonne_to_kg(tonne: Decimal | float | int) -> Decimal:
     return Decimal(str(tonne)) * KG_PER_TONNE
+
+
+#: Rupees in one lakh and one crore. Named because the mistake this prevents is specific and
+#: has already happened once here: paise are *two* decimal places away from rupees, so
+#: ``paise / 100_000`` looks like "lakh" and is a hundred times too large. Every rupee figure
+#: in an early Decision Packet was wrong that way — Rs 27 lakh of avoided fertiliser rendered
+#: as Rs 2,662 lakh — and it read as plausible enough that only the arithmetic caught it.
+PAISE_PER_LAKH = 100 * 100_000
+PAISE_PER_CRORE = 100 * 10_000_000
+
+
+def format_lakh(paise: int, *, places: int = 1) -> str:
+    """Render paise as a lakh figure: ``format_lakh(2_700_000) == '0.3'``.
+
+    Use this rather than dividing inline. The division is trivial; getting it right every
+    time under deadline is not.
+    """
+    return f"{paise / PAISE_PER_LAKH:,.{places}f}"
+
+
+def format_crore(paise: int, *, places: int = 2) -> str:
+    return f"{paise / PAISE_PER_CRORE:,.{places}f}"
