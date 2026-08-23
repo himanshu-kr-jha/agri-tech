@@ -189,19 +189,49 @@ def _log_scale(value: float, *, floor: float, ceiling: float) -> float:
     )
 
 
-def rank_findings(outputs: list[ModuleOutput], as_of: dt.datetime) -> list[RankedFinding]:
+#: How hard a named subject pulls the ranking. Asked about guava, a CEO should get guava
+#: first even though guava is 9 acres against paddy's 1,832 — impact is log-scaled, so
+#: without this the largest crop wins every question regardless of what was asked.
+FOCUS_BOOST = 3.0
+
+#: And how hard a *different* named crop is pushed down. Demoted rather than dropped: that
+#: guava is 0.5% of operated area is context the answer needs, not noise to hide.
+FOCUS_DEMOTE = 0.2
+
+
+def focus_weight(finding: Finding, focus_subject: str | None) -> float:
+    """Multiplier applied when the question named a specific subject.
+
+    Findings with no subject at all — cross-cutting ones — are left alone. Only a finding
+    that is *about a different named thing* is pushed down, so asking about guava reorders
+    the answer without amputating it.
+    """
+    if not focus_subject:
+        return 1.0
+    subject = subject_of(finding.key)
+    if subject == focus_subject.lower():
+        return FOCUS_BOOST
+    if "." not in finding.key:
+        return 1.0
+    return FOCUS_DEMOTE
+
+
+def rank_findings(
+    outputs: list[ModuleOutput], as_of: dt.datetime, focus_subject: str | None = None
+) -> list[RankedFinding]:
     ranked: list[RankedFinding] = []
     for output in outputs:
         for finding in output.findings:
             if not finding.evidence:
                 continue  # FR-804, enforced again here rather than trusted
             urgency = urgency_of(finding, as_of)
+            weight = focus_weight(finding, focus_subject)
             ranked.append(
                 RankedFinding(
                     finding=finding,
                     module=output.module,
                     module_version=output.version,
-                    score=round(impact_of(finding) * finding.confidence * urgency, 5),
+                    score=round(impact_of(finding) * finding.confidence * urgency * weight, 5),
                     urgency=urgency,
                 )
             )
@@ -352,6 +382,22 @@ def _is_adverse(finding: Finding) -> bool:
 # --------------------------------------------------------------------------- assembly
 
 
+def _action_is_about(action: ProposedAction, subject: str) -> bool:
+    """Is this action about the named crop?
+
+    Key *or* title, because the key alone is not reliable: the Risk module keys its actions
+    ``stagger_sale.paddy`` while the Market module keys its by lot id — ``sell.<uuid>`` — and
+    puts the crop only in the title. Matching on the key alone silently excluded every sale
+    action from every focused question, which is the opposite of the intent.
+
+    Titles are safe to match here in a way ``Finding.statement`` is not: they are composed by
+    our own deterministic modules from our own crop names, and the narrator rewrites claim
+    prose only, never an action title. No ingested text reaches this comparison.
+    """
+    needle = subject.lower()
+    return needle in action.key.lower() or needle in action.title.lower()
+
+
 def to_claim(finding: Finding) -> Claim:
     return Claim(
         statement=finding.statement,
@@ -419,6 +465,8 @@ def build_confidence(
     outputs: list[ModuleOutput],
     ranked: list[RankedFinding],
     floor: float,
+    focus_subject: str | None = None,
+    unmatched_focus: bool = False,
 ) -> ConfidenceBlock:
     """Overall confidence, and — when it is low — what would actually raise it (FR-813).
 
@@ -473,6 +521,29 @@ def build_confidence(
             "(seed/sources.md A1-A15, E1-E6) lifts every economic claim here."
         )
 
+    if focus_subject and unmatched_focus:
+        remedies.insert(
+            0,
+            f"No action can be proposed for {focus_subject} from what is on record. The "
+            f"modules found nothing actionable specific to it — recording buyers, offers or "
+            f"crop cycles for {focus_subject} is what would produce one. Recommendations "
+            f"about other crops are deliberately not shown here: they answer a different "
+            f"question.",
+        )
+
+    if focus_subject and not any(
+        subject_of(r.finding.key) == focus_subject.lower() for r in ranked
+    ):
+        # The question named something we hold nothing about. Answering anyway and saying
+        # nothing would let a CEO read an answer about the wrong crop as if it were the
+        # answer to their question.
+        remedies.insert(
+            0,
+            f"Nothing on record is specific to {focus_subject}. What follows is the "
+            f"collective's wider position, not an answer about {focus_subject} — recording "
+            f"crop cycles, buyers or prices for it would change that.",
+        )
+
     return ConfidenceBlock(
         overall=round(min(1.0, max(0.0, overall)), 3),
         per_section=per_section,
@@ -490,10 +561,16 @@ def reconcile(
     max_situation: int = 5,
     max_impact: int = 4,
     max_recommendations: int = 5,
+    focus_subject: str | None = None,
 ) -> Reconciled:
-    """The deterministic core. An LLM narrates this; it does not decide it."""
+    """The deterministic core. An LLM narrates this; it does not decide it.
+
+    ``focus_subject`` is the crop the question named, if any. It reorders — it never filters.
+    It is frozen into the EvidenceSnapshot and replayed from there, so a packet built with a
+    focus still reproduces byte-for-byte (INV-2).
+    """
     dropped = sum(1 for o in outputs for f in o.findings if not f.evidence)
-    ranked = rank_findings(outputs, as_of)
+    ranked = rank_findings(outputs, as_of, focus_subject)
     overrides = detect_overrides(ranked)
 
     situation = [
@@ -530,10 +607,27 @@ def reconcile(
             if action.value_paise
             else 0.3
         )
+        if focus_subject:
+            # Without this the packet answers a guava question with a paddy action, because
+            # a paddy action is worth two orders of magnitude more rupees.
+            weight *= FOCUS_BOOST if focus_subject.lower() in action.key.lower() else FOCUS_DEMOTE
         return (1 if demoted else 0, -(weight * action.confidence))
 
-    ordered = sorted(all_actions, key=action_rank)
-    chosen = [a for _m, a in ordered][:max_recommendations]
+    ordered = [a for _m, a in sorted(all_actions, key=action_rank)]
+
+    unmatched_focus = False
+    if focus_subject:
+        # Reordering alone is not enough. An action about a different crop is not a weaker
+        # answer to the question — it is an answer to a different question, and leaving it
+        # at the top means a guava question is answered with "stagger the paddy sale".
+        #
+        # Filtered before the truncation, not after: a matching action that ranked sixth on
+        # rupees is still the right answer to a question that named its crop.
+        matching = [a for a in ordered if _action_is_about(a, focus_subject)]
+        unmatched_focus = not matching
+        ordered = matching
+
+    chosen = ordered[:max_recommendations]
 
     findings_used = [r.finding for r in (*situation, *impact)]
     evidence: list[EvidenceRef] = []
@@ -574,6 +668,8 @@ def reconcile(
         actions=[assign(a, as_of) for a in chosen],
         evidence=evidence[:60],
         drilldown=merge_drilldown(findings_used, chosen),
-        confidence=build_confidence(outputs, ranked, confidence_floor),
+        confidence=build_confidence(
+            outputs, ranked, confidence_floor, focus_subject, unmatched_focus
+        ),
         dropped_unevidenced=dropped,
     )

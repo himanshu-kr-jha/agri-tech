@@ -216,3 +216,52 @@ class LlmCallLog(Base, AppendOnlyMixin):
     latency_ms: Mapped[int | None]
     stop_reason: Mapped[str | None] = mapped_column(String(40))
     error: Mapped[str | None] = mapped_column(Text)
+
+
+class ConversationTurn(Base, AppendOnlyMixin):
+    """One question and the answer it got. Append-only (FR-709, SAF-10).
+
+    Why this table exists when ``decision_packet`` already records questions: it only records
+    the ones that produced a Decision Packet. Under a conversational assistant most answers
+    are lookups and explanations, and a system whose promise is "a farmer can contest a
+    decision" cannot log its decisions and not its answers. Every turn is recorded, whatever
+    shape it took.
+
+    Append-only for the same reason as the audit trail: the value of the record is that it
+    cannot be tidied afterwards.
+
+    ``answer`` holds the rendered claims or the refusal, not the packet. A DECISION turn
+    points at ``packet_id`` and the packet carries its own frozen evidence — copying it here
+    would create a second copy that could drift from the one INV-2 protects.
+    """
+
+    __tablename__ = "conversation_turn"
+    __table_args__ = (
+        Index("ix_conversation_turn_conversation", "conversation_id", "created_at"),
+        Index("ix_conversation_turn_org", "organization_id", "created_at"),
+    )
+
+    id: Mapped[UuidPk]
+    #: Groups turns into one session. Client-supplied; a new id simply starts a new thread.
+    conversation_id: Mapped[uuid.UUID] = mapped_column(nullable=False)
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("organization.id"))
+    actor_user_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("app_user.id"))
+    #: Set when a farmer asked. Which assistant answered is not inferable from roles alone
+    #: once staff can also hold a farmer account.
+    farmer_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("farmer.id"))
+
+    question: Mapped[str] = mapped_column(Text, nullable=False)
+    #: DECISION | LOOKUP | EXPLAIN | REFUSE
+    shape: Mapped[str] = mapped_column(String(16), nullable=False)
+    lookup_key: Mapped[str | None] = mapped_column(String(48))
+    #: The router's own output, kept so a bad answer can be traced to a bad route.
+    intent_plan: Mapped[Json | None]
+    #: True when the router fell back to keywords — a degraded answer, recorded as degraded.
+    fell_back: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
+    packet_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("decision_packet.id"))
+    #: The rendered claims, or the refusal text. Absent for DECISION turns, which point at
+    #: the packet instead.
+    answer: Mapped[Json | None]
+    grounded: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    latency_ms: Mapped[int | None]

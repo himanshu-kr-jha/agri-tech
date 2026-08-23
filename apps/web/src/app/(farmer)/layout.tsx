@@ -36,6 +36,12 @@ export default async function FarmerLayout({ children }: { children: React.React
             </span>
           </Link>
           <span className="text-sm text-muted-foreground">मेरा खेत · My farm</span>
+          <Link
+            href="/ask"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            पूछिए · Ask
+          </Link>
           <div className="ml-auto">
             <SignOutButton />
           </div>

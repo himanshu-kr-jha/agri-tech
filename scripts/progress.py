@@ -267,6 +267,39 @@ DELIVERABLES: list[Deliverable] = [
                                 "test_no_api_key_skips_narration_rather_than_erroring"])),
 
     # ---- Stretch (docs/MVP-SCOPE.md §3 "build if ahead of schedule")
+    # ---- Phase 5: the conversational assistant (docs/adr/0011)
+    Deliverable("M24", "Assistant contracts + NIM provider adapter", "5", "FR-807, NFR-302",
+                Evidence(symbols=["agrivardhak.orchestrator.assistant_contracts:AssistantAnswer",
+                                  "agrivardhak.orchestrator.assistant_contracts:IntentPlan",
+                                  "agrivardhak.orchestrator.llm:structured"],
+                         tests=["test_the_lookup_vocabulary_covers_both_audiences_and_nothing_else"])),
+    Deliverable("M25", "Intent router with keyword fallback", "5", "FR-807, NFR-303",
+                Evidence(symbols=["agrivardhak.orchestrator.router:plan"],
+                         tests=["test_a_farmer_is_never_routed_to_a_decision",
+                                "test_a_farmer_can_never_be_routed_to_an_organization_lookup"])),
+    Deliverable("M26", "Named lookups, organization and farmer", "5", "FR-806, INV-5",
+                Evidence(symbols=["agrivardhak.orchestrator.lookups.fpo:run",
+                                  "agrivardhak.orchestrator.lookups.farmer:run"],
+                         tests=["test_every_lookup_key_is_answerable",
+                                "test_every_claim_carries_evidence",
+                                "test_the_farmer_module_exposes_no_organization_query"])),
+    Deliverable("M27", "Review gate: deterministic grounding, order-only selector", "5",
+                "FR-802, FR-804",
+                Evidence(symbols=["agrivardhak.orchestrator.review:grounded",
+                                  "agrivardhak.orchestrator.review:select_sections"],
+                         tests=["test_grounding_rejects_a_claim_that_cites_evidence_nobody_produced",
+                                "test_the_selector_cannot_drop_a_protected_section"])),
+    Deliverable("M28", "Chat endpoint + conversation turns", "5", "API-05, FR-709",
+                Evidence(symbols=["agrivardhak.orchestrator.chat:answer",
+                                  "agrivardhak.domain.models:ConversationTurn"],
+                         files=["apps/web/src/components/chat.tsx",
+                                "apps/web/src/app/(farmer)/ask/page.tsx"],
+                         tests=["test_every_turn_is_recorded_whatever_shape_it_took",
+                                "test_the_whole_chat_works_with_no_model_configured"])),
+    Deliverable("M12b", "Funding intelligence reachable + announcements shared", "5",
+                "FR-601…606, FR-105, INV-5",
+                Evidence(symbols=["agrivardhak.orchestrator.gather:for_funding"],
+                         tests=["test_internal_announcements_never_reach_a_farmer"])),
     Deliverable("S1", "Outbreak clustering", "S", "FR-525",
                 Evidence(symbols=["agrivardhak.intelligence.crop_health:cluster"],
                          tests=["test_clustered_reports_raise_an_outbreak_signal",
@@ -455,9 +488,10 @@ def render() -> str:
         "2": "Phase 2 — Intelligence (hours 18–36)",
         "3": "Phase 3 — The loop closes (hours 36–52)",
         "4": "Phase 4 — Hardening (hours 52–66)",
+        "5": "Phase 5 — Conversational assistant (docs/adr/0011)",
         "S": "Stretch — build if ahead of schedule",
     }
-    for phase in ("0", "1", "2", "3", "4", "S"):
+    for phase in ("0", "1", "2", "3", "4", "5", "S"):
         items = by_phase.get(phase, [])
         if not items:
             continue

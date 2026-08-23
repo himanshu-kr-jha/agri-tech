@@ -1,12 +1,19 @@
 """Application settings. Secrets come from the environment, never the repository (NFR-403)."""
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+#: Resolved against the package rather than the working directory. A bare ``".env"`` is read
+#: relative to CWD, so the same settings loaded fine under ``make dev`` (which cds into
+#: apps/api) and silently found no key under any script run from the repo root — the kind of
+#: difference that looks like "the model is not working" rather than like a path bug.
+_ENV_FILE = Path(__file__).resolve().parents[1] / ".env"
+
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_prefix="AGRI_", extra="ignore")
+    model_config = SettingsConfigDict(env_file=_ENV_FILE, env_prefix="AGRI_", extra="ignore")
 
     environment: str = "local"
     debug: bool = True
@@ -19,6 +26,27 @@ class Settings(BaseSettings):
 
     anthropic_api_key: str | None = None
     orchestrator_model: str = "claude-sonnet-5"
+
+    # ------------------------------------------------------------- assistant routing
+    #: Which provider backs the intent router and the relevance selector. ``"none"``
+    #: disables both, and the assistant degrades to keyword routing with unfiltered
+    #: packets rather than failing — see orchestrator/llm.py (NFR-303).
+    llm_provider: str = "nvidia"
+
+    #: NVIDIA NIM exposes an OpenAI-compatible /chat/completions. We call it over httpx
+    #: rather than adding the OpenAI SDK: two call sites do not justify a dependency.
+    nvidia_api_key: str | None = None
+    nvidia_base_url: str = "https://integrate.api.nvidia.com/v1"
+    #: An 8B, deliberately. The router picks one item from a closed enum — a task that
+    #: does not need a frontier model, and on this tier llama-3.3-70b answers in ~50s
+    #: against this one's ~500ms. A router slower than the work it schedules is worse
+    #: than the keyword planner it replaces. Measured in docs/adr/0011.
+    router_model: str = "meta/llama-3.1-8b-instruct"
+
+    #: Shorter than the narrator's budget on purpose. The narrator runs after the answer
+    #: exists, so it can afford to be slow; the router runs before any work starts, and a
+    #: slow classification is worse than the keyword one it falls back to.
+    router_timeout_seconds: float = 8.0
 
     #: NFR-302: below this, we return deterministic module output without narrative
     #: synthesis rather than an error page.
