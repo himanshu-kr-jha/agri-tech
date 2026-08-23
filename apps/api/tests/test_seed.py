@@ -203,3 +203,97 @@ def test_every_variety_declares_whether_it_is_sourced(session, seeded) -> None:
             assert variety.is_synthetic is True, (
                 f"{variety.name} has no source_ref and is not flagged synthetic"
             )
+
+
+# --------------------------------------------------------------------------- learning loop
+
+
+def test_the_learning_loop_is_seeded(session, org) -> None:
+    """The Impact panel has something to report on a fresh seed (M18, FR-1201...1203)."""
+    from agrivardhak.learning import attribution
+
+    summary = attribution.summarise(session, organization_id=org.id)
+    # Lower bounds, not equality. The suite runs against the same database `make seed`
+    # populated, and other tests in it create interventions of their own — an exact count
+    # here fails depending on which tests ran first, which is a property of the fixture
+    # rather than of the seed.
+    assert isinstance(summary["interventions"], int)
+    assert summary["interventions"] >= 15
+    assert isinstance(summary["attributions"], int)
+    assert summary["attributions"] >= 11
+    assert summary["predictions_scored"] > 0
+    assert summary["mean_absolute_error"] is not None
+
+
+def test_the_seeded_impact_is_not_a_highlight_reel(session, org) -> None:
+    """SAF-12, asserted rather than intended.
+
+    The screen's whole argument is that what could *not* be attributed matters as much as
+    what could. A seed weighted toward successes would quietly turn it into the vendor
+    dashboard it exists to argue against, and nothing else in the suite would notice.
+    """
+    from agrivardhak.learning import attribution
+
+    summary = attribution.summarise(session, organization_id=org.id)
+    strengths = summary["attribution_strength"]
+    assert isinstance(strengths, dict)
+    assert isinstance(summary["interventions"], int)
+
+    clean_wins = strengths.get("HIGH", 0) + strengths.get("MODERATE", 0)
+    assert clean_wins * 2 <= summary["interventions"], (
+        f"{clean_wins} of {summary['interventions']} executed actions are clean wins. "
+        "The seed has drifted into a highlight reel."
+    )
+    assert strengths.get("CONFOUNDED", 0) > 0, "no confounded attribution — SAF-12 unshown"
+    assert strengths.get("UNCERTAIN", 0) > 0, "nothing landed inside ordinary variation"
+    assert summary["unattributable"] > 0, "every action attributed — INV-7 has nothing to show"
+
+
+def test_every_executed_recommendation_has_an_approval(session, org) -> None:
+    """INV-1 as a property of the seeded data, not only of the API.
+
+    The seed writes history directly rather than going through the approval endpoint, so it
+    is exactly the place a recommendation could reach EXECUTED without a human behind it.
+    """
+    from agrivardhak.domain.enums import RecommendationStatus
+    from agrivardhak.domain.models.decisions import Approval, Recommendation
+
+    executed = list(
+        session.execute(
+            select(Recommendation).where(
+                Recommendation.organization_id == org.id,
+                Recommendation.status == RecommendationStatus.EXECUTED,
+            )
+        ).scalars()
+    )
+    assert executed, "no executed recommendations in the seed"
+    for recommendation in executed:
+        approvals = list(
+            session.execute(
+                select(Approval).where(Approval.recommendation_id == recommendation.id)
+            ).scalars()
+        )
+        assert approvals, f"{recommendation.title!r} is EXECUTED with no approval row (INV-1)"
+
+
+def test_unfollowed_advice_is_recorded_and_not_scored(session, org) -> None:
+    """INV-7. Advice nobody took must leave a row saying so, and must not be attributed."""
+    from agrivardhak.domain.enums import Adherence
+    from agrivardhak.domain.models.decisions import Attribution, Intervention
+
+    refused = list(
+        session.execute(
+            select(Intervention).where(Intervention.followed.in_([Adherence.NO, Adherence.UNKNOWN]))
+        ).scalars()
+    )
+    assert refused, "nothing in the seed represents advice that was not followed"
+    for intervention in refused:
+        scored = list(
+            session.execute(
+                select(Attribution).where(Attribution.intervention_id == intervention.id)
+            ).scalars()
+        )
+        assert not scored, (
+            f"intervention {intervention.id} was not followed but carries an attribution — "
+            "the model would learn from advice nobody took"
+        )

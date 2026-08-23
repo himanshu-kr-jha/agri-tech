@@ -18,6 +18,7 @@ import {
   StaleBadge,
   formatMass,
 } from "@/components/invariants";
+import { ErrorPanel } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -31,12 +32,12 @@ export default async function FarmerPage({ params }: { params: Promise<{ id: str
     if (error instanceof ApiError && error.status === 404) notFound();
     const status = error instanceof ApiError ? error.status : 0;
     return (
-      <main className="mx-auto max-w-4xl px-6 py-12">
-        <p className="rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+      <main className="max-w-5xl px-6 py-10 md:px-10">
+        <ErrorPanel title={status === 403 ? "Not visible to you" : "API unreachable"}>
           {status === 403
             ? "You may not view this farmer. Farmers see only their own record; organization staff see their members."
             : "Could not reach the API. Run `make api`."}
-        </p>
+        </ErrorPanel>
       </main>
     );
   }
@@ -46,20 +47,21 @@ export default async function FarmerPage({ params }: { params: Promise<{ id: str
   const past = cycles.filter((c) => c.status !== "GROWING");
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-10">
+    <main className="max-w-5xl px-6 py-10 md:px-10">
       <Link
         href="/farmers"
-        className="text-sm text-neutral-500 underline-offset-2 hover:underline"
+        className="text-xs uppercase tracking-[0.14em] text-muted-foreground underline-offset-4 transition-colors hover:text-foreground"
       >
         ← All farmers
       </Link>
 
-      <header className="mb-8 mt-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-semibold tracking-tight">{farmer.name}</h1>
+      <header className="mb-10 mt-4">
+        <p className="eyebrow">Member</p>
+        <div className="mt-1.5 flex flex-wrap items-center gap-3">
+          <h1 className="title-section text-[2rem]">{farmer.name}</h1>
           {farmer.is_synthetic && <DemoDataBadge />}
         </div>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="mt-2 text-sm text-muted-foreground">
           {[farmer.village, farmer.block, farmer.tract ? TRACT_LABEL[farmer.tract] : null]
             .filter(Boolean)
             .join(" · ")}
@@ -67,17 +69,25 @@ export default async function FarmerPage({ params }: { params: Promise<{ id: str
       </header>
 
       <Section title="Plots" count={plots.length}>
-        <ul className="divide-y divide-neutral-100 dark:divide-neutral-900">
+        <ul>
           {plots.map((plot) => (
-            <li key={plot.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2.5">
+            <li
+              key={plot.id}
+              className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-border/60 py-3 last:border-0"
+            >
               <span className="w-16 shrink-0 font-medium">{plot.label}</span>
-              <span className="tabular-nums">{plot.area_acres.toFixed(2)} ac</span>
+              <span className="tabular-nums">
+                <span className="font-serif text-[15px] text-primary">
+                  {plot.area_acres.toFixed(2)}
+                </span>
+                <span className="ml-1 text-xs text-muted-foreground">ac</span>
+              </span>
               {plot.provenance && (
                 <>
                   <ConfidenceChip value={plot.provenance.confidence} />
                   {plot.provenance.is_stale && <StaleBadge />}
                   {plot.provenance.has_open_discrepancy && <DiscrepancyBadge />}
-                  <span className="text-xs text-neutral-500">
+                  <span className="text-xs text-muted-foreground">
                     {plot.provenance.source_type.replace(/_/g, " ").toLowerCase()},{" "}
                     {new Date(plot.provenance.observed_at).toLocaleDateString("en-IN", {
                       day: "numeric",
@@ -87,7 +97,7 @@ export default async function FarmerPage({ params }: { params: Promise<{ id: str
                   </span>
                 </>
               )}
-              <span className="ml-auto text-xs text-neutral-500">
+              <span className="ml-auto text-xs text-muted-foreground">
                 {[plot.soil_type, plot.irrigation_source].filter(Boolean).join(" · ")}
               </span>
             </li>
@@ -103,15 +113,20 @@ export default async function FarmerPage({ params }: { params: Promise<{ id: str
 
       {contributions.length > 0 && (
         <Section title="Contributed to lots" count={contributions.length}>
-          <ul className="divide-y divide-neutral-100 dark:divide-neutral-900">
+          <ul>
             {contributions.map((item, index) => (
-              <li key={index} className="flex items-center gap-3 py-2.5">
+              <li
+                key={index}
+                className="flex items-center gap-3 border-b border-border/60 py-3 last:border-0"
+              >
                 <span className="font-medium">{item.crop}</span>
-                <span className="tabular-nums">{formatMass(item.quantity_kg)}</span>
+                <span className="font-serif text-[15px] tabular-nums text-primary">
+                  {formatMass(item.quantity_kg)}
+                </span>
                 {item.grade && (
-                  <span className="text-xs text-neutral-500">Grade {item.grade}</span>
+                  <span className="text-xs text-muted-foreground">Grade {item.grade}</span>
                 )}
-                <span className="ml-auto text-xs text-neutral-500">{item.lot}</span>
+                <span className="ml-auto font-mono text-xs text-muted-foreground">{item.lot}</span>
               </li>
             ))}
           </ul>
@@ -137,13 +152,12 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mb-8">
-      <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-neutral-500">
-        {title} <span className="font-normal">({count})</span>
-      </h2>
-      <div className="rounded-xl border border-neutral-200 px-4 dark:border-neutral-800">
-        {children}
+    <section className="mb-6">
+      <div className="mb-3 flex items-baseline gap-2.5">
+        <h2 className="title-panel">{title}</h2>
+        <span className="text-xs text-muted-foreground">({count})</span>
       </div>
+      <div className="panel py-1">{children}</div>
     </section>
   );
 }
@@ -166,13 +180,23 @@ function CycleTable({
   showHealth?: boolean;
 }) {
   return (
-    <ul className="divide-y divide-neutral-100 dark:divide-neutral-900">
+    <ul>
       {cycles.map((cycle) => (
-        <li key={cycle.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2.5">
+        <li
+          key={cycle.id}
+          className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-border/60 py-3 last:border-0"
+        >
           <span className="w-20 shrink-0 font-medium">{cycle.crop}</span>
-          <span className="text-xs text-neutral-500">{cycle.variety}</span>
-          <span className="text-xs text-neutral-500">{cycle.season}</span>
-          <span className="tabular-nums">{cycle.area_acres.toFixed(2)} ac</span>
+          <span className="text-xs text-muted-foreground">{cycle.variety}</span>
+          <span className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
+            {cycle.season}
+          </span>
+          <span className="tabular-nums">
+            <span className="font-serif text-[15px] text-primary">
+              {cycle.area_acres.toFixed(2)}
+            </span>
+            <span className="ml-1 text-xs text-muted-foreground">ac</span>
+          </span>
           {showHealth &&
             (cycle.crop_health_pct !== null ? (
               <span className="flex items-center gap-1.5">
@@ -183,11 +207,12 @@ function CycleTable({
                 {cycle.health_is_stale && <StaleBadge />}
               </span>
             ) : (
-              <span className="text-xs text-amber-700 dark:text-amber-300">
+              <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
                 no health reading — a field visit would raise this forecast&apos;s confidence
               </span>
             ))}
-          <span className="ml-auto text-xs text-neutral-500">
+          <span className="ml-auto text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
             {cycle.status.toLowerCase().replace(/_/g, " ")}
           </span>
         </li>

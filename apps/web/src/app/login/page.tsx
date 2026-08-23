@@ -15,6 +15,7 @@
 import { redirect } from "next/navigation";
 
 import { LoginForm, type DemoAccount } from "./login-form";
+import { IconLeaf } from "@/components/icons";
 import { currentUser, homeFor } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
@@ -39,21 +40,25 @@ export default async function LoginPage() {
   const accounts = await demoAccounts();
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-lg flex-col justify-center px-6 py-12">
-      <header className="mb-8">
-        <h1 className="text-2xl font-semibold tracking-tight">AgriVardhak</h1>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-          Decision support for farmer collectives. Sign in to continue.
+    <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center px-6 py-16">
+      <header className="mb-9">
+        <span className="mb-6 flex h-11 w-11 items-center justify-center rounded-md bg-primary text-primary-foreground">
+          <IconLeaf size={20} />
+        </span>
+        <p className="eyebrow">Farmer collectives</p>
+        <h1 className="title-page mt-1.5 text-[2.5rem]">AgriVardhak</h1>
+        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+          Decision support that recommends, never decides. Sign in to continue.
         </p>
       </header>
 
       <LoginForm accounts={accounts} />
 
-      <p className="mt-10 text-xs leading-relaxed text-neutral-500">
+      <p className="mt-10 border-t border-border/60 pt-6 text-xs leading-relaxed text-muted-foreground">
         Every farmer, plot and buyer in this system is synthetic and labelled{" "}
-        <span className="font-medium">DEMO DATA</span> wherever it appears. The market prices,
-        weather and hazard climatology are real and cited in{" "}
-        <code className="font-mono">seed/sources.md</code>.
+        <span className="font-medium text-foreground/70">DEMO DATA</span> wherever it appears.
+        The market prices, weather and hazard climatology are real and cited in{" "}
+        <code className="font-mono text-[11px]">seed/sources.md</code>.
       </p>
     </main>
   );

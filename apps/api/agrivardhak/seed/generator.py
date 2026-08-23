@@ -40,6 +40,7 @@ from agrivardhak.ingestion.weather import load_weather
 from agrivardhak.orchestrator import gather
 from agrivardhak.provenance import resolver, trust
 from agrivardhak.seed import reference as ref
+from agrivardhak.seed.learning import seed_learning_loop
 
 SEED = 20260822
 TODAY = dt.date(2026, 8, 22)
@@ -117,6 +118,11 @@ class SeedResult:
     weather_records: int = 0
     lots: int = 0
     offers: int = 0
+    decisions: int = 0
+    pending: int = 0
+    interventions: int = 0
+    attributions: int = 0
+    predictions_scored: int = 0
 
 
 # --------------------------------------------------------------------------- helpers
@@ -180,6 +186,11 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
     offers = _seed_offers(session, org, lots, rng)
     _seed_farmer_login(session, org, farmers)
 
+    # Two prior seasons of closed decision loops, so the Impact panel has something honest
+    # to report. Everything before this line describes a collective that has not yet decided
+    # anything; this is what makes the learning loop visible. See seed/learning.py.
+    loop = seed_learning_loop(session, org, rng)
+
     session.flush()
     return SeedResult(
         organization_id=org.id,
@@ -193,6 +204,11 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
         weather_records=weather_records,
         lots=len(lots),
         offers=offers,
+        decisions=loop.packets,
+        pending=loop.pending,
+        interventions=loop.interventions,
+        attributions=loop.attributions,
+        predictions_scored=loop.predictions_scored,
     )
 
 
@@ -204,6 +220,13 @@ def _summarize(session: Session, org: Organization) -> SeedResult:
     "price records 0 / weather days 0 / lots 0" — and anyone following the README would
     reasonably conclude the seed had broken. It had not; the summary was lying by omission.
     """
+    from agrivardhak.domain.models.decisions import (
+        Attribution,
+        DecisionPacket,
+        Intervention,
+        Prediction,
+        Recommendation,
+    )
     from agrivardhak.domain.models.provenance import (
         DataDiscrepancy,
         ExternalRecord,
@@ -233,6 +256,15 @@ def _summarize(session: Session, org: Organization) -> SeedResult:
         ),
         lots=count(Lot, Lot.organization_id == org.id),
         offers=count(DemandSignal, DemandSignal.organization_id == org.id),
+        decisions=count(DecisionPacket, DecisionPacket.organization_id == org.id),
+        pending=count(
+            Recommendation,
+            Recommendation.organization_id == org.id,
+            Recommendation.status == enums.RecommendationStatus.SUGGESTED,
+        ),
+        interventions=count(Intervention),
+        attributions=count(Attribution),
+        predictions_scored=count(Prediction, Prediction.actual_value.is_not(None)),
     )
 
 

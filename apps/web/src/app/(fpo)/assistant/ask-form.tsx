@@ -114,14 +114,14 @@ export function AskForm({ examples }: { examples: string[] }) {
           onChange={(e) => setQuestion(e.target.value)}
           rows={2}
           maxLength={500}
-          className="w-full rounded-lg border border-neutral-300 px-4 py-3 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+          className="w-full rounded-md border border-border/70 bg-card px-4 py-3.5 text-sm leading-relaxed text-foreground transition-colors placeholder:text-muted-foreground/50 focus:border-primary/30"
           placeholder="What should we do this season?"
         />
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="submit"
             disabled={busy}
-            className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
+            className="btn-primary"
           >
             {busy ? "Working…" : "Ask"}
           </button>
@@ -129,7 +129,7 @@ export function AskForm({ examples }: { examples: string[] }) {
             <button
               type="button"
               onClick={() => abort.current?.abort()}
-              className="rounded-md px-3 py-2 text-sm ring-1 ring-inset ring-neutral-300 dark:ring-neutral-700"
+              className="btn-ghost"
             >
               Stop
             </button>
@@ -142,7 +142,7 @@ export function AskForm({ examples }: { examples: string[] }) {
           <button
             key={example}
             onClick={() => setQuestion(example)}
-            className="rounded-full px-3 py-1 text-xs ring-1 ring-inset ring-neutral-300 hover:bg-neutral-100 dark:ring-neutral-700 dark:hover:bg-neutral-800"
+            className="rounded-full border border-border/60 bg-card px-3.5 py-1.5 text-xs text-muted-foreground transition-colors hover:border-primary/25 hover:text-foreground"
           >
             {example}
           </button>
@@ -150,7 +150,8 @@ export function AskForm({ examples }: { examples: string[] }) {
       </div>
 
       {progress && busy && (
-        <p className="mt-6 text-sm text-neutral-500">
+        <p className="mt-6 flex items-center gap-2.5 text-sm text-muted-foreground">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" aria-hidden="true" />
           {progress.state === "planning"
             ? "Choosing which modules this question needs…"
             : `Gathered ${progress.plan?.map((m) => MODULE_LABEL[m] ?? m).join(", ")} in ${(
@@ -160,21 +161,21 @@ export function AskForm({ examples }: { examples: string[] }) {
       )}
 
       {error && (
-        <p className="mt-6 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+        <p className="mt-6 rounded-md border border-destructive/25 bg-destructive/[0.04] p-4 text-sm text-destructive">
           {error}
         </p>
       )}
 
       {packet && (
-        <div className="mt-8 border-t border-neutral-200 pt-8 dark:border-neutral-800">
+        <div className="mt-10 border-t border-border/70 pt-8">
           <PacketView packet={packet} />
           {done && (
-            <p className="mt-8 border-t border-neutral-100 pt-4 text-xs text-neutral-500 dark:border-neutral-900">
+            <p className="mt-8 border-t border-border/60 pt-4 text-xs text-muted-foreground">
               Evidence frozen as{" "}
               <span className="font-mono">{done.content_hash.slice(0, 16)}…</span> ·{" "}
               <a
                 href={`/decisions/${done.packet_id}`}
-                className="underline underline-offset-2"
+                className="text-primary underline underline-offset-4"
               >
                 open this decision to approve or reject
               </a>

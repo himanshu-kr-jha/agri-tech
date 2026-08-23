@@ -1,26 +1,337 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens.
+ *
+ * Authored as bare HSL triplets ("H S% L%") rather than finished colours so that every
+ * utility can take an alpha modifier — `border-border/70` is the single most-used value in
+ * this UI and it needs the channels, not a hex. This is the shadcn convention and it is
+ * kept here deliberately: the token names are the vocabulary the whole app speaks.
+ *
+ * Light only. There is no dark set — see ui-clone-workspace/brand-interview.md #2. The
+ * design reads depth from hairlines on warm paper; inverted, that language says nothing.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 60 20% 97%; /* #F9F9F6 — warm paper */
+  --foreground: 150 12% 12%; /* #1B221F */
+
+  --card: 0 0% 100%;
+  --card-foreground: 150 12% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 150 12% 12%;
+
+  --primary: 145 37% 16%; /* #1A3826 — forest. Titles, numbers, the one filled button. */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 132 8% 57%; /* #899A8C — eyebrow labels */
+  --secondary-foreground: 145 37% 16%;
+
+  --muted: 132 10% 93%;
+  --muted-foreground: 145 8% 45%; /* #6A7C71 — all secondary copy */
+
+  --accent: 43 55% 51%; /* #C7A03D — gold. Once per screen, never decoration. */
+  --accent-foreground: 150 12% 12%;
+
+  --destructive: 0 66% 42%;
+  --destructive-foreground: 0 0% 100%;
+
+  --warning: 38 62% 42%;
+  --success: 145 37% 30%;
+
+  --border: 140 10% 88%; /* #DDE3DF — nearly always used at /0.7 */
+  --input: 140 10% 88%;
+  --ring: 145 37% 16%;
+
+  --sidebar: 145 37% 12%; /* #132A1D — darker than primary, reads as a spine */
+  --sidebar-foreground: 60 20% 97%;
+
+  --chart-1: 145 37% 16%;
+  --chart-2: 132 20% 45%;
+  --chart-3: 43 55% 51%;
+  --chart-4: 25 35% 45%;
+  --chart-5: 200 30% 40%;
+
+  --radius: 0.5rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-warning: hsl(var(--warning));
+  --color-success: hsl(var(--success));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --radius-md: calc(var(--radius) - 2px);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+}
+
+@layer components {
+  /*
+   * The paper ground: two offset dot grids at 6% and 4%. Faint enough that you notice it
+   * only as texture, which is the point — it stops a full-bleed cream page reading as
+   * "unstyled white".
+   */
+  .paper-noise {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(hsl(var(--muted-foreground) / 0.06) 1px, transparent 1px),
+      radial-gradient(hsl(var(--muted-foreground) / 0.04) 1px, transparent 1px);
+    background-size:
+      20px 20px,
+      10px 10px;
+    background-position:
+      0 0,
+      5px 5px;
+  }
+
+  /* The house card. No shadow anywhere in this design — depth is hairlines only. */
+  .panel {
+    border-radius: var(--radius-md);
+    border: 1px solid hsl(var(--border) / 0.7);
+    background-color: hsl(var(--card));
+    padding: 1.5rem;
+  }
+
+  .kpi-tile {
+    position: relative;
+    border-radius: var(--radius-md);
+    border: 1px solid hsl(var(--border) / 0.7);
+    background-color: hsl(var(--card));
+    padding: 1.25rem;
+    transition-property: transform, border-color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .kpi-tile:hover {
+    transform: translateY(-1px);
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  /* The attention slot. One per screen at most, or it stops meaning anything. */
+  .kpi-tile-invert {
+    background-color: hsl(var(--primary));
+    border-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .kpi-tile-invert:hover {
+    border-color: hsl(var(--primary));
+  }
+
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .kpi-tile-invert .kpi-label {
+    color: hsl(var(--primary-foreground) / 0.7);
+  }
+
+  .kpi-value {
+    margin-top: 0.5rem;
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: hsl(var(--primary));
+  }
+
+  .kpi-tile-invert .kpi-value {
+    color: hsl(var(--primary-foreground));
+  }
+
+  /*
+   * Micro-caps. The only labelling device in this system — there are no pill badges, no
+   * coloured section headers. Tracking does the work that weight and colour do elsewhere.
+   */
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: hsl(var(--secondary));
+  }
+
+  .eyebrow-sm {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Serif titles. Fraunces at these sizes needs negative tracking or it reads loose. */
+  .title-page {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-size: 3rem;
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    color: hsl(var(--primary));
+  }
+
+  .title-panel {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: hsl(var(--primary));
+  }
+
+  .title-section {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: hsl(var(--primary));
+  }
+
+  /* Hairline-bordered inline chip. Status, season, meta — never a call to action. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid hsl(var(--border) / 0.6);
+    background-color: hsl(var(--card));
+    padding: 0.25rem 0.75rem;
+    font-size: 12px;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 13.5px;
+    color: hsl(var(--sidebar-foreground) / 0.62);
+    transition-property: background-color, color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .nav-item:hover {
+    background-color: hsl(var(--sidebar-foreground) / 0.05);
+    color: hsl(var(--sidebar-foreground) / 0.9);
+  }
+
+  /* The gold appears here and essentially nowhere else. */
+  .nav-item-active {
+    background-color: hsl(var(--sidebar-foreground) / 0.09);
+    color: hsl(var(--sidebar-foreground));
+    font-weight: 500;
+    box-shadow: inset 2px 0 0 0 hsl(var(--accent));
+  }
+
+  .nav-group-label {
+    padding: 0 0.75rem;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: hsl(var(--sidebar-foreground) / 0.4);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-md);
+    background-color: hsl(var(--primary));
+    padding: 0.5rem 1rem;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: hsl(var(--primary-foreground));
+    transition-property: background-color, opacity;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: hsl(var(--primary) / 0.88);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid hsl(var(--border) / 0.7);
+    background-color: hsl(var(--card));
+    padding: 0.5rem 1rem;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    transition-property: border-color, background-color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  .btn-ghost:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+/* Focus is a ring in the primary, matching --ring. Never removed, only restyled. */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring) / 0.55);
+  outline-offset: 2px;
 }

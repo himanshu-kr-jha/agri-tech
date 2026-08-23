@@ -1,0 +1,11 @@
+# PostGIS + pgvector on Postgres 16, in one image.
+#
+# Upstream doesn't publish a combined image, so we layer pgvector onto the
+# official PostGIS image: apt has a packaged pgvector for this Debian base,
+# which keeps this Dockerfile short and the extension version tied to
+# Debian's security updates rather than a hand-pinned source build.
+FROM postgis/postgis:16-3.4
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends postgresql-16-pgvector \
+    && rm -rf /var/lib/apt/lists/*

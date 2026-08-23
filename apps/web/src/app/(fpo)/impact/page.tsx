@@ -13,6 +13,7 @@
 
 import { ApiError, api } from "@/lib/api";
 import { DemoDataBadge } from "@/components/invariants";
+import { EmptyState, ErrorPanel, KpiTile, PageHeader, Panel, PanelHeader } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -30,11 +31,11 @@ export default async function ImpactPage() {
   } catch (error) {
     const status = error instanceof ApiError ? error.status : 0;
     return (
-      <main className="mx-auto max-w-3xl px-6 py-12">
-        <h1 className="text-2xl font-semibold">Impact</h1>
-        <p className="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+      <main className="px-6 py-10 md:px-10">
+        <PageHeader eyebrow="The closed loop" title="Impact" />
+        <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
           {status === 403 ? "Organization-internal." : "Could not reach the API. Run `make api`."}
-        </p>
+        </ErrorPanel>
       </main>
     );
   }
@@ -42,107 +43,95 @@ export default async function ImpactPage() {
   const nothingYet = data.interventions === 0;
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
-      <header className="mb-6">
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-semibold tracking-tight">Impact</h1>
-          <DemoDataBadge />
-        </div>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-          What the decision loop has actually recorded — including what it could not honestly
-          claim.
-        </p>
-      </header>
+    <main className="max-w-5xl px-6 py-10 md:px-10">
+      <PageHeader
+        eyebrow="The closed loop"
+        title="What we can honestly claim"
+        subtitle="What the decision loop has actually recorded — including what it could not honestly claim."
+        aside={<DemoDataBadge />}
+      />
 
       {nothingYet ? (
-        <div className="rounded-xl border border-neutral-200 p-6 dark:border-neutral-800">
-          <p className="text-sm">
-            Nothing to report yet. Impact is measured from recommendations that were approved,
-            executed, and whose outcomes were recorded against a baseline.
+        <Panel>
+          <PanelHeader eyebrow="Nothing recorded" title="No impact to report yet" />
+          <p className="text-sm leading-relaxed text-foreground/85">
+            Impact is measured from recommendations that were approved, executed, and whose
+            outcomes were recorded against a baseline.
           </p>
-          <p className="mt-2 text-sm text-neutral-500">
+          <EmptyState>
             An empty panel is the correct answer here. Filling it with activity counts — how
             many questions were asked, how many packets generated — would be reporting our own
             busyness as the collective&apos;s benefit.
-          </p>
-        </div>
+          </EmptyState>
+        </Panel>
       ) : (
         <>
           <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <Stat label="Actions executed" value={data.interventions} />
-            <Stat label="Attributed" value={data.attributions} />
-            <Stat
+            <KpiTile label="Actions executed" value={data.interventions} />
+            <KpiTile label="Attributed" value={data.attributions} />
+            <KpiTile
               label="Could not attribute"
               value={data.unattributable}
-              detail="advice not followed"
+              caption="not followed, or followed too loosely to score"
             />
-            <Stat
+            <KpiTile
               label="Forecast error"
               value={
                 data.mean_absolute_error != null
                   ? `${Math.round(data.mean_absolute_error * 100)}%`
                   : "—"
               }
-              detail={`${data.predictions_scored} scored`}
+              caption={`${data.predictions_scored} scored`}
             />
           </section>
 
-          <section className="mt-8">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-              Attribution strength
-            </h2>
-            <ul className="mt-2 divide-y divide-neutral-100 rounded-xl border border-neutral-200 dark:divide-neutral-900 dark:border-neutral-800">
+          <Panel className="mt-4">
+            <PanelHeader
+              eyebrow="Confidence in the claim"
+              title="Attribution strength"
+              meta={`${data.attributions} attributed`}
+            />
+            <ul>
               {Object.entries(STRENGTH_NOTE).map(([strength, note]) => (
-                <li key={strength} className="flex items-baseline gap-3 px-4 py-2.5 text-sm">
-                  <span className="w-24 shrink-0 font-medium">{strength.toLowerCase()}</span>
-                  <span className="tabular-nums">{data.attribution_strength[strength] ?? 0}</span>
-                  <span className="text-xs text-neutral-500">{note}</span>
+                <li
+                  key={strength}
+                  className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-border/60 py-3 last:border-0"
+                >
+                  <span className="w-28 shrink-0 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    {strength.toLowerCase()}
+                  </span>
+                  <span className="w-10 font-serif text-lg tabular-nums text-primary">
+                    {data.attribution_strength[strength] ?? 0}
+                  </span>
+                  <span className="flex-1 text-xs leading-relaxed text-muted-foreground">
+                    {note}
+                  </span>
                 </li>
               ))}
             </ul>
-          </section>
+          </Panel>
 
-          <section className="mt-8">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-              Adherence
-            </h2>
-            <p className="mb-2 mt-0.5 text-xs text-neutral-400">
+          <Panel className="mt-4">
+            <PanelHeader eyebrow="INV-7" title="Adherence" />
+            <p className="-mt-2 mb-4 text-xs leading-relaxed text-muted-foreground">
               Whether the recommendation was actually followed. Advice nobody took tells us
-              nothing about the advice (INV-7).
+              nothing about the advice.
             </p>
-            <ul className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
+            <ul className="flex flex-wrap gap-x-10 gap-y-3">
               {Object.entries(data.adherence).map(([key, count]) => (
                 <li key={key}>
-                  <span className="text-neutral-500">{key.toLowerCase()}</span>{" "}
-                  <span className="font-medium tabular-nums">{count}</span>
+                  <p className="kpi-label">{key.toLowerCase()}</p>
+                  <p className="mt-1 font-serif text-xl tabular-nums text-primary">{count}</p>
                 </li>
               ))}
             </ul>
-          </section>
+          </Panel>
         </>
       )}
 
-      <p className="mt-8 border-t border-neutral-100 pt-4 text-xs text-neutral-500 dark:border-neutral-900">
+      <p className="mt-6 border-t border-border/60 pt-4 text-xs leading-relaxed text-muted-foreground">
         {data.note}
       </p>
     </main>
-  );
-}
-
-function Stat({
-  label,
-  value,
-  detail,
-}: {
-  label: string;
-  value: number | string;
-  detail?: string;
-}) {
-  return (
-    <div className="rounded-xl border border-neutral-200 p-4 dark:border-neutral-800">
-      <div className="text-xs font-medium uppercase tracking-wide text-neutral-500">{label}</div>
-      <div className="mt-2 text-2xl font-semibold tabular-nums">{value}</div>
-      {detail && <div className="mt-0.5 text-xs text-neutral-500">{detail}</div>}
-    </div>
   );
 }

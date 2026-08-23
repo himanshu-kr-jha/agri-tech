@@ -10,6 +10,8 @@ import Link from "next/link";
 
 import { ApiError, api, type Briefing, type Card } from "@/lib/api";
 import { ConfidenceChip, DemoDataBadge, formatValue } from "@/components/invariants";
+import { IconAlert, IconArrowUpRight, IconClock, IconDatabase, IconEye } from "@/components/icons";
+import { Chip, EmptyState, ErrorPanel, KpiTile, PageHeader, Panel, PanelHeader } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -25,34 +27,24 @@ function formatCardValue(card: Card): string {
 }
 
 function StatCard({ card }: { card: Card }) {
-  const body = (
-    <div className="flex h-full flex-col justify-between rounded-xl border border-neutral-200 p-4 transition-colors hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600">
-      <div className="flex items-start justify-between gap-2">
-        <span className="text-xs font-medium uppercase tracking-wide text-neutral-500">
-          {card.label}
-        </span>
-        {card.confidence !== null && <ConfidenceChip value={card.confidence} />}
-      </div>
-      <div className="mt-3">
-        <span className="text-2xl font-semibold tabular-nums">{formatCardValue(card)}</span>
-        {card.unit && card.unit !== "₹" && (
-          <span className="ml-1 text-sm text-neutral-500">{card.unit}</span>
-        )}
-      </div>
-      {card.detail && (
-        <p className="mt-1 line-clamp-2 text-xs text-neutral-500 dark:text-neutral-400">
-          {card.detail}
-        </p>
-      )}
-    </div>
+  const tile = (
+    <KpiTile
+      label={card.label}
+      value={formatCardValue(card)}
+      // "₹" is already inside the formatted value; showing it again as a suffix would read
+      // as a currency-per-currency unit.
+      unit={card.unit && card.unit !== "₹" ? card.unit : null}
+      caption={card.detail}
+      chip={card.confidence !== null ? <ConfidenceChip value={card.confidence} /> : null}
+    />
   );
 
   return card.href ? (
     <Link href={card.href} className="block h-full">
-      {body}
+      {tile}
     </Link>
   ) : (
-    body
+    tile
   );
 }
 
@@ -66,75 +58,103 @@ function StatCard({ card }: { card: Card }) {
 function BriefingPanel({ briefing }: { briefing: Briefing }) {
   if (briefing.quiet) {
     return (
-      <section className="mb-8 rounded-xl border border-neutral-200 p-4 text-sm text-neutral-600 dark:border-neutral-800 dark:text-neutral-400">
-        Nothing needs a decision today. That is a real answer, not an empty state — the
-        briefing stays short so that the day it is long, you read it.
-      </section>
+      <Panel className="mb-8" aria-label="Briefing">
+        <PanelHeader eyebrow="Briefing" title="Nothing needs a decision today" />
+        <EmptyState>
+          That is a real answer, not an empty state — the briefing stays short so that the day
+          it is long, you read it.
+        </EmptyState>
+      </Panel>
     );
   }
+
   return (
-    <section aria-label="Briefing" className="mb-8 space-y-4">
+    <section aria-label="Briefing" className="mb-8 grid gap-4 lg:grid-cols-2">
       {briefing.needs_decision.length > 0 && (
         <BriefingGroup
-          title="Waiting on you"
-          subtitle="Nothing here has happened yet"
+          eyebrow="Waiting on you"
+          title="Nothing here has happened yet"
           items={briefing.needs_decision}
+          icon={<IconAlert size={15} />}
           emphasis
         />
       )}
       {briefing.closing_soon.length > 0 && (
-        <BriefingGroup title="Closing soon" items={briefing.closing_soon} />
+        <BriefingGroup
+          eyebrow="Closing soon"
+          title="Windows about to shut"
+          items={briefing.closing_soon}
+          icon={<IconClock size={15} />}
+        />
       )}
       {briefing.watch.length > 0 && (
-        <BriefingGroup title="Worth watching" items={briefing.watch} />
+        <BriefingGroup
+          eyebrow="Worth watching"
+          title="Moving, not yet actionable"
+          items={briefing.watch}
+          icon={<IconEye size={15} />}
+        />
       )}
       {briefing.data_health.length > 0 && (
-        <BriefingGroup title="Data health" items={briefing.data_health} />
+        <BriefingGroup
+          eyebrow="Data health"
+          title="What the answers rest on"
+          items={briefing.data_health}
+          icon={<IconDatabase size={15} />}
+        />
       )}
     </section>
   );
 }
 
 function BriefingGroup({
+  eyebrow,
   title,
-  subtitle,
   items,
+  icon,
   emphasis = false,
 }: {
+  eyebrow: string;
   title: string;
-  subtitle?: string;
   items: Briefing["needs_decision"];
+  icon: React.ReactNode;
   emphasis?: boolean;
 }) {
   return (
     <div
-      className={`rounded-xl border p-4 ${
-        emphasis
-          ? "border-amber-300 bg-amber-50 dark:border-amber-700 dark:bg-amber-950/40"
-          : "border-neutral-200 dark:border-neutral-800"
+      className={`panel ${
+        emphasis ? "border-accent/45 shadow-[inset_2px_0_0_0_hsl(var(--accent))]" : ""
       }`}
     >
-      <h2 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
-        {title}
-      </h2>
-      {subtitle && <p className="mt-0.5 text-xs text-neutral-400">{subtitle}</p>}
-      <ul className="mt-2 space-y-1.5">
+      <div className="mb-4 flex items-start justify-between gap-4">
+        <div>
+          <p className="eyebrow-sm">{eyebrow}</p>
+          <h2 className="title-panel mt-0.5">{title}</h2>
+        </div>
+        <span className="pt-4 text-muted-foreground/70">{icon}</span>
+      </div>
+      <ul>
         {items.map((item, i) => (
-          <li key={i} className="text-sm">
-            {item.href ? (
-              <Link href={item.href} className="font-medium underline-offset-2 hover:underline">
-                {item.headline}
-              </Link>
-            ) : (
-              <span className="font-medium">{item.headline}</span>
-            )}
+          <li key={i} className="border-b border-border/60 py-3 last:border-0 last:pb-0">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              {item.href ? (
+                <Link
+                  href={item.href}
+                  className="text-sm font-medium text-foreground underline-offset-4 hover:underline"
+                >
+                  {item.headline}
+                </Link>
+              ) : (
+                <span className="text-sm font-medium text-foreground">{item.headline}</span>
+              )}
+              {item.value_paise != null && item.unit !== "paise_per_kg" && (
+                <span className="font-mono text-xs tabular-nums text-muted-foreground">
+                  {formatValue(item.value_paise, item.unit ?? null)}
+                </span>
+              )}
+            </div>
             {item.detail && (
-              <span className="ml-2 text-xs text-neutral-500">{item.detail}</span>
-            )}
-            {item.value_paise != null && item.unit !== "paise_per_kg" && (
-              <span className="ml-2 text-xs tabular-nums text-neutral-500">
-                {formatValue(item.value_paise, item.unit ?? null)}
-              </span>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.detail}</p>
             )}
           </li>
         ))}
@@ -152,47 +172,74 @@ export default async function DashboardPage() {
   } catch (error) {
     const status = error instanceof ApiError ? error.status : 0;
     return (
-      <main className="mx-auto max-w-5xl px-6 py-12">
-        <h1 className="text-2xl font-semibold">FPO dashboard</h1>
-        <p className="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+      <main className="px-6 py-10 md:px-10">
+        <PageHeader eyebrow="FPO Command Centre" title="Dashboard" />
+        <ErrorPanel title={status === 403 ? "Not your view" : "API unreachable"}>
           {status === 403
             ? "This view is for organization staff. A farmer account sees their own farm instead — the boundary is enforced by the API, not by hiding this page."
             : "Could not reach the API. Run `make api`, and set AGRI_DEV_TOKEN for an authenticated view."}
-        </p>
+        </ErrorPanel>
       </main>
     );
   }
 
   const { organization, cards } = data;
+  // The *real* pending count, from the card the API computes — not
+  // `briefing.needs_decision.length`, which is a truncated headline list. Using the list
+  // length put "5 awaiting approval" in the header beside a tile reading 11, on the same
+  // screen, both claiming to count the same thing.
+  const pendingCard = cards.find((c) => c.key === "pending_actions");
+  const pending = typeof pendingCard?.value === "number" ? pendingCard.value : 0;
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
-      <header className="mb-8">
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-semibold tracking-tight">{organization.name}</h1>
-          {organization.is_synthetic && <DemoDataBadge />}
-        </div>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-          {organization.type} · {organization.district}, {organization.state}
-        </p>
-      </header>
-
-      {briefing && <BriefingPanel briefing={briefing} />}
+    <main className="px-6 py-10 md:px-10">
+      <PageHeader
+        eyebrow="FPO Command Centre"
+        title={
+          <>
+            What the collective
+            <br />
+            looks like today
+          </>
+        }
+        subtitle={`Members, land, crops and open decisions for ${organization.name} — one layer, read before you act.`}
+        aside={
+          <>
+            {organization.is_synthetic && <DemoDataBadge />}
+            <Chip tone={pending > 0 ? "accent" : "neutral"}>
+              {pending > 0
+                ? `${pending} awaiting approval`
+                : `${organization.district}, ${organization.state}`}
+            </Chip>
+          </>
+        }
+      />
 
       <section
         aria-label="Organization at a glance"
-        className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+        className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
         {cards.map((card) => (
           <StatCard key={card.key} card={card} />
         ))}
       </section>
 
-      <p className="mt-8 text-xs text-neutral-500 dark:text-neutral-400">
-        Every figure here is synthetic demonstration data drawn from a real district profile.
-        Market prices and weather come from Agmarknet and Open-Meteo and are real. Generated{" "}
-        {new Date(data.generated_at).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}.
-      </p>
+      {briefing && <BriefingPanel briefing={briefing} />}
+
+      <Panel className="flex flex-wrap items-center justify-between gap-4">
+        <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
+          Every figure here is synthetic demonstration data drawn from a real district profile.
+          Market prices and weather come from Agmarknet and Open-Meteo and are real. Generated{" "}
+          <span className="font-mono">
+            {new Date(data.generated_at).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+          </span>
+          .
+        </p>
+        <Link href="/decisions" className="btn-ghost">
+          Open decisions
+          <IconArrowUpRight size={14} />
+        </Link>
+      </Panel>
     </main>
   );
 }

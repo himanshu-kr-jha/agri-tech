@@ -10,14 +10,22 @@
  */
 
 import { ApiError, api, type RiskEntry } from "@/lib/api";
-import { DemoDataBadge, formatInr } from "@/components/invariants";
+import { DemoDataBadge, formatInr, formatRole } from "@/components/invariants";
+import { EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Bands are hairline rings, not filled blocks.
+ *
+ * Four coloured pills per row — and there are two bands on every entry — would turn the
+ * register into a heat map, which is exactly the reading this page is arguing against.
+ * Colour marks severity; the numbers beside it carry the argument.
+ */
 const BAND: Record<string, string> = {
-  HIGH: "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-200",
-  MEDIUM: "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-200",
-  LOW: "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300",
+  HIGH: "text-destructive ring-destructive/30 bg-destructive/[0.04]",
+  MEDIUM: "text-accent-foreground/80 ring-accent/45 bg-accent/[0.07]",
+  LOW: "text-muted-foreground ring-border",
 };
 
 const DOMAIN_LABEL: Record<string, string> = {
@@ -38,6 +46,16 @@ function exposureScore(entry: RiskEntry): number {
   );
 }
 
+/** A number and its unit, the house pattern: serif figure, smaller muted label beside it. */
+function Exposure({ value, label }: { value: string; label: string }) {
+  return (
+    <span className="flex items-baseline gap-1.5">
+      <span className="font-serif text-[19px] tabular-nums text-primary">{value}</span>
+      <span className="text-xs text-muted-foreground">{label}</span>
+    </span>
+  );
+}
+
 export default async function RiskPage() {
   let data;
   try {
@@ -45,13 +63,13 @@ export default async function RiskPage() {
   } catch (error) {
     const status = error instanceof ApiError ? error.status : 0;
     return (
-      <main className="mx-auto max-w-4xl px-6 py-12">
-        <h1 className="text-2xl font-semibold">Risk register</h1>
-        <p className="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+      <main className="px-6 py-10 md:px-10">
+        <PageHeader eyebrow="Exposure" title="Risk register" />
+        <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
           {status === 403
             ? "The risk register is organization-internal."
             : "Could not reach the API. Run `make api`."}
-        </p>
+        </ErrorPanel>
       </main>
     );
   }
@@ -59,83 +77,77 @@ export default async function RiskPage() {
   const entries = [...data.entries].sort((a, b) => exposureScore(b) - exposureScore(a));
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-10">
-      <header className="mb-6">
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-semibold tracking-tight">Risk register</h1>
-          <DemoDataBadge />
-        </div>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-          Ordered by how much is exposed, not by how likely it is. Weather figures are
-          frequencies from 30 years of record — how often the window has been hit, not a
-          forecast that it will be.
-        </p>
-      </header>
+    <main className="max-w-5xl px-6 py-10 md:px-10">
+      <PageHeader
+        eyebrow="Exposure"
+        title="What is exposed, worst first"
+        subtitle="Ordered by how much is at stake, not by how likely it is. Weather figures are frequencies from 30 years of record — how often the window has been hit, not a forecast that it will be."
+        aside={<DemoDataBadge />}
+      />
 
       {entries.length === 0 ? (
-        <p className="rounded-lg border border-neutral-200 p-6 text-sm text-neutral-500 dark:border-neutral-800">
-          Nothing on the register yet. It fills in when the assistant is asked a question that
-          runs the risk module.
-        </p>
+        <Panel>
+          <EmptyState>
+            Nothing on the register yet. It fills in when the assistant is asked a question
+            that runs the risk module.
+          </EmptyState>
+        </Panel>
       ) : (
         <ul className="space-y-3">
           {entries.map((entry) => (
-            <li
-              key={entry.id}
-              className="rounded-xl border border-neutral-200 p-4 dark:border-neutral-800"
-            >
-              <div className="flex flex-wrap items-baseline gap-2">
-                <h2 className="font-medium">{entry.title}</h2>
-                <span className="rounded bg-neutral-100 px-1.5 py-0.5 font-mono text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">
+            <li key={entry.id} className="panel">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+                <h2 className="title-panel">{entry.title}</h2>
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
                   {DOMAIN_LABEL[entry.domain] ?? entry.domain.toLowerCase()}
                 </span>
-                <span className={`rounded px-1.5 py-0.5 text-xs font-medium ${BAND[entry.likelihood]}`}>
+                <span
+                  className={`rounded px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] ring-1 ring-inset ${BAND[entry.likelihood]}`}
+                >
                   {entry.likelihood.toLowerCase()} likelihood
                 </span>
-                <span className={`rounded px-1.5 py-0.5 text-xs font-medium ${BAND[entry.impact]}`}>
+                <span
+                  className={`rounded px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] ring-1 ring-inset ${BAND[entry.impact]}`}
+                >
                   {entry.impact.toLowerCase()} impact
                 </span>
               </div>
 
-              <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-neutral-600 dark:text-neutral-400">
+              <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
                 {entry.farmers_affected != null && (
-                  <span>
-                    <strong className="tabular-nums">{entry.farmers_affected.toLocaleString("en-IN")}</strong>{" "}
-                    farmers
-                  </span>
+                  <Exposure
+                    value={entry.farmers_affected.toLocaleString("en-IN")}
+                    label="farmers"
+                  />
                 )}
                 {entry.area_affected_acres != null && (
-                  <span>
-                    <strong className="tabular-nums">
-                      {entry.area_affected_acres.toLocaleString("en-IN")}
-                    </strong>{" "}
-                    acres
-                  </span>
+                  <Exposure
+                    value={entry.area_affected_acres.toLocaleString("en-IN")}
+                    label="acres"
+                  />
                 )}
                 {entry.value_at_risk_paise != null && (
-                  <span>
-                    <strong>{formatInr(entry.value_at_risk_paise)}</strong> at stake
-                  </span>
+                  <Exposure value={formatInr(entry.value_at_risk_paise)} label="at stake" />
                 )}
                 {typeof entry.detail?.probability === "number" && (
-                  <span>
-                    <strong className="tabular-nums">
-                      {Math.round((entry.detail.probability as number) * 100)}%
-                    </strong>{" "}
-                    of years in the record
-                  </span>
+                  <Exposure
+                    value={`${Math.round((entry.detail.probability as number) * 100)}%`}
+                    label="of years in the record"
+                  />
                 )}
-              </p>
+              </div>
 
               {entry.recommended_action && (
-                <p className="mt-2 border-t border-neutral-100 pt-2 text-sm dark:border-neutral-900">
-                  <span className="text-neutral-500">What would reduce it: </span>
-                  {entry.recommended_action}
+                <p className="mt-4 border-t border-border/60 pt-3 text-sm leading-relaxed">
+                  <span className="eyebrow-sm">What would reduce it</span>
+                  <span className="mt-1.5 block text-foreground/85">
+                    {entry.recommended_action}
+                  </span>
                 </p>
               )}
 
-              <p className="mt-2 text-xs text-neutral-400">
-                {entry.owner_role && `owned by ${entry.owner_role.replace(/_/g, " ").toLowerCase()}`}
+              <p className="mt-3 text-xs text-muted-foreground/80">
+                {entry.owner_role && `Owned by the ${formatRole(entry.owner_role)}`}
                 {entry.review_on &&
                   ` · review by ${new Date(entry.review_on).toLocaleDateString("en-IN", {
                     day: "numeric",

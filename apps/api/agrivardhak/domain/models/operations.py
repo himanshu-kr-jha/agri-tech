@@ -14,11 +14,13 @@ import datetime as dt
 import uuid
 
 from sqlalchemy import (
+    BigInteger,
     Boolean,
     Date,
     DateTime,
     Enum,
     ForeignKey,
+    Identity,
     Index,
     String,
     Text,
@@ -160,7 +162,18 @@ class DomainEvent(Base, AppendOnlyMixin):
     event cannot diverge — the bug a message broker introduces and then makes you solve
     with idempotency keys and dead-letter queues.
 
-    UUIDv7 ids make this table naturally time-ordered without a sequence.
+    Ordering comes from ``seq``, not from the id.
+
+    The id is a UUIDv7 and those are time-ordered — but only to **millisecond** resolution;
+    below that, ``uuid_generate_v7()`` fills the remaining 74 bits with random bytes. Two
+    events written in the same transaction land in the same millisecond almost every time,
+    so ordering by id shuffled them at random. ``test_events_drain_in_order`` caught it by
+    passing on one run and failing on the next with ``['2', '1', '3']``.
+
+    That is not a cosmetic ordering: this table is what carries ``RecommendationApproved``
+    and ``RecommendationSuperseded``, and a superseding event delivered before the approval
+    it supersedes is INV-10 inverted. So the outbox now orders by a ``BIGINT`` identity
+    column, which is monotonic by construction.
     """
 
     __tablename__ = "domain_event"
@@ -168,9 +181,12 @@ class DomainEvent(Base, AppendOnlyMixin):
         Index("ix_domain_event_unpublished", "published_at"),
         Index("ix_domain_event_aggregate", "aggregate_type", "aggregate_id"),
         Index("ix_domain_event_type", "event_type", "occurred_at"),
+        Index("ix_domain_event_seq", "seq"),
     )
 
     id: Mapped[UuidPk]
+    #: Insertion order. The only correct thing to sort this table by.
+    seq: Mapped[int] = mapped_column(BigInteger, Identity(always=True), nullable=False)
     event_type: Mapped[str] = mapped_column(String(80), nullable=False)
     aggregate_type: Mapped[str] = mapped_column(String(64), nullable=False)
     aggregate_id: Mapped[uuid.UUID] = mapped_column(nullable=False)

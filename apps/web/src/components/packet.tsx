@@ -17,7 +17,7 @@
  *    so it sits above the recommendations rather than in a footnote.
  */
 
-import { ConfidenceChip, formatInr } from "@/components/invariants";
+import { ConfidenceChip, formatInr, formatRole } from "@/components/invariants";
 import type {
   Claim,
   ConfidenceBlock,
@@ -96,15 +96,18 @@ export function PacketView({ packet }: { packet: Partial<Packet> }) {
 
       {packet.actions && packet.actions.length > 0 && (
         <Section title={SECTION_TITLE.actions} subtitle="A role, a task, a date">
-          <ul className="divide-y divide-neutral-100 dark:divide-neutral-900">
+          <ul>
             {packet.actions.map((action, i) => (
-              <li key={i} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5 text-sm">
-                <span className="rounded bg-neutral-100 px-1.5 py-0.5 font-mono text-xs dark:bg-neutral-800">
-                  {action.role.replace(/_/g, " ").toLowerCase()}
+              <li
+                key={i}
+                className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-border/60 py-3 text-sm last:border-0"
+              >
+                <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
+                  {formatRole(action.role)}
                 </span>
-                <span>{action.task}</span>
+                <span className="text-foreground">{action.task}</span>
                 {action.due_on && (
-                  <span className="ml-auto text-xs text-neutral-500">
+                  <span className="ml-auto font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
                     by{" "}
                     {new Date(action.due_on).toLocaleDateString("en-IN", {
                       day: "numeric",
@@ -130,23 +133,20 @@ function OverrideBanner({ overrides }: { overrides: OverrideNote[] }) {
   return (
     <section
       aria-label="Cross-domain override"
-      className="rounded-xl border-2 border-amber-300 bg-amber-50 p-5 dark:border-amber-700 dark:bg-amber-950/40"
+      className="panel border-accent/45 bg-accent/[0.05] shadow-[inset_3px_0_0_0_hsl(var(--accent))]"
     >
-      <h2 className="text-xs font-semibold uppercase tracking-wide text-amber-800 dark:text-amber-200">
-        The evidence disagrees with the plan
-      </h2>
+      <p className="eyebrow-sm text-accent-foreground/70">Cross-domain override</p>
+      <h2 className="title-panel mt-0.5">The evidence disagrees with the plan</h2>
       {overrides.map((override) => (
-        <div key={override.overridden_key} className="mt-3">
-          <p className="text-sm leading-relaxed text-amber-950 dark:text-amber-100">
-            {override.reason}
-          </p>
-          <p className="mt-2 font-mono text-xs text-amber-700 dark:text-amber-300">
+        <div key={override.overridden_key} className="mt-4">
+          <p className="text-sm leading-relaxed text-foreground/85">{override.reason}</p>
+          <p className="mt-2 font-mono text-[11px] text-muted-foreground">
             overrides {override.overridden_key} ({override.overridden_module}) ·{" "}
             {override.prevailing_evidence.length} pieces of prevailing evidence
           </p>
         </div>
       ))}
-      <p className="mt-3 border-t border-amber-200 pt-3 text-xs text-amber-800 dark:border-amber-800 dark:text-amber-300">
+      <p className="mt-4 border-t border-accent/25 pt-3 text-xs leading-relaxed text-muted-foreground">
         Shown rather than applied silently. You can disagree with this — that is the point of
         putting it in front of you.
       </p>
@@ -167,10 +167,8 @@ function Section({
 }) {
   return (
     <section>
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-        {title}
-      </h2>
-      {subtitle && <p className="mb-2 mt-0.5 text-xs text-neutral-400">{subtitle}</p>}
+      <h2 className="title-panel">{title}</h2>
+      {subtitle && <p className="mb-3 mt-1 text-xs text-muted-foreground">{subtitle}</p>}
       {children}
     </section>
   );
@@ -181,7 +179,7 @@ function Claims({ claims, showAffected = false }: { claims: Claim[]; showAffecte
   const rendered = claims.filter((c) => c.evidence.length > 0);
   if (rendered.length === 0) {
     return (
-      <p className="text-sm text-neutral-500">
+      <p className="text-sm leading-relaxed text-muted-foreground">
         Nothing here is supported by evidence we hold, so nothing is claimed.
       </p>
     );
@@ -192,9 +190,9 @@ function Claims({ claims, showAffected = false }: { claims: Claim[]; showAffecte
         <li key={i} className="flex gap-3">
           <ConfidenceChip value={claim.confidence} className="mt-0.5 shrink-0" />
           <div className="min-w-0">
-            <p className="text-sm leading-relaxed">{claim.statement}</p>
+            <p className="text-sm leading-relaxed text-foreground/90">{claim.statement}</p>
             {showAffected && claim.affected && <Affected affected={claim.affected} />}
-            <p className="mt-0.5 text-xs text-neutral-400">
+            <p className="mt-1 text-xs text-muted-foreground/80">
               {claim.evidence.length} source{claim.evidence.length === 1 ? "" : "s"}
             </p>
           </div>
@@ -215,7 +213,11 @@ function Affected({ affected }: { affected: NonNullable<Claim["affected"]> }) {
   }
   if (affected.value_paise) parts.push(formatInr(affected.value_paise));
   if (parts.length === 0) return null;
-  return <p className="mt-1 text-xs font-medium text-neutral-600 dark:text-neutral-400">{parts.join(" · ")}</p>;
+  return (
+    <p className="mt-1.5 font-mono text-[11px] tracking-[0.04em] text-muted-foreground">
+      {parts.join(" · ")}
+    </p>
+  );
 }
 
 function ActionCard({ action }: { action: PacketAction }) {
@@ -223,15 +225,15 @@ function ActionCard({ action }: { action: PacketAction }) {
     | { rung: string; action: string; note?: string }[]
     | null;
   return (
-    <div className="rounded-lg border border-neutral-200 p-4 dark:border-neutral-800">
-      <div className="flex flex-wrap items-baseline gap-2">
-        <h3 className="font-medium">{action.title}</h3>
+    <div className="rounded-md border border-border/70 bg-card p-5">
+      <div className="flex flex-wrap items-baseline gap-2.5">
+        <h3 className="font-serif text-[17px] tracking-tight text-primary">{action.title}</h3>
         <ConfidenceChip value={action.confidence} />
-        <span className="rounded bg-neutral-100 px-1.5 py-0.5 font-mono text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">
+        <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
           {action.recommendation_type.replace(/_/g, " ").toLowerCase()}
         </span>
       </div>
-      <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+      <p className="mt-2.5 text-sm leading-relaxed text-foreground/85">
         {action.rationale}
       </p>
 
@@ -266,22 +268,24 @@ function ActionCard({ action }: { action: PacketAction }) {
  * property: the chemical rung must never read as a peer of the cultural ones.
  */
 function Ladder({ steps }: { steps: { rung: string; action: string; note?: string }[] }) {
+  // The chemical rung is the only warm colour on the ladder. That is the safety property
+  // made visible: it must never read as a peer of the cultural and biological rungs above it.
   const colour: Record<string, string> = {
-    immediate: "text-rose-700 dark:text-rose-300",
-    cultural: "text-emerald-700 dark:text-emerald-300",
-    biological: "text-emerald-700 dark:text-emerald-300",
-    chemical: "text-amber-700 dark:text-amber-300",
-    monitoring: "text-neutral-500",
+    immediate: "text-destructive",
+    cultural: "text-chart-2",
+    biological: "text-chart-2",
+    chemical: "text-accent",
+    monitoring: "text-muted-foreground",
   };
   return (
-    <ol className="mt-3 space-y-2 border-l-2 border-neutral-200 pl-4 dark:border-neutral-800">
+    <ol className="mt-4 space-y-3 border-l border-border pl-4">
       {steps.map((step, i) => (
         <li key={i} className="text-sm">
-          <span className={`font-mono text-xs uppercase ${colour[step.rung] ?? ""}`}>
+          <span className={`font-mono text-[11px] uppercase tracking-[0.14em] ${colour[step.rung] ?? ""}`}>
             {step.rung}
           </span>
-          <p className="mt-0.5">{step.action}</p>
-          {step.note && <p className="mt-0.5 text-xs text-neutral-500">{step.note}</p>}
+          <p className="mt-1 text-foreground/90">{step.action}</p>
+          {step.note && <p className="mt-1 text-xs text-muted-foreground">{step.note}</p>}
         </li>
       ))}
     </ol>
@@ -291,10 +295,10 @@ function Ladder({ steps }: { steps: { rung: string; action: string; note?: strin
 function Detail({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <details className="mt-2">
-      <summary className="cursor-pointer text-xs font-medium text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300">
+      <summary className="cursor-pointer text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-foreground">
         {label}
       </summary>
-      <div className="mt-1.5 text-xs text-neutral-600 dark:text-neutral-400">{children}</div>
+      <div className="mt-2 text-xs leading-relaxed text-muted-foreground">{children}</div>
     </details>
   );
 }
@@ -306,30 +310,30 @@ function ConfidenceSection({ confidence }: { confidence: ConfidenceBlock }) {
       subtitle="What this rests on, and what would make it stronger"
     >
       <div
-        className={`rounded-lg border p-4 ${
+        className={`rounded-md border bg-card p-5 ${
           confidence.below_floor
-            ? "border-amber-300 bg-amber-50 dark:border-amber-700 dark:bg-amber-950/40"
-            : "border-neutral-200 dark:border-neutral-800"
+            ? "border-accent/45 shadow-[inset_3px_0_0_0_hsl(var(--accent))]"
+            : "border-border/70"
         }`}
       >
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-semibold tabular-nums">
+        <div className="flex items-baseline gap-3">
+          <span className="font-serif text-[30px] leading-none tabular-nums text-primary">
             {Math.round(confidence.overall * 100)}%
           </span>
-          <span className="text-sm text-neutral-500">overall</span>
+          <span className="text-sm text-muted-foreground">overall</span>
           {confidence.below_floor && (
-            <span className="ml-auto rounded bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900 dark:bg-amber-900 dark:text-amber-100">
+            <span className="ml-auto text-[10px] font-medium uppercase tracking-[0.14em] text-accent-foreground/80">
               below the confidence floor
             </span>
           )}
         </div>
 
         {Object.keys(confidence.per_section).length > 0 && (
-          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-600 dark:text-neutral-400">
+          <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
             {Object.entries(confidence.per_section).map(([module, value]) => (
               <li key={module}>
                 {module.replace(/_intelligence$/, "")}{" "}
-                <span className="font-medium tabular-nums">{Math.round(value * 100)}%</span>
+                <span className="font-mono tabular-nums text-foreground">{Math.round(value * 100)}%</span>
               </li>
             ))}
           </ul>
@@ -337,10 +341,8 @@ function ConfidenceSection({ confidence }: { confidence: ConfidenceBlock }) {
 
         {confidence.what_would_raise_it.length > 0 && (
           <div className="mt-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
-              What would raise it
-            </h3>
-            <ul className="mt-1 list-disc space-y-0.5 pl-4 text-sm">
+            <h3 className="eyebrow-sm">What would raise it</h3>
+            <ul className="mt-2 list-disc space-y-1 pl-4 text-sm leading-relaxed text-foreground/85">
               {confidence.what_would_raise_it.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
@@ -378,20 +380,20 @@ function EvidenceSection({
       title={SECTION_TITLE.evidence}
       subtitle="Frozen at generation — this answer stays explainable"
     >
-      <div className="rounded-lg border border-neutral-200 p-4 text-sm dark:border-neutral-800">
-        <p className="text-neutral-600 dark:text-neutral-400">
+      <div className="rounded-md border border-border/70 bg-card p-5 text-sm">
+        <p className="text-muted-foreground">
           {evidence.length} sources ·{" "}
           {Object.entries(byKind)
             .map(([kind, n]) => `${n} ${kind.replace(/_/g, " ")}`)
             .join(", ")}
         </p>
         {packet.snapshot_id && (
-          <p className="mt-2 font-mono text-xs break-all text-neutral-500">
+          <p className="mt-2.5 break-all font-mono text-[11px] text-muted-foreground/80">
             snapshot {packet.snapshot_id}
           </p>
         )}
         {packet.generated_at && (
-          <p className="mt-1 text-xs text-neutral-500">
+          <p className="mt-1 text-xs text-muted-foreground">
             Generated{" "}
             {new Date(packet.generated_at).toLocaleString("en-IN", {
               timeZone: "Asia/Kolkata",
@@ -403,7 +405,9 @@ function EvidenceSection({
           <ul className="space-y-0.5">
             {evidence.slice(0, 40).map((ref) => (
               <li key={ref.id} className="flex gap-2">
-                <span className="shrink-0 font-mono text-neutral-400">{ref.kind.slice(0, 4)}</span>
+                <span className="shrink-0 font-mono text-muted-foreground/70">
+                  {ref.kind.slice(0, 4)}
+                </span>
                 <span className="truncate">{ref.label}</span>
               </li>
             ))}

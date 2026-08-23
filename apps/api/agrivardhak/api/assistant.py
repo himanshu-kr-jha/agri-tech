@@ -41,6 +41,8 @@ from agrivardhak.domain import enums
 from agrivardhak.domain.models.decisions import (
     Approval,
     EvidenceSnapshot,
+    Intervention,
+    Outcome,
     Recommendation,
 )
 from agrivardhak.domain.models.decisions import (
@@ -423,17 +425,33 @@ def _recommendation_payload(session: Session, row: Recommendation) -> dict[str, 
             for a in approvals
         ],
         # UI-11: what a human must still do before anything happens.
-        "awaiting": _awaiting(row.status),
+        "awaiting": _awaiting(session, row),
     }
 
 
-def _awaiting(status: enums.RecommendationStatus) -> str | None:
+def _awaiting(session: Session, row: Recommendation) -> str | None:
+    """What a human must still do. ``None`` once the loop is closed.
+
+    ``EXECUTED`` is not the end of the line — an executed action still owes an outcome
+    record before it can be attributed (INV-7). But it stops owing one as soon as that
+    outcome exists, and the earlier version of this function never checked: it derived the
+    answer from ``status`` alone, so a fully closed loop from last season still rendered
+    "Awaiting an outcome record. Nothing has happened yet." underneath its own recorded
+    result.
+    """
+    if row.status is enums.RecommendationStatus.EXECUTED:
+        recorded = session.execute(
+            select(Outcome.id)
+            .join(Intervention, Outcome.intervention_id == Intervention.id)
+            .where(Intervention.recommendation_id == row.id)
+            .limit(1)
+        ).first()
+        return None if recorded else "an outcome record"
     return {
         enums.RecommendationStatus.SUGGESTED: "review or approval by an authorised role",
         enums.RecommendationStatus.REVIEWED: "approval by an authorised role",
         enums.RecommendationStatus.APPROVED: "execution, then an outcome record",
-        enums.RecommendationStatus.EXECUTED: "an outcome record",
-    }.get(status)
+    }.get(row.status)
 
 
 # --------------------------------------------------------------------------- risk register

@@ -43,15 +43,16 @@ export interface Provenance {
 export function ConfidenceChip({ value, className = "" }: { value: number; className?: string }) {
   const pct = Math.round(value * 100);
   const band = value >= 0.8 ? "high" : value >= 0.55 ? "medium" : "low";
+  // Hairline rings rather than filled pills: a chip appears beside nearly every number on
+  // these screens, and three saturated blocks per row would read as an error state.
   const styles: Record<string, string> = {
-    high: "bg-emerald-50 text-emerald-800 ring-emerald-600/20 dark:bg-emerald-950 dark:text-emerald-200 dark:ring-emerald-400/30",
-    medium:
-      "bg-amber-50 text-amber-800 ring-amber-600/20 dark:bg-amber-950 dark:text-amber-200 dark:ring-amber-400/30",
-    low: "bg-rose-50 text-rose-800 ring-rose-600/20 dark:bg-rose-950 dark:text-rose-200 dark:ring-rose-400/30",
+    high: "text-primary ring-primary/25",
+    medium: "text-accent-foreground/80 ring-accent/50 bg-accent/[0.07]",
+    low: "text-destructive ring-destructive/30 bg-destructive/[0.04]",
   };
   return (
     <span
-      className={`inline-flex items-center rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${styles[band]} ${className}`}
+      className={`inline-flex items-center rounded px-1.5 py-0.5 font-mono text-[11px] font-medium tabular-nums ring-1 ring-inset ${styles[band]} ${className}`}
       title={`Confidence ${pct}% (${band})`}
     >
       {pct}%
@@ -93,19 +94,17 @@ export function ProvenancePopover({
 
   return (
     <span className="group relative inline-flex items-center gap-1">
-      <span className={isStale ? "text-neutral-500 dark:text-neutral-400" : ""}>{children}</span>
+      <span className={isStale ? "text-muted-foreground" : ""}>{children}</span>
       <ConfidenceChip value={confidence} />
       {isStale && <StaleBadge />}
       {provenance.hasOpenDiscrepancy && <DiscrepancyBadge />}
       <span
         role="tooltip"
-        className="pointer-events-none invisible absolute left-0 top-full z-50 mt-1 w-64 rounded-lg border border-neutral-200 bg-white p-3 text-xs shadow-lg group-hover:visible dark:border-neutral-700 dark:bg-neutral-900"
+        className="pointer-events-none invisible absolute left-0 top-full z-50 mt-1.5 w-64 rounded-md border border-border/70 bg-popover p-3.5 text-xs group-hover:visible"
       >
-        <span className="block font-medium">{sourceLabel ?? SOURCE_LABEL[sourceType]}</span>
-        <span className="mt-1 block text-neutral-600 dark:text-neutral-400">
-          Observed {observed}
-        </span>
-        <span className="mt-1 block text-neutral-600 dark:text-neutral-400">
+        <span className="eyebrow-sm block">{sourceLabel ?? SOURCE_LABEL[sourceType]}</span>
+        <span className="mt-2 block text-muted-foreground">Observed {observed}</span>
+        <span className="mt-1 block text-muted-foreground">
           {verificationStatus === "VERIFIED"
             ? "Verified"
             : verificationStatus === "DISPUTED"
@@ -113,7 +112,7 @@ export function ProvenancePopover({
               : "Not yet verified"}
         </span>
         {isStale && (
-          <span className="mt-1 block text-amber-700 dark:text-amber-300">
+          <span className="mt-1 block text-warning">
             Stale — older than this attribute&apos;s freshness window
           </span>
         )}
@@ -125,7 +124,7 @@ export function ProvenancePopover({
 export function StaleBadge() {
   return (
     <span
-      className="inline-flex items-center rounded px-1 py-0.5 text-[10px] font-medium uppercase tracking-wide text-amber-700 ring-1 ring-inset ring-amber-600/30 dark:text-amber-300"
+      className="inline-flex items-center rounded px-1 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-warning ring-1 ring-inset ring-warning/30"
       title="This value is older than its freshness window"
     >
       stale
@@ -141,7 +140,7 @@ export function DiscrepancyBadge({ onClick }: { onClick?: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center rounded px-1 py-0.5 text-[10px] font-medium uppercase tracking-wide text-rose-700 ring-1 ring-inset ring-rose-600/30 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950"
+      className="inline-flex items-center rounded px-1 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-destructive ring-1 ring-inset ring-destructive/30 transition-colors hover:bg-destructive/[0.06]"
       title="Sources disagree about this value — no value has been chosen"
     >
       conflict
@@ -159,8 +158,10 @@ export function DiscrepancyBadge({ onClick }: { onClick?: () => void }) {
  */
 export function DemoDataBadge({ className = "" }: { className?: string }) {
   return (
+    // Deliberately not toned down to a whisper. Rule 5 in CLAUDE.md: synthetic data is
+    // labelled where it appears, and a badge nobody notices is the same as no badge.
     <span
-      className={`inline-flex items-center rounded bg-violet-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-violet-700 ring-1 ring-inset ring-violet-600/20 dark:bg-violet-950 dark:text-violet-300 ${className}`}
+      className={`inline-flex items-center rounded bg-accent/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-accent-foreground/75 ring-1 ring-inset ring-accent/40 ${className}`}
       title="Synthetic demonstration data — not a real observation"
     >
       demo data
@@ -235,6 +236,27 @@ export function formatInr(paise: number, { indianGrouping = true } = {}): string
     currency: "INR",
     maximumFractionDigits: rupees % 1 === 0 ? 0 : 2,
   });
+}
+
+/**
+ * Role enums into something a person would say out loud.
+ *
+ * `FPO_CEO` had been rendering as "Fpo Ceo" via a bare CSS `capitalize`, and as "fpo ceo"
+ * where the string was lowercased. Neither is a thing anyone calls that job. Acronyms in
+ * this domain are load-bearing — FPO, PACS and SHG are three different legal forms — so they
+ * stay uppercase and the rest reads as a sentence.
+ */
+const ROLE_ACRONYMS = new Set(["FPO", "PACS", "SHG", "CEO", "AI"]);
+
+export function formatRole(role: string): string {
+  const words = role.split("_").filter(Boolean);
+  return words
+    .map((word, i) => {
+      if (ROLE_ACRONYMS.has(word.toUpperCase())) return word.toUpperCase();
+      const lower = word.toLowerCase();
+      return i === 0 ? lower[0].toUpperCase() + lower.slice(1) : lower;
+    })
+    .join(" ");
 }
 
 /** ADR-0009: area is square metres canonical; acres for display. */

@@ -6,12 +6,15 @@
  * boundary cannot be crossed by a routing mistake. The API refuses anyway.
  *
  * Larger type and fewer words than the console. This is read on a phone, outdoors, often by
- * someone for whom Hindi is the first language and text is not the easiest channel.
+ * someone for whom Hindi is the first language and text is not the easiest channel — which
+ * is why this tree gets none of the console's sidebar, density, or micro-caps labelling.
+ * It shares the palette and the serif; it does not share the information architecture.
  */
 
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { IconLeaf } from "@/components/icons";
 import { SignOutButton } from "@/components/sign-out";
 import { currentUser, homeFor } from "@/lib/session";
 
@@ -21,19 +24,24 @@ export default async function FarmerLayout({ children }: { children: React.React
   if (user.audience !== "FARMER") redirect(homeFor(user));
 
   return (
-    <div className="min-h-screen font-sans text-[17px]">
-      <header className="border-b border-neutral-200 dark:border-neutral-800">
-        <nav className="mx-auto flex max-w-2xl items-center gap-4 px-5 py-3">
-          <Link href="/today" className="font-semibold tracking-tight">
-            AgriVardhak
+    <div className="flex min-h-screen flex-col text-[17px]">
+      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
+        <nav className="mx-auto flex max-w-2xl items-center gap-3 px-5 py-3.5">
+          <Link href="/today" className="flex items-center gap-2.5">
+            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+              <IconLeaf size={16} />
+            </span>
+            <span className="font-serif text-[17px] tracking-tight text-primary">
+              AgriVardhak
+            </span>
           </Link>
-          <span className="text-sm text-neutral-500">मेरा खेत · My farm</span>
+          <span className="text-sm text-muted-foreground">मेरा खेत · My farm</span>
           <div className="ml-auto">
             <SignOutButton />
           </div>
         </nav>
       </header>
-      {children}
+      <div className="flex-1">{children}</div>
     </div>
   );
 }

@@ -68,7 +68,18 @@ def test_a_failing_handler_does_not_stall_the_queue(session, org) -> None:
 
 
 def test_events_drain_in_order(session, org) -> None:
-    """UUIDv7 ids are time-ordered, so two events about one aggregate cannot cross."""
+    """Two events about one aggregate cannot cross.
+
+    Twenty of them, not three, and deliberately so. This test used to write three events
+    and assert their order, and it *passed most of the time* while the dispatcher was
+    ordering by ``id``: UUIDv7 is time-ordered only to the millisecond, and below that
+    ``uuid_generate_v7()`` is random, so three events written in one transaction had a
+    decent chance of coming back sorted anyway. It failed with ``['2', '1', '3']`` roughly
+    every other run.
+
+    At twenty events the odds of a random permutation sorting correctly are 1 in 20!, so a
+    regression here fails every time instead of half the time.
+    """
     seen: list[str] = []
 
     @outbox.on("Ordered")
@@ -77,13 +88,14 @@ def test_events_drain_in_order(session, org) -> None:
 
     try:
         aggregate = uuid.uuid4()
-        for n in ("1", "2", "3"):
+        expected = [str(n) for n in range(20)]
+        for n in expected:
             row = _event(org, "Ordered", aggregate)
             row.payload = {"n": n}
             session.add(row)
             session.flush()
         outbox.dispatch_pending(session)
-        assert seen == ["1", "2", "3"]
+        assert seen == expected
     finally:
         outbox.HANDLERS["Ordered"].remove(_record)
 

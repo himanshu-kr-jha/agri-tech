@@ -76,6 +76,11 @@ def _card(
 
     ``confidence`` is carried on the card itself rather than computed in the UI, so a number
     cannot reach a screen without the thing that says how much to trust it (UI-02).
+
+    ``href`` must name a route the web app actually serves. This API decides web routes,
+    which is a wart, but it means a card can advertise a screen that was never built — four
+    of these tiles once linked to ``/production``, ``/schemes`` and ``/discrepancies`` and
+    three of them 404'd. ``test_dashboard_hrefs_are_built_routes`` now holds that line.
     """
     return {
         "key": key,
@@ -210,9 +215,10 @@ def dashboard(session: SessionDep, scope: CurrentScope) -> dict[str, Any]:
                 f"{name} {float(sqm_to_acres(float(sqm))):,.0f} ac" for name, _n, sqm in crop_mix
             )
             or "nothing sown",
-            href="/production",
+            # No href: there is no production screen. A card that links to a 404 is worse
+            # than a card that does not link — see the note on _card().
         ),
-        _card("active_cycles", "Active crop cycles", active_cycles, href="/production"),
+        _card("active_cycles", "Active crop cycles", active_cycles),
         _card(
             "expected_production",
             "Aggregated for sale",
@@ -251,7 +257,7 @@ def dashboard(session: SessionDep, scope: CurrentScope) -> dict[str, Any]:
             detail="identified across members"
             if scheme_opportunity
             else "scheme engine not yet run",
-            href="/schemes",
+            # No href: scheme detail lives inside the decision packet, not on its own screen.
         ),
         _card(
             "capital",

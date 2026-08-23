@@ -50,90 +50,93 @@ export function LoginForm({ accounts }: { accounts: DemoAccount[] }) {
     }
   }
 
+  const field =
+    "mt-1.5 w-full rounded-md border border-border/70 bg-card px-3 py-2.5 text-sm text-foreground transition-colors placeholder:text-muted-foreground/50 focus:border-primary/30";
+
   return (
     <>
-      <form onSubmit={submit} className="space-y-4">
+      <form onSubmit={submit} className="space-y-5">
         <label className="block">
-          <span className="text-sm text-neutral-600 dark:text-neutral-400">Username</span>
+          <span className="eyebrow-sm">Username</span>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             autoComplete="username"
             required
-            className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-900"
+            className={field}
           />
         </label>
         <label className="block">
-          <span className="text-sm text-neutral-600 dark:text-neutral-400">Password</span>
+          <span className="eyebrow-sm">Password</span>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
             required
-            className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-900"
+            className={field}
           />
         </label>
 
         {error && (
           <p
             role="alert"
-            className="rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200"
+            className="rounded-md border border-destructive/25 bg-destructive/[0.04] p-3 text-sm text-destructive"
           >
             {error}
           </p>
         )}
 
-        <button
-          type="submit"
-          disabled={busy}
-          className="w-full rounded-lg bg-neutral-900 px-4 py-2.5 font-medium text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
-        >
+        <button type="submit" disabled={busy} className="btn-primary w-full py-2.5">
           {busy ? "Signing in…" : "Sign in"}
         </button>
       </form>
 
       {accounts.length > 0 && (
-        <section className="mt-8">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
-            Demo accounts
-          </h2>
-          <p className="mb-3 mt-1 text-xs text-neutral-500">
+        <section className="mt-10">
+          <p className="eyebrow-sm">Demo accounts</p>
+          <p className="mb-4 mt-1.5 text-xs leading-relaxed text-muted-foreground">
             Sign in as each to see the same system from both sides. What a member can reach is
             enforced by the API, not by hiding pages.
           </p>
-          <ul className="space-y-2">
-            {accounts.map((account) => (
-              <li key={account.username}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUsername(account.username);
-                    setPassword(account.password);
-                    setError(null);
-                  }}
-                  className={`w-full rounded-xl border p-3 text-left transition-colors hover:border-neutral-400 dark:hover:border-neutral-500 ${
-                    username === account.username
-                      ? "border-neutral-900 dark:border-neutral-100"
-                      : "border-neutral-200 dark:border-neutral-800"
-                  }`}
-                >
-                  <div className="flex flex-wrap items-baseline gap-2">
-                    <span className="font-medium">{account.display_name}</span>
-                    <span className="rounded bg-neutral-100 px-1.5 py-0.5 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">
-                      {AUDIENCE_LABEL[account.audience] ?? account.audience}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
-                    {account.description}
-                  </p>
-                  <p className="mt-1.5 font-mono text-xs text-neutral-500">
-                    {account.username} · {account.password}
-                  </p>
-                </button>
-              </li>
-            ))}
+          <ul className="space-y-2.5">
+            {accounts.map((account) => {
+              const selected = username === account.username;
+              return (
+                <li key={account.username}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUsername(account.username);
+                      setPassword(account.password);
+                      setError(null);
+                    }}
+                    aria-pressed={selected}
+                    className={`w-full rounded-md border bg-card p-4 text-left transition-colors ${
+                      selected
+                        ? "border-primary/40 shadow-[inset_2px_0_0_0_hsl(var(--accent))]"
+                        : "border-border/70 hover:border-primary/25"
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="font-serif text-[15px] tracking-tight text-primary">
+                        {account.display_name}
+                      </span>
+                      <span className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                        {AUDIENCE_LABEL[account.audience] ?? account.audience}
+                      </span>
+                    </div>
+                    <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                      {account.description}
+                    </p>
+                    <p className="mt-2 font-mono text-[11px] text-muted-foreground/80">
+                      {account.username} · {account.password}
+                    </p>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </section>
       )}

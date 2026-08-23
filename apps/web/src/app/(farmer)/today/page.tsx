@@ -24,7 +24,7 @@ export default async function TodayPage() {
     const status = error instanceof ApiError ? error.status : 0;
     return (
       <main className="mx-auto max-w-2xl px-5 py-10">
-        <p className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-100">
+        <p className="rounded-md border border-accent/40 bg-accent/[0.06] p-4 text-[15px] leading-relaxed text-foreground/85">
           {status === 403
             ? "This view is for a farmer account. Organization staff have the FPO console — the two see different data by design (INV-5)."
             : "Could not reach the API. Run `make api`, and set AGRI_DEV_TOKEN to a farmer token to see this view."}
@@ -37,48 +37,52 @@ export default async function TodayPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-5 py-8">
-      <header className="mb-6">
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-semibold tracking-tight">{farmer.name}</h1>
+      <header className="mb-8">
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="title-section text-[2rem]">{farmer.name}</h1>
           {farmer.is_synthetic && <DemoDataBadge />}
         </div>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="mt-1.5 text-[15px] text-muted-foreground">
           {[farmer.village, farmer.block].filter(Boolean).join(" · ")}
         </p>
       </header>
 
       <section className="mb-8">
-        <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-neutral-500">
-          मेरी फ़सल · My crops
-        </h2>
+        <h2 className="eyebrow mb-3">मेरी फ़सल · My crops</h2>
         {crops.length === 0 ? (
-          <p className="rounded-lg border border-neutral-200 p-4 text-sm text-neutral-500 dark:border-neutral-800">
+          <p className="panel text-[15px] text-muted-foreground">
             कोई चालू फ़सल नहीं · No crop currently growing.
           </p>
         ) : (
           <ul className="space-y-3">
             {crops.map((crop) => (
-              <li
-                key={crop.id}
-                className="rounded-xl border border-neutral-200 p-4 dark:border-neutral-800"
-              >
+              <li key={crop.id} className="panel">
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="text-lg font-medium">{crop.crop}</span>
-                  <span className="text-sm text-neutral-500">{crop.variety}</span>
-                  <span className="ml-auto tabular-nums">{crop.area_acres.toFixed(2)} एकड़</span>
+                  <span className="font-serif text-[21px] tracking-tight text-primary">
+                    {crop.crop}
+                  </span>
+                  <span className="text-sm text-muted-foreground">{crop.variety}</span>
+                  <span className="ml-auto tabular-nums">
+                    <span className="font-serif text-lg text-primary">
+                      {crop.area_acres.toFixed(2)}
+                    </span>
+                    <span className="ml-1 text-sm text-muted-foreground">एकड़</span>
+                  </span>
                 </div>
 
                 {crop.health_pct != null ? (
-                  <p className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+                  <p className="mt-3 flex flex-wrap items-center gap-2 text-[15px]">
                     <span>
                       फ़सल की स्थिति · Crop health{" "}
-                      <strong className="tabular-nums">{Math.round(crop.health_pct)}%</strong>
+                      <strong className="font-serif text-lg tabular-nums text-primary">
+                        {Math.round(crop.health_pct)}%
+                      </strong>
                     </span>
                     {crop.health_confidence != null && (
                       <ConfidenceChip value={crop.health_confidence} />
                     )}
                     {crop.health_observed_at && (
-                      <span className="text-xs text-neutral-500">
+                      <span className="font-mono text-xs text-muted-foreground">
                         {new Date(crop.health_observed_at).toLocaleDateString("en-IN", {
                           day: "numeric",
                           month: "short",
@@ -87,13 +91,14 @@ export default async function TodayPage() {
                     )}
                   </p>
                 ) : (
-                  <p className="mt-2 text-sm text-amber-700 dark:text-amber-300">
+                  <p className="mt-3 flex items-center gap-2 text-[15px] text-muted-foreground">
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
                     अभी तक कोई जाँच नहीं · No field visit recorded yet.
                   </p>
                 )}
 
                 {crop.expected_harvest && (
-                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                  <p className="mt-2 text-[15px] text-muted-foreground">
                     कटाई · Expected harvest{" "}
                     {new Date(crop.expected_harvest).toLocaleDateString("en-IN", {
                       day: "numeric",
@@ -109,16 +114,19 @@ export default async function TodayPage() {
 
       {contributions.length > 0 && (
         <section className="mb-8">
-          <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-neutral-500">
-            समिति को दिया · Given to the collective
-          </h2>
-          <ul className="divide-y divide-neutral-100 rounded-xl border border-neutral-200 dark:divide-neutral-900 dark:border-neutral-800">
+          <h2 className="eyebrow mb-3">समिति को दिया · Given to the collective</h2>
+          <ul className="panel p-0">
             {contributions.map((item, i) => (
-              <li key={i} className="flex flex-wrap items-baseline gap-3 px-4 py-3">
+              <li
+                key={i}
+                className="flex flex-wrap items-baseline gap-3 border-b border-border/60 px-5 py-3.5 last:border-0"
+              >
                 <span className="font-medium">{item.crop}</span>
-                <span className="tabular-nums">{formatMass(item.quantity_kg)}</span>
+                <span className="font-serif text-lg tabular-nums text-primary">
+                  {formatMass(item.quantity_kg)}
+                </span>
                 {item.grade && (
-                  <span className="text-sm text-neutral-500">श्रेणी {item.grade}</span>
+                  <span className="text-sm text-muted-foreground">श्रेणी {item.grade}</span>
                 )}
               </li>
             ))}
@@ -126,7 +134,7 @@ export default async function TodayPage() {
         </section>
       )}
 
-      <p className="rounded-lg border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
+      <p className="panel bg-muted/50 text-[15px] leading-relaxed text-muted-foreground">
         {data.boundary_note}
       </p>
     </main>

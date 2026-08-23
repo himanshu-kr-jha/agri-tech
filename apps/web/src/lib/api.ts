@@ -245,6 +245,28 @@ export interface DecisionDetail {
   recommendations: Recommendation[];
 }
 
+export interface DiscrepancyClaim {
+  value: number;
+  unit: string;
+  confidence: number;
+  observed_at: string;
+  source_type: string;
+  observation_id: string;
+}
+
+export interface Discrepancy {
+  id: string;
+  subject_type: string;
+  subject_id: string;
+  attribute: string;
+  claims: DiscrepancyClaim[];
+  spread_pct: number;
+  tolerance_pct: number;
+  /** The best-supported claim — deliberately NOT called "the value". INV-4: nothing is resolved. */
+  best_supported_value: number | null;
+  effective_confidence: number | null;
+}
+
 export interface RiskEntry {
   id: string;
   domain: string;
@@ -377,6 +399,8 @@ export const api = {
       `/api/v1/recommendations${status ? `?status=${status}` : ""}`,
     ),
   riskRegister: () => get<{ entries: RiskEntry[] }>("/api/v1/risk-register"),
+  discrepancies: () =>
+    get<{ total: number; discrepancies: Discrepancy[] }>("/api/v1/fpo/discrepancies"),
   briefing: () => get<Briefing>("/api/v1/briefing"),
   impact: () => get<Impact>("/api/v1/impact"),
   farmerToday: () => get<FarmerToday>("/api/v1/farmer/today"),

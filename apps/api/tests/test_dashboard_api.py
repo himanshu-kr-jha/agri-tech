@@ -117,6 +117,57 @@ def test_dashboard_surfaces_open_data_conflicts(client, seeded) -> None:
     assert cards["data_conflicts"]["value"] > 0
 
 
+def test_dashboard_hrefs_are_built_routes(client, seeded) -> None:
+    """A tile may not advertise a screen the web app does not serve.
+
+    This is a regression test with a scar behind it. Four of the ten tiles linked to
+    ``/production``, ``/schemes`` and ``/discrepancies``; only the last of those was ever
+    built, so three tiles were clickable 404s on the primary screen of the product. Nothing
+    caught it because the API was, by itself, perfectly correct.
+
+    The route list is maintained by hand, which is the honest cost of the API deciding web
+    routes at all. Adding a page? Add it here. Removing one? This test tells you which
+    tiles now point nowhere.
+    """
+    built = {
+        "/dashboard",
+        "/assistant",
+        "/decisions",
+        "/discrepancies",
+        "/farmers",
+        "/impact",
+        "/market",
+        "/risk",
+        "/today",
+    }
+    cards = client.get("/api/v1/fpo/dashboard", headers=_ceo(seeded)).json()["cards"]
+    dangling = {c["key"]: c["href"] for c in cards if c["href"] and c["href"] not in built}
+    assert not dangling, f"dashboard tiles link to routes that do not exist: {dangling}"
+
+
+def test_briefing_hrefs_are_built_routes(client, seeded) -> None:
+    """Same rule for the briefing: every link on it must resolve."""
+    built = {
+        "/dashboard",
+        "/assistant",
+        "/decisions",
+        "/discrepancies",
+        "/farmers",
+        "/impact",
+        "/market",
+        "/risk",
+        "/today",
+    }
+    briefing = client.get("/api/v1/briefing", headers=_ceo(seeded)).json()
+    dangling = []
+    for group in ("needs_decision", "closing_soon", "watch", "data_health"):
+        for item in briefing.get(group) or []:
+            href = item.get("href")
+            if href and href.split("/")[1:2] and f"/{href.split('/')[1]}" not in built:
+                dangling.append((group, href))
+    assert not dangling, f"briefing items link to routes that do not exist: {dangling}"
+
+
 # --------------------------------------------------------------------------- drill-down
 
 

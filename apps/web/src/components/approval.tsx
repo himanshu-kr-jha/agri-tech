@@ -24,18 +24,25 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-import { ConfidenceChip, formatValue } from "@/components/invariants";
+import { ConfidenceChip, formatRole, formatValue } from "@/components/invariants";
 import type { Recommendation } from "@/lib/api";
 
 type Mode = "idle" | "approve" | "modify" | "reject";
 
+/**
+ * Status reads as a hairline-ringed micro-cap, not a coloured pill.
+ *
+ * Only EXECUTED gets a fill: it is the one status that means something irreversible has
+ * happened in the world. Everything before it is still a proposal, and colouring proposals
+ * like outcomes is how a reader stops noticing the difference.
+ */
 const STATUS_STYLE: Record<string, string> = {
-  SUGGESTED: "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300",
-  REVIEWED: "bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-200",
-  APPROVED: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200",
-  EXECUTED: "bg-emerald-600 text-white",
-  REJECTED: "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-200",
-  SUPERSEDED: "bg-neutral-200 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400",
+  SUGGESTED: "text-muted-foreground ring-border",
+  REVIEWED: "text-chart-5 ring-chart-5/35",
+  APPROVED: "text-primary ring-primary/30",
+  EXECUTED: "bg-primary text-primary-foreground ring-primary",
+  REJECTED: "text-destructive ring-destructive/30",
+  SUPERSEDED: "text-muted-foreground/70 ring-border/70",
 };
 
 export function ApprovalCard({ recommendation }: { recommendation: Recommendation }) {
@@ -71,42 +78,45 @@ export function ApprovalCard({ recommendation }: { recommendation: Recommendatio
   }
 
   return (
-    <div className="rounded-lg border border-neutral-200 p-4 dark:border-neutral-800">
-      <div className="flex flex-wrap items-baseline gap-2">
-        <h3 className="font-medium">{recommendation.title}</h3>
+    <div className="rounded-md border border-border/70 bg-card p-5">
+      <div className="flex flex-wrap items-baseline gap-2.5">
+        <h3 className="font-serif text-[17px] tracking-tight text-primary">
+          {recommendation.title}
+        </h3>
         <ConfidenceChip value={recommendation.confidence} />
         <span
-          className={`rounded px-2 py-0.5 text-xs font-medium ${
+          className={`rounded px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] ring-1 ring-inset ${
             STATUS_STYLE[recommendation.status] ?? STATUS_STYLE.SUGGESTED
           }`}
         >
           {recommendation.status.toLowerCase().replace(/_/g, " ")}
         </span>
         {recommendation.recommended_value_paise != null && (
-          <span className="ml-auto tabular-nums font-medium">
+          <span className="ml-auto font-serif text-xl tabular-nums text-primary">
             {formatValue(recommendation.recommended_value_paise, recommendation.value_unit)}
           </span>
         )}
       </div>
 
-      <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+      <p className="mt-2.5 text-sm leading-relaxed text-foreground/85">
         {recommendation.reasoning}
       </p>
 
       {recommendation.awaiting && (
-        <p className="mt-2 text-xs text-amber-700 dark:text-amber-300">
+        <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
           Awaiting {recommendation.awaiting}. Nothing has happened yet.
         </p>
       )}
 
       {recommendation.approvals.length > 0 && (
-        <ul className="mt-3 space-y-1 border-t border-neutral-100 pt-3 text-xs text-neutral-600 dark:border-neutral-900 dark:text-neutral-400">
+        <ul className="mt-4 space-y-1.5 border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground">
           {recommendation.approvals.map((approval) => (
             <li key={approval.id}>
               <span className="font-medium">
                 {approval.decision.toLowerCase().replace(/_/g, " ")}
               </span>{" "}
-              by {approval.role_exercised.replace(/_/g, " ").toLowerCase()} on{" "}
+              by the {formatRole(approval.role_exercised)} on{" "}
               {new Date(approval.decided_at).toLocaleDateString("en-IN")}
               {approval.approved_value_paise != null &&
                 approval.approved_value_paise !== recommendation.recommended_value_paise && (
@@ -124,7 +134,7 @@ export function ApprovalCard({ recommendation }: { recommendation: Recommendatio
       )}
 
       {error && (
-        <p className="mt-3 rounded border border-rose-200 bg-rose-50 p-2 text-xs text-rose-800 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+        <p className="mt-3 rounded-md border border-destructive/25 bg-destructive/[0.04] p-3 text-xs leading-relaxed text-destructive">
           {error}
         </p>
       )}
@@ -133,7 +143,7 @@ export function ApprovalCard({ recommendation }: { recommendation: Recommendatio
         <div className="mt-4 flex flex-wrap gap-2">
           <button
             onClick={() => setMode("approve")}
-            className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300"
+            className="btn-primary"
           >
             Approve
           </button>
@@ -141,14 +151,14 @@ export function ApprovalCard({ recommendation }: { recommendation: Recommendatio
             recommendation.value_unit !== "paise_per_kg" && (
             <button
               onClick={() => setMode("modify")}
-              className="rounded-md px-3 py-1.5 text-sm ring-1 ring-inset ring-neutral-300 hover:bg-neutral-100 dark:ring-neutral-700 dark:hover:bg-neutral-800"
+              className="btn-ghost"
             >
               Approve with a different amount
             </button>
           )}
           <button
             onClick={() => setMode("reject")}
-            className="rounded-md px-3 py-1.5 text-sm text-rose-700 ring-1 ring-inset ring-rose-300 hover:bg-rose-50 dark:text-rose-300 dark:ring-rose-800 dark:hover:bg-rose-950"
+            className="btn-ghost border-destructive/30 text-destructive hover:border-destructive/50"
           >
             Reject
           </button>
@@ -180,36 +190,36 @@ export function ApprovalCard({ recommendation }: { recommendation: Recommendatio
         >
           {mode === "modify" && (
             <label className="block text-sm">
-              <span className="text-neutral-600 dark:text-neutral-400">Approved amount (₹)</span>
+              <span className="eyebrow-sm">Approved amount (₹)</span>
               <input
                 type="number"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 required
-                className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-1.5 tabular-nums dark:border-neutral-700 dark:bg-neutral-900"
+                className="mt-1.5 w-full rounded-md border border-border/70 bg-card px-3 py-2 tabular-nums transition-colors focus:border-primary/30"
               />
-              <span className="mt-1 block text-xs text-neutral-500">
+              <span className="mt-1.5 block text-xs leading-relaxed text-muted-foreground">
                 Recorded as a modification, not a plain approval — so the system learns its
                 figure was not the one you agreed.
               </span>
             </label>
           )}
           <label className="block text-sm">
-            <span className="text-neutral-600 dark:text-neutral-400">
+            <span className="eyebrow-sm">
               {mode === "reject" ? "Why not? (required)" : "Note (optional)"}
             </span>
             <textarea
               value={rationale}
               onChange={(e) => setRationale(e.target.value)}
               rows={2}
-              className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-1.5 dark:border-neutral-700 dark:bg-neutral-900"
+              className="mt-1.5 w-full rounded-md border border-border/70 bg-card px-3 py-2 text-sm leading-relaxed transition-colors focus:border-primary/30"
             />
           </label>
           <div className="flex gap-2">
             <button
               type="submit"
               disabled={pending}
-              className="rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
+              className="btn-primary"
             >
               {mode === "reject" ? "Confirm rejection" : "Confirm approval"}
             </button>
@@ -219,7 +229,7 @@ export function ApprovalCard({ recommendation }: { recommendation: Recommendatio
                 setMode("idle");
                 setError(null);
               }}
-              className="rounded-md px-3 py-1.5 text-sm ring-1 ring-inset ring-neutral-300 dark:ring-neutral-700"
+              className="btn-ghost"
             >
               Cancel
             </button>
@@ -228,15 +238,11 @@ export function ApprovalCard({ recommendation }: { recommendation: Recommendatio
       )}
 
       {recommendation.status === "APPROVED" && (
-        <div className="mt-4 border-t border-neutral-100 pt-3 dark:border-neutral-900">
-          <button
-            onClick={() => void send("execute", {})}
-            disabled={pending}
-            className="rounded-md bg-emerald-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-600 disabled:opacity-50"
-          >
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border/60 pt-4">
+          <button onClick={() => void send("execute", {})} disabled={pending} className="btn-primary">
             Mark as executed
           </button>
-          <span className="ml-2 text-xs text-neutral-500">
+          <span className="text-xs leading-relaxed text-muted-foreground">
             Records what was actually done, so the outcome can be attributed later (INV-7).
           </span>
         </div>

@@ -15,6 +15,7 @@ import { Suspense } from "react";
 
 import { AskForm } from "./ask-form";
 import { DemoDataBadge } from "@/components/invariants";
+import { PageHeader } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -27,19 +28,17 @@ const EXAMPLES = [
 
 export default function AssistantPage() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
-      <header className="mb-6">
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-semibold tracking-tight">Ask the collective</h1>
-          <DemoDataBadge />
-        </div>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-          Every answer is a Decision Packet with its evidence frozen. Nothing it proposes
-          happens until you approve it.
-        </p>
-      </header>
+    <main className="max-w-4xl px-6 py-10 md:px-10">
+      <PageHeader
+        eyebrow="Decision packet"
+        title="Ask the collective"
+        subtitle="Every answer arrives with its evidence frozen. Nothing it proposes happens until a human approves it."
+        aside={<DemoDataBadge />}
+      />
 
-      <Suspense fallback={<p className="text-sm text-neutral-500">Loading…</p>}>
+      <Suspense
+        fallback={<p className="text-sm text-muted-foreground">Loading…</p>}
+      >
         <AskForm examples={EXAMPLES} />
       </Suspense>
     </main>

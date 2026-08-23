@@ -104,7 +104,25 @@ def record_adherence(
 
     Recorded even — especially — when the answer is "not at all". An intervention row saying
     ``NO`` is what stops the outcome from ever being read as a verdict on the advice.
+
+    **Must be called before the intervention is flushed.** ``intervention`` is append-only
+    under DR-04 with no mutable columns at all, so setting these fields on a row that already
+    exists is not merely discouraged — the database trigger refuses the UPDATE. This function
+    had no callers until the seed used it, and the first thing it did was raise
+    ``RestrictViolation``: the fields were being written as an UPDATE after the INSERT.
+
+    Recording adherence *later* than the intervention is a legitimate thing to want — a field
+    officer reports back a fortnight after the action. That is a new intervention row
+    superseding this one, which is what append-only means everywhere else in this schema, and
+    it is a deliberate design choice rather than an oversight: "what we believed on the day"
+    and "what we learned afterwards" are two facts, and overwriting the first loses one.
     """
+    if intervention not in session.new:
+        raise ValueError(
+            "record_adherence must be called before the intervention is flushed. "
+            "intervention is append-only (DR-04): to correct adherence on a row that already "
+            "exists, insert a new intervention rather than updating this one."
+        )
     intervention.followed = followed
     intervention.fidelity = fidelity
     intervention.delay_days = delay_days
@@ -298,7 +316,11 @@ def summarise(session: Session, *, organization_id: uuid.UUID) -> dict[str, obje
         "adherence": by_adherence,
         "attributions": len(attributions),
         "attribution_strength": by_strength,
-        "unattributable": by_adherence.get("NO", 0) + by_adherence.get("UNKNOWN", 0),
+        # Every executed action that produced no attribution row — which is what the panel
+        # labels "could not attribute". This used to count only NO/UNKNOWN adherence and so
+        # missed the action that *was* followed, but too loosely to mean anything: the
+        # fidelity-floor case never appeared in the one figure meant to own it.
+        "unattributable": len(interventions) - len(attributions),
         "predictions_scored": len(predictions),
         "mean_absolute_error": round(sum(errors) / len(errors), 4) if errors else None,
         "note": (

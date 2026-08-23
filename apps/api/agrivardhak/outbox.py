@@ -19,9 +19,11 @@ dies between the handler running and ``published_at`` being written. Handlers mu
 be idempotent, and the ones here are: they write rows keyed on the event's aggregate, so a
 replay updates rather than duplicates.
 
-**In order per aggregate.** Events are drained in id order, and ids are UUIDv7, so they are
-time-ordered without a sequence. Two events about the same recommendation cannot be
-processed out of order.
+**In order per aggregate.** Events are drained in ``seq`` order — a BIGINT identity column,
+monotonic by construction. This used to order by id on the reasoning that UUIDv7 is
+time-ordered, which is true only down to the millisecond: below that the id is random, and
+two events written in one transaction share a millisecond nearly always. They were being
+delivered in random order. See the note on ``DomainEvent``.
 
 **One bad handler cannot stop the queue.** A handler that raises marks its event with the
 error and moves on. A poison message halting all downstream work for an FPO would be a worse
@@ -68,7 +70,7 @@ def dispatch_pending(session: Session, *, limit: int = 200, now: dt.datetime | N
         session.execute(
             select(DomainEvent)
             .where(DomainEvent.published_at.is_(None))
-            .order_by(DomainEvent.id)
+            .order_by(DomainEvent.seq)
             .limit(limit)
             .with_for_update(skip_locked=True)
         ).scalars()

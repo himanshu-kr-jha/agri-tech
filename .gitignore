@@ -26,6 +26,7 @@ out/
 # Data
 *.db
 *.sqlite3
+!infra/Dockerfile.db
 pgdata/
 # Fetched external payloads — Agmarknet prices, Open-Meteo weather, ERA5 hazard
 # climatology. **Committed on purpose** (14.7 MB): NFR-303 requires the demo to run with the

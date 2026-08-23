@@ -61,6 +61,14 @@ def main() -> int:
     print(f"  weather days   {result.weather_records:,}  (real Open-Meteo, 3 tracts)")
     print(f"  lots           {result.lots:,}")
     print(f"  buyer offers   {result.offers:,}  (anchored to real modal prices)")
+    print(f"  decisions      {result.decisions:,}  (two closed seasons plus this one, open)")
+    print(f"  awaiting you   {result.pending:,}  (SUGGESTED — nothing has happened yet)")
+    print(f"  interventions  {result.interventions:,}  (with adherence recorded — INV-7)")
+    print(
+        f"  attributions   {result.attributions:,}  "
+        f"(of {result.interventions:,} — the rest were not scoreable, deliberately)"
+    )
+    print(f"  scored forecasts {result.predictions_scored:,}  (prediction vs actual — INV-6)")
     return 0
 
 
