@@ -688,7 +688,7 @@ def _realisation_gap(lot: Lot, best: BuyerScore, history: list[PricePoint]) -> F
         magnitude=Decimal(str(round(gap, 3))),
         unit="share of mandi price lost to costs",
         confidence=_confidence_for(best, CostModel()),
-        evidence=[history[0].evidence],
+        evidence=[sorted(history, key=lambda p: p.date)[-1].evidence],
         assumptions=[
             "Compared against the median of the last 30 reported days, not a single day.",
             "The deductions are itemised in the effective-price breakdown; they are "

@@ -271,3 +271,21 @@ def test_the_current_price_is_the_last_point_not_the_first(session, seeded) -> N
     assert latest is not None
     # Same day; the helper picks one market, the series carries several, so compare the day.
     assert points[-1].date == latest[1].as_of.date()
+
+
+def test_a_seasonal_claim_cites_a_recent_record_not_the_oldest_one(session, seeded) -> None:
+    """Provenance has to point somewhere useful, or it is decoration.
+
+    The seasonality finding is derived from 24 months of series, so any single citation is
+    somewhat arbitrary — but citing the *oldest* record sends a CEO checking "where did this
+    November figure come from" to a single day two years earlier. The numbers were right and
+    the audit trail was useless, which is the more embarrassing of the two failures.
+    """
+    from agrivardhak.orchestrator import gather
+
+    points = agmarknet.price_points(session, commodity_name="Paddy(Common)", limit=2000)
+    if len(points) < 60:
+        pytest.skip("not enough paddy history seeded")
+    seasonality = gather.seasonality_from("Paddy", points)
+    assert seasonality.evidence.as_of.date() == points[-1].date
+    assert seasonality.evidence.as_of.date() > points[0].date

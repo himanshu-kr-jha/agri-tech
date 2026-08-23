@@ -421,7 +421,11 @@ def seasonality_from(crop_name: str, points: list[market.PricePoint]) -> risk.Pr
         )
         for month, group in by_month.items()
     }
-    return risk.PriceSeasonality(crop_name=crop_name, months=months, evidence=points[0].evidence)
+    # `points[-1]`, not `[0]`: the series is ascending, so the last element is the most
+    # recent. A seasonal claim about *this* November that cited a record from two years ago
+    # would send anyone checking the provenance to the wrong place — the numbers would be
+    # right and the audit trail would be useless.
+    return risk.PriceSeasonality(crop_name=crop_name, months=months, evidence=points[-1].evidence)
 
 
 def load_climatology(session: Session) -> dict[str, risk.Climatology]:
@@ -564,7 +568,7 @@ def for_farm(
                 expected_yield_kg_per_ha=(statistics.mean(yields) if yields else None),
                 price_low_paise_per_kg=low,
                 price_high_paise_per_kg=high,
-                price_evidence=points[0].evidence,
+                price_evidence=points[-1].evidence,
                 yield_confidence=predicted.get("confidence"),
             )
         )
