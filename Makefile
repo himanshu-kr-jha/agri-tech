@@ -1,4 +1,4 @@
-.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed seed-reset check lint fmt typecheck test test-api progress progress-check clean
+.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed seed-reset check lint fmt typecheck test test-api test-web progress progress-check clean
 
 API := apps/api
 PY  := $(API)/.venv/bin/python
@@ -119,10 +119,13 @@ typecheck: ## mypy (strict on domain/ and intelligence/) + tsc
 	cd $(API) && .venv/bin/mypy agrivardhak
 	cd apps/web && npx tsc --noEmit
 
-test: test-api ## Run all tests
+test: test-api test-web ## Run all tests
 
 test-api: ## pytest
 	cd $(API) && .venv/bin/python -m pytest -q
+
+test-web: ## vitest — component tests, including partial-packet rendering
+	cd apps/web && npx vitest run
 
 progress: ## Regenerate PROGRESS.md from what the repo can prove
 	$(API)/.venv/bin/python scripts/progress.py

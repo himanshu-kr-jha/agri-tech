@@ -18,7 +18,14 @@
  */
 
 import { ConfidenceChip, formatInr } from "@/components/invariants";
-import type { Claim, EvidenceRef, OverrideNote, PacketAction, Packet } from "@/lib/api";
+import type {
+  Claim,
+  ConfidenceBlock,
+  EvidenceRef,
+  OverrideNote,
+  Packet,
+  PacketAction,
+} from "@/lib/api";
 
 const SECTION_TITLE: Record<string, string> = {
   situation: "Situation",
@@ -30,62 +37,88 @@ const SECTION_TITLE: Record<string, string> = {
   actions: "Actions",
 };
 
-export function PacketView({ packet }: { packet: Packet }) {
+/**
+ * Renders a packet that may only be **partly arrived**.
+ *
+ * This component is mounted after every SSE frame, so on the first render it holds nothing
+ * but `situation` — `recommendation`, `actions` and `overrides` are still undefined. Treating
+ * the input as a complete `Packet` crashed the page on the first frame with
+ * `Cannot read properties of undefined (reading 'map')`, and it crashed *only* in a browser:
+ * a script that accumulates every frame before rendering never sees a half-built packet, so
+ * the stream parsed perfectly and the screen was blank.
+ *
+ * So the type is `Partial<Packet>` and every section renders only once its data exists. A
+ * section that has not arrived is *absent*, not an empty heading — the reader watches the
+ * answer assemble rather than watching placeholders fill in.
+ */
+export function PacketView({ packet }: { packet: Partial<Packet> }) {
   return (
     <article className="space-y-8">
-      <OverrideBanner overrides={packet.overrides} />
+      {packet.overrides && packet.overrides.length > 0 && (
+        <OverrideBanner overrides={packet.overrides} />
+      )}
 
-      <Section title={SECTION_TITLE.situation} subtitle="What is happening">
-        <Claims claims={packet.situation} />
-      </Section>
+      {packet.situation && (
+        <Section title={SECTION_TITLE.situation} subtitle="What is happening">
+          <Claims claims={packet.situation} />
+        </Section>
+      )}
 
-      <Section title={SECTION_TITLE.impact} subtitle="Who and what is affected">
-        <Claims claims={packet.impact} showAffected />
-      </Section>
+      {packet.impact && (
+        <Section title={SECTION_TITLE.impact} subtitle="Who and what is affected">
+          <Claims claims={packet.impact} showAffected />
+        </Section>
+      )}
 
-      <Section
-        title={SECTION_TITLE.recommendation}
-        subtitle="Proposed — nothing happens until a human approves"
-      >
-        <div className="space-y-3">
-          {packet.recommendation.map((action, i) => (
-            <ActionCard key={i} action={action} />
-          ))}
-        </div>
-      </Section>
+      {packet.recommendation && (
+        <Section
+          title={SECTION_TITLE.recommendation}
+          subtitle="Proposed — nothing happens until a human approves"
+        >
+          <div className="space-y-3">
+            {packet.recommendation.map((action, i) => (
+              <ActionCard key={i} action={action} />
+            ))}
+          </div>
+        </Section>
+      )}
 
-      <Section
-        title={SECTION_TITLE.expected_outcome}
-        subtitle="Ranges and directions, never promised figures"
-      >
-        <Claims claims={packet.expected_outcome} />
-      </Section>
+      {packet.expected_outcome && (
+        <Section
+          title={SECTION_TITLE.expected_outcome}
+          subtitle="Ranges and directions, never promised figures"
+        >
+          <Claims claims={packet.expected_outcome} />
+        </Section>
+      )}
 
-      <ConfidenceSection packet={packet} />
+      {packet.confidence && <ConfidenceSection confidence={packet.confidence} />}
 
-      <Section title={SECTION_TITLE.actions} subtitle="A role, a task, a date">
-        <ul className="divide-y divide-neutral-100 dark:divide-neutral-900">
-          {packet.actions.map((action, i) => (
-            <li key={i} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5 text-sm">
-              <span className="rounded bg-neutral-100 px-1.5 py-0.5 font-mono text-xs dark:bg-neutral-800">
-                {action.role.replace(/_/g, " ").toLowerCase()}
-              </span>
-              <span>{action.task}</span>
-              {action.due_on && (
-                <span className="ml-auto text-xs text-neutral-500">
-                  by{" "}
-                  {new Date(action.due_on).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                  })}
+      {packet.actions && packet.actions.length > 0 && (
+        <Section title={SECTION_TITLE.actions} subtitle="A role, a task, a date">
+          <ul className="divide-y divide-neutral-100 dark:divide-neutral-900">
+            {packet.actions.map((action, i) => (
+              <li key={i} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5 text-sm">
+                <span className="rounded bg-neutral-100 px-1.5 py-0.5 font-mono text-xs dark:bg-neutral-800">
+                  {action.role.replace(/_/g, " ").toLowerCase()}
                 </span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </Section>
+                <span>{action.task}</span>
+                {action.due_on && (
+                  <span className="ml-auto text-xs text-neutral-500">
+                    by{" "}
+                    {new Date(action.due_on).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                    })}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
-      <EvidenceSection evidence={packet.evidence} packet={packet} />
+      {packet.evidence && <EvidenceSection evidence={packet.evidence} packet={packet} />}
     </article>
   );
 }
@@ -266,8 +299,7 @@ function Detail({ label, children }: { label: string; children: React.ReactNode 
   );
 }
 
-function ConfidenceSection({ packet }: { packet: Packet }) {
-  const { confidence } = packet;
+function ConfidenceSection({ confidence }: { confidence: ConfidenceBlock }) {
   return (
     <Section
       title={SECTION_TITLE.confidence}
@@ -330,7 +362,13 @@ function ConfidenceSection({ packet }: { packet: Packet }) {
   );
 }
 
-function EvidenceSection({ evidence, packet }: { evidence: EvidenceRef[]; packet: Packet }) {
+function EvidenceSection({
+  evidence,
+  packet,
+}: {
+  evidence: EvidenceRef[];
+  packet: Partial<Packet>;
+}) {
   const byKind = evidence.reduce<Record<string, number>>((acc, ref) => {
     acc[ref.kind] = (acc[ref.kind] ?? 0) + 1;
     return acc;
@@ -347,14 +385,20 @@ function EvidenceSection({ evidence, packet }: { evidence: EvidenceRef[]; packet
             .map(([kind, n]) => `${n} ${kind.replace(/_/g, " ")}`)
             .join(", ")}
         </p>
-        <p className="mt-2 font-mono text-xs break-all text-neutral-500">
-          snapshot {packet.snapshot_id}
-        </p>
-        <p className="mt-1 text-xs text-neutral-500">
-          Generated{" "}
-          {new Date(packet.generated_at).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} by{" "}
-          {packet.model_id} · prompt {packet.prompt_version}
-        </p>
+        {packet.snapshot_id && (
+          <p className="mt-2 font-mono text-xs break-all text-neutral-500">
+            snapshot {packet.snapshot_id}
+          </p>
+        )}
+        {packet.generated_at && (
+          <p className="mt-1 text-xs text-neutral-500">
+            Generated{" "}
+            {new Date(packet.generated_at).toLocaleString("en-IN", {
+              timeZone: "Asia/Kolkata",
+            })}{" "}
+            by {packet.model_id} · prompt {packet.prompt_version}
+          </p>
+        )}
         <Detail label="List the sources">
           <ul className="space-y-0.5">
             {evidence.slice(0, 40).map((ref) => (

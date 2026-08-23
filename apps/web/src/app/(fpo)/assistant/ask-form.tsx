@@ -99,7 +99,12 @@ export function AskForm({ examples }: { examples: string[] }) {
     }
   }
 
-  const packet = done || Object.keys(sections).length > 0 ? (sections as unknown as Packet) : null;
+  // `Partial<Packet>`, and the cast is deliberate rather than lazy: sections arrive one at a
+  // time, so between the first frame and the last this object genuinely has holes in it.
+  // Calling it a complete Packet is what crashed the page on the first render — PacketView
+  // now takes a partial and renders only what has landed.
+  const packet: Partial<Packet> | null =
+    done || Object.keys(sections).length > 0 ? (sections as Partial<Packet>) : null;
 
   return (
     <>
