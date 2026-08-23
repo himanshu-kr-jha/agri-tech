@@ -178,6 +178,7 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
     _seed_farm_resources(session, rng)
     lots = _seed_lots(session, org, cycles, rng)
     offers = _seed_offers(session, org, lots, rng)
+    _seed_farmer_login(session, org, farmers)
 
     session.flush()
     return SeedResult(
@@ -359,18 +360,86 @@ def _seed_buyers(session: Session, org: Organization, rng: random.Random) -> Non
 
 
 def _seed_users(session: Session, org: Organization) -> None:
-    ceo = User(display_name="FPO CEO (demo)", email="ceo@demo.agrivardhak", locale="en-IN")
-    admin = User(
-        display_name="Platform Admin (demo)", email="admin@demo.agrivardhak", locale="en-IN"
+    """Staff accounts. The farmer account is created later, once farmers exist.
+
+    All of these can sign in with :data:`agrivardhak.api.login.DEMO_PASSWORD` and are flagged
+    ``is_demo_account`` so the sign-in page can offer them and so nothing mistakes them for
+    real credentials.
+
+    Hashed at the production iteration count, not a reduced one. An earlier version used
+    50,000 rounds to keep seeding fast, which cost about 0.8 s in total — and made a real
+    password check four times cheaper than the dummy check the login endpoint runs for an
+    unknown username, reopening the timing oracle from the other side. Under a second is not
+    worth a hole.
+    """
+    ceo = User(
+        display_name="Ramesh Verma — CEO",
+        email="ceo@demo.agrivardhak",
+        locale="en-IN",
+        password_hash=_demo_hash(),
+        is_demo_account=True,
     )
-    session.add_all([ceo, admin])
+    officer = User(
+        display_name="Sunita Devi — Field Officer",
+        email="officer@demo.agrivardhak",
+        locale="en-IN",
+        password_hash=_demo_hash(),
+        is_demo_account=True,
+    )
+    admin = User(
+        display_name="Platform Admin (demo)",
+        email="admin@demo.agrivardhak",
+        locale="en-IN",
+        password_hash=_demo_hash(),
+        is_demo_account=True,
+    )
+    session.add_all([ceo, officer, admin])
     session.flush()
     session.add_all(
         [
             RoleGrant(user_id=ceo.id, organization_id=org.id, role=enums.Role.FPO_CEO),
+            RoleGrant(user_id=officer.id, organization_id=org.id, role=enums.Role.FIELD_OFFICER),
             RoleGrant(user_id=admin.id, organization_id=None, role=enums.Role.PLATFORM_ADMIN),
         ]
     )
+    session.flush()
+
+
+def _demo_hash() -> str:
+    from agrivardhak.api.login import DEMO_PASSWORD
+    from agrivardhak.api.passwords import hash_password
+
+    return hash_password(DEMO_PASSWORD)
+
+
+def _seed_farmer_login(session: Session, org: Organization, farmers: list[Farmer]) -> None:
+    """One farmer who can sign in, for the boundary demo.
+
+    Picked rather than random: the account is more convincing when the person behind it has
+    plots, an active crop and a lot contribution to look at. A farmer whose page is empty
+    demonstrates the boundary just as well and reads as a bug.
+    """
+    with_land = session.execute(
+        select(Farmer.id, Farmer.full_name)
+        .join(Farm, Farm.operator_farmer_id == Farmer.id)
+        .join(Plot, Plot.farm_id == Farm.id)
+        .join(CropCycle, CropCycle.plot_id == Plot.id)
+        .where(CropCycle.status == enums.CropCycleStatus.GROWING)
+        .limit(1)
+    ).first()
+    farmer_id, farmer_name = with_land if with_land else (farmers[0].id, farmers[0].full_name)
+
+    user = User(
+        display_name=f"{farmer_name} — Member",
+        email="farmer@demo.agrivardhak",
+        locale="hi-IN",
+        farmer_id=farmer_id,
+        password_hash=_demo_hash(),
+        is_demo_account=True,
+    )
+    session.add(user)
+    session.flush()
+    session.add(RoleGrant(user_id=user.id, organization_id=org.id, role=enums.Role.FARMER))
     session.flush()
 
 

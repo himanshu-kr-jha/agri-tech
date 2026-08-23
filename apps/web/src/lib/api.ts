@@ -1,3 +1,5 @@
+import { sessionToken } from "@/lib/session";
+
 /**
  * Server-side API client.
  *
@@ -5,13 +7,15 @@
  * that authorization, provenance resolution and the information boundary have exactly one
  * enforcement point. That is why this file exists rather than a Prisma schema.
  *
- * The dev token below is a stand-in until NextAuth lands. It is issued by the API's own
- * `issue_token` in dev only and carries the CEO role — a real session will replace it, and
- * the API does not care which produced it because it verifies either way.
+ * The bearer token comes from the signed-in session — an httpOnly cookie the browser cannot
+ * read (see `lib/session.ts`). `AGRI_DEV_TOKEN` is still honoured as a fallback so the older
+ * `make dev-env` workflow and any scripts built on it keep working; a real session wins.
+ *
+ * Every function here is async because reading the cookie is. That is a small tax for the
+ * property it buys: there is no code path where a token reaches the browser.
  */
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-const DEV_TOKEN = process.env.AGRI_DEV_TOKEN ?? "";
 
 export interface Card {
   key: string;
@@ -333,9 +337,14 @@ export class ApiError extends Error {
   }
 }
 
+async function authHeaders(): Promise<Record<string, string>> {
+  const token = await sessionToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${API}${path}`, {
-    headers: DEV_TOKEN ? { Authorization: `Bearer ${DEV_TOKEN}` } : {},
+    headers: await authHeaders(),
     cache: "no-store",
   });
   if (!res.ok) {
@@ -385,7 +394,7 @@ async function post<T>(path: string, body: unknown): Promise<T> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(DEV_TOKEN ? { Authorization: `Bearer ${DEV_TOKEN}` } : {}),
+      ...(await authHeaders()),
     },
     body: JSON.stringify(body),
     cache: "no-store",

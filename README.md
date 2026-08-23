@@ -29,11 +29,32 @@ make demo      # seed 1,000 farmers, real prices/weather, write the dev token
 make dev       # API on :8000, web on :3000
 ```
 
-Then open **<http://localhost:3000/assistant>** and ask:
+Then open **<http://localhost:3000>** and sign in.
+
+### Demo logins
+
+All three are seeded, all use the password **`agrivardhak`**, and the sign-in page lists them so
+you do not have to remember. Which dashboard you land on is decided by your **role**, on the
+server — not by the URL you typed.
+
+| Sign in as | Username | You get |
+|---|---|---|
+| **Ramesh Verma — CEO** | `ceo@demo.agrivardhak` | The organization console: assistant, every member, buyer negotiations, risk register, decision history. The only role that can approve a crop plan. |
+| **Sunita Devi — Field Officer** | `officer@demo.agrivardhak` | The same console, but may approve crop protection and *not* a funding allocation |
+| **Pushpa Nishad — Member** | `farmer@demo.agrivardhak` | Their own farm, in Hindi and English. Nothing else. |
+
+As the CEO, ask:
 
 > *What should we do this season to maximize sustainable farmer income?*
 
 The answer takes about six seconds and streams in section by section.
+
+Then **sign out and sign in as the member.** Every organization URL redirects them to their
+own farm, and the API returns `403` underneath — the redirect is a courtesy, the refusal is
+the boundary. Those credentials are published on purpose: they are synthetic accounts in a
+demonstration system, and a credential that is documented and flagged is safer than one that
+looks like a secret while being equally guessable. The API only serves that list outside
+production.
 
 ### Prerequisites
 
@@ -79,11 +100,7 @@ silently fail.
 
 ### See the information boundary
 
-```bash
-make farmer-env    # swap the dev token to a FARMER
-# restart the web server, then open /today
-make dev-env       # swap back to the CEO
-```
+Sign out, then sign in as `farmer@demo.agrivardhak`.
 
 A farmer gets **403 on all ten organization endpoints** and 200 on their own record. The
 farmer view is built farmer-scoped from the start rather than filtered down from an
@@ -205,7 +222,8 @@ PostgreSQL 16 + PostGIS + pgvector · Claude (Anthropic SDK), for narration only
 | Symptom | Cause | Fix |
 |---|---|---|
 | Every page says *"Could not reach the API"* | API not running | `make api` in a second terminal |
-| Pages say *"This view is for organization staff"* | Token missing or expired (12h) | `make dev-env`, restart the web server |
+| Redirected to `/login` unexpectedly | Session expired (12h) | Sign in again |
+| Sign-in says *"Could not reach the API"* | API not running | `make api` |
 | `make seed` prints nothing new | Already seeded — it is idempotent | `make seed-reset` |
 | `make setup` fails on the venv | Python 3.13 picked up | `uv venv --python 3.12 --clear` in `apps/api` |
 | Assistant returns 500 | Stale schema | `make upgrade` |

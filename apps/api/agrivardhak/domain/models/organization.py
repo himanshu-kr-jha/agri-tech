@@ -107,6 +107,16 @@ class User(Base, TimestampMixin):
     farmer_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("farmer.id"))
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
 
+    #: PBKDF2-SHA256, salted, stored as "pbkdf2_sha256$iterations$salt$hash". Null for a
+    #: user who cannot sign in with a password at all — which is the right default, since
+    #: most farmers will arrive through a phone OTP rather than a password they have to
+    #: remember. See agrivardhak.api.passwords for why the format is written out longhand.
+    password_hash: Mapped[str | None] = mapped_column(String(255))
+    #: True for the accounts seeded so the demo has something to log in with. Never true
+    #: for a real user, and the login endpoint refuses to issue a demo credential outside
+    #: a local environment.
+    is_demo_account: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
     role_grants: Mapped[list[RoleGrant]] = relationship(back_populates="user")
 
 

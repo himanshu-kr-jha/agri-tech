@@ -9,25 +9,30 @@ asserted by a test, not hoped for (NFR-303).
 ## 1. Start it
 
 ```bash
-make setup          # uv sync + pnpm install + docker compose up -d db
-make upgrade        # alembic upgrade head
-make seed           # the synthetic Prayagraj FPO + real prices, weather, climatology
-make dev-token      # copy the JWT it prints
+make setup          # venv + npm install + Postgres in Docker + migrations
+make demo           # seed the FPO, real prices, weather, climatology, demo accounts
 ```
 
-Put the token where the web tier can find it — it is read server-side only, never sent to
-the browser:
-
 ```bash
-cat > apps/web/.env.local <<EOF
-AGRI_DEV_TOKEN=<the token>
-NEXT_PUBLIC_API_URL=http://localhost:8000
-EOF
-
 make dev            # api on :8000, web on :3000
 ```
 
-Then open <http://localhost:3000/assistant>.
+Then open <http://localhost:3000> and sign in.
+
+### The three demo logins
+
+Password for all of them: **`agrivardhak`**. The sign-in page lists them, so nothing has to
+be typed from memory or from this page.
+
+| | Username | Lands on |
+|---|---|---|
+| Ramesh Verma — CEO | `ceo@demo.agrivardhak` | the organization console |
+| Sunita Devi — Field Officer | `officer@demo.agrivardhak` | the same console, narrower approval rights |
+| Pushpa Nishad — Member | `farmer@demo.agrivardhak` | their own farm |
+
+Which dashboard you get is decided by the role grants in the database and returned by the
+API. The client cannot ask for a role — there is a test that posts `"roles": ["FPO_CEO"]`
+alongside the farmer's credentials and asserts it comes back `FARMER`.
 
 **Sanity check before you present** (about two minutes):
 
@@ -72,27 +77,13 @@ and carries a `DEMO DATA` badge wherever it appears.
 | `/today` | Switch to a farmer token (below). Bilingual, their own farm only. |
 | `/impact` | Reports what it **could not** attribute as prominently as what it could. |
 
-### A farmer token, for the boundary moment
+### The boundary moment
 
-```bash
-cd apps/api && .venv/bin/python -c "
-import uuid
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session
-from agrivardhak.config import get_settings
-from agrivardhak.api.auth import issue_token
-from agrivardhak.domain.enums import Role
-from agrivardhak.domain.models.organization import Organization, Farmer
-e = create_engine(get_settings().database_url)
-with Session(e) as s:
-    org = s.execute(select(Organization)).scalars().first()
-    f = s.execute(select(Farmer)).scalars().first()
-print(issue_token(user_id=uuid.uuid4(), roles={Role.FARMER},
-                  organization_id=org.id, farmer_id=f.id))"
-```
+Sign out, then sign in as `farmer@demo.agrivardhak`.
 
-Swap it into `.env.local` and reload. Better still, show the status codes rather than the
-screen — this is the more convincing demonstration:
+Every organization URL now redirects the member to their own farm. Show the status codes
+rather than the screen — it is the more convincing demonstration, and it is what a technical
+judge will ask for:
 
 ```
 farmer token →  /fpo/dashboard   403      /farmer/today   200
@@ -103,6 +94,9 @@ farmer token →  /fpo/dashboard   403      /farmer/today   200
                 /audit           403
                 /assistant/ask   403
 ```
+
+The redirect is a courtesy for someone who typed the wrong URL. The refusal is the boundary,
+and it does not care how the browser got there.
 
 The farmer view is built farmer-scoped from the start rather than filtered down from an
 organization query, so org-internal rows are never in the result set for a rendering bug to
@@ -115,7 +109,8 @@ leak.
 | Symptom | Cause | Fix |
 |---|---|---|
 | Every page says "Could not reach the API" | API not running | `make api` |
-| Pages render but say "organization staff only" | `AGRI_DEV_TOKEN` is a farmer token, or missing | `make dev-token`, update `.env.local`, restart the web server |
+| Sent back to `/login` unexpectedly | Session expired — tokens last 12 hours | Sign in again |
+| Sign-in says "Could not reach the API" | API not running | `make api` |
 | `make seed` says nothing happened | Already seeded; it is idempotent | `make seed-reset` |
 | Assistant returns 500 | Usually a stale schema | `make upgrade` |
 | Prices or weather look empty | The fixture bundle was not loaded | The payloads are committed under `seed/generated/` (14.7 MB, 738 files) — `make seed-reset` reloads them without touching the network |

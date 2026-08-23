@@ -22,19 +22,25 @@ setup: ## Install deps, start the database, apply migrations
 
 demo: ## One command from a fresh clone to a running demo
 	$(MAKE) seed
-	$(MAKE) dev-env
+	@printf 'NEXT_PUBLIC_API_URL=http://localhost:8000\n' > apps/web/.env.local
 	@echo ""
-	@echo "  Ready. Run 'make dev', then open http://localhost:3000/assistant"
+	@echo "  Ready. Run 'make dev', then open http://localhost:3000 and sign in:"
+	@echo ""
+	@echo "    ceo@demo.agrivardhak      the organization console"
+	@echo "    officer@demo.agrivardhak  the console, narrower approval rights"
+	@echo "    farmer@demo.agrivardhak   one member's own farm"
+	@echo ""
+	@echo "  Password for all three: agrivardhak"
 	@echo ""
 
-dev-env: ## Write apps/web/.env.local with a fresh CEO token (needs a seeded database)
+dev-env: ## Legacy: bypass the sign-in screen with a CEO token in .env.local
 	@cd $(API) && .venv/bin/python -c "import sys; sys.path.insert(0,'.'); 	from sqlalchemy import select; 	from agrivardhak.api.auth import issue_token; 	from agrivardhak.db.session import session_scope; 	from agrivardhak.domain.enums import Role; 	from agrivardhak.domain.models.organization import Organization, RoleGrant; 	s=session_scope().__enter__(); 	org=s.execute(select(Organization)).scalars().first(); 	g=s.execute(select(RoleGrant).where(RoleGrant.role==Role.FPO_CEO)).scalars().first(); 	print(issue_token(user_id=g.user_id, roles={Role.FPO_CEO}, organization_id=org.id))" 	> /tmp/agrivardhak-token || (echo "No seeded organization found. Run 'make seed' first." && exit 1)
 	@printf 'AGRI_DEV_TOKEN=%s\nNEXT_PUBLIC_API_URL=http://localhost:8000\n' \
 	  "$$(cat /tmp/agrivardhak-token)" > apps/web/.env.local
 	@rm -f /tmp/agrivardhak-token
 	@echo "Wrote apps/web/.env.local (CEO token, expires in 12h — re-run this if the UI says 403)."
 
-farmer-env: ## Swap apps/web/.env.local to a FARMER token, for the boundary demo
+farmer-env: ## Legacy: bypass the sign-in screen with a FARMER token in .env.local
 	@cd $(API) && .venv/bin/python -c "import uuid, sys; sys.path.insert(0,'.'); 	from sqlalchemy import select; 	from agrivardhak.api.auth import issue_token; 	from agrivardhak.db.session import session_scope; 	from agrivardhak.domain.enums import Role; 	from agrivardhak.domain.models.organization import Organization, Farmer; 	s=session_scope().__enter__(); 	org=s.execute(select(Organization)).scalars().first(); 	f=s.execute(select(Farmer)).scalars().first(); 	print(issue_token(user_id=uuid.uuid4(), roles={Role.FARMER}, organization_id=org.id, farmer_id=f.id))" 	> /tmp/agrivardhak-token || (echo "No seeded farmer found. Run 'make seed' first." && exit 1)
 	@printf 'AGRI_DEV_TOKEN=%s\nNEXT_PUBLIC_API_URL=http://localhost:8000\n' \
 	  "$$(cat /tmp/agrivardhak-token)" > apps/web/.env.local

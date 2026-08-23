@@ -1,6 +1,17 @@
-/** FPO console shell — shared nav for the organization-facing screens. */
+/**
+ * FPO console shell — nav, and the guard that decides who may be here.
+ *
+ * The redirect is a *convenience*, not the security boundary. Every one of these screens
+ * fetches through the API, which refuses a farmer token with 403 whatever the browser did to
+ * get here. Sending them to their own view instead of showing an error is simply the more
+ * useful behaviour for someone who typed the wrong URL.
+ */
 
 import Link from "next/link";
+import { redirect } from "next/navigation";
+
+import { SignOutButton } from "@/components/sign-out";
+import { currentUser, homeFor } from "@/lib/session";
 
 const NAV = [
   { href: "/assistant", label: "Ask" },
@@ -12,12 +23,16 @@ const NAV = [
   { href: "/impact", label: "Impact" },
 ];
 
-export default function FpoLayout({ children }: { children: React.ReactNode }) {
+export default async function FpoLayout({ children }: { children: React.ReactNode }) {
+  const user = await currentUser();
+  if (!user) redirect("/login");
+  if (user.audience !== "FPO") redirect(homeFor(user));
+
   return (
     <div className="min-h-screen font-sans">
       <header className="border-b border-neutral-200 dark:border-neutral-800">
-        <nav className="mx-auto flex max-w-5xl items-center gap-6 px-6 py-3 text-sm">
-          <Link href="/" className="font-semibold tracking-tight">
+        <nav className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-3 text-sm">
+          <Link href="/dashboard" className="font-semibold tracking-tight">
             AgriVardhak
           </Link>
           {NAV.map((item) => (
@@ -29,6 +44,10 @@ export default function FpoLayout({ children }: { children: React.ReactNode }) {
               {item.label}
             </Link>
           ))}
+          <div className="ml-auto flex items-center gap-3">
+            <span className="text-xs text-neutral-500">{user.display_name}</span>
+            <SignOutButton />
+          </div>
         </nav>
       </header>
       {children}

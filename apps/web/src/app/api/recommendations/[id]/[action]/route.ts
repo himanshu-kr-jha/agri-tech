@@ -10,8 +10,10 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
+import { sessionToken } from "@/lib/session";
+
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-const DEV_TOKEN = process.env.AGRI_DEV_TOKEN ?? "";
+
 
 /** Only these three. A path segment from the URL must never become an arbitrary API call. */
 const ALLOWED = new Set(["approve", "reject", "execute", "review"]);
@@ -25,11 +27,12 @@ export async function POST(
     return NextResponse.json({ detail: `unknown action: ${action}` }, { status: 400 });
   }
   const body = await request.json().catch(() => ({}));
+  const token = await sessionToken();
   const upstream = await fetch(`${API}/api/v1/recommendations/${id}/${action}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(DEV_TOKEN ? { Authorization: `Bearer ${DEV_TOKEN}` } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     body: JSON.stringify(body),
     cache: "no-store",

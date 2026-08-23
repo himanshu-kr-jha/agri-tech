@@ -8,16 +8,19 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
+import { sessionToken } from "@/lib/session";
+
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-const DEV_TOKEN = process.env.AGRI_DEV_TOKEN ?? "";
+
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => ({}));
+  const token = await sessionToken();
   const upstream = await fetch(`${API}/api/v1/assistant/ask/stream`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(DEV_TOKEN ? { Authorization: `Bearer ${DEV_TOKEN}` } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     body: JSON.stringify(body),
     cache: "no-store",
