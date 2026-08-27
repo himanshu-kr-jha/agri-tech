@@ -26,7 +26,8 @@ with real" has an exact operational meaning — **lift the caps** in `seed/sourc
 
 5. Minimal registry: extend the source record with licence, retrieval and recheck fields.
    **No scheduler.** Staleness signalling and a fetch log only.
-6. Four scrapers — `cost_of_cultivation`, `scheme`, `variety`, `price` — each with an
+6. Scrapers by domain — `cost_of_cultivation`, `scheme`, `variety`, `price`, and since the
+   re-verification also `production` and `procurement` — each with an
    **opaque JSON cursor** in a `scraper_checkpoint` table. Opaque because the cursor shape
    genuinely differs per type.
 7. Fetch stack is **plain Python**: `httpx` + `pdfplumber` + `pandas`. No scraping vendor.
@@ -83,6 +84,11 @@ verbatim (ADR-0015). **`agridarshan.up.gov.in` was investigated and rejected**: 
 DBT beneficiary administration system holding personal farmer records, so Q22's option (iii)
 applies — skip it. This is the first source with a real licence rather than `UNKNOWN`, and
 that licence does **not** cover commercial use.
+
+**Batch 5 — crop production, area and yield. Done.** The district series, scoped to UP by a
+server-side filter. Directly addresses A1–A4.
+
+**Batch 6 — procurement. Done.** Closes Domain 3 of the original brief.
 
 **Batch 4 — crop varieties. Done.** Field crop varieties and hybrids, 255 rows, via the
 existing data.gov.in fetcher. Advisory-tier university cost studies remain outstanding.

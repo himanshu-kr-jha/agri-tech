@@ -1,0 +1,166 @@
+{
+  "records": [
+    {
+      "sl__no_": "1",
+      "state_ut": "Andhra Pradesh",
+      "procurement": 34.83,
+      "msp_value__rs_1888_qtl_": 6575.11
+    },
+    {
+      "sl__no_": "2",
+      "state_ut": "Telangana",
+      "procurement": 88.42,
+      "msp_value__rs_1888_qtl_": 16693.11
+    },
+    {
+      "sl__no_": "3",
+      "state_ut": "Assam",
+      "procurement": 1.19,
+      "msp_value__rs_1888_qtl_": 224.36
+    },
+    {
+      "sl__no_": "4",
+      "state_ut": "Bihar",
+      "procurement": 0.67,
+      "msp_value__rs_1888_qtl_": 126.41
+    },
+    {
+      "sl__no_": "5",
+      "state_ut": "Chandigarh",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "6",
+      "state_ut": "Chhatisgarh",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "7",
+      "state_ut": "Gujarat",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "8",
+      "state_ut": "Haryana",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "9",
+      "state_ut": "Himachal Pradesh",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "10",
+      "state_ut": "Jharkhand",
+      "procurement": 1.45,
+      "msp_value__rs_1888_qtl_": 274.56
+    },
+    {
+      "sl__no_": "11",
+      "state_ut": "Jammu & Kashmir",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "12",
+      "state_ut": "Karnataka",
+      "procurement": 0.07,
+      "msp_value__rs_1888_qtl_": 12.28
+    },
+    {
+      "sl__no_": "13",
+      "state_ut": "Kerala",
+      "procurement": 3.85,
+      "msp_value__rs_1888_qtl_": 727.2
+    },
+    {
+      "sl__no_": "14",
+      "state_ut": "Madhya Pradesh",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "15",
+      "state_ut": "Maharashtra",
+      "procurement": 3.44,
+      "msp_value__rs_1888_qtl_": 648.87
+    },
+    {
+      "sl__no_": "16",
+      "state_ut": "Odisha",
+      "procurement": 14.44,
+      "msp_value__rs_1888_qtl_": 2726.28
+    },
+    {
+      "sl__no_": "17",
+      "state_ut": "Punjab",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "18",
+      "state_ut": "NEF ( Tripura)",
+      "procurement": 0.08,
+      "msp_value__rs_1888_qtl_": 14.76
+    },
+    {
+      "sl__no_": "19",
+      "state_ut": "Tamil Nadu",
+      "procurement": 9.26,
+      "msp_value__rs_1888_qtl_": 1749.04
+    },
+    {
+      "sl__no_": "20",
+      "state_ut": "Uttar Pradesh",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "21",
+      "state_ut": "Uttrakhand",
+      "procurement": "0",
+      "msp_value__rs_1888_qtl_": "0"
+    },
+    {
+      "sl__no_": "22",
+      "state_ut": "West Bengal",
+      "procurement": 7.45,
+      "msp_value__rs_1888_qtl_": 1407.29
+    },
+    {
+      "sl__no_": "Total",
+      "state_ut": "Total",
+      "procurement": 165.14,
+      "msp_value__rs_1888_qtl_": 31179.27
+    }
+  ],
+  "field": [
+    {
+      "id": "sl__no_",
+      "name": "Sl. No.",
+      "type": "keyword"
+    },
+    {
+      "id": "state_ut",
+      "name": "State/UT",
+      "type": "keyword"
+    },
+    {
+      "id": "procurement",
+      "name": "Procurement",
+      "type": "double"
+    },
+    {
+      "id": "msp_value__rs_1888_qtl_",
+      "name": "MSP Value (Rs 1888/Qtl)",
+      "type": "double"
+    }
+  ],
+  "total": 23,
+  "fetched_count": 23
+}

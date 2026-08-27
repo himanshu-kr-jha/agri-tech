@@ -1,0 +1,25 @@
+{
+  "batch": 5,
+  "domain": "production",
+  "generated_at": "2026-08-27T20:10:55.732005+00:00",
+  "licence_note": "An UNKNOWN licence blocks a confidence-cap lift under ADR-0014. Data is cached but inert until a human confirms the licence.",
+  "resources": [
+    {
+      "key": "crop-production-district",
+      "title": "District-wise, season-wise crop production statistics",
+      "publisher": "Ministry of Agriculture & Farmers Welfare",
+      "access_route": "api.data.gov.in",
+      "resource_id": "35be999b-0208-4354-b557-f6ca9a5355de",
+      "url": null,
+      "language": "en",
+      "unit": "area in hectares, production in tonnes",
+      "temporal_coverage": "1997..2014",
+      "authority": "authoritative",
+      "licence": "UNKNOWN",
+      "recheck_days": 365,
+      "records": 33306,
+      "sha256_file": "5f6b963017ffb01cdf016abd7adfb7ff992278e7beeaa74bf9bf4a61990cfa94",
+      "notes": "Allahabad (= Prayagraj) has 470 rows across 38 crops. District mean yields 2007-14: wheat ~2.3, paddy ~2.4, potato ~16.3 t/ha. 2014 is an outlier low year and should not be read alone."
+    }
+  ]
+}

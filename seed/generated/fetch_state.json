@@ -13,6 +13,13 @@
     "last_checked": "2026-08-27T19:46:29.436453+00:00",
     "records": 209
   },
+  "crop-production-district": {
+    "content_hash": "69be5a14765d92292405e881f23d5b88cd12e1afd0750f211f1b00cf385c6e75",
+    "health": "OK",
+    "last_changed": "2026-08-27T20:10:08.673269+00:00",
+    "last_checked": "2026-08-27T20:10:40.583546+00:00",
+    "records": 33306
+  },
   "msp-kharif": {
     "content_hash": "87ad8e4d2f12eeec8d19166e742d484f31c30bf8b819984e239000282fb59b5c",
     "health": "OK",
@@ -27,12 +34,33 @@
     "last_checked": "2026-08-27T19:48:16.467966+00:00",
     "records": 6
   },
+  "procurement-paddy-statewise": {
+    "content_hash": "f3e235ff1fb196362fa98021527ab8da4367f0d03749826c59fd0b8fa78a9f89",
+    "health": "OK",
+    "last_changed": "2026-08-27T20:10:26.987916+00:00",
+    "last_checked": "2026-08-27T20:10:26.987916+00:00",
+    "records": 23
+  },
+  "procurement-wheat-paddy": {
+    "content_hash": "1da62adc46ee310c9b4cdc8175a3124b7c13a8ff760f7e63a000eab35a48448c",
+    "health": "OK",
+    "last_changed": "2026-08-27T20:10:26.078580+00:00",
+    "last_checked": "2026-08-27T20:10:26.078580+00:00",
+    "records": 5
+  },
+  "up-agridarshan-cms": {
+    "content_hash": "6ace285710311580a31edee9123387621184596a6f5d75795a681ddb2c576f57",
+    "health": "OK",
+    "last_changed": "2026-08-27T20:10:28.972319+00:00",
+    "last_checked": "2026-08-27T20:10:28.972319+00:00",
+    "records": 125
+  },
   "up-go-agriculture": {
     "content_hash": "fdae629a7b1b94222f43d188fa7dfb4684f5a0ba8239ebf756a679769f083c25",
     "cursor_go_number": "48/2026/2026 /001-1395153-12-2099-117-2021-1065-2026",
     "health": "OK",
     "last_changed": "2026-08-27T19:57:26.201812+00:00",
-    "last_checked": "2026-08-27T19:58:28.626256+00:00",
+    "last_checked": "2026-08-27T20:10:27.982215+00:00",
     "records": 75
   },
   "variety-field-crops": {

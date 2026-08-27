@@ -1,9 +1,26 @@
 {
   "batch": 3,
   "domain": "scheme",
-  "generated_at": "2026-08-27T19:58:29.769135+00:00",
+  "generated_at": "2026-08-27T20:10:29.597813+00:00",
   "licence_note": "An UNKNOWN licence blocks a confidence-cap lift under ADR-0014. Data is cached but inert until a human confirms the licence.",
   "resources": [
+    {
+      "key": "up-agridarshan-cms",
+      "title": "UP Agriculture department public CMS — circulars, advisories, FAQs",
+      "publisher": "Government of Uttar Pradesh, Department of Agriculture",
+      "access_route": "agridarshan.up.gov.in",
+      "resource_id": null,
+      "url": "https://agridarshan.up.gov.in/api/cms/getAll",
+      "language": "hi",
+      "unit": null,
+      "temporal_coverage": "rolling",
+      "authority": "advisory",
+      "licence": "UNKNOWN",
+      "recheck_days": 90,
+      "records": 125,
+      "sha256_file": "4a92d11acbefab8c20bc5061fac4ffd8fa7a83598f0f949a1f53183464c4ce8d",
+      "notes": "Advisory tier: FAQs and circulars are guidance, not the eligibility text a rule may be transcribed from. Bilingual fields; Hindi remains canonical (ADR-0015)."
+    },
     {
       "key": "up-go-agriculture",
       "title": "Uttar Pradesh government orders — Agriculture department (शासनादेश)",

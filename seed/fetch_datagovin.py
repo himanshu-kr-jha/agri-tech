@@ -68,7 +68,8 @@ from source_registry import SOURCES, Source, batches, by_key, in_batch
 
 API = "https://api.data.gov.in/resource"
 
-#: data.gov.in caps page size; every registered resource is far below this.
+#: Page size. Not every resource fits in one page — the district production series is 33k
+#: rows for UP alone — so ``fetch`` always pages by offset rather than trusting one request.
 PAGE_LIMIT = 5000
 RETRIES = 3
 BACKOFF_BASE = 2.0
@@ -79,26 +80,59 @@ def content_hash(payload: dict[str, object]) -> str:
     return digest({"records": payload.get("records", []), "field": payload.get("field", [])})
 
 
-def fetch(source: Source, api_key: str) -> dict[str, object]:
-    """GET one resource, retrying with exponential backoff.
-
-    A source that fails is left alone: the previously fetched payload stays on disk and stays
-    valid. We never delete good historical data because a portal had a bad afternoon.
-    """
-    query = urllib.parse.urlencode({"api-key": api_key, "format": "json", "limit": PAGE_LIMIT})
-    url = f"{API}/{source.resource_id}?{query}"
+def _get_page(source: Source, api_key: str, offset: int) -> dict[str, object]:
+    """One page, retrying with exponential backoff."""
+    params: dict[str, object] = {
+        "api-key": api_key,
+        "format": "json",
+        "limit": PAGE_LIMIT,
+        "offset": offset,
+    }
+    for key, value in (source.filters or {}).items():
+        params[f"filters[{key}]"] = value
+    url = f"{API}/{source.resource_id}?{urllib.parse.urlencode(params)}"
     request = urllib.request.Request(url, headers={"User-Agent": UA})
 
     last_error: Exception | None = None
     for attempt in range(RETRIES):
         try:
-            with urllib.request.urlopen(request, timeout=60) as response:
-                return json.loads(response.read())
+            with urllib.request.urlopen(request, timeout=90) as response:
+                result: dict[str, object] = json.loads(response.read())
+                return result
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
             last_error = exc
             if attempt < RETRIES - 1:
                 time.sleep(BACKOFF_BASE**attempt)
-    raise RuntimeError(f"{source.key}: {RETRIES} attempts failed: {last_error}")
+    raise RuntimeError(f"{source.key}: {RETRIES} attempts failed at offset {offset}: {last_error}")
+
+
+def fetch(source: Source, api_key: str) -> dict[str, object]:
+    """Fetch every record for a resource, paging by offset.
+
+    Paging is not optional: the district crop-production series is 246k rows nationally and
+    the API caps a page well below that, so a single request would silently return a prefix
+    and look like a complete dataset.
+
+    A source that fails is left alone: the previously fetched payload stays on disk and stays
+    valid. We never delete good historical data because a portal had a bad afternoon.
+    """
+    records: list[object] = []
+    field: object = None
+    total = 0
+    offset = 0
+
+    while True:
+        page = _get_page(source, api_key, offset)
+        field = field or page.get("field")
+        total = int(page.get("total") or 0)
+        batch = list(page.get("records") or [])
+        records.extend(batch)
+        offset += len(batch)
+        if not batch or offset >= total:
+            break
+        time.sleep(0.3)  # courtesy between pages
+
+    return {"records": records, "field": field, "total": total, "fetched_count": len(records)}
 
 
 def run(sources: list[Source], api_key: str, *, force: bool) -> int:
@@ -148,7 +182,7 @@ def run(sources: list[Source], api_key: str, *, force: bool) -> int:
 def show_status() -> None:
     state = load_state()
     print(
-        f"{'source':22}{'b':3}{'domain':22}{'fetcher':12}"
+        f"{'source':30}{'b':3}{'domain':22}{'fetcher':12}"
         f"{'lang':6}{'health':13}{'last changed':22}due"
     )
     for source in SOURCES:
@@ -157,7 +191,7 @@ def show_status() -> None:
         health = str(entry.get("health", "never fetched"))
         due = "YES" if is_due(source, state) else f"in {source.cadence_days}d"
         print(
-            f"{source.key:22}{source.batch:<3}{source.domain.value:22}{source.fetcher:12}"
+            f"{source.key:30}{source.batch:<3}{source.domain.value:22}{source.fetcher:12}"
             f"{source.language:6}{health:13}{changed:22}{due}"
         )
 

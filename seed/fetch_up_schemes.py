@@ -72,6 +72,7 @@ from fetch_common import (
 from source_registry import by_key, in_batch
 
 SOURCE_KEY = "up-go-agriculture"
+CMS_KEY = "up-agridarshan-cms"
 RETRIES = 3
 BACKOFF_BASE = 2.0
 COURTESY_DELAY = 1.0  # no robots.txt is not permission; be a polite guest
@@ -191,6 +192,66 @@ def walk(url: str, *, max_pages: int, stop_at: str | None) -> tuple[list[dict[st
     return collected, False
 
 
+def fetch_cms(state: dict[str, Any], *, force: bool) -> None:
+    """The one public agridarshan endpoint: circulars, advisories, FAQs.
+
+    Everything else on that API is either 403 (authentication-gated, so not public data and
+    not something we work around) or a beneficiary endpoint holding personal farmer records,
+    which we never touch. ``leaders`` is dropped on ingest: it carries officials' contact
+    details, which we have no use for and no reason to copy.
+    """
+    source = by_key(CMS_KEY)
+    assert source.url is not None
+    started = now()
+    path = GENERATED / source.batch_dir / f"{CMS_KEY}.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        raw = json.loads(_with_retries(_get, source.url))
+    except (RuntimeError, json.JSONDecodeError) as exc:
+        record_failure(state, source, error=str(exc), started=started)
+        print(f"  {CMS_KEY}: FAILED ({exc}); previous payload left intact.")
+        return
+
+    data = {k: v for k, v in (raw.get("data") or {}).items() if k != "leaders"}
+    counts = {k: len(v) if isinstance(v, list) else 0 for k, v in data.items()}
+    payload = {
+        "source_key": CMS_KEY,
+        "publisher": source.publisher,
+        "access_route": source.access_route,
+        "url": source.url,
+        "language": "hi",
+        "language_note": (
+            "Bilingual fields as published. Hindi is canonical; the English field is the "
+            "publisher's own, not a translation we made (ADR-0015)."
+        ),
+        "authority": source.authority.value,
+        "authority_note": (
+            "Advisory tier (ADR-0012): FAQs and circulars are guidance, not eligibility text "
+            "a rule may be transcribed from."
+        ),
+        "excluded": ["leaders (officials' contact details, not needed)"],
+        "section_counts": counts,
+        "data": data,
+    }
+
+    total = sum(counts.values())
+    changed, rewrite = record_success(
+        state,
+        source,
+        content_digest=digest(data),
+        started=started,
+        records=total,
+        force=force,
+        path=path,
+    )
+    if rewrite:
+        path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
+    result = "changed" if changed else ("rewritten" if rewrite else "unchanged")
+    log({"at": started.isoformat(), "source": CMS_KEY, "result": result, "records": total})
+    print(f"  {CMS_KEY}: {result} — " + ", ".join(f"{k}={v}" for k, v in counts.items() if v))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--max-pages", type=int, default=6, help="pages to walk (default 6)")
@@ -270,8 +331,12 @@ def main() -> int:
             "reached_cursor": reached,
         }
     )
+    fetch_cms(state, force=args.force)
     save_state(state)
-    write_manifest(in_batch(3), {SOURCE_KEY: len(merged)})
+    write_manifest(
+        in_batch(3),
+        {SOURCE_KEY: len(merged), CMS_KEY: state.get(CMS_KEY, {}).get("records", 0)},
+    )
 
     print(f"  {result}: {len(merged)} orders ({len(merged) - len(existing)} new this run)")
     if merged:

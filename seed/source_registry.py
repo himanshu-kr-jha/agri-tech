@@ -32,6 +32,8 @@ class Domain(enum.StrEnum):
     SCHEME = "scheme"
     VARIETY = "variety"
     PRICE = "price"
+    PRODUCTION = "production"
+    PROCUREMENT = "procurement"
 
 
 class Authority(enum.StrEnum):
@@ -50,6 +52,9 @@ CADENCE_DAYS: dict[Domain, int] = {
     Domain.SCHEME: 90,
     Domain.VARIETY: 365,
     Domain.PRICE: 1,
+    #: Advance estimates are revised through the year; procurement moves each season.
+    Domain.PRODUCTION: 365,
+    Domain.PROCUREMENT: 90,
 }
 
 
@@ -75,6 +80,9 @@ class Source:
     fetcher: str = "datagovin"
     #: ISO 639-1. Hindi sources are stored verbatim and never translated on ingest (ADR-0015).
     language: str = "en"
+    #: Server-side filters, applied as ``filters[key]=value``. Scoping to UP at the API keeps
+    #: a 246k-row national series down to the 33k rows we actually reason over.
+    filters: dict[str, str] | None = None
     authority: Authority = Authority.AUTHORITATIVE
     #: ``UNKNOWN`` blocks a cap lift (ADR-0014). Never guess this.
     licence: str = "UNKNOWN"
@@ -197,6 +205,80 @@ SOURCES: list[Source] = [
             "255 rows with actual variety names by crop and year. The companion NARS dataset "
             "(9cac7b14) holds only counts, and the horticultural one (46f587a9) is 13 rows of "
             "mostly NA with no guava — neither is registered."
+        ),
+    ),
+    # ------------------------------------- batch 5 — crop production, area and yield
+    # The most valuable single source found. District x season x crop x year, with area AND
+    # production, so yield is derivable. Bears directly on seed/sources.md A1-A4 (base yield,
+    # all TODO). Scoped to UP: 33,306 rows of a 246,091-row national series.
+    #
+    # Entity-resolution trap, recorded because it silently returns nothing: the district is
+    # ALLAHABAD, not PRAYAGRAJ. The series predates the 2018 rename and a join on the current
+    # name matches zero rows.
+    Source(
+        key="crop-production-district",
+        batch=5,
+        domain=Domain.PRODUCTION,
+        title="District-wise, season-wise crop production statistics",
+        publisher="Ministry of Agriculture & Farmers Welfare",
+        access_route=_DGI,
+        resource_id="35be999b-0208-4354-b557-f6ca9a5355de",
+        unit="area in hectares, production in tonnes",
+        temporal_coverage="1997..2014",
+        filters={"state_name": "Uttar Pradesh"},
+        notes=(
+            "Allahabad (= Prayagraj) has 470 rows across 38 crops. District mean yields "
+            "2007-14: wheat ~2.3, paddy ~2.4, potato ~16.3 t/ha. 2014 is an outlier low year "
+            "and should not be read alone."
+        ),
+    ),
+    # ------------------------------------------------------------ batch 6 — procurement
+    # Domain 3 of the original brief, previously unaddressed entirely.
+    Source(
+        key="procurement-wheat-paddy",
+        batch=6,
+        domain=Domain.PROCUREMENT,
+        title="Procurement of wheat and paddy, MSP value and farmers benefited",
+        publisher="Department of Food & Public Distribution / FCI",
+        access_route=_DGI,
+        resource_id="f8340bd2-2b3c-4049-84bd-89da9f98d76a",
+        unit="quantity in LMT, value in INR crore, farmers as a count",
+        temporal_coverage="2018-19..2022-23",
+        notes="Carries farmers_benefited: 4,033,463 wheat farmers in 2018-19.",
+    ),
+    Source(
+        key="procurement-paddy-statewise",
+        batch=6,
+        domain=Domain.PROCUREMENT,
+        title="State/UT-wise paddy procurement and value at MSP",
+        publisher="Department of Food & Public Distribution",
+        access_route=_DGI,
+        resource_id="e10ca3fd-2577-4f45-8b7c-2e0ae0fcf95e",
+        unit="quantity in LMT, value in INR crore",
+        temporal_coverage="Apr-Jun 2021",
+        notes="23 states. Narrow window, but the only state-wise procurement split found.",
+    ),
+    # ------------------------------------ batch 3 addition — UP public CMS (bilingual)
+    # The ONE public endpoint on agridarshan. Its reference endpoints (getDistrict, getBlock,
+    # administrative/getByCode, agency/getAll) all return 403: authentication-gated, therefore
+    # not public data, and a 403 is an access control we do not work around. Its beneficiary
+    # endpoints are personal data and are never touched. cms/getAll needs no auth and carries
+    # 69 circulars, 24 bilingual FAQs, advisories and announcements. No Aadhaar/IFSC present.
+    Source(
+        key="up-agridarshan-cms",
+        batch=3,
+        domain=Domain.SCHEME,
+        title="UP Agriculture department public CMS — circulars, advisories, FAQs",
+        publisher="Government of Uttar Pradesh, Department of Agriculture",
+        access_route="agridarshan.up.gov.in",
+        url="https://agridarshan.up.gov.in/api/cms/getAll",
+        fetcher="up_schemes",
+        language="hi",
+        authority=Authority.ADVISORY,
+        temporal_coverage="rolling",
+        notes=(
+            "Advisory tier: FAQs and circulars are guidance, not the eligibility text a rule "
+            "may be transcribed from. Bilingual fields; Hindi remains canonical (ADR-0015)."
         ),
     ),
 ]

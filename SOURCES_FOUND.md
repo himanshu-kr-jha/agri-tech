@@ -55,6 +55,35 @@ Real variety names by crop and year (Wheat 2008 = "Pusa Wheat-111 (HD-2932)"). T
 were checked and rejected: `9cac7b14` holds only counts per crop group, and `46f587a9` is 13
 rows of mostly `NA` with no guava.
 
+## Batch 5 — crop production, area and yield, ingested
+
+| Source | Resource id | Coverage | Priority | Licence |
+|---|---|---|---|---|
+| District-wise, season-wise crop production statistics | `35be999b…` | 1997–2014; **33,306 UP rows** of 246,091 national | P0 | UNKNOWN |
+
+The most valuable single source found. District × season × crop × year with **area and
+production**, so yield is derivable — which bears directly on `seed/sources.md` **A1–A4**
+(base yield: paddy / wheat / potato / mustard, all `TODO`).
+
+Allahabad has 470 rows across 38 crops. District mean yields 2007–14: wheat ~2.3, paddy ~2.4,
+potato ~16.3 t/ha, against repo synthetics of 4.0–4.3, 4.2–4.5 and 23–25 respectively. Variety
+*potential* legitimately exceeds a district *average*, so this does not make the synthetics
+wrong — but it bounds them, which was previously impossible. **2014 is an outlier low year and
+must not be read alone.**
+
+**Entity-resolution trap:** `district_name=PRAYAGRAJ` returns **0 rows**; `ALLAHABAD` returns
+470. The series predates the 2018 rename, so a join on the current name silently matches
+nothing.
+
+## Batch 6 — procurement, ingested
+
+Domain 3 of the original brief, previously unaddressed entirely.
+
+| Source | Resource id | Coverage | Priority | Licence |
+|---|---|---|---|---|
+| Procurement of wheat & paddy, MSP value, **farmers benefited** | `f8340bd2…` | 2018-19 → 2022-23 | P0 | UNKNOWN |
+| State/UT-wise paddy procurement and value at MSP | `e10ca3fd…` | Apr–Jun 2021, 23 states | P0 | UNKNOWN |
+
 ## Reachable, not yet ingested
 
 | Source | Status | Notes |
@@ -90,5 +119,6 @@ are short of cash in October'."*
 | Any anti-bot-protected endpoint reached by evasion | Prohibited outright — including data.gov.in's website, which has a sanctioned API instead |
 | Agricultural blogs / aggregators where a government source exists | P4/P5 must never override P0 |
 | Any source carrying personal farmer data | No lawful basis; aggregated/anonymised only |
-| **`agridarshan.up.gov.in/api/`** | **Found by reading its Angular bundle, and deliberately not used.** Endpoints include `beneficiaryMgt/getBenfById`, `beneficiaryMgt/getRegistration`, `farmerRegister/getVerifier`, `grantWiseBill/getFarmerList`, `onlinebooking/getAllApplicants` — an internal DBT beneficiary administration system holding **personal farmer records**. Technically reachable; out of bounds under INV-9, the DPDP Act, and this project's own rule against collecting personal farmer data. |
+| **`agridarshan.up.gov.in/api/` — beneficiary endpoints** | **Found by reading its Angular bundle, and deliberately not used.** Endpoints include `beneficiaryMgt/getBenfById`, `beneficiaryMgt/getRegistration`, `farmerRegister/getVerifier`, `grantWiseBill/getFarmerList`, `onlinebooking/getAllApplicants` — an internal DBT beneficiary administration system holding **personal farmer records**. Technically reachable; out of bounds under INV-9, the DPDP Act, and this project's own rule against collecting personal farmer data. |
 | `agriculture.up.gov.in/dbt/Labharti_Shuchi.aspx` | "Beneficiary list" — personal data, same reasoning |
+| `agridarshan` reference endpoints — `onlinebooking/getDistrict`, `getBlock`, `administrative/getByCode`, `agency/getAll` | Probed: **all return 403**. Authentication-gated, therefore not public data, and a 403 is an access control we do not work around. Only `cms/getAll` is public, and it *is* used — see batch 3. |
