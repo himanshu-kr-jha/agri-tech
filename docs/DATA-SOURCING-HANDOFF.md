@@ -4,7 +4,7 @@ Date: 2026-08-28 · Branch: `data-scraping` (off `main`) · Status: **gathering 
 
 Written so the next session — or the next person — resumes without re-deriving anything.
 Companions: `docs/DATA-SOURCING.md` (the agreed design), `SOURCES_FOUND.md` (the source
-register), `docs/adr/0012`–`0015` (the four decisions), `seed/source_registry.py` (the code
+register), `docs/adr/0012`–`0017` (the six decisions), `seed/source_registry.py` (the code
 that is the single source of truth for what we fetch).
 
 ---
@@ -45,7 +45,7 @@ exact meaning — *lift the caps*:
 
 ## 3. The decision record
 
-Twenty-two questions, asked and answered in a grilling session. Settled — do not silently
+Twenty-nine questions, asked and answered across nine grilling rounds. Settled — do not silently
 revisit; if one turns out wrong, change it deliberately and say so.
 
 | # | Question | Answer |

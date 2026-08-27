@@ -246,7 +246,7 @@ cultivation, UP schemes in Hindi, varieties, crop production, procurement), a re
 re-runnable fetchers. Nothing is wired into the intelligence layer yet, and nine of ten
 licences are unconfirmed, which under ADR-0014 leaves that data inert.
 
-**`docs/DATA-SOURCING-HANDOFF.md` is the entry point.** Decisions in ADR-0012..0015.
+**`docs/DATA-SOURCING-HANDOFF.md` is the entry point.** Decisions in ADR-0012..0017.
 
 ## 11. Open questions still needing a human answer
 
