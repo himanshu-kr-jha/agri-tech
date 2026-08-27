@@ -29,12 +29,37 @@ Against the five demo crops: Paddy, Wheat, Potato and Mustard (as "R & M") are c
 **Guava is not** — horticulture sits outside the CACP scheme. ADR-0012 handles this; guava is
 perennial and was already reported separately from the annual ranking.
 
+## Batch 3 — UP schemes (Hindi), ingested
+
+| Source | Detail |
+|---|---|
+| `shasanadesh.up.gov.in/ShowGOforDept.aspx?dept=37` | UP government orders (शासनादेश), Agriculture dept. Hindi, official, public, **no personal data**. ASP.NET GridView, 25 rows/page, paginated by `__doPostBack` with VIEWSTATE. Newest order 24/08/2026. |
+
+Stored verbatim as published — Hindi is canonical, nothing translated on ingest (ADR-0015).
+Category facet is the useful filter; `नीतियोँ/योजनाओं संबंधी दिशा-निर्देश` ("guidelines
+relating to policies/schemes") is the one that carries scheme text, alongside `अधिसूचना`
+(notification) and `वित्‍तीय स्‍वीकृतियॉं` (financial sanctions).
+
+**Licence — the first source that is not `UNKNOWN`.** shasanadesh's own Copyright Policy
+permits reproduction for *non-commercial research and private study, with attribution*;
+anything else requires department permission. Recorded on the source as
+**COMMERCIAL USE NOT CLEARED**, which matters because AgriVardhak is intended as a product.
+
+## Batch 4 — crop varieties, ingested
+
+| Source | Resource id | Coverage | Priority | Licence |
+|---|---|---|---|---|
+| Field crop varieties and hybrids released and notified | `53cd4900…` | 2008–2012, 255 rows | P2 | UNKNOWN |
+
+Real variety names by crop and year (Wheat 2008 = "Pusa Wheat-111 (HD-2932)"). Two companions
+were checked and rejected: `9cac7b14` holds only counts per crop group, and `46f587a9` is 13
+rows of mostly `NA` with no guava.
+
 ## Reachable, not yet ingested
 
 | Source | Status | Notes |
 |---|---|---|
 | `agriculture.up.gov.in` | 200, no `robots.txt` | Plain IIS/HTML. Route to UP state schemes S9–S12. |
-| `agridarshan.up.gov.in` | 200, Hindi (`कृषि विभाग, उ०प्र०`) | Angular SPA — plain HTTP returns an empty shell. Find its JSON API; do **not** add browser automation. |
 | `mospi.gov.in` | 200 | Publishes 4.12 *Cost of Cultivation of Principal Crops* — the untried route to the itemised tables. |
 | `agmarknet.gov.in` | 200 | Already ingested. |
 | `pmkisan.gov.in` | 200 | Central scheme, already cited in `sources.md` §14. |
@@ -65,3 +90,5 @@ are short of cash in October'."*
 | Any anti-bot-protected endpoint reached by evasion | Prohibited outright — including data.gov.in's website, which has a sanctioned API instead |
 | Agricultural blogs / aggregators where a government source exists | P4/P5 must never override P0 |
 | Any source carrying personal farmer data | No lawful basis; aggregated/anonymised only |
+| **`agridarshan.up.gov.in/api/`** | **Found by reading its Angular bundle, and deliberately not used.** Endpoints include `beneficiaryMgt/getBenfById`, `beneficiaryMgt/getRegistration`, `farmerRegister/getVerifier`, `grantWiseBill/getFarmerList`, `onlinebooking/getAllApplicants` — an internal DBT beneficiary administration system holding **personal farmer records**. Technically reachable; out of bounds under INV-9, the DPDP Act, and this project's own rule against collecting personal farmer data. |
+| `agriculture.up.gov.in/dbt/Labharti_Shuchi.aspx` | "Beneficiary list" — personal data, same reasoning |

@@ -70,6 +70,11 @@ class Source:
     url: str | None = None
     unit: str | None = None
     temporal_coverage: str | None = None
+    #: Which script fetches this. "datagovin" for api.data.gov.in resources, otherwise the
+    #: name of a dedicated scraper — a source is not fetchable until one exists.
+    fetcher: str = "datagovin"
+    #: ISO 639-1. Hindi sources are stored verbatim and never translated on ingest (ADR-0015).
+    language: str = "en"
     authority: Authority = Authority.AUTHORITATIVE
     #: ``UNKNOWN`` blocks a cap lift (ADR-0014). Never guess this.
     licence: str = "UNKNOWN"
@@ -146,6 +151,53 @@ SOURCES: list[Source] = [
         unit="INR per quintal",
         temporal_coverage="2013-14..2017-18",
         notes="Stale. Aggregate only. C2 includes imputed rent and interest on owned capital.",
+    ),
+    # -------------------------------------------------- batch 3 — UP schemes (Hindi)
+    # Uttar Pradesh government orders for the Agriculture department. Hindi, official, public,
+    # and carrying no personal data. This is the route to the state schemes seed/sources.md §7
+    # lists as S9-S12, which are published in Hindi and largely nowhere else.
+    #
+    # NOT used, deliberately: agridarshan.up.gov.in/api/. Reading its Angular bundle found the
+    # API, and the endpoints are beneficiaryMgt/getBenfById, farmerRegister/getVerifier,
+    # grantWiseBill/getFarmerList and similar — an internal DBT beneficiary administration
+    # system holding personal farmer records. Technically reachable, and out of bounds under
+    # INV-9 and the project's own rule against collecting personal farmer data.
+    Source(
+        key="up-go-agriculture",
+        batch=3,
+        domain=Domain.SCHEME,
+        title="Uttar Pradesh government orders — Agriculture department (शासनादेश)",
+        publisher="Government of Uttar Pradesh, Department of Agriculture",
+        access_route="shasanadesh.up.gov.in",
+        url="https://shasanadesh.up.gov.in/ShowGOforDept.aspx?dept=37",
+        fetcher="up_schemes",
+        language="hi",
+        temporal_coverage="rolling; newest first",
+        licence=(
+            "Non-commercial research and private study, with attribution; any other re-use "
+            "requires department permission (shasanadesh.up.gov.in Copyright Policy). "
+            "COMMERCIAL USE NOT CLEARED."
+        ),
+        notes=(
+            "ASP.NET GridView, 25 rows per page, paginated by __doPostBack with VIEWSTATE. "
+            "Hindi is canonical and stored verbatim (ADR-0015)."
+        ),
+    ),
+    # ------------------------------------------------------- batch 4 — crop varieties
+    Source(
+        key="variety-field-crops",
+        batch=4,
+        domain=Domain.VARIETY,
+        title="Field crop varieties and hybrids released and notified",
+        publisher="Indian Council of Agricultural Research / Ministry of Agriculture",
+        access_route=_DGI,
+        resource_id="53cd4900-a5ee-45e0-bc2e-56a288a6a2fd",
+        temporal_coverage="2008..2012",
+        notes=(
+            "255 rows with actual variety names by crop and year. The companion NARS dataset "
+            "(9cac7b14) holds only counts, and the horticultural one (46f587a9) is 13 rows of "
+            "mostly NA with no guava — neither is registered."
+        ),
     ),
 ]
 

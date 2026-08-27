@@ -40,8 +40,6 @@ That is the whole point: polling stays cheap, and "when did this actually change
 from __future__ import annotations
 
 import argparse
-import datetime as dt
-import hashlib
 import json
 import os
 import pathlib
@@ -53,13 +51,22 @@ import urllib.request
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
+from fetch_common import (
+    GENERATED,
+    UA,
+    digest,
+    is_due,
+    load_state,
+    log,
+    now,
+    record_failure,
+    record_success,
+    save_state,
+    write_manifest,
+)
 from source_registry import SOURCES, Source, batches, by_key, in_batch
 
 API = "https://api.data.gov.in/resource"
-UA = "AgriVardhak-seed/0.1 (agricultural research; contact via repo)"
-GENERATED = pathlib.Path(__file__).resolve().parent / "generated"
-STATE_PATH = GENERATED / "fetch_state.json"
-LOG_PATH = GENERATED / "fetch_log.jsonl"
 
 #: data.gov.in caps page size; every registered resource is far below this.
 PAGE_LIMIT = 5000
@@ -67,41 +74,9 @@ RETRIES = 3
 BACKOFF_BASE = 2.0
 
 
-def now() -> dt.datetime:
-    return dt.datetime.now(dt.UTC)
-
-
-def load_state() -> dict[str, dict[str, object]]:
-    if not STATE_PATH.exists():
-        return {}
-    return json.loads(STATE_PATH.read_text())
-
-
-def save_state(state: dict[str, dict[str, object]]) -> None:
-    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n")
-
-
-def log(entry: dict[str, object]) -> None:
-    """Append-only fetch log (DATA-SOURCING.md §5, health monitoring item ii)."""
-    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with LOG_PATH.open("a") as fh:
-        fh.write(json.dumps(entry, sort_keys=True) + "\n")
-
-
 def content_hash(payload: dict[str, object]) -> str:
     """Hash the data, not the envelope. See module docstring."""
-    material = {"records": payload.get("records", []), "field": payload.get("field", [])}
-    canonical = json.dumps(material, sort_keys=True, separators=(",", ":"))
-    return hashlib.sha256(canonical.encode()).hexdigest()
-
-
-def is_due(source: Source, state: dict[str, dict[str, object]]) -> bool:
-    entry = state.get(source.key)
-    if entry is None or not entry.get("last_checked"):
-        return True
-    last = dt.datetime.fromisoformat(str(entry["last_checked"]))
-    return (now() - last).days >= source.cadence_days
+    return digest({"records": payload.get("records", []), "field": payload.get("field", [])})
 
 
 def fetch(source: Source, api_key: str) -> dict[str, object]:
@@ -126,133 +101,64 @@ def fetch(source: Source, api_key: str) -> dict[str, object]:
     raise RuntimeError(f"{source.key}: {RETRIES} attempts failed: {last_error}")
 
 
-def write_manifest(batch: int, sources: list[Source]) -> None:
-    """Per-batch provenance. Regenerated from whatever payloads are present."""
-    directory = GENERATED / sources[0].batch_dir
-    entries = []
-    for source in sorted(sources, key=lambda s: s.key):
-        path = directory / f"{source.key}.json"
-        if not path.exists():
-            continue
-        raw = path.read_bytes()
-        payload = json.loads(raw)
-        entries.append(
-            {
-                "key": source.key,
-                "title": source.title,
-                "publisher": source.publisher,
-                "access_route": source.access_route,
-                "resource_id": source.resource_id,
-                "unit": source.unit,
-                "temporal_coverage": source.temporal_coverage,
-                "authority": source.authority.value,
-                "licence": source.licence,
-                "recheck_days": source.cadence_days,
-                "records": len(payload.get("records", [])),
-                "fields": [f["id"] for f in payload.get("field", [])],
-                "sha256_file": hashlib.sha256(raw).hexdigest(),
-                "sha256_content": content_hash(payload),
-                "notes": source.notes,
-            }
-        )
-    manifest = {
-        "batch": batch,
-        "domain": sources[0].domain.value,
-        "generated_at": now().isoformat(),
-        "licence_note": (
-            "UNKNOWN licences block a confidence-cap lift under ADR-0014. "
-            "Data here is cached but inert until a human confirms the licence."
-        ),
-        "resources": entries,
-    }
-    (directory / "MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
-
-
 def run(sources: list[Source], api_key: str, *, force: bool) -> int:
     state = load_state()
-    touched_batches: set[int] = set()
+    counts: dict[str, int] = {}
     failures = 0
 
     for source in sources:
         directory = GENERATED / source.batch_dir
         directory.mkdir(parents=True, exist_ok=True)
         path = directory / f"{source.key}.json"
-        entry = dict(state.get(source.key, {}))
         started = now()
 
         try:
             payload = fetch(source, api_key)
         except RuntimeError as exc:
             failures += 1
-            entry["last_error"] = str(exc)
-            entry["last_error_at"] = started.isoformat()
-            entry["health"] = "UNHEALTHY"
-            state[source.key] = entry
-            log(
-                {
-                    "at": started.isoformat(),
-                    "source": source.key,
-                    "result": "error",
-                    "detail": str(exc),
-                }
-            )
-            print(f"  {source.key:14} ERROR  {exc}")
+            record_failure(state, source, error=str(exc), started=started)
+            print(f"  {source.key:20} ERROR  {exc}")
             continue
 
-        digest = content_hash(payload)
-        #: Whether the *source* changed, which is not the same as whether we rewrite the file.
-        #: ``--force`` rewrites, but must never claim the source changed — ``last_changed`` is
-        #: the field that answers "when did this actually change", and a forced re-download
-        #: would otherwise falsify it.
-        changed = entry.get("content_hash") != digest
-        rewrite = changed or force or not path.exists()
-
-        entry["last_checked"] = started.isoformat()
-        entry["health"] = "OK"
-        entry.pop("last_error", None)
-        entry.pop("last_error_at", None)
-
+        records = len(payload.get("records", []))
+        counts[source.key] = records
+        changed, rewrite = record_success(
+            state,
+            source,
+            content_digest=content_hash(payload),
+            started=started,
+            records=records,
+            force=force,
+            path=path,
+        )
         if rewrite:
             path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
-            entry["content_hash"] = digest
-            entry["records"] = len(payload.get("records", []))
-            touched_batches.add(source.batch)
-        if changed:
-            entry["last_changed"] = started.isoformat()
 
         result = "changed" if changed else ("rewritten" if rewrite else "unchanged")
-        log(
-            {
-                "at": started.isoformat(),
-                "source": source.key,
-                "result": result,
-                "records": len(payload.get("records", [])),
-                "sha256_content": digest,
-            }
-        )
-        print(f"  {source.key:14} {result:10} {len(payload.get('records', []))} rec")
-
-        state[source.key] = entry
+        log({"at": started.isoformat(), "source": source.key, "result": result, "records": records})
+        print(f"  {source.key:20} {result:10} {records} rec")
         time.sleep(0.5)  # courtesy rate limit; no robots.txt is not permission
 
     save_state(state)
-    for batch in sorted(touched_batches | {s.batch for s in sources}):
-        members = in_batch(batch)
-        if members:
-            write_manifest(batch, members)
+    for batch in sorted({s.batch for s in sources}):
+        write_manifest([s for s in in_batch(batch) if s.fetcher == "datagovin"], counts)
     return failures
 
 
 def show_status() -> None:
     state = load_state()
-    print(f"{'source':16}{'batch':6}{'domain':22}{'health':10}{'last changed':22}due")
+    print(
+        f"{'source':22}{'b':3}{'domain':22}{'fetcher':12}"
+        f"{'lang':6}{'health':13}{'last changed':22}due"
+    )
     for source in SOURCES:
         entry = state.get(source.key, {})
         changed = str(entry.get("last_changed", "-"))[:19]
         health = str(entry.get("health", "never fetched"))
         due = "YES" if is_due(source, state) else f"in {source.cadence_days}d"
         print(
-            f"{source.key:16}{source.batch:<6}{source.domain.value:22}{health:10}{changed:22}{due}"
+            f"{source.key:22}{source.batch:<3}{source.domain.value:22}{source.fetcher:12}"
+            f"{source.language:6}{health:13}{changed:22}{due}"
         )
 
 
@@ -283,11 +189,20 @@ def main() -> int:
     elif args.due:
         state = load_state()
         selected = [s for s in SOURCES if is_due(s, state)]
-        if not selected:
-            print("nothing due.")
-            return 0
     else:
         selected = list(SOURCES)
+
+    # Sources with their own scraper (batch 3's ASP.NET listing, say) are skipped rather than
+    # fetched with a null resource id. `make fetch-due` runs every fetcher, so they are not
+    # dropped — each one just handles its own.
+    skipped = [s for s in selected if s.fetcher != "datagovin"]
+    selected = [s for s in selected if s.fetcher == "datagovin"]
+    for source in skipped:
+        print(f"  {source.key:20} skipped    (handled by fetch_{source.fetcher}.py)")
+
+    if not selected:
+        print("nothing due for this fetcher.")
+        return 0
 
     print(f"fetching {len(selected)} source(s) from api.data.gov.in")
     failures = run(selected, api_key, force=args.force)

@@ -81,8 +81,9 @@ seed-reset: ## Truncate all data and re-seed (faster than db-reset; keeps the sc
 fetch-status: ## Show every registered external source, its health and whether it is due
 	@python3 seed/fetch_datagovin.py --status
 
-fetch-due: ## Re-fetch only sources past their recheck cadence (the periodic entry point)
+fetch-due: ## Re-fetch every source past its recheck cadence (the periodic entry point)
 	@python3 seed/fetch_datagovin.py --due
+	@python3 seed/fetch_up_schemes.py --due
 
 fetch: ## Fetch one batch of external sources, e.g. make fetch b=1
 	@python3 seed/fetch_datagovin.py $(if $(b),--batch $(b),)

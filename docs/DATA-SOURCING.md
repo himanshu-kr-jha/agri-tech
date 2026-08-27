@@ -77,11 +77,15 @@ was unreachable (`ECONNREFUSED 164.100.114.118`); MoSPI 4.12 is the untried alte
 The aggregates already cached cannot retire E1–E6 but can **bound** it: a synthetic component
 set whose total, divided by yield, lands far from the real A2+FL is provably wrong.
 
-**Batch 3 — UP state schemes (Hindi).** `agriculture.up.gov.in` is plain HTML and fetchable.
-`agridarshan.up.gov.in` is an Angular SPA; find the JSON API behind it, and if there is none,
-skip it rather than introducing browser automation.
+**Batch 3 — UP state schemes (Hindi). Done.** `shasanadesh.up.gov.in` government orders for
+the Agriculture department, scraped incrementally by `seed/fetch_up_schemes.py`. Hindi stored
+verbatim (ADR-0015). **`agridarshan.up.gov.in` was investigated and rejected**: its API is a
+DBT beneficiary administration system holding personal farmer records, so Q22's option (iii)
+applies — skip it. This is the first source with a real licence rather than `UNKNOWN`, and
+that licence does **not** cover commercial use.
 
-**Batch 4 — varieties, and advisory-tier university cost studies.**
+**Batch 4 — crop varieties. Done.** Field crop varieties and hybrids, 255 rows, via the
+existing data.gov.in fetcher. Advisory-tier university cost studies remain outstanding.
 
 ## Open
 

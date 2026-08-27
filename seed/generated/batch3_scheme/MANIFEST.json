@@ -1,0 +1,25 @@
+{
+  "batch": 3,
+  "domain": "scheme",
+  "generated_at": "2026-08-27T19:58:29.769135+00:00",
+  "licence_note": "An UNKNOWN licence blocks a confidence-cap lift under ADR-0014. Data is cached but inert until a human confirms the licence.",
+  "resources": [
+    {
+      "key": "up-go-agriculture",
+      "title": "Uttar Pradesh government orders — Agriculture department (शासनादेश)",
+      "publisher": "Government of Uttar Pradesh, Department of Agriculture",
+      "access_route": "shasanadesh.up.gov.in",
+      "resource_id": null,
+      "url": "https://shasanadesh.up.gov.in/ShowGOforDept.aspx?dept=37",
+      "language": "hi",
+      "unit": null,
+      "temporal_coverage": "rolling; newest first",
+      "authority": "authoritative",
+      "licence": "Non-commercial research and private study, with attribution; any other re-use requires department permission (shasanadesh.up.gov.in Copyright Policy). COMMERCIAL USE NOT CLEARED.",
+      "recheck_days": 90,
+      "records": 75,
+      "sha256_file": "0e0199a39633a0fde6b30ef8495f7489937a75f3a7638533318849782f577f38",
+      "notes": "ASP.NET GridView, 25 rows per page, paginated by __doPostBack with VIEWSTATE. Hindi is canonical and stored verbatim (ADR-0015)."
+    }
+  ]
+}

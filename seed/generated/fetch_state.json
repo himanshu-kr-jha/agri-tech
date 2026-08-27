@@ -26,5 +26,20 @@
     "last_changed": "2026-08-27T19:47:47.532216+00:00",
     "last_checked": "2026-08-27T19:48:16.467966+00:00",
     "records": 6
+  },
+  "up-go-agriculture": {
+    "content_hash": "fdae629a7b1b94222f43d188fa7dfb4684f5a0ba8239ebf756a679769f083c25",
+    "cursor_go_number": "48/2026/2026 /001-1395153-12-2099-117-2021-1065-2026",
+    "health": "OK",
+    "last_changed": "2026-08-27T19:57:26.201812+00:00",
+    "last_checked": "2026-08-27T19:58:28.626256+00:00",
+    "records": 75
+  },
+  "variety-field-crops": {
+    "content_hash": "2b6d44c308a1defadd1725d59f701bfa5b5b3dc93c4943be77acf097c3fde3b6",
+    "health": "OK",
+    "last_changed": "2026-08-27T19:57:25.076314+00:00",
+    "last_checked": "2026-08-27T19:57:25.076314+00:00",
+    "records": 255
   }
 }
