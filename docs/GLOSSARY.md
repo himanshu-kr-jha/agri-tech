@@ -62,6 +62,9 @@ a tempting synonym, the synonym is listed as **not**.
 | **Scraper checkpoint** | Per-scraper opaque cursor recording the last extracted record, so a batch resumes rather than restarts. |
 | **Canonical text** | The source's own published wording, frozen. For Hindi-only schemes this is Hindi — ADR-0015. |
 | **Derived translation** | A translation of canonical text, carrying its own translator identity and version. Rules never derive from it. |
+| **MSP announced** | CACP's notified price for a crop-season. A policy fact, not a price a farmer can necessarily get. ADR-0016. |
+| **Procurement available** | Whether a centre is open, in window, in spec and with quota. Gates whether MSP is reachable. |
+| **Effective realization** | What the farmer actually nets after deductions and settlement lag. Never conflated with MSP or market price. |
 
 ## Intelligence & decisions
 
