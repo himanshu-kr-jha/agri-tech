@@ -4,6 +4,7 @@ Date: 2026-08-28 · Scope: Uttar Pradesh, anchored on Prayagraj
 
 Machine-readable registry: `seed/source_registry.py`. Fetcher: `seed/fetch_datagovin.py`.
 Design decisions: `docs/DATA-SOURCING.md`. Citation register: `seed/sources.md`.
+**State of play and next actions: `docs/DATA-SOURCING-HANDOFF.md`.**
 
 ## Verified and cached
 

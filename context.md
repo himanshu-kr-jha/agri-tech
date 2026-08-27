@@ -237,6 +237,15 @@ Each of these was discussed and consciously deferred. See `docs/MVP-SCOPE.md#cut
 
 ---
 
+## 11a. External data sourcing
+
+Branch `data-scraping` carries ten cached public sources across six batches (MSP, cost of
+cultivation, UP schemes in Hindi, varieties, crop production, procurement), a registry, and
+re-runnable fetchers. Nothing is wired into the intelligence layer yet, and nine of ten
+licences are unconfirmed, which under ADR-0014 leaves that data inert.
+
+**`docs/DATA-SOURCING-HANDOFF.md` is the entry point.** Decisions in ADR-0012..0015.
+
 ## 11. Open questions still needing a human answer
 
 | # | Question | Blocks |

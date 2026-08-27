@@ -1,6 +1,9 @@
 # Data Sourcing — agreed design
 
-Date: 2026-08-28 · Status: agreed in design session, **not yet implemented**
+Date: 2026-08-28 · Status: agreed in design session; gathering built, wiring not started
+
+> **Resuming this work?** Read `docs/DATA-SOURCING-HANDOFF.md` first — it carries the state of
+> play, the traps that fail silently, what was rejected and why, and the next actions.
 
 The goal is narrow and specific: **retire the `SYNTHETIC` labels in `seed/`** by replacing
 invented coefficients with cited ones. It is not an India-wide ingestion fabric. Every
