@@ -209,6 +209,7 @@ Additional engineering decisions:
 | T-12 | **A confidence cap lifts only with a named verifier** and a licence on record. A fetch cannot assert that a transcription faithfully represents the published text | ADR-0014 |
 | T-13 | **Hindi source text is canonical**, translation is derived and versioned. UP state schemes are Hindi-only, and लघु एवं सीमांत कृषक is a legal category a fluent translation can silently destroy | ADR-0015 |
 | T-14 | **MSP is a price floor, not a buyer offer.** The seed priced it as `mandi × 1.05`, which inverts the one property that matters: a floor must hold when the market falls. Splits into announced / procurement-available / market / effective-realization | ADR-0016 |
+| T-15 | **One canonical alias table**, applied at gather not ingest, where an unmapped name raises rather than skips. Cross-source names are not derivable — `R & M` / `Rapeseed/Mustard` / `Mustard` — and `PRAYAGRAJ` matches zero rows where `ALLAHABAD` matches 470 | ADR-0017 |
 
 ---
 

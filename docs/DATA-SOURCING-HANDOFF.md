@@ -72,6 +72,13 @@ revisit; if one turns out wrong, change it deliberately and say so.
 | 20 | Recheck cadence | MSP 90d · cost 365d · schemes 90d · varieties 365d · prices 1d |
 | 21 | Hindi | **Canonical**, translation derived and versioned → ADR-0015 |
 | 22 | agridarshan SPA | Find its API — *found, and rejected, see §6* |
+| 23 | Advisory tier in `ModuleOutput` | Separate `advisory_findings` list, not a confidence value |
+| 24 | Publisher vs access route in citations | Registry-bound constructor **plus** a test |
+| 25 | Yield: district mean vs variety potential | **Different attributes**, not competing claims. The gap is management-quality signal |
+| 26 | MSP announced but procurement unknown | **Reference-only.** Never presented as a reachable floor |
+| 27 | `Govt Procurement Centre` buyer | Keep; price from real MSP with availability caveat; delete the `1.05` "MSP-linked" multiplier |
+| 28 | Three temporal granularities | Gather resolves each to the value in force at `as_of` |
+| 29 | Cross-source naming | One canonical alias table → ADR-0017 |
 
 ---
 
@@ -138,6 +145,10 @@ Conflating them falsifies the one field that answers *when did this actually cha
 
 **Hashing the response envelope creates phantom changes.** data.gov.in returns volatile
 wrapper fields. The content hash covers `records` and `field` only.
+
+**An unmapped name silently shortens a list.** `R & M` / `Rapeseed/Mustard` / `Mustard` are one
+crop across three sources, and `Paddy (Grade A)` / `Paddy (Common)` are two crops that look
+like one. ADR-0017: alias at gather, and raise on unmapped rather than skip.
 
 **A 403 is not a puzzle to solve.** Four agridarshan reference endpoints return 403 —
 authentication-gated, therefore not public data. Do not attempt to get around it.

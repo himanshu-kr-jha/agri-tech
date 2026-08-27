@@ -65,6 +65,8 @@ a tempting synonym, the synonym is listed as **not**.
 | **MSP announced** | CACP's notified price for a crop-season. A policy fact, not a price a farmer can necessarily get. ADR-0016. |
 | **Procurement available** | Whether a centre is open, in window, in spec and with quota. Gates whether MSP is reachable. |
 | **Effective realization** | What the farmer actually nets after deductions and settlement lag. Never conflated with MSP or market price. |
+| **Canonical name** | Our vocabulary for a crop, district or entity. Sources map *into* it; it never maps out. ADR-0017. |
+| **Alias** | A `(source, foreign_name) → canonical` mapping. Directional and per-source; an unmapped name is an error, never a skip. |
 
 ## Intelligence & decisions
 
