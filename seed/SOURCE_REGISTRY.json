@@ -1,0 +1,119 @@
+{
+  "registry_version": "0.1.0-discovery",
+  "generated_at": "2026-08-27T18:48:20.653249+00:00",
+  "publisher_note": "All below authored by DES/CACP, Ministry of Agriculture & Farmers Welfare. Access route = api.data.gov.in (NDSAP). Publisher != access route.",
+  "sources": [
+    {
+      "source_id": "dgi-coc-a2fl",
+      "resource_id": "a24e6a66-32d3-46a0-a5c3-7bcfd58d6e02",
+      "title": "State-wise and Crop-wise Cost of Production (A2+FL) for Important Crops 2013-14 to 2017-18",
+      "publisher": "DES, MoA&FW",
+      "access_route": "api.data.gov.in",
+      "authority": "P0",
+      "domain": "cost_of_cultivation",
+      "geo": "all-India, state-wise",
+      "granularity": "state x crop x year",
+      "unit": "INR per quintal",
+      "temporal": "2013-14..2017-18",
+      "records": 209,
+      "up_crops": 15,
+      "component_breakdown": false,
+      "update_frequency": "annual (stale: latest 2017-18)",
+      "license": "UNKNOWN - to confirm (NDSAP/GODL-India presumed, unverified)",
+      "retires": "NONE of E1-E6 directly; bounds them as a cross-check"
+    },
+    {
+      "source_id": "dgi-coc-c2",
+      "resource_id": "dc3ba615-2892-49c6-bdcd-ecdf0d24c8a5",
+      "title": "State-wise and Crop-wise Cost of Production (C2) for Important Crops 2013-14 to 2017-18",
+      "publisher": "DES, MoA&FW",
+      "access_route": "api.data.gov.in",
+      "authority": "P0",
+      "domain": "cost_of_cultivation",
+      "geo": "all-India, state-wise",
+      "granularity": "state x crop x year",
+      "unit": "INR per quintal",
+      "temporal": "2013-14..2017-18",
+      "records": 209,
+      "up_crops": 15,
+      "component_breakdown": false,
+      "update_frequency": "annual (stale)",
+      "license": "UNKNOWN - to confirm",
+      "retires": "NONE of E1-E6 directly"
+    },
+    {
+      "source_id": "dgi-msp-rabi",
+      "resource_id": "6f655085-856d-4246-a516-5d6b3bebb990",
+      "title": "Rabi Crop-wise MSP and Cost of Production 2022-23 to 2025-26",
+      "publisher": "DES/CACP, MoA&FW",
+      "access_route": "api.data.gov.in",
+      "authority": "P0",
+      "domain": "msp",
+      "geo": "all-India",
+      "granularity": "crop x year",
+      "unit": "INR per quintal",
+      "temporal": "2022-23..2025-26",
+      "records": 6,
+      "component_breakdown": false,
+      "update_frequency": "annual, event-driven on CACP notification",
+      "license": "UNKNOWN - to confirm",
+      "retires": "MSP for Wheat, Barley, Gram, Lentil, Rapeseed/Mustard, Safflower - CURRENT"
+    },
+    {
+      "source_id": "dgi-msp-kharif",
+      "resource_id": "aa823ea9-ecb3-45ea-9ec0-1fcb0c522feb",
+      "title": "Kharif Crop-wise MSP and Cost of Production 2021-22 to 2024-25",
+      "publisher": "DES/CACP, MoA&FW",
+      "access_route": "api.data.gov.in",
+      "authority": "P0",
+      "domain": "msp",
+      "geo": "all-India",
+      "granularity": "crop x year",
+      "unit": "INR per quintal",
+      "temporal": "2021-22..2024-25",
+      "records": 17,
+      "component_breakdown": false,
+      "update_frequency": "annual, event-driven",
+      "license": "UNKNOWN - to confirm",
+      "retires": "MSP for Paddy, Jowar, Bajra, Ragi, Maize, Arhar, Moong, Urad, Cotton, Groundnut, Sunflower, Soyabean, Sesamum, Nigerseed - CURRENT"
+    }
+  ],
+  "unreachable": [
+    {
+      "host": "desagri.gov.in",
+      "status": "ECONNREFUSED 164.100.114.118 / timeout",
+      "impact": "blocks the itemised cost-of-cultivation tables that E1-E6 actually needs",
+      "checked_at": "2026-08-27T18:48:20.653249+00:00"
+    },
+    {
+      "host": "data.gov.in (website HTML)",
+      "status": "Akamai Access Denied",
+      "impact": "none - api.data.gov.in is the sanctioned route and works",
+      "checked_at": "2026-08-27T18:48:20.653249+00:00"
+    }
+  ],
+  "up_crops_with_authoritative_cost": [
+    "Arhar",
+    "Bajra",
+    "Barley",
+    "Gram",
+    "Groundnut",
+    "Lentil",
+    "Maize",
+    "Moong",
+    "Paddy",
+    "Potato",
+    "R & M",
+    "Sesamum",
+    "Sugarcane",
+    "Urad",
+    "Wheat"
+  ],
+  "demo_crop_coverage": {
+    "Paddy": "covered",
+    "Wheat": "covered",
+    "Potato": "covered",
+    "Mustard": "covered as 'R & M'",
+    "Guava": "NOT covered - horticulture outside CACP scheme"
+  }
+}

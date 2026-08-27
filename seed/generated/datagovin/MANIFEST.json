@@ -1,0 +1,95 @@
+{
+  "fetched_at": "2026-08-27T19:22:28.194816+00:00",
+  "access_route": "api.data.gov.in",
+  "publisher": "Directorate of Economics & Statistics / CACP, Ministry of Agriculture & Farmers Welfare",
+  "licence": "UNKNOWN - NDSAP/GODL-India presumed, NOT yet verified",
+  "auth": "API key required; supplied via DATA_GOV_IN_API_KEY env var, never committed",
+  "resources": [
+    {
+      "file": "coc_a2fl.json",
+      "resource_id": "a24e6a66-32d3-46a0-a5c3-7bcfd58d6e02",
+      "title": "State-wise & Crop-wise Cost of Production (A2+FL), Important Crops",
+      "temporal_coverage": "2013-14..2017-18",
+      "unit": "INR/quintal",
+      "records": 209,
+      "sha256": "f2f6a923cb87d78cd0a1b01e0db02d2be02fc424158a126d291eb3869bc1e14a",
+      "fields": [
+        "crop",
+        "state",
+        "cost_of_production_a2_fl___2013_14",
+        "cost_of_production_a2_fl___2014_15",
+        "cost_of_production_a2_fl___2015_16",
+        "cost_of_production_a2_fl___2016_17",
+        "cost_of_production_a2_fl___2017_18"
+      ]
+    },
+    {
+      "file": "coc_c2.json",
+      "resource_id": "dc3ba615-2892-49c6-bdcd-ecdf0d24c8a5",
+      "title": "State-wise & Crop-wise Cost of Production (C2), Important Crops",
+      "temporal_coverage": "2013-14..2017-18",
+      "unit": "INR/quintal",
+      "records": 209,
+      "sha256": "65a9888c3f583a871d2c08be1abd32df96ef91896ec4345b6917a8f3e52179da",
+      "fields": [
+        "crop",
+        "state",
+        "cost_of_production_c2___2013_14",
+        "cost_of_production_c2___2014_15",
+        "cost_of_production_c2___2015_16",
+        "cost_of_production_c2___2016_17",
+        "cost_of_production_c2___2017_18"
+      ]
+    },
+    {
+      "file": "msp_kharif.json",
+      "resource_id": "aa823ea9-ecb3-45ea-9ec0-1fcb0c522feb",
+      "title": "Kharif Crop-wise MSP & Cost of Production",
+      "temporal_coverage": "2021-22..2024-25",
+      "unit": "INR/quintal",
+      "records": 17,
+      "sha256": "c8da55cdb6b5870f4995aaa1c0a620c67b639a24ee93f449489fc8ff94b4e39d",
+      "fields": [
+        "sl__no_",
+        "kharif_crop_wise",
+        "_2021_22___cost",
+        "_2021_22___msp_",
+        "_2021_22___difference__msp_cost_",
+        "_2022_23___cost",
+        "_2022_23___msp",
+        "_2022_23___difference__msp_cost_",
+        "_2023_24___cost",
+        "_2023_24___msp",
+        "_2023_24___difference__msp_cost_",
+        "_2024_25___cost",
+        "_2024_25___msp",
+        "_2024_25___difference__msp_cost_"
+      ]
+    },
+    {
+      "file": "msp_rabi.json",
+      "resource_id": "6f655085-856d-4246-a516-5d6b3bebb990",
+      "title": "Rabi Crop-wise MSP & Cost of Production",
+      "temporal_coverage": "2022-23..2025-26",
+      "unit": "INR/quintal",
+      "records": 6,
+      "sha256": "0daf636ccf65d631722159641c96af3732ef09333a21bfb4cefcf7d18f2aa90d",
+      "fields": [
+        "_sl__no_",
+        "rabi_crop_wise",
+        "_2022_23___cost",
+        "_2022_23___msp",
+        "_2022_23___difference__msp_cost_",
+        "_2023_24___cost",
+        "_2023_24___msp",
+        "_2023_24___difference__msp_cost_",
+        "_2024_25___cost",
+        "_2024_25___msp",
+        "_2024_25___difference__msp_cost_",
+        "_2025_26___cost",
+        "_2025_26___msp",
+        "_2025_26___difference__msp_cost_"
+      ]
+    }
+  ]
+}

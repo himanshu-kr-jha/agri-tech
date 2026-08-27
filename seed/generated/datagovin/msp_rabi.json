@@ -1,0 +1,204 @@
+{
+    "index_name": "6f655085-856d-4246-a516-5d6b3bebb990",
+    "title": "Rabi Crop-wise Details of Minimum Support Price (MSP) and Cost of Production from 2022-23 to 2025-26",
+    "desc": "Rabi Crop-wise Details of Minimum Support Price (MSP) and Cost of Production from 2022-23 to 2025-26",
+    "org_type": "Central",
+    "org": [
+        "Rajya Sabha"
+    ],
+    "sector": [
+        "All"
+    ],
+    "source": "data.gov.in",
+    "catalog_uuid": "78889f83-0f96-484b-9fbc-5be92454446f",
+    "visualizable": "1",
+    "active": "1",
+    "created": 1735732198,
+    "updated": 1735732198,
+    "created_date": "2025-01-01T12:49:58Z",
+    "updated_date": "2025-01-01T12:49:58Z",
+    "external_ws": 0,
+    "external_ws_url": "",
+    "target_bucket": {
+        "index": "api",
+        "type": "78889f83-0f96-484b-9fbc-5be92454446f",
+        "field": "6f655085-856d-4246-a516-5d6b3bebb990"
+    },
+    "field": [
+        {
+            "id": "_sl__no_",
+            "name": "Sl. No.",
+            "type": "double"
+        },
+        {
+            "id": "rabi_crop_wise",
+            "name": "Rabi Crop-wise",
+            "type": "keyword"
+        },
+        {
+            "id": "_2022_23___cost",
+            "name": "2022-23 - Cost",
+            "type": "double"
+        },
+        {
+            "id": "_2022_23___msp",
+            "name": "2022-23 - MSP",
+            "type": "double"
+        },
+        {
+            "id": "_2022_23___difference__msp_cost_",
+            "name": "2022-23 - Difference (MSP-Cost)",
+            "type": "double"
+        },
+        {
+            "id": "_2023_24___cost",
+            "name": "2023-24 - Cost",
+            "type": "double"
+        },
+        {
+            "id": "_2023_24___msp",
+            "name": "2023-24 - MSP",
+            "type": "double"
+        },
+        {
+            "id": "_2023_24___difference__msp_cost_",
+            "name": "2023-24 - Difference (MSP-Cost)",
+            "type": "double"
+        },
+        {
+            "id": "_2024_25___cost",
+            "name": "2024-25 - Cost",
+            "type": "double"
+        },
+        {
+            "id": "_2024_25___msp",
+            "name": "2024-25 - MSP",
+            "type": "double"
+        },
+        {
+            "id": "_2024_25___difference__msp_cost_",
+            "name": "2024-25 - Difference (MSP-Cost)",
+            "type": "double"
+        },
+        {
+            "id": "_2025_26___cost",
+            "name": "2025-26 - Cost",
+            "type": "double"
+        },
+        {
+            "id": "_2025_26___msp",
+            "name": "2025-26 - MSP",
+            "type": "double"
+        },
+        {
+            "id": "_2025_26___difference__msp_cost_",
+            "name": "2025-26 - Difference (MSP-Cost)",
+            "type": "double"
+        }
+    ],
+    "message": "Resource lists",
+    "version": "2.2.0",
+    "status": "ok",
+    "total": 6,
+    "count": 6,
+    "limit": "1000",
+    "offset": "0",
+    "records": [
+        {
+            "_sl__no_": 1,
+            "rabi_crop_wise": "Wheat",
+            "_2022_23___cost": 1008,
+            "_2022_23___msp": 2015,
+            "_2022_23___difference__msp_cost_": 1007,
+            "_2023_24___cost": 1065,
+            "_2023_24___msp": 2125,
+            "_2023_24___difference__msp_cost_": 1060,
+            "_2024_25___cost": 1128,
+            "_2024_25___msp": 2275,
+            "_2024_25___difference__msp_cost_": 1147,
+            "_2025_26___cost": 1182,
+            "_2025_26___msp": 2425,
+            "_2025_26___difference__msp_cost_": 1243
+        },
+        {
+            "_sl__no_": 2,
+            "rabi_crop_wise": "Barley",
+            "_2022_23___cost": 1019,
+            "_2022_23___msp": 1635,
+            "_2022_23___difference__msp_cost_": 616,
+            "_2023_24___cost": 1082,
+            "_2023_24___msp": 1735,
+            "_2023_24___difference__msp_cost_": 653,
+            "_2024_25___cost": 1158,
+            "_2024_25___msp": 1850,
+            "_2024_25___difference__msp_cost_": 692,
+            "_2025_26___cost": 1239,
+            "_2025_26___msp": 1980,
+            "_2025_26___difference__msp_cost_": 741
+        },
+        {
+            "_sl__no_": 3,
+            "rabi_crop_wise": "Gram",
+            "_2022_23___cost": 3004,
+            "_2022_23___msp": 5230,
+            "_2022_23___difference__msp_cost_": 2226,
+            "_2023_24___cost": 3206,
+            "_2023_24___msp": 5335,
+            "_2023_24___difference__msp_cost_": 2129,
+            "_2024_25___cost": 3400,
+            "_2024_25___msp": 5440,
+            "_2024_25___difference__msp_cost_": 2040,
+            "_2025_26___cost": 3527,
+            "_2025_26___msp": 5650,
+            "_2025_26___difference__msp_cost_": 2123
+        },
+        {
+            "_sl__no_": 4,
+            "rabi_crop_wise": "Masur (Lentil)",
+            "_2022_23___cost": 3079,
+            "_2022_23___msp": 5500,
+            "_2022_23___difference__msp_cost_": 2421,
+            "_2023_24___cost": 3239,
+            "_2023_24___msp": 6000,
+            "_2023_24___difference__msp_cost_": 2761,
+            "_2024_25___cost": 3405,
+            "_2024_25___msp": 6425,
+            "_2024_25___difference__msp_cost_": 3020,
+            "_2025_26___cost": 3537,
+            "_2025_26___msp": 6700,
+            "_2025_26___difference__msp_cost_": 3163
+        },
+        {
+            "_sl__no_": 5,
+            "rabi_crop_wise": "Rapeseed\/Mustard",
+            "_2022_23___cost": 2523,
+            "_2022_23___msp": 5050,
+            "_2022_23___difference__msp_cost_": 2527,
+            "_2023_24___cost": 2670,
+            "_2023_24___msp": 5450,
+            "_2023_24___difference__msp_cost_": 2780,
+            "_2024_25___cost": 2855,
+            "_2024_25___msp": 5650,
+            "_2024_25___difference__msp_cost_": 2795,
+            "_2025_26___cost": 3011,
+            "_2025_26___msp": 5950,
+            "_2025_26___difference__msp_cost_": 2939
+        },
+        {
+            "_sl__no_": 6,
+            "rabi_crop_wise": "Safflower",
+            "_2022_23___cost": 3627,
+            "_2022_23___msp": 5441,
+            "_2022_23___difference__msp_cost_": 1814,
+            "_2023_24___cost": 3765,
+            "_2023_24___msp": 5650,
+            "_2023_24___difference__msp_cost_": 1885,
+            "_2024_25___cost": 3807,
+            "_2024_25___msp": 5800,
+            "_2024_25___difference__msp_cost_": 1993,
+            "_2025_26___cost": 3960,
+            "_2025_26___msp": 5940,
+            "_2025_26___difference__msp_cost_": 1980
+        }
+    ]
+}
