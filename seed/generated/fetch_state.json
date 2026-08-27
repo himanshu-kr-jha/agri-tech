@@ -1,0 +1,30 @@
+{
+  "coc-a2fl": {
+    "content_hash": "a33a73217e433eb9d10869cbc409ee62d4f421584314b390c492d9a1cb3bc663",
+    "health": "OK",
+    "last_changed": "2026-08-27T19:46:28.311878+00:00",
+    "last_checked": "2026-08-27T19:46:28.311878+00:00",
+    "records": 209
+  },
+  "coc-c2": {
+    "content_hash": "cfebc0f1e5c8820d8f22ddd48823fedfc818f33ead1030b685d65d5b3e0de484",
+    "health": "OK",
+    "last_changed": "2026-08-27T19:46:29.436453+00:00",
+    "last_checked": "2026-08-27T19:46:29.436453+00:00",
+    "records": 209
+  },
+  "msp-kharif": {
+    "content_hash": "87ad8e4d2f12eeec8d19166e742d484f31c30bf8b819984e239000282fb59b5c",
+    "health": "OK",
+    "last_changed": "2026-08-27T19:46:27.344380+00:00",
+    "last_checked": "2026-08-27T19:48:17.747306+00:00",
+    "records": 17
+  },
+  "msp-rabi": {
+    "content_hash": "8a20bc381607ee2d8ceadaf33b904ddcd2a8bad4ee0a0e7ede158fb46cb2c344",
+    "health": "OK",
+    "last_changed": "2026-08-27T19:47:47.532216+00:00",
+    "last_checked": "2026-08-27T19:48:16.467966+00:00",
+    "records": 6
+  }
+}

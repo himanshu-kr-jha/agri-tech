@@ -2,13 +2,14 @@
 
 Date: 2026-08-28 · Scope: Uttar Pradesh, anchored on Prayagraj
 
-Machine-readable companion: `seed/SOURCE_REGISTRY.json`.
+Machine-readable registry: `seed/source_registry.py`. Fetcher: `seed/fetch_datagovin.py`.
 Design decisions: `docs/DATA-SOURCING.md`. Citation register: `seed/sources.md`.
 
 ## Verified and cached
 
 All four authored by **DES / CACP, Ministry of Agriculture & Farmers Welfare**, fetched via
-the `api.data.gov.in` route. Payloads in `seed/generated/datagovin/`, hashes in `MANIFEST.json`.
+the `api.data.gov.in` route. Payloads in `seed/generated/batch1_msp/` and
+`seed/generated/batch2_cost_of_cultivation/`, hashes in each `MANIFEST.json`.
 
 | Source | Resource id | Coverage | Unit | Priority | Licence |
 |---|---|---|---|---|---|

@@ -70,7 +70,7 @@ still apply. No personal farmer data is collected.
 aggregate-only and stale at 2017-18 while MSP came back current to 2025-26. The demo is a
 price story, and the system currently cannot express *MSP announced* vs *procurement price*
 vs *market price* vs *effective realization* at all. Data is already cached in
-`seed/generated/datagovin/`.
+`seed/generated/batch1_msp/`.
 
 **Batch 2 — cost of cultivation (E1–E6).** Blocked on the itemised tables. `desagri.gov.in`
 was unreachable (`ECONNREFUSED 164.100.114.118`); MoSPI 4.12 is the untried alternative route.

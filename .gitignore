@@ -49,3 +49,7 @@ packages/contracts/src/generated/
 
 # Logs
 *.log
+
+# Per-clone fetch log; append-only and conflicts on every merge.
+# The shared state that matters is seed/generated/fetch_state.json, which IS tracked.
+seed/generated/fetch_log.jsonl
