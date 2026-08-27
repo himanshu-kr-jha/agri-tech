@@ -54,6 +54,14 @@ a tempting synonym, the synonym is listed as **not**.
 | **DataSource** | A registered origin of data, with trust weight and cadence. |
 | **ExternalRecord** | A raw payload fetched from an external source, retained for evidence citation. |
 | **Fixture** | Offline stand-in data used when a live source is unavailable. Always UI-labelled. |
+| **Publisher** | The authority that *authored* a dataset (e.g. DES/CACP). Distinct from access route. |
+| **Access route** | Where we actually fetched it (e.g. `api.data.gov.in`). Never recorded as the publisher. |
+| **Cap lift** | Raising a confidence ceiling once a value is sourced *and* verified. Requires a named verifier — ADR-0014. |
+| **Authoritative source** | A source whose costs may enter a ranked comparison (CACP/DES). ADR-0012. |
+| **Advisory source** | A sourced-but-not-authoritative source (ICAR, university study). May inform a suggestion, never a ranking. ADR-0012. |
+| **Scraper checkpoint** | Per-scraper opaque cursor recording the last extracted record, so a batch resumes rather than restarts. |
+| **Canonical text** | The source's own published wording, frozen. For Hindi-only schemes this is Hindi — ADR-0015. |
+| **Derived translation** | A translation of canonical text, carrying its own translator identity and version. Rules never derive from it. |
 
 ## Intelligence & decisions
 

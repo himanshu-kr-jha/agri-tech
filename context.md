@@ -204,6 +204,10 @@ Additional engineering decisions:
 | T-07 | **Aggregate confidence is a tonnage-weighted mean, not the minimum** | Weakest-link is right for a single claim — a chain built on one stale reading is only as good as that reading. It is wrong for a rollup: a 1,900 t forecast from 1,282 independently observed cycles is not made worthless by one plot nobody visited. Using min() reported 0.00 on the whole forecast, which was both wrong and useless. Weak evidence is now surfaced as its own finding instead, naming the cycles a field visit would help most. Found building M6. |
 | T-08 | **Crop-health half-life 14 days, not 7** | 7 days conflated how fast a *crop* changes with how fast our *information about it* decays. A week-old field-officer reading is still worth a great deal. At 7 days every aggregate forecast collapsed to ~0 confidence. |
 | T-09 | **Design system cloned from the Krishi·OS FPO console reference** — paper ground, hairlines instead of shadows, Fraunces on every number, gold accent once per screen, light-only | ADR-0010 |
+| T-10 | **Only fully-sourced crops enter the Farm ranking**; authoritative (CACP/DES) vs advisory (ICAR/university) tiers. Gross margin is a difference of two numbers, so an invented cost can beat a surveyed one on the strength of the invention | ADR-0012 |
+| T-11 | **Cost economics as `ExternalRecord`**, gathered by the orchestrator into `ModuleInput.data`; `CROP_ECONOMICS` demoted to a labelled synthetic fallback. Keeps intelligence modules pure | ADR-0013 |
+| T-12 | **A confidence cap lifts only with a named verifier** and a licence on record. A fetch cannot assert that a transcription faithfully represents the published text | ADR-0014 |
+| T-13 | **Hindi source text is canonical**, translation is derived and versioned. UP state schemes are Hindi-only, and लघु एवं सीमांत कृषक is a legal category a fluent translation can silently destroy | ADR-0015 |
 
 ---
 

@@ -88,7 +88,7 @@ Consciously **not** built. Each was discussed in discovery and deferred.
 | Trained CV disease model | ADR-0006. Checklist + assistive image label instead. | POST-MVP |
 | Trained yield/price ML models | Deterministic formulas with cited coefficients are more defensible in 72h. | POST-MVP |
 | Satellite / IoT / soil-sensor ingestion | Explicitly deferred in discovery. | POST-MVP |
-| Government record integration | "not for prototyping stage". | POST-MVP |
+| Government record integration | "not for prototyping stage". **Partially reopened 2026-08-28** for read-only public data only (MSP, cost of production, scheme text) — no farmer-record integration, no write path. See ADR-0012..0015 and `docs/DATA-SOURCING.md`. | POST-MVP, except public read-only sourcing |
 | Researcher dataset marketplace, free/paid tiers | Business model, not product spine. D-22. | POST-MVP |
 | Field Officer / Procurement / Finance / Researcher roles | Three roles for MVP. The CEO exercises field-officer approvals. | POST-MVP |
 | Logistics booking, warehouse management | Costs are modelled; operations are not. | POST-MVP |
