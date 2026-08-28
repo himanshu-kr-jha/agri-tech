@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif; background: #F9F9F6; color: #1B221F; -webkit-font-smoothing: antialiased; }
+    a { color: #1A3826; } a:hover { color: #C7A03D; }
+    .eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #899A8C; }
+    .serif { font-family: Fraunces, ui-serif, Georgia, serif; font-optical-sizing: auto; letter-spacing: -0.025em; color: #1A3826; }
+    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace; }
+    .body { font-size: 15px; line-height: 1.62; color: #6A7C71; }
+    .rule { height: 1px; background: rgba(221,227,223,0.7); border: 0; }
+  </style>
+</helmet>
+<div style="width: 1440px; height: 810px; box-sizing: border-box; padding: 68px 88px; display: flex; flex-direction: column; background: #F9F9F6;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow">Why you can rely on it</span>
+    <span class="eyebrow mono">06 / 08</span>
+  </div>
+  <div style="padding: 34px 0 26px; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div class="serif" style="font-size: 46px;">An unverified number cannot advise a farmer</div>
+    <div class="body" style="font-size: 14px; max-width: 360px; text-align: right;">Not by policy. By construction — the ceiling sits below the floor required to act.</div>
+  </div>
+  <div style="display: flex; gap: 46px; flex-grow: 1; align-items: stretch;">
+    <div style="flex-basis: 46%; display: flex; flex-direction: column; justify-content: center; gap: 22px; padding: 32px; border: 1px solid rgba(221,227,223,0.7); background: #FFFFFF;">
+      <div style="display: flex; align-items: baseline; gap: 14px;">
+        <span class="serif" style="font-size: 62px;">0.42</span>
+        <span class="body" style="font-size: 15px;">ceiling on an unsourced<br>crop-protection finding</span>
+      </div>
+      <hr class="rule">
+      <div style="display: flex; align-items: baseline; gap: 14px;">
+        <span class="serif" style="font-size: 62px; color: #C7A03D;">0.45</span>
+        <span class="body" style="font-size: 15px;">floor required before anything<br>may drive a recommendation</span>
+      </div>
+      <div style="padding-top: 8px;"><span style="font-size: 15px; color: #1B221F; line-height: 1.6;">The gap is deliberate. An unsourced diagnosis is <span style="font-style: italic;">structurally incapable</span> of reaching a farmer, however confident the model feels.</span></div>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 20px; justify-content: center;">
+      <span class="serif" style="font-size: 27px;">Every unsourced figure carries a ceiling</span>
+      <span class="body">Rather than labelling uncertain data and hoping a reader notices, each unverified input is capped at the point of use. The cap propagates into everything computed from it, so an unsourced cost quietly limits the confidence of the whole crop plan — visibly, and without anyone having to remember.</span>
+      <div style="display: flex; flex-direction: column; gap: 0; border-top: 1px solid rgba(221,227,223,0.7);">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+          <span style="font-size: 15px; color: #1B221F;">Crop-protection guidance</span>
+          <span style="display: flex; align-items: baseline; gap: 14px;"><span class="body" style="font-size: 13px;">below the action floor</span><span class="serif" style="font-size: 24px;">0.42</span></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+          <span style="font-size: 15px; color: #1B221F;">Cost of cultivation</span>
+          <span style="display: flex; align-items: baseline; gap: 14px;"><span class="body" style="font-size: 13px;">caps the whole crop plan</span><span class="serif" style="font-size: 24px;">0.62</span></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+          <span style="font-size: 15px; color: #1B221F;">Scheme eligibility rules</span>
+          <span style="display: flex; align-items: baseline; gap: 14px;"><span class="body" style="font-size: 13px;">rules not yet verified</span><span class="serif" style="font-size: 24px;">0.55</span></span>
+        </div>
+      </div>
+      <span class="body" style="font-size: 14px;">A cap lifts only when a person has confirmed the source. Nine of our ten sources are still capped today — and we would rather say so than quietly rely on them.</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

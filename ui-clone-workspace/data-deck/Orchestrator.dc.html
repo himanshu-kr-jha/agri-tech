@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif; background: #F9F9F6; color: #1B221F; -webkit-font-smoothing: antialiased; }
+    a { color: #1A3826; } a:hover { color: #C7A03D; }
+    .eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #899A8C; }
+    .serif { font-family: Fraunces, ui-serif, Georgia, serif; font-optical-sizing: auto; letter-spacing: -0.025em; color: #1A3826; }
+    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace; }
+    .body { font-size: 15px; line-height: 1.62; color: #6A7C71; }
+    .rule { height: 1px; background: rgba(221,227,223,0.7); border: 0; }
+  </style>
+</helmet>
+<div style="width: 1440px; height: 810px; box-sizing: border-box; padding: 68px 88px; display: flex; flex-direction: column; background: #F9F9F6;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow">Streamlining for the orchestrator</span>
+    <span class="eyebrow mono">07 / 08</span>
+  </div>
+  <div style="padding: 34px 0 26px; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div class="serif" style="font-size: 46px;">Turning cluttered data into a decision</div>
+    <div class="body" style="font-size: 14px; max-width: 400px; text-align: right;">Four rules stand between raw public data and anything the orchestrator is allowed to say.</div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; flex-grow: 1;">
+    <div style="display: flex; flex-direction: column; gap: 11px; padding: 26px 26px 24px; border: 1px solid rgba(221,227,223,0.7); background: #FFFFFF;">
+      <span class="eyebrow mono">Rule 01</span>
+      <span class="serif" style="font-size: 25px;">Names are mapped, never guessed</span>
+      <span style="font-size: 15px; color: #1B221F; line-height: 1.55;">One table maps every source's vocabulary into ours. An unrecognised name stops the run.</span>
+      <span class="body" style="font-size: 13px; padding-top: 11px; border-top: 1px solid rgba(221,227,223,0.7);">Fuzzy matching would fold <span class='mono' style='font-size:12px;'>Paddy (Grade A)</span> into <span class='mono' style='font-size:12px;'>Paddy (Common)</span> — two different prices, one silent error.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 11px; padding: 26px 26px 24px; border: 1px solid rgba(221,227,223,0.7); background: #FFFFFF;">
+      <span class="eyebrow mono">Rule 02</span>
+      <span class="serif" style="font-size: 25px;">Disagreement is shown, not settled</span>
+      <span style="font-size: 15px; color: #1B221F; line-height: 1.55;">When two sources conflict beyond tolerance, both claims are kept and confidence drops.</span>
+      <span class="body" style="font-size: 13px; padding-top: 11px; border-top: 1px solid rgba(221,227,223,0.7);">The system never quietly picks a winner and presents it as the answer.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 11px; padding: 26px 26px 24px; border: 1px solid rgba(221,227,223,0.7); background: #FFFFFF;">
+      <span class="eyebrow mono">Rule 03</span>
+      <span class="serif" style="font-size: 25px;">Unsourced crops leave the comparison</span>
+      <span style="font-size: 15px; color: #1B221F; line-height: 1.55;">A margin ranking admits a crop only when every cost behind it is sourced.</span>
+      <span class="body" style="font-size: 13px; padding-top: 11px; border-top: 1px solid rgba(221,227,223,0.7);">Margin is a difference of two numbers — an invented cost can win on the strength of the invention.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 11px; padding: 26px 26px 24px; border: 1px solid rgba(221,227,223,0.7); background: #FFFFFF;">
+      <span class="eyebrow mono">Rule 04</span>
+      <span class="serif" style="font-size: 25px;">Guidance cannot outrank a survey</span>
+      <span style="font-size: 15px; color: #1B221F; line-height: 1.55;">Advisory material informs suggestions. It never competes in a ranked result.</span>
+      <span class="body" style="font-size: 13px; padding-top: 11px; border-top: 1px solid rgba(221,227,223,0.7);">A confident single-district study must not outrank a 900-farmer state survey.</span>
+    </div>
+  </div>
+  <div style="margin-top: 24px; padding: 20px 24px; border-left: 2px solid #C7A03D; background: #FFFFFF;">
+    <span style="font-size: 15px; color: #1B221F;">What reaches the FPO is not "the data we found". It is what survived four rules designed to catch the <span style="font-style: italic;">plausible wrong answer</span> — the kind that never announces itself.</span>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif; background: #F9F9F6; color: #1B221F; -webkit-font-smoothing: antialiased; }
+    a { color: #1A3826; } a:hover { color: #C7A03D; }
+    .eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #899A8C; }
+    .serif { font-family: Fraunces, ui-serif, Georgia, serif; font-optical-sizing: auto; letter-spacing: -0.025em; color: #1A3826; }
+    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace; }
+    .body { font-size: 15px; line-height: 1.62; color: #6A7C71; }
+    .rule { height: 1px; background: rgba(221,227,223,0.7); border: 0; }
+  </style>
+</helmet>
+<div style="width: 1440px; height: 810px; box-sizing: border-box; padding: 68px 88px; display: flex; flex-direction: column; background: #F9F9F6;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow">The problem</span>
+    <span class="eyebrow mono">02 / 08</span>
+  </div>
+  <div style="padding: 34px 0 26px;"><div class="serif" style="font-size: 46px;">Public data is abundant. It is not usable.</div></div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 56px; flex-grow: 1; align-content: start;">
+    <div style="display: flex; flex-direction: column; gap: 9px; padding: 22px 0 24px; border-top: 1px solid rgba(221,227,223,0.7);">
+      <span class="serif" style="font-size: 42px;">285,974</span>
+      <span style="font-size: 15px; font-weight: 500; color: #1B221F;">datasets on the national open-data portal</span>
+      <span class="body" style="font-size: 14px;">Abundance is not availability. Most are irrelevant, superseded, or one row of nothing.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 9px; padding: 22px 0 24px; border-top: 1px solid rgba(221,227,223,0.7);">
+      <span class="serif" style="font-size: 42px;">3 names</span>
+      <span style="font-size: 15px; font-weight: 500; color: #1B221F;">for one crop, across three government sources</span>
+      <span class="body" style="font-size: 14px;"><span class='mono' style='font-size:13px;'>R &amp; M</span> · <span class='mono' style='font-size:13px;'>Rapeseed/Mustard</span> · <span class='mono' style='font-size:13px;'>Mustard</span> — and none of it is derivable.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 9px; padding: 22px 0 24px; border-top: 1px solid rgba(221,227,223,0.7);">
+      <span class="serif" style="font-size: 42px;">0 rows</span>
+      <span style="font-size: 15px; font-weight: 500; color: #1B221F;">returned for the district the FPO actually farms</span>
+      <span class="body" style="font-size: 14px;">The series predates the 2018 rename. <span class='mono' style='font-size:13px;'>PRAYAGRAJ</span> matches nothing; <span class='mono' style='font-size:13px;'>ALLAHABAD</span> matches 470.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 9px; padding: 22px 0 24px; border-top: 1px solid rgba(221,227,223,0.7);">
+      <span class="serif" style="font-size: 42px;">9 of 10</span>
+      <span style="font-size: 15px; font-weight: 500; color: #1B221F;">sources whose licence is not stated anywhere</span>
+      <span class="body" style="font-size: 14px;">Usable for research. Not automatically usable in a product.</span>
+    </div>
+  </div>
+  <div style="padding-top: 20px; border-top: 1px solid rgba(221,227,223,0.7);"><span class="body" style="font-size: 15px;">Every one of these failures is <span style="color:#1B221F; font-weight:500;">silent</span>. Each returns a plausible answer rather than an error — which is what makes them dangerous in a system that advises farmers.</span></div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif; background: #F9F9F6; color: #1B221F; -webkit-font-smoothing: antialiased; }
+    a { color: #1A3826; } a:hover { color: #C7A03D; }
+    .eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #899A8C; }
+    .serif { font-family: Fraunces, ui-serif, Georgia, serif; font-optical-sizing: auto; letter-spacing: -0.025em; color: #1A3826; }
+    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace; }
+    .body { font-size: 15px; line-height: 1.62; color: #6A7C71; }
+    .rule { height: 1px; background: rgba(221,227,223,0.7); border: 0; }
+  </style>
+</helmet>
+<div style="width: 1440px; height: 810px; box-sizing: border-box; padding: 68px 88px; display: flex; flex-direction: column; background: #F9F9F6;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow">Our sources</span>
+    <span class="eyebrow mono">04 / 08</span>
+  </div>
+  <div style="padding: 34px 0 26px; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div class="serif" style="font-size: 46px;">Where it comes from</div>
+    <div class="body" style="font-size: 14px;">Every source is a government publisher. No blogs, no aggregators, no scraped resellers.</div>
+  </div>
+  <div style="display: grid; grid-template-columns: 46px 1fr 1fr 1.15fr 132px; gap: 0 22px; align-items: center; padding-bottom: 11px; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow"></span><span class="eyebrow">Domain</span><span class="eyebrow">Publisher</span><span class="eyebrow">Coverage</span><span class="eyebrow" style="text-align: right;">Tier</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 46px 1fr 1fr 1.15fr 132px; gap: 0 22px; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow mono">01</span>
+    <span style="font-size: 16px; color: #1B221F; font-weight: 500;">Minimum Support Price</span>
+    <span class="body" style="font-size: 14px;">CACP / DES</span>
+    <span class="body" style="font-size: 14px;">23 crops, current to 2025-26</span>
+    <span class="mono" style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: right; color: #899A8C;">Authoritative</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 46px 1fr 1fr 1.15fr 132px; gap: 0 22px; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow mono">02</span>
+    <span style="font-size: 16px; color: #1B221F; font-weight: 500;">Cost of production</span>
+    <span class="body" style="font-size: 14px;">DES</span>
+    <span class="body" style="font-size: 14px;">State × crop, 2013-14 to 2017-18</span>
+    <span class="mono" style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: right; color: #899A8C;">Authoritative</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 46px 1fr 1fr 1.15fr 132px; gap: 0 22px; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow mono">03</span>
+    <span style="font-size: 16px; color: #1B221F; font-weight: 500;">UP schemes &amp; orders</span>
+    <span class="body" style="font-size: 14px;">Govt of Uttar Pradesh</span>
+    <span class="body" style="font-size: 14px;">Hindi, current to Aug 2026</span>
+    <span class="mono" style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: right; color: #899A8C;">Authoritative</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 46px 1fr 1fr 1.15fr 132px; gap: 0 22px; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow mono">04</span>
+    <span style="font-size: 16px; color: #1B221F; font-weight: 500;">Crop varieties</span>
+    <span class="body" style="font-size: 14px;">ICAR</span>
+    <span class="body" style="font-size: 14px;">255 released varieties</span>
+    <span class="mono" style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: right; color: #899A8C;">Authoritative</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 46px 1fr 1fr 1.15fr 132px; gap: 0 22px; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow mono">05</span>
+    <span style="font-size: 16px; color: #1B221F; font-weight: 500;">Production, area, yield</span>
+    <span class="body" style="font-size: 14px;">Ministry of Agriculture</span>
+    <span class="body" style="font-size: 14px;">33,306 UP rows, district level</span>
+    <span class="mono" style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: right; color: #899A8C;">Authoritative</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 46px 1fr 1fr 1.15fr 132px; gap: 0 22px; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow mono">06</span>
+    <span style="font-size: 16px; color: #1B221F; font-weight: 500;">Procurement</span>
+    <span class="body" style="font-size: 14px;">DFPD / FCI</span>
+    <span class="body" style="font-size: 14px;">Quantity, MSP value, farmers benefited</span>
+    <span class="mono" style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: right; color: #899A8C;">Authoritative</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 46px 1fr 1fr 1.15fr 132px; gap: 0 22px; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow mono">07</span>
+    <span style="font-size: 16px; color: #1B221F; font-weight: 500;">Department circulars &amp; FAQs</span>
+    <span class="body" style="font-size: 14px;">Govt of Uttar Pradesh</span>
+    <span class="body" style="font-size: 14px;">69 circulars, bilingual</span>
+    <span class="mono" style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: right; color: #C7A03D;">Advisory</span>
+  </div>
+  <div style="margin-top: auto; padding-top: 20px;"><span class="body" style="font-size: 14px;"><span style="color:#1B221F; font-weight:500;">Advisory</span> is not a lesser fact — it is a different permission. Guidance may inform a suggestion; it may never enter a ranked comparison against surveyed data.</span></div>
+</div>
+</x-dc>
+</body>
+</html>

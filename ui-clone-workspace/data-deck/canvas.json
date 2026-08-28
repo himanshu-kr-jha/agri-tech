@@ -1,0 +1,13 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html",         "x": 0,    "y": 0,    "w": 1440, "h": 810, "title": "01 · Opening" },
+    { "file": "Problem.dc.html",      "x": 1560, "y": 0,    "w": 1440, "h": 810, "title": "02 · The problem" },
+    { "file": "Pipeline.dc.html",     "x": 3120, "y": 0,    "w": 1440, "h": 810, "title": "03 · How we collect" },
+    { "file": "Sources.dc.html",      "x": 4680, "y": 0,    "w": 1440, "h": 810, "title": "04 · Our sources" },
+    { "file": "Credibility.dc.html",  "x": 0,    "y": 1050, "w": 1440, "h": 810, "title": "05 · Credibility" },
+    { "file": "Caps.dc.html",         "x": 1560, "y": 1050, "w": 1440, "h": 810, "title": "06 · Confidence caps" },
+    { "file": "Orchestrator.dc.html", "x": 3120, "y": 1050, "w": 1440, "h": 810, "title": "07 · For the orchestrator" },
+    { "file": "Refusals.dc.html",     "x": 4680, "y": 1050, "w": 1440, "h": 810, "title": "08 · What we refuse" }
+  ],
+  "launch": { "view": "focused", "file": "Main.dc.html" }
+}
