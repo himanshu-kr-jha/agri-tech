@@ -1,0 +1,36 @@
+# NOTE: seed/generated/ is deliberately NOT excluded. The ingestion adapters read it at
+# runtime (see Dockerfile), so it is application data, not build scratch. It is ~23 MB.
+
+.git/
+.gitignore
+
+# Python build scratch
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Node — the web tier deploys to Vercel, none of this belongs in the API image
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+apps/web/node_modules/
+
+# Local environment and editor state
+.env
+.env.local
+.env.*.local
+.vscode/
+.idea/
+.DS_Store
+*.log
+
+# Not needed at runtime
+ui-clone-workspace/
+docs/
+infra/

@@ -12,7 +12,13 @@ services:
       POSTGRES_USER: agrivardhak
       POSTGRES_PASSWORD: agrivardhak
       POSTGRES_DB: agrivardhak
-      # Deterministic collation so seed hashes are reproducible across machines (DR-09).
+      # Byte-order collation, for consistency between local machines only. DR-09's
+      # reproducibility does *not* depend on it: seed determinism comes from the fixed RNG
+      # seed, and evidence hashes from json.dumps(sort_keys=True) over module output that is
+      # ordered in Python (orchestrator/gather.py holds no SQL ORDER BY at all). The one
+      # collation-sensitive query in the codebase is the farmer directory listing in
+      # api/dashboard.py, which reaches no EvidenceSnapshot. Managed Postgres — Supabase
+      # included — forces en_US.UTF-8, and INV-2 holds there unchanged.
       POSTGRES_INITDB_ARGS: "--locale=C --encoding=UTF8"
     ports:
       - "5433:5432"

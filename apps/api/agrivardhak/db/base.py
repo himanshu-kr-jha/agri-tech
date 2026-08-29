@@ -16,6 +16,21 @@ from sqlalchemy import BigInteger, DateTime, MetaData, Numeric, String, func, te
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
+#: libpq connect option: ``public`` for our tables, ``extensions`` for PostGIS and pgcrypto.
+#:
+#: Passed as a *connection* option rather than executed as a ``SET`` statement, and that
+#: distinction is load-bearing for Alembic. Running ``SET search_path`` on a SQLAlchemy 2.0
+#: connection implicitly opens a transaction; Alembic's own ``begin_transaction()`` then
+#: nests inside it instead of owning it, so its commit does not commit the outer transaction
+#: and closing the connection rolls the entire migration back — silently, with exit code 0
+#: and a full set of "Running upgrade" log lines. Set here, no transaction is involved.
+#:
+#: Supabase installs PostGIS into ``extensions`` while GeoAlchemy2 emits an unqualified
+#: ``geography(POLYGON,4326)`` (domain/models/land.py), which does not resolve without this.
+#: Harmless on Docker, where the extensions live in ``public``: Postgres ignores a
+#: search_path entry naming a schema that does not exist.
+SEARCH_PATH_OPTION = "-csearch_path=public,extensions"
+
 # Predictable constraint names make Alembic autogenerate stable across machines.
 NAMING_CONVENTION = {
     "ix": "ix_%(column_0_label)s",
