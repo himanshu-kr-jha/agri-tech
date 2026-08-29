@@ -57,6 +57,7 @@ from agrivardhak.domain.models.market import RiskRegisterEntry
 from agrivardhak.domain.models.operations import AuditRecord, DomainEvent
 from agrivardhak.intelligence import crop_health, farm, funding, market, quality, risk, scheme
 from agrivardhak.intelligence.contracts import ModuleInput, ModuleOutput
+from agrivardhak.knowledge import gates
 from agrivardhak.orchestrator import gather, reconcile
 from agrivardhak.orchestrator.packet import (
     AssignedAction,
@@ -264,10 +265,17 @@ def freeze(
                 "trough_percentile": risk.TROUGH_PERCENTILE,
                 "concentration_share": risk.CONCENTRATION_SHARE,
                 "hazard_reportable": risk.HAZARD_REPORTABLE,
+                "policy_window_days": risk.POLICY_WINDOW_DAYS,
             },
             "crop_health_ceiling": crop_health.UNSOURCED_CONFIDENCE_CEILING,
             "farm_ceiling": farm.UNSOURCED_CONFIDENCE_CEILING,
             "scheme_ceiling": scheme.UNVERIFIED_CONFIDENCE_CEILING,
+            # The knowledge gates decide whether retrieved text could influence this answer
+            # at all (ADR-0014). Moving either number changes what the orchestrator would
+            # have concluded, so a replay that did not know them would silently disagree
+            # with the packet it is checking.
+            "knowledge_inert_licence_ceiling": gates.INERT_LICENCE_CEILING,
+            "knowledge_unverified_extraction_ceiling": gates.UNVERIFIED_EXTRACTION_CEILING,
         },
     }
     digest = content_hash(payload)

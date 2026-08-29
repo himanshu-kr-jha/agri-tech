@@ -326,12 +326,24 @@ class ActorKind(StrEnum):
 
 
 class ExternalRecordKind(StrEnum):
+    """What a raw external payload is about.
+
+    The last five arrived with the batch fetchers (``seed/source_registry.py``). They are
+    reference facts about the world rather than claims about one of our subjects, which is
+    why they land here and not as observations (ADR-0013).
+    """
+
     WEATHER = "WEATHER"
     MARKET_PRICE = "MARKET_PRICE"
     SCHEME = "SCHEME"
     NEWS = "NEWS"
     DEMAND = "DEMAND"
     FUEL_PRICE = "FUEL_PRICE"
+    MSP = "MSP"
+    COST_OF_CULTIVATION = "COST_OF_CULTIVATION"
+    VARIETY = "VARIETY"
+    PRODUCTION = "PRODUCTION"
+    PROCUREMENT = "PROCUREMENT"
 
 
 class NewsDomain(StrEnum):

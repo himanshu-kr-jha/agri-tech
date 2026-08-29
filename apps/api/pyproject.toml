@@ -22,6 +22,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# The local sentence encoder. Optional on purpose: retrieval falls back to Postgres
+# full-text search without it (see agrivardhak/knowledge/embed.py), so a clone that skips
+# this still runs the demo offline. onnxruntime rather than torch — ~50 MB against ~2.5 GB,
+# for a corpus of a few hundred short passages.
+embed = [
+    "onnxruntime>=1.20",
+    "tokenizers>=0.20",
+    "numpy>=1.26",
+]
 dev = [
     "pytest>=8.3",
     "pytest-asyncio>=0.24",
@@ -60,7 +69,12 @@ module = ["agrivardhak.domain.*", "agrivardhak.intelligence.*"]
 strict = true
 
 [[tool.mypy.overrides]]
-module = ["geoalchemy2.*", "pgvector.*", "uuid_utils.*", "apscheduler.*", "jose.*"]
+module = [
+    "geoalchemy2.*", "pgvector.*", "uuid_utils.*", "apscheduler.*", "jose.*",
+    # The sentence encoder is optional and loaded by path at runtime (NFR-303), so
+    # these are not guaranteed to be installed at type-check time.
+    "onnxruntime.*", "tokenizers.*", "numpy.*",
+]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

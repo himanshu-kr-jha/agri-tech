@@ -69,6 +69,13 @@ def main() -> int:
         f"(of {result.interventions:,} — the rest were not scoreable, deliberately)"
     )
     print(f"  scored forecasts {result.predictions_scored:,}  (prediction vs actual — INV-6)")
+    print(
+        f"  external records {result.external_records:,}  (ten cited public sources, six batches)"
+    )
+    print(
+        f"  knowledge chunks {result.knowledge_chunks:,}  (retrievable; Hindi canonical — ADR-0015)"
+    )
+    print(f"  policy events  {result.policy_events:,}  (real UP government orders, not synthetic)")
     return 0
 
 

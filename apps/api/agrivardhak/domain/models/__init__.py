@@ -21,6 +21,10 @@ from agrivardhak.domain.models.decisions import (
     Prediction,
     Recommendation,
 )
+from agrivardhak.domain.models.knowledge import (
+    EMBEDDING_DIM,
+    KnowledgeChunk,
+)
 from agrivardhak.domain.models.land import (
     Farm,
     FarmResource,
@@ -73,6 +77,7 @@ from agrivardhak.domain.models.schemes import (
 )
 
 __all__ = [
+    "EMBEDDING_DIM",
     "Announcement",
     "Approval",
     "AttributePolicy",
@@ -101,6 +106,7 @@ __all__ = [
     "GovernanceProfile",
     "InputApplication",
     "Intervention",
+    "KnowledgeChunk",
     "LlmCallLog",
     "Lot",
     "LotItem",

@@ -1,4 +1,4 @@
-.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed seed-reset fetch fetch-due fetch-status check lint fmt typecheck test test-api test-web progress progress-check clean
+.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed seed-reset fetch fetch-due fetch-status ingest embed-model extract-schemes weather agmarknet climatology dev-token routing-eval check lint fmt typecheck test test-api test-web trace progress progress-check clean
 
 API := apps/api
 PY  := $(API)/.venv/bin/python
@@ -88,6 +88,21 @@ fetch-due: ## Re-fetch every source past its recheck cadence (the periodic entry
 fetch: ## Fetch one batch of external sources, e.g. make fetch b=1
 	@python3 seed/fetch_datagovin.py $(if $(b),--batch $(b),)
 
+ingest: ## Land the fetched batches as external records, then run the Data Observer
+	cd $(API) && .venv/bin/python -m agrivardhak.knowledge
+
+embed-model: ## Install the encoder runtime + download the model (~120 MB). Optional; enables vector search.
+	cd $(API) && $(UV) pip install --quiet -e ".[embed]"
+	cd $(API) && .venv/bin/python -m agrivardhak.knowledge.download_model
+	@echo ""
+	@echo "  Now run 'make ingest' to embed chunks that were stored before the encoder existed."
+
+extract-schemes: ## Propose scheme fields from the Hindi orders (calls Claude; review the diff)
+	cd $(API) && .venv/bin/python -m agrivardhak.knowledge.extract $(if $(limit),--limit $(limit),)
+
+climatology: ## Derive the 30-year ERA5 hazard climatology
+	python3 seed/fetch_climatology.py
+
 weather: ## Fetch real Open-Meteo weather:  make weather from=2024-06-01 to=2026-08-22
 	@test -n "$(from)" -a -n "$(to)" || (echo 'usage: make weather from=YYYY-MM-DD to=YYYY-MM-DD' && exit 1)
 	python3 seed/fetch_weather.py --from $(from) --to $(to)
@@ -145,6 +160,9 @@ test-web: ## vitest — component tests, including partial-packet rendering
 
 routing-eval: ## Measure intent-routing accuracy against a live model:  make routing-eval a="--verbose"
 	$(PY) scripts/routing_eval.py $(a)
+
+trace: ## Walk one government order through every Data Observer stage (read-only)
+	@cd $(API) && .venv/bin/python ../../scripts/trace_observer.py
 
 progress: ## Regenerate PROGRESS.md from what the repo can prove
 	$(API)/.venv/bin/python scripts/progress.py

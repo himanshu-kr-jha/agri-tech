@@ -88,9 +88,10 @@ agrivadhak/
 │   └── api/               ← FastAPI
 │       └── agrivardhak/
 │           ├── domain/        ← entities, value objects, events (no I/O)
-│           ├── intelligence/  ← the six modules, each a pure function
+│           ├── intelligence/  ← the seven modules, each a pure function
 │           ├── orchestrator/  ← decision packet assembly
-│           ├── ingestion/     ← weather, mandi, scheme, news adapters
+│           ├── ingestion/     ← weather, mandi, batch-registry and scheme adapters
+│           ├── knowledge/     ← the Data Observer: classify, segment, embed, retrieve (ADR-0018)
 │           ├── provenance/    ← observation + confidence machinery
 │           └── api/           ← FastAPI routers
 ├── packages/

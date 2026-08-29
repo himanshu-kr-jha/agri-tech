@@ -210,6 +210,7 @@ Additional engineering decisions:
 | T-13 | **Hindi source text is canonical**, translation is derived and versioned. UP state schemes are Hindi-only, and लघु एवं सीमांत कृषक is a legal category a fluent translation can silently destroy | ADR-0015 |
 | T-14 | **MSP is a price floor, not a buyer offer.** The seed priced it as `mandi × 1.05`, which inverts the one property that matters: a floor must hold when the market falls. Splits into announced / procurement-available / market / effective-realization | ADR-0016 |
 | T-15 | **One canonical alias table**, applied at gather not ingest, where an unmapped name raises rather than skips. Cross-source names are not derivable — `R & M` / `Rapeseed/Mustard` / `Mustard` — and `PRAYAGRAJ` matches zero rows where `ALLAHABAD` matches 470 | ADR-0017 |
+| T-16 | **Hybrid retrieval over a gated knowledge base.** pgvector + Postgres full-text fused by Reciprocal Rank Fusion, ranked by trust computed at query time, with an unlicensed passage capped at 0.40 — below the orchestrator's 0.45 floor, so it can be read and cannot become advice | ADR-0018 |
 
 ---
 
@@ -241,12 +242,20 @@ Each of these was discussed and consciously deferred. See `docs/MVP-SCOPE.md#cut
 
 ## 11a. External data sourcing
 
-Branch `data-scraping` carries ten cached public sources across six batches (MSP, cost of
-cultivation, UP schemes in Hindi, varieties, crop production, procurement), a registry, and
-re-runnable fetchers. Nothing is wired into the intelligence layer yet, and nine of ten
-licences are unconfirmed, which under ADR-0014 leaves that data inert.
+Ten cached public sources across six batches (MSP, cost of cultivation, UP schemes in Hindi,
+varieties, crop production, procurement), a registry, and re-runnable fetchers.
 
-**`docs/DATA-SOURCING-HANDOFF.md` is the entry point.** Decisions in ADR-0012..0017.
+**Wired as of 2026-08-29** (ADR-0018). All six batches land as `ExternalRecord` rows; the
+text-bearing ones pass through the Data Observer into `KnowledgeChunk` and are retrievable.
+The शासनादेश stream now populates `NewsEvent` and produces POLICY findings, which retires the
+hardcoded *"no scheme feed yet"* line in the Risk module.
+
+**Nine of ten licences remain unconfirmed**, so under ADR-0014 that text is retrievable as
+context and capped below the orchestrator's confidence floor — it cannot drive a
+recommendation. Confirming those licences is still the cheapest unblock available, and it
+cannot be automated: ADR-0014 requires a named human.
+
+**`docs/DATA-SOURCING-HANDOFF.md`** is the entry point for the gathering; **`docs/DATA-OBSERVER-HANDOFF.md`** for the wiring. Decisions in ADR-0012..0018.
 
 ## 11. Open questions still needing a human answer
 

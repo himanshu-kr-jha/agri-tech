@@ -88,6 +88,33 @@ HAZARD_IS_CLIMATE_ABOVE = 0.90
 
 LIKELIHOOD_BANDS = ((0.66, "HIGH"), (0.33, "MEDIUM"), (0.0, "LOW"))
 
+#: How far back a policy act still counts as "recent". Matches the registry's 90-day
+#: recheck cadence for the scheme domain, so the window and the fetch cadence agree — a
+#: longer window would report orders we may not have re-confirmed.
+POLICY_WINDOW_DAYS = 90
+
+#: ``NewsDomain`` (what an order is *about*) and ``RiskDomain`` (what kind of risk it poses
+#: to us) are different enums, and the register only accepts the latter — writing a
+#: NewsDomain value into a RiskEntry raises at persistence, which is how this map was found.
+#:
+#: ``INPUT_PRICE`` is the interesting case: there is no input-cost risk domain, and inventing
+#: one would be a schema change made in passing. A fertiliser-subsidy order is a *policy act*
+#: whose channel happens to be input cost, so POLICY is the honest register domain — and the
+#: finding's title keeps the input-price reading, so nothing is lost to the reader.
+_RISK_DOMAIN_FOR: dict[str, str] = {
+    "POLICY": "POLICY",
+    "INPUT_PRICE": "POLICY",
+    "GLOBAL": "GLOBAL",
+    "MARKET": "MARKET",
+    "CLIMATE": "CLIMATE",
+    "SUPPLY_CHAIN": "SUPPLY_CHAIN",
+}
+
+#: Citations attached to one policy finding. The packet renders every one, and a reader who
+#: needs more than five orders to believe an order was issued is not going to be convinced
+#: by a sixth.
+MAX_POLICY_CITATIONS = 5
+
 HAZARD_LABEL = {
     "heavy_rain": "a heavy-rain day (>=15 mm)",
     "very_heavy_rain": "a very-heavy-rain day (>=40 mm)",
@@ -246,6 +273,33 @@ class CropExposure:
     #: Tract → area, for a hazard that differs by tract even when the rainfall does not.
     area_by_tract: dict[str, Decimal] = field(default_factory=dict)
     evidence: list[EvidenceRef] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class PolicyEvent:
+    """A dated government act, already classified (FR-404).
+
+    Gathered from the शासनादेश stream, which is the only policy feed this system has and the
+    only source whose licence anyone has confirmed. The listing gives a date, a domain and
+    one sentence of subject — enough to report that an act occurred and who it touches, and
+    not enough to model its magnitude. That boundary is deliberate: an invented rupee figure
+    attached to a real order would be worse than the gap it filled.
+    """
+
+    key: str
+    domain: str
+    headline: str
+    occurred_at: dt.date
+    #: Crops the subject names, resolved by the gather layer against the alias table
+    #: (ADR-0017). Empty when the order is department-wide.
+    crops: list[str]
+    #: Highest confidence this event may carry — the licence and verification gate from
+    #: ``knowledge/gates.py``. Already applied to ``confidence``; carried so a caller can
+    #: explain the ceiling rather than just observe it.
+    ceiling: float
+    confidence: float
+    evidence: EvidenceRef
+    licence_confirmed: bool = True
 
 
 @dataclass(frozen=True)
@@ -645,6 +699,110 @@ def concentration_risk(
     return out
 
 
+def policy_change_risk(
+    events: list[PolicyEvent],
+    exposures: list[CropExposure],
+    as_of: dt.date,
+    *,
+    window_days: int = POLICY_WINDOW_DAYS,
+) -> list[tuple[Finding, RiskEntry]]:
+    """Group recent policy acts by domain and size the exposure each one touches.
+
+    One finding per domain rather than one per order: 74 separate register entries saying
+    "an order was issued" is a feed, and the CEO already has a feed. What changes a decision
+    is *how much of our standing crop sits under a policy area that just moved*.
+
+    Confidence is the highest confidence among the citations, which for an unverified or
+    unlicensed source is the gate's ceiling — so a policy finding resting on text nobody has
+    cleared sits below the orchestrator's floor and cannot become a recommendation
+    (ADR-0014). No mitigation is invented: the honest action is that a human reads the order.
+    """
+    if not events:
+        return []
+
+    cutoff = as_of - dt.timedelta(days=window_days)
+    recent = [e for e in events if e.occurred_at >= cutoff]
+    if not recent:
+        return []
+
+    by_crop = {e.crop_name.lower(): e for e in exposures}
+    out: list[tuple[Finding, RiskEntry]] = []
+
+    grouped: dict[str, list[PolicyEvent]] = {}
+    for event in recent:
+        grouped.setdefault(event.domain, []).append(event)
+
+    for domain, group in sorted(grouped.items()):
+        group = sorted(group, key=lambda e: e.occurred_at, reverse=True)
+        named = {c.lower() for e in group for c in e.crops}
+        touched = [by_crop[c] for c in sorted(named) if c in by_crop]
+        # An order that names no crop is department-wide, so every standing crop is exposed
+        # to it. Saying "0 farmers affected" for a state-wide fertiliser subsidy would be
+        # arithmetically true and materially false.
+        if not touched:
+            touched = exposures
+
+        farmer_ids = sorted({f for e in touched for f in e.farmer_ids})
+        cycle_ids = sorted({c for e in touched for c in e.crop_cycle_ids})
+        area = sum((e.area_sqm for e in touched), Decimal(0))
+        affected = AffectedSet(
+            farmer_ids=farmer_ids,
+            crop_cycle_ids=cycle_ids,
+            area_sqm=area or None,
+        )
+
+        confidence = max(e.confidence for e in group)
+        evidence = [e.evidence for e in group[:MAX_POLICY_CITATIONS]]
+        unconfirmed = [e for e in group if not e.licence_confirmed]
+        assumptions = [
+            "Order listings carry a subject line, not the order text — the scope below is "
+            "read from the subject and has not been verified against the published order.",
+        ]
+        if unconfirmed:
+            assumptions.append(
+                f"{len(unconfirmed)} of {len(group)} citations come from a source whose "
+                f"licence is unconfirmed; their confidence is capped accordingly (ADR-0014)."
+            )
+        latest = group[0]
+        acres = _acres(area) if area else 0.0
+
+        finding = Finding(
+            key=f"policy_change.{domain.lower()}",
+            statement=(
+                f"{len(group)} {domain.replace('_', ' ').lower()} "
+                f"{'orders were' if len(group) != 1 else 'order was'} published in the "
+                f"last {window_days} days, the most recent on "
+                f"{latest.occurred_at.isoformat()}, touching {acres:,.0f} acres across "
+                f"{len(farmer_ids):,} farmers."
+            ),
+            magnitude=Decimal(len(group)),
+            unit="government orders",
+            confidence=confidence,
+            evidence=evidence,
+            assumptions=assumptions,
+            affected=affected,
+        )
+        entry = RiskEntry(
+            key=finding.key,
+            domain=_RISK_DOMAIN_FOR.get(domain, "POLICY"),
+            title=f"Policy activity: {domain.replace('_', ' ').lower()}",
+            likelihood="HIGH",
+            impact="MEDIUM" if len(group) > 1 else "LOW",
+            probability=None,
+            horizon_start=cutoff,
+            horizon_end=as_of,
+            affected=affected,
+            mitigation=(
+                "Read the orders before the next planning meeting. The listing names the "
+                "subject only; eligibility and amounts are in the order itself."
+            ),
+            confidence=confidence,
+            evidence=evidence,
+        )
+        out.append((finding, entry))
+    return out
+
+
 def buyer_concentration_risk(buyers: list[BuyerExposure]) -> tuple[Finding, RiskEntry] | None:
     """Counterparty exposure: one buyer holding most of a crop's offered volume."""
     if not buyers:
@@ -712,6 +870,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
     buyers: list[BuyerExposure] = data.get("buyer_exposures") or []
     working_capital: int | None = data.get("working_capital_paise")
     current_price: dict[str, int] = data.get("current_price_paise_per_kg") or {}
+    policy_events: list[PolicyEvent] = data.get("policy_events") or []
 
     findings: list[Finding] = []
     actions: list[ProposedAction] = []
@@ -733,7 +892,16 @@ def run(inputs: ModuleInput) -> ModuleOutput:
     degraded.append(
         "pest and disease outbreak likelihood is not modelled — no surveillance history"
     )
-    degraded.append("policy and procurement change is not modelled — no scheme feed yet")
+    if not policy_events:
+        degraded.append("policy and procurement change is not modelled — no scheme feed yet")
+    else:
+        # The feed reports that an act occurred and who it touches. Its magnitude is in the
+        # order document, which the listing does not carry — so the gap that remains is
+        # narrower than it was, and is still named.
+        degraded.append(
+            "policy impact is not quantified — order listings carry a subject line, not "
+            "the order text"
+        )
 
     for exposure in exposures:
         season = seasonality.get(exposure.crop_name)
@@ -776,6 +944,10 @@ def run(inputs: ModuleInput) -> ModuleOutput:
         entries.append(counterparty[1])
         actions.append(_split_lot_action(counterparty[1]))
 
+    for finding, entry in policy_change_risk(policy_events, exposures, inputs.as_of.date()):
+        findings.append(finding)
+        entries.append(entry)
+
     return ModuleOutput(
         module=MODULE,
         version=VERSION,
@@ -799,6 +971,7 @@ def register_entries(output: ModuleOutput, inputs: ModuleInput) -> list[RiskEntr
     buyers: list[BuyerExposure] = data.get("buyer_exposures") or []
     working_capital: int | None = data.get("working_capital_paise")
     current_price: dict[str, int] = data.get("current_price_paise_per_kg") or {}
+    policy_events: list[PolicyEvent] = data.get("policy_events") or []
 
     entries: list[RiskEntry] = []
     for exposure in exposures:
@@ -824,6 +997,8 @@ def register_entries(output: ModuleOutput, inputs: ModuleInput) -> list[RiskEntr
     counterparty = buyer_concentration_risk(buyers)
     if counterparty:
         entries.append(counterparty[1])
+    for _, entry in policy_change_risk(policy_events, exposures, inputs.as_of.date()):
+        entries.append(entry)
     return entries
 
 

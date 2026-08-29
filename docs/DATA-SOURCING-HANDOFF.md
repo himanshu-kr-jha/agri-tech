@@ -1,6 +1,13 @@
 # Data Sourcing — session handoff
 
-Date: 2026-08-28 · Branch: `data-scraping` (off `main`) · Status: **gathering done, nothing wired**
+Date: 2026-08-28 · Branch: `data-scraping` (merged to `main`) · Status: **gathering done**
+
+> **Update 2026-08-29 — wired.** All six batches now land as `ExternalRecord` rows and the
+> text-bearing ones are retrievable through the Data Observer (ADR-0018). §2's goal —
+> *retire the SYNTHETIC labels* — is **not** met and cannot be until the licences in §8.1 are
+> confirmed: retrieved text is capped below the orchestrator's floor, so it informs without
+> deciding. What did change is that the data is reachable, cited and visible instead of
+> sitting inert on disk. **`docs/DATA-OBSERVER-HANDOFF.md`** is that work's own handoff.
 
 Written so the next session — or the next person — resumes without re-deriving anything.
 Companions: `docs/DATA-SOURCING.md` (the agreed design), `SOURCES_FOUND.md` (the source

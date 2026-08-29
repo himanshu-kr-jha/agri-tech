@@ -28,7 +28,7 @@ from agrivardhak.domain.models.land import Farm, Plot
 from agrivardhak.domain.models.market import RiskRegisterEntry
 from agrivardhak.domain.models.organization import Farmer, Membership
 from agrivardhak.domain.models.provenance import DataDiscrepancy, Observation
-from agrivardhak.intelligence import quality
+from agrivardhak.intelligence import quality, risk
 from agrivardhak.intelligence.contracts import AffectedSet, EvidenceRef
 from agrivardhak.orchestrator import briefing as briefing_service
 from agrivardhak.orchestrator import engine, gather, reconcile
@@ -653,10 +653,14 @@ def _whats_changed(
 ) -> list[Claim]:
     """What moved recently, from data we actually hold.
 
-    Not the causal-chain engine the product vision describes — that needs an ingested news
-    feed this repository does not have, and a fabricated headline driving a fabricated chain
-    would be worse than saying less. What it does report is real: mandi prices from the
-    Agmarknet backfill, conflicts that opened, and risks that were registered.
+    Still not the causal-chain engine the product vision describes (D-13). It now has a real
+    policy feed — the UP शासनादेश stream, ingested and classified — so it can report *that*
+    the government acted and on what. It cannot report what that will cost, because the
+    order listings carry a subject line and not the order text, and inventing the missing
+    magnitude would be exactly the fabricated chain this function has always refused to draw.
+
+    Everything reported here is observed: mandi prices from the Agmarknet backfill, conflicts
+    that opened, risks that were registered, and published government orders.
     """
     claims: list[Claim] = []
     since = as_of - dt.timedelta(days=CHANGE_WINDOW_DAYS)
@@ -750,13 +754,49 @@ def _whats_changed(
             )
         )
 
+    # Published government orders. Grouped rather than listed one by one: 22 separate
+    # "an order was issued" lines is a feed, and the CEO already has a feed.
+    events = gather.policy_events(session, as_of=as_of)
+    if events:
+        by_domain: dict[str, list[Any]] = {}
+        for event in events:
+            by_domain.setdefault(event.domain, []).append(event)
+        for domain, group in sorted(by_domain.items(), key=lambda kv: len(kv[1]), reverse=True)[:2]:
+            latest = max(group, key=lambda e: e.occurred_at)
+            unconfirmed = (
+                " Licence for this source is confirmed."
+                if latest.licence_confirmed
+                else " The licence on this source is unconfirmed, so it is context only."
+            )
+            claims.append(
+                Claim(
+                    statement=(
+                        f"The state agriculture department published {len(group)} "
+                        f"{domain.replace('_', ' ').lower()} "
+                        f"{'orders' if len(group) != 1 else 'order'} in the last "
+                        f"{risk.POLICY_WINDOW_DAYS} days, most recently on "
+                        f"{latest.occurred_at:%d %b %Y}. The listing gives the subject only "
+                        f"— the eligibility and the amounts are in the order itself."
+                        f"{unconfirmed}"
+                    ),
+                    magnitude=Decimal(len(group)),
+                    unit="government orders",
+                    # An order was published on a date. That is a record, not a forecast —
+                    # but it is a record from an external source, so it decays and it is
+                    # capped by the licence gate, which is what `event.confidence` carries.
+                    confidence=latest.confidence,
+                    evidence=[e.evidence for e in group[:3]],
+                )
+            )
+
     if not claims:
         claims.append(
             Claim(
                 statement=(
                     f"Nothing material has changed in the last {CHANGE_WINDOW_DAYS} days: no "
                     f"crop price moved more than {PRICE_MOVE_THRESHOLD:.0%}, no new conflicts "
-                    f"opened, and no risk was registered."
+                    f"opened, no risk was registered, and the state agriculture department "
+                    f"published nothing."
                 ),
                 confidence=RECORD_FACT,
                 evidence=[
