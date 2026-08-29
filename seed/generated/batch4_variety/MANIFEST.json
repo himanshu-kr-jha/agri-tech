@@ -1,0 +1,25 @@
+{
+  "batch": 4,
+  "domain": "variety",
+  "generated_at": "2026-08-27T19:57:26.125085+00:00",
+  "licence_note": "An UNKNOWN licence blocks a confidence-cap lift under ADR-0014. Data is cached but inert until a human confirms the licence.",
+  "resources": [
+    {
+      "key": "variety-field-crops",
+      "title": "Field crop varieties and hybrids released and notified",
+      "publisher": "Indian Council of Agricultural Research / Ministry of Agriculture",
+      "access_route": "api.data.gov.in",
+      "resource_id": "53cd4900-a5ee-45e0-bc2e-56a288a6a2fd",
+      "url": null,
+      "language": "en",
+      "unit": null,
+      "temporal_coverage": "2008..2012",
+      "authority": "authoritative",
+      "licence": "UNKNOWN",
+      "recheck_days": 365,
+      "records": 255,
+      "sha256_file": "04673620b7c83984bfabebf1bf3d0cfd4c729a939987b224d8128ef19b5273a0",
+      "notes": "255 rows with actual variety names by crop and year. The companion NARS dataset (9cac7b14) holds only counts, and the horticultural one (46f587a9) is 13 rows of mostly NA with no guava — neither is registered."
+    }
+  ]
+}

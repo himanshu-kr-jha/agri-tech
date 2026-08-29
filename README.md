@@ -228,6 +228,7 @@ PostgreSQL 16 + PostGIS + pgvector · Claude (Anthropic SDK), for narration only
 | `make setup` fails on the venv | Python 3.13 picked up | `uv venv --python 3.12 --clear` in `apps/api` |
 | Assistant returns 500 | Stale schema | `make upgrade` |
 | Port 5433 already in use | Another Postgres or a stale container | `make db-down`, then `make db-up` |
+| Browser console shows `403 Forbidden` on `_next/static/...` and the HMR websocket fails | Next.js 16 blocks dev-server requests from an origin other than `localhost` — you opened the `Network:` URL `next dev` printed (e.g. `http://192.168.x.x:3000`) instead of the `Local:` one | Open **http://localhost:3000** instead. Only if you genuinely need LAN access (e.g. testing on a phone), add `DEV_ALLOWED_ORIGINS=<your-ip>` to `apps/web/.env.local` and restart `make web` |
 | Everything is broken | | `make db-reset && make demo` — nuclear but reliable |
 
 **No external service needs to be up.** Prices, weather and climatology are stored payloads;

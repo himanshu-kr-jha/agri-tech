@@ -1,0 +1,58 @@
+{
+  "batch": 2,
+  "domain": "cost_of_cultivation",
+  "generated_at": "2026-08-27T19:46:30.489010+00:00",
+  "licence_note": "UNKNOWN licences block a confidence-cap lift under ADR-0014. Data here is cached but inert until a human confirms the licence.",
+  "resources": [
+    {
+      "key": "coc-a2fl",
+      "title": "State-wise and crop-wise cost of production (A2+FL), important crops",
+      "publisher": "Directorate of Economics & Statistics / CACP, Ministry of Agriculture & Farmers Welfare",
+      "access_route": "api.data.gov.in",
+      "resource_id": "a24e6a66-32d3-46a0-a5c3-7bcfd58d6e02",
+      "unit": "INR per quintal",
+      "temporal_coverage": "2013-14..2017-18",
+      "authority": "authoritative",
+      "licence": "UNKNOWN",
+      "recheck_days": 365,
+      "records": 209,
+      "fields": [
+        "crop",
+        "state",
+        "cost_of_production_a2_fl___2013_14",
+        "cost_of_production_a2_fl___2014_15",
+        "cost_of_production_a2_fl___2015_16",
+        "cost_of_production_a2_fl___2016_17",
+        "cost_of_production_a2_fl___2017_18"
+      ],
+      "sha256_file": "0d337c85a0b8f5a994ab291ab6ae9208085311f83366b208703f4527660a1320",
+      "sha256_content": "a33a73217e433eb9d10869cbc409ee62d4f421584314b390c492d9a1cb3bc663",
+      "notes": "Stale. Aggregate only \u2014 no component breakdown. UP covers exactly 15 crops."
+    },
+    {
+      "key": "coc-c2",
+      "title": "State-wise and crop-wise cost of production (C2), important crops",
+      "publisher": "Directorate of Economics & Statistics / CACP, Ministry of Agriculture & Farmers Welfare",
+      "access_route": "api.data.gov.in",
+      "resource_id": "dc3ba615-2892-49c6-bdcd-ecdf0d24c8a5",
+      "unit": "INR per quintal",
+      "temporal_coverage": "2013-14..2017-18",
+      "authority": "authoritative",
+      "licence": "UNKNOWN",
+      "recheck_days": 365,
+      "records": 209,
+      "fields": [
+        "crop",
+        "state",
+        "cost_of_production_c2___2013_14",
+        "cost_of_production_c2___2014_15",
+        "cost_of_production_c2___2015_16",
+        "cost_of_production_c2___2016_17",
+        "cost_of_production_c2___2017_18"
+      ],
+      "sha256_file": "249bfbdf9c785d559602ead74631f8f1454d43f6fbc770f85d4a7e4261fb0e64",
+      "sha256_content": "cfebc0f1e5c8820d8f22ddd48823fedfc818f33ead1030b685d65d5b3e0de484",
+      "notes": "Stale. Aggregate only. C2 includes imputed rent and interest on owned capital."
+    }
+  ]
+}

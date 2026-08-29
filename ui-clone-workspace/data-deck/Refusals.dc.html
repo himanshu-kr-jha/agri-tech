@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif; background: #F9F9F6; color: #1B221F; -webkit-font-smoothing: antialiased; }
+    a { color: #1A3826; } a:hover { color: #C7A03D; }
+    .eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #899A8C; }
+    .serif { font-family: Fraunces, ui-serif, Georgia, serif; font-optical-sizing: auto; letter-spacing: -0.025em; color: #1A3826; }
+    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace; }
+    .body { font-size: 15px; line-height: 1.62; color: #6A7C71; }
+    .rule { height: 1px; background: rgba(221,227,223,0.7); border: 0; }
+  </style>
+</helmet>
+<div style="width: 1440px; height: 810px; box-sizing: border-box; padding: 68px 88px; display: flex; flex-direction: column; background: #F9F9F6;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid rgba(221,227,223,0.7);">
+    <span class="eyebrow">Why an FPO can rely on us</span>
+    <span class="eyebrow mono">08 / 08</span>
+  </div>
+  <div style="padding: 34px 0 28px;">
+    <div class="serif" style="font-size: 46px; max-width: 900px;">What we refuse to do is part of the product</div>
+  </div>
+  <div style="display: flex; gap: 46px; flex-grow: 1;">
+    <div style="flex-basis: 52%; display: flex; flex-direction: column; gap: 20px; padding: 30px; border: 1px solid rgba(221,227,223,0.7); background: #FFFFFF;">
+      <span class="eyebrow">The case in one example</span>
+      <span class="serif" style="font-size: 29px; line-height: 1.24;">We found a government API holding farmer records. We did not take it.</span>
+      <span class="body">A state agriculture portal exposes an interface serving beneficiary registrations, farmer lists and payment records. It was reachable. We recorded it in writing as out of bounds, with the reasoning, so that nobody later finds it and assumes it was simply missed.</span>
+      <hr class="rule">
+      <span class="body" style="font-size: 14px;">A farmer's data belongs to the farmer. That holds whether or not a door happens to be open.</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 0;">
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 19px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+        <span style="font-size: 17px; color: #1A3826; font-weight: 500;">Never bypass a protection</span>
+        <span class="body" style="font-size: 14px;">A blocked page and a 403 are answers, not obstacles. Where a sanctioned interface exists, we use that instead.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 19px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+        <span style="font-size: 17px; color: #1A3826; font-weight: 500;">Never invent an agricultural figure</span>
+        <span class="body" style="font-size: 14px;">A yield or subsidy rule we cannot cite is marked invented and shown as such, or the feature is dropped. There is no third option.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 19px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+        <span style="font-size: 17px; color: #1A3826; font-weight: 500;">Never present guidance as a guarantee</span>
+        <span class="body" style="font-size: 14px;">An announced support price is not a price a farmer can reach unless a centre is open. We show the distinction rather than flattening it.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 19px 0; border-bottom: 1px solid rgba(221,227,223,0.7);">
+        <span style="font-size: 17px; color: #1A3826; font-weight: 500;">Never delete good history</span>
+        <span class="body" style="font-size: 14px;">A source that goes down keeps its last good copy. Nothing valid is discarded because a portal had a bad afternoon.</span>
+      </div>
+    </div>
+  </div>
+  <div style="padding-top: 24px; margin-top: 20px; border-top: 1px solid rgba(221,227,223,0.7); display: flex; justify-content: space-between; align-items: baseline;">
+    <span class="serif" style="font-size: 25px;">An FPO can check every number we show it.</span>
+    <span class="body" style="font-size: 14px;">Source, publisher, retrieval date, and whether a person has verified it.</span>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
