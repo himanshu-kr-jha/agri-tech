@@ -55,10 +55,15 @@ from agrivardhak.domain.models.decisions import (
 )
 from agrivardhak.domain.models.market import RiskRegisterEntry
 from agrivardhak.domain.models.operations import AuditRecord, DomainEvent
-from agrivardhak.intelligence import crop_health, farm, market, quality, risk, scheme
+from agrivardhak.intelligence import crop_health, farm, funding, market, quality, risk, scheme
 from agrivardhak.intelligence.contracts import ModuleInput, ModuleOutput
 from agrivardhak.orchestrator import gather, reconcile
-from agrivardhak.orchestrator.packet import DecisionPacket, PacketScope
+from agrivardhak.orchestrator.packet import (
+    AssignedAction,
+    DecisionPacket,
+    PacketScope,
+    ProposedCalendarEvent,
+)
 
 PROMPT_VERSION = "packet-v1"
 
@@ -78,6 +83,7 @@ MODULES: dict[str, Any] = {
     "farm": (gather.for_farm, farm.run),
     "crop_health": (gather.for_crop_health, crop_health.run),
     "scheme": (gather.for_scheme, scheme.run),
+    "funding": (gather.for_funding, funding.run),
 }
 
 #: Keyword -> modules. A question mentioning none of these gets the full set, because the
@@ -102,10 +108,14 @@ PLAN_HINTS: dict[str, tuple[str, ...]] = {
     "spray": ("crop_health",),
     "scheme": ("scheme",),
     "subsidy": ("scheme",),
-    "loan": ("scheme",),
+    "loan": ("scheme", "funding"),
+    "capital": ("funding",),
+    "cash": ("funding",),
+    "afford": ("funding",),
+    "fund": ("funding", "scheme"),
     "insurance": ("scheme", "risk"),
-    "income": ("farm", "market", "quality", "risk", "scheme"),
-    "season": ("farm", "quality", "market", "risk", "scheme"),
+    "income": ("farm", "market", "quality", "risk", "scheme", "funding"),
+    "season": ("farm", "quality", "market", "risk", "scheme", "funding"),
 }
 
 
@@ -219,6 +229,7 @@ def freeze(
     as_of: dt.datetime,
     question: str,
     model_id: str,
+    focus_subject: str | None = None,
 ) -> EvidenceSnapshot:
     """Persist everything that produced this answer, immutably (INV-2, FR-704).
 
@@ -234,6 +245,9 @@ def freeze(
         "organization_id": str(organization_id),
         "prompt_version": PROMPT_VERSION,
         "model_id": model_id,
+        # Part of what produced the answer, so it belongs in the frozen record. Absent on
+        # snapshots taken before focus existed, which `replay` reads back as None.
+        "focus_subject": focus_subject,
         "module_versions": {name: output.version for name, output in outputs.items()},
         "modules": {name: json.loads(output.model_dump_json()) for name, output in outputs.items()},
         "input_shape": {
@@ -293,12 +307,19 @@ def ask(
     confidence_floor: float = 0.45,
     model_id: str = "deterministic",
     narrate: bool = False,
+    plan: list[str] | None = None,
+    focus_subject: str | None = None,
 ) -> PacketResult:
     """The whole pipeline. Returns the packet and the ids it persisted.
 
     ``as_of`` is a parameter rather than a clock read so a packet can be regenerated for a
     past moment and compared against what was actually produced then — the replay property
     the whole architecture is arranged around.
+
+    ``plan`` and ``focus_subject`` let a caller that has already classified the question say
+    so. Both were previously recomputed here from keywords, which meant the intent router
+    could pick modules and name a crop and have both silently discarded — the packet came out
+    the same whichever crop was asked about.
     """
     started = dt.datetime.now(dt.UTC)
     as_of = as_of or started
@@ -306,7 +327,7 @@ def ask(
     if organization_id is None:
         raise ValueError("a decision packet needs an organization scope")
 
-    plan = plan_for(question)
+    plan = plan or plan_for(question)
     outputs, inputs = run_modules(
         session,
         organization_id=organization_id,
@@ -316,7 +337,10 @@ def ask(
     )
 
     result = reconcile.reconcile(
-        list(outputs.values()), as_of=as_of, confidence_floor=confidence_floor
+        list(outputs.values()),
+        as_of=as_of,
+        confidence_floor=confidence_floor,
+        focus_subject=focus_subject,
     )
     snapshot = freeze(
         session,
@@ -326,6 +350,7 @@ def ask(
         as_of=as_of,
         question=question,
         model_id=model_id,
+        focus_subject=focus_subject,
     )
 
     assert result.confidence is not None
@@ -345,7 +370,7 @@ def ask(
         confidence=result.confidence,
         evidence=result.evidence,
         actions=result.actions,
-        schedule=[],
+        schedule=_proposed_schedule(result.actions),
         drilldown=result.drilldown,
         overrides=result.overrides,
         generated_at=as_of,
@@ -434,6 +459,35 @@ def ask(
         plan=plan,
         elapsed_ms=elapsed,
     )
+
+
+def _proposed_schedule(actions: list[AssignedAction]) -> list[ProposedCalendarEvent]:
+    """Turn assigned actions into *proposed* calendar entries (FR-904).
+
+    A proposal, emphatically not a booking. ``lifecycle.schedule_from`` is what writes a real
+    ``CalendarEvent``, and it refuses any recommendation that is not already APPROVED —
+    somebody's Tuesday is a consequence, and consequences need a human (INV-1). What belongs
+    in the packet is the *shape* of the week the CEO would be approving.
+
+    Only actions with a concrete target become entries. ``ProposedCalendarEvent`` requires a
+    subject, and an event about nothing in particular is noise in a calendar that is supposed
+    to earn its place.
+    """
+    events: list[ProposedCalendarEvent] = []
+    for action in actions:
+        if action.related_target_id is None or action.due_on is None:
+            continue
+        events.append(
+            ProposedCalendarEvent(
+                title=action.task,
+                subject_type=action.related_target_type or "recommendation",
+                subject_id=action.related_target_id,
+                # 09:30 IST — the start of a working day, not midnight UTC, which would
+                # render as the previous evening for every person who reads it.
+                starts_at=dt.datetime.combine(action.due_on, dt.time(4, 0), tzinfo=dt.UTC),
+            )
+        )
+    return events
 
 
 def _persist_recommendations(
@@ -642,7 +696,7 @@ def replay(session: Session, snapshot_id: uuid.UUID) -> dict[str, Any]:
     payload = snapshot.payload
     outputs = [ModuleOutput.model_validate(m) for m in payload["modules"].values()]
     as_of = dt.datetime.fromisoformat(payload["as_of"])
-    result = reconcile.reconcile(outputs, as_of=as_of)
+    result = reconcile.reconcile(outputs, as_of=as_of, focus_subject=payload.get("focus_subject"))
     return {
         "situation": [json.loads(c.model_dump_json()) for c in result.situation],
         "impact": [json.loads(c.model_dump_json()) for c in result.impact],

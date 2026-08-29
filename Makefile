@@ -143,6 +143,9 @@ test-api: ## pytest
 test-web: ## vitest — component tests, including partial-packet rendering
 	cd apps/web && npx vitest run
 
+routing-eval: ## Measure intent-routing accuracy against a live model:  make routing-eval a="--verbose"
+	$(PY) scripts/routing_eval.py $(a)
+
 progress: ## Regenerate PROGRESS.md from what the repo can prove
 	$(API)/.venv/bin/python scripts/progress.py
 

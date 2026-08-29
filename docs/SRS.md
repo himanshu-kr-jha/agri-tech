@@ -367,6 +367,14 @@ Common contract — see `docs/ARCHITECTURE.md#module-contract`:
 | FR-811 | The system SHALL produce a proactive **morning briefing** for the FPO CEO: the N items requiring attention, each with quantified impact, plus a recommended priority order. | MUST |
 | FR-812 | Assistants SHALL respond in the user's selected language (Hindi or English) without loss of numeric precision or units. | MUST |
 | FR-813 | When the orchestrator's confidence is below a configured floor, it SHALL say so and recommend what data would raise it, rather than producing a confident-sounding answer. | MUST |
+| FR-814 | An assistant question SHALL be classified into one of four response shapes — `DECISION`, `LOOKUP`, `EXPLAIN`, `REFUSE` — and answered in that shape. Only `DECISION` freezes an `EvidenceSnapshot` and writes `Recommendation` rows; a question that asks what is true SHALL NOT produce either. | MUST |
+| FR-815 | `LOOKUP` and `EXPLAIN` answers SHALL be composed of the same evidenced `Claim` type as a Decision Packet, so FR-804 applies unchanged to every response shape. | MUST |
+| FR-816 | Question classification SHALL draw only from a closed vocabulary of named lookups and registered modules, filtered by the asker's audience. A classification outside that vocabulary SHALL be rejected and the deterministic keyword planner used instead — the information boundary SHALL NOT depend on model behaviour (INV-5). | MUST |
+| FR-817 | Before rendering, an answer SHALL be checked deterministically: every magnitude and evidence reference SHALL resolve to the result that produced it, or the reviewed output SHALL be discarded in favour of the unreviewed one. | MUST |
+| FR-818 | A relevance pass MAY select and order the sections of an answer. It SHALL NOT rewrite or delete content, and SHALL NOT drop the situation, recommendation, evidence, confidence or override sections (FR-802, INV-8). | MUST |
+| FR-819 | A follow-up question about a previous answer SHALL be answered from that answer's frozen `EvidenceSnapshot`, never by re-running the orchestrator (INV-2). | MUST |
+| FR-820 | Every assistant turn SHALL be recorded — question, classification, shape and outcome — whatever shape it took, not only those producing a Decision Packet (FR-709). | MUST |
+| FR-821 | With no language model reachable, the assistant SHALL remain functional: keyword routing, unfiltered rendering, and every response shape except model-classified ones still available (NFR-303). | MUST |
 
 ### 4.9 Calendar & tasks (FR-9xx)
 
