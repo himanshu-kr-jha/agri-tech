@@ -1,6 +1,6 @@
 # Deployment: Supabase + Render + Vercel
 
-Date: 2026-08-29 · Status: §4 (C1–C7) implemented and verified against Docker; §5 runbook not yet run
+Date: 2026-08-29 · Status: §4 (C1–C7) implemented and verified against Docker; §7 repo obligations discharged (ADR-0018, ARCHITECTURE §2 "Hosted (pilot)", `M-DEPLOY` in `scripts/progress.py`, `.env.example`); **§5 runbook not yet run — no cloud resource exists yet**
 
 **Verification performed** (2026-08-29), against a database created with `TEMPLATE template0`
 holding nothing but `plpgsql` — the closest local simulation of a new Supabase project:
