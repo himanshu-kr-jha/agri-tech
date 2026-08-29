@@ -1,0 +1,2365 @@
+{
+  "index_name": "53cd4900-a5ee-45e0-bc2e-56a288a6a2fd",
+  "title": "List of field crops varieties hybrids released and notified during 2008-2011",
+  "desc": "List of field crops varieties hybrids released and notified during 2008-2011",
+  "created": 1502857278,
+  "updated": 1527233794,
+  "visualizable": "0",
+  "source": "data.gov.in",
+  "org_type": "Central",
+  "org": [
+    "Ministry of Agriculture and Farmers Welfare",
+    "Department of Agricultural Research and Education (DARE)",
+    "Indian Council of Agricultural Research (ICAR)"
+  ],
+  "sector": [
+    "Agriculture"
+  ],
+  "catalog_uuid": "6977a082-295b-429d-b801-face2e1a1a2f",
+  "status": "ok",
+  "field": [
+    {
+      "id": "type_of_crops",
+      "name": "Type of crops",
+      "type": "keyword"
+    },
+    {
+      "id": "name_of_crop",
+      "name": "Name of  Crop",
+      "type": "keyword"
+    },
+    {
+      "id": "__2008",
+      "name": "2008",
+      "type": "keyword"
+    },
+    {
+      "id": "__2009",
+      "name": "2009",
+      "type": "keyword"
+    },
+    {
+      "id": "__2010",
+      "name": "2010",
+      "type": "keyword"
+    },
+    {
+      "id": "__2011",
+      "name": "2011",
+      "type": "keyword"
+    },
+    {
+      "id": "__2012",
+      "name": "2012",
+      "type": "keyword"
+    }
+  ],
+  "created_date": "2017-08-16T04:21:18Z",
+  "updated_date": "2018-05-25T13:06:34Z",
+  "active": "1",
+  "external_ws_url": "",
+  "external_ws": "0",
+  "message": "Resource lists",
+  "version": "2.2.0",
+  "total": 255,
+  "count": 255,
+  "limit": "5000",
+  "offset": "0",
+  "records": [
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "Pusa Wheat-111 (HD-2932)",
+      "__2009": "MACS 2971",
+      "__2010": "MPO(JW)  1215 (MPO 1215)",
+      "__2011": "DPW 621-50 (PBW 621 & DBW 50)",
+      "__2012": "PBW 644"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "VL Gehun 892",
+      "__2009": "Ratan(CG 5016)*",
+      "__2010": "MACS 6222",
+      "__2011": "WH 1080",
+      "__2012": "UAS-428 (Durum)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "W H-1021",
+      "__2009": "WH 1025*",
+      "__2010": "PDW 314",
+      "__2011": "MP 3288 (JW 3288)",
+      "__2012": "TL  2969  (Triticale)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "POSHAN (HI8663)",
+      "__2009": "UP 2628*",
+      "__2010": "DBW39",
+      "__2011": "KRL-213",
+      "__2012": "Pusa Pachheti (HD 3059)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "Purna (HI-1544)",
+      "__2009": "MP 3211 (JW 3211)*",
+      "__2010": "VL Gehun 907 (VL 907)",
+      "__2011": "HD 2967",
+      "__2012": "CO W2*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "HPW 251",
+      "__2009": "MP (JW) 1202 (MP 1202)*",
+      "__2010": "Pusa Suketi  HS 507",
+      "__2011": "KRL-210",
+      "__2012": "PDKV Washim (WSM 1472)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "RAJ-4120",
+      "__2009": "NA",
+      "__2010": "Pusa Prachi (HI 1563)",
+      "__2011": "HD 3043",
+      "__2012": "GDW-1255*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "Pusa Baker (HS-490)",
+      "__2009": "NA",
+      "__2010": "WHD 943",
+      "__2011": "AKAW-4627",
+      "__2012": "GW -11*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "CBW-38",
+      "__2009": "NA",
+      "__2010": "Netravati  (NIAW 1415)",
+      "__2011": "MP(JW)1201 (MP 1201)*",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "MP-1203",
+      "__2009": "NA",
+      "__2010": "Raj 4079*",
+      "__2011": "Raj Vijay Wheat 4106 (MP 4106)*",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "PBN -590",
+      "__2009": "NA",
+      "__2010": "CCNNRV01 (Raj Molya Rodhak-1)*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "PBW-596",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "HD 2894",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "(Pusa Wheat -109)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "HD 4713 (Pusa Wheat 11)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "M P(J W)-3173*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Wheat",
+      "__2008": "Ratan (CG 5016)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Barley",
+      "__2008": "RD-2715",
+      "__2009": "PRB-502*",
+      "__2010": "BH-902",
+      "__2011": "UPB 1008",
+      "__2012": "BH 885*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Barley",
+      "__2008": "Narendra Barley-5 (NDB -943)*",
+      "__2009": "Jawahar Barley (JB 110)*",
+      "__2010": "DWRB 73",
+      "__2011": "DWRUB64",
+      "__2012": "BH 885*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Barley",
+      "__2008": "Narendra Barley-5 (NDB -943)*",
+      "__2009": "Jawahar Barley (JB 110)*",
+      "__2010": "Pusa Losar  (BH- 380)",
+      "__2011": "DWRUB64",
+      "__2012": "BH 885*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Barley",
+      "__2008": "Narendra Barley-5 (NDB -943)*",
+      "__2009": "Jawahar Barley (JB 110)*",
+      "__2010": "HBL 391(Gokul)*",
+      "__2011": "DWRUB64",
+      "__2012": "BH 885*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Akshayadhan (IET 19367)",
+      "__2009": "Vallabh Basmati-22 (IET 19492)",
+      "__2010": "Chinsurah Rice (IET 19140) (CNI 383-5-11)",
+      "__2011": "SJR-5 (IET-19972)",
+      "__2012": "Punjab Basmati-2"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "CR Dhan 40 (IET 19253)",
+      "__2009": "CO(R) 50 (IET 19321) (CB 01001)",
+      "__2010": "IGKVR-1 (IET 19569)",
+      "__2011": "Indam 200-017 (IET 20419)",
+      "__2012": "Mugad Siri-1253"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Sampada (IET 19424)",
+      "__2009": "DRH-775 (IET-19741)",
+      "__2010": "IGKVR-2 (IET 19795)",
+      "__2011": "NDR 2065 (IET 17476)*",
+      "__2012": "CR Dhan 500,  (IET 20220)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "MTU 1075 (IET 18482)",
+      "__2009": "91H97228(HRI 157) (IET 19511)",
+      "__2010": "CR Dhan 401 (REETA) (IET 19969)",
+      "__2011": "Chandrama(CR-386-2-10)  (IET 9354, 10419)*",
+      "__2012": "JGL 3844 (Jagtial Samba)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Vardhan (IET 18940)",
+      "__2009": "PAC 835 (PAC 80035) (IET 18178",
+      "__2010": "CR Dhan 601 (IET 18558)",
+      "__2011": "IGRKVR-1244 (R1244-1246-1-605-1) (IET 19796)*",
+      "__2012": "JGL 3828 (Manair Sona)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Gontra Bidhan -1 (IET 17430)",
+      "__2009": "PAC 837 (PAC 85037) (IET 19746)",
+      "__2010": "CR Dhan 501 (IET 19189)",
+      "__2011": "Indira Barani Dhan-1 (RF-17-38-70)(IET 21205)*",
+      "__2012": "NDGR201  (IET 20048)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Pusa Basmati 6 (IET18005)",
+      "__2009": "Jagjeevan (IET 19487) (RP 4631-46-6-5-1-1-1)",
+      "__2010": "RC Maniphou 11 (IET 20193)",
+      "__2011": "NA",
+      "__2012": "Narendra Sugandha Dhan (NDR 6093) (IET 19768)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "MTU-1075 (IET-18482)",
+      "__2009": "DRRH-3 (DRRH-44) (IET 19543)",
+      "__2010": "VTL-8*",
+      "__2011": "NA",
+      "__2012": "Narendra Usar Dhan 2009 (NDRK 50002) (IET 19667)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "AMAL-MANA (IET-14199/18250)",
+      "__2009": "DRR-1 (RPRH 25-104-1-2) (IET 20010)",
+      "__2010": "MO 21(Pratheeksha)*",
+      "__2011": "NA",
+      "__2012": "CO 4   (IET 21449)  (TNRH 174)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "GK 5003 (IET 18160)",
+      "__2009": "Narendra Usar Dhan-2008 (NDRK 5088) (IET 18699)",
+      "__2010": "ANNA(R) 4*",
+      "__2011": "NA",
+      "__2012": "NK 5251 (IET 19738) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Sahyadri-4 (IET-18610)",
+      "__2009": "SWARANA-SUB1 (CR 2539-1) IET-20266*",
+      "__2010": "CO(R) 49*",
+      "__2011": "NA",
+      "__2012": "US 382 (IET 20727) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Karma Mahsuri (IET-19991)*",
+      "__2009": "Narendra Usar Dhan 2008 (IET-18699)*",
+      "__2010": "GAR  13(IET-20930)*",
+      "__2011": "NA",
+      "__2012": "Arize Tej (HRI 169) (IET21411) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "PKV   HMT*",
+      "__2009": "NDR 2064 (IET 17475)*",
+      "__2010": "NAUR-1*",
+      "__2011": "NA",
+      "__2012": "PNPH 24 (IET 21406)  (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Jaldi Dhan-6(IET- 14359)*",
+      "__2009": "Narendra Dhan 3112-1 Prakhar (IET 19335)*",
+      "__2010": "Ratnagiri-4(RTN 49-1-1-2) (IET 20980)*",
+      "__2011": "NA",
+      "__2012": "NPH 924-1 (IET 21255) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Nua Kalajeera (IET-18393)*",
+      "__2009": "Narendra Lalmati (IET 21051)*",
+      "__2010": "Karjat  184",
+      "__2011": "NA",
+      "__2012": "RH-1531 (Frontline Gold) (IET 21404) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Phule Samrudhi *",
+      "__2009": "Rani Dhan (IET-19148)*",
+      "__2010": "Ratnagiri-24(RTN-24) (IET-19812)*",
+      "__2011": "NA",
+      "__2012": "JKRH 3333  (IET 20759) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "AAUDR-1 (IET 19258)*",
+      "__2009": "Taramati (RNR-23064)*",
+      "__2010": "VAMSADHARA (RGL-11414)*",
+      "__2011": "NA",
+      "__2012": "TRY 3*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "CR Dhan-10 (IET 18312)*",
+      "__2009": "PUBM-8*",
+      "__2010": "Akshaya*",
+      "__2011": "NA",
+      "__2012": "ADT 49*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "CR Boro Dhan-2 (IET 17612)*",
+      "__2009": "SHARADA (MAS 946-1)*",
+      "__2010": "JGL 11470 (Jagtial Mahsuri)*",
+      "__2011": "NA",
+      "__2012": "ADT 50*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "CR Dhan -70(IET-11904)*",
+      "__2009": "CSR 22*",
+      "__2010": "JGL 3855 (Karimnagar Samba)*",
+      "__2011": "NA",
+      "__2012": "CO 4 (Hybrid)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "CR Sugandh Dhan-3 (IET 18395)*",
+      "__2009": "KHP-10*",
+      "__2010": "Bhavapuri Sannalu*",
+      "__2011": "NA",
+      "__2012": "Gujarat Anand Rice-2 (IET-21614)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Manaswini (IET-19005)*",
+      "__2009": "ONA SIRI (MAS 26)*",
+      "__2010": "SUGANDHA SAMBA (RNR-2465)*",
+      "__2011": "NA",
+      "__2012": "GNR2*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Malaviya Sugandh -105 (HUR-105)*",
+      "__2009": "MGD 101*",
+      "__2010": "Luna Sampad (IET 19470)*",
+      "__2011": "NA",
+      "__2012": "Luna Barial (IET 19472)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Malaviya Sugandh -4-3 (HUR-4-3)*",
+      "__2009": "Srisatya (RGL1880)*",
+      "__2010": "REETA (IET 19969)*",
+      "__2011": "NA",
+      "__2012": "Improved Lalat (CRMAS 2621-7-1)  (IET 21066)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "JRH-8*",
+      "__2009": "Amara (MTU 1064)*",
+      "__2010": "MANDAKINI (OR 2077-4)(IET 17847)",
+      "__2011": "NA",
+      "__2012": "Luna Sankhi (IET 21237)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "RC Maniphou-7*",
+      "__2009": "Nellore Mahsuri (NLR 34449)*",
+      "__2010": "Nua Chinikamini (IET 18394)(CR 2580)*",
+      "__2011": "NA",
+      "__2012": "Improved Tapaswini (CRMAS 2622-7-6) (IET 21070)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "RC Maniphou-6*",
+      "__2009": "Ramappa (WLG-23985) (IET-17856)*",
+      "__2010": "Phalguni (IET 18720) (CRAC 2224-1041)*",
+      "__2011": "NA",
+      "__2012": "Poorna Bhog (IET 18008)  (CRM-2203-4)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Maniphou-10*",
+      "__2009": "Phule Samruddhi (VDN-99-29)*",
+      "__2010": "Luna Suvarna (IET 18697)*",
+      "__2011": "NA",
+      "__2012": "Sumit (CR Dhan 404)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "",
+      "__2009": "",
+      "__2010": "",
+      "__2011": "",
+      "__2012": "(IET 19913)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "KKL ( R) -1*",
+      "__2009": "HKR 127 (HKR 95-222)*",
+      "__2010": "MRUNALINI (OR 1898-18) (IET 18649)*",
+      "__2011": "NA",
+      "__2012": "Jala Mani (CR Dhan 503  (IET 20214 (CR 2282-1-2-5-1)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "PKV Khamang ( Sye-116-53-22-8)*",
+      "__2009": "PTB-58 (IET-17608) (Cul 20D-1)*",
+      "__2010": "TEJASWINI (OR 1912-22) (IET 20005)*",
+      "__2011": "NA",
+      "__2012": "Jayanti Dhan (CR Dhan 502) (IET 20706) (CR 2080-169-3-2-5-2)**"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Karjat-7 *",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Satyabhama (CR Dhan 100)  (IET 20148)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Co (R) 48*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Pyari (CR Dhan 200)  (CR 2624-IR 55423-01) (IET 21214*)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "CAUR-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "HUE (CR Dhan 301) (IET 19351) (CRK 26-1-2-1)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Narendra Mayank (NDR-9830144) (IET-18055) (IR-68828-24-NDR-1-1-1-1)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Narendra Jal Pushp (NDR- 9830135) (IET-17972)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Paddy",
+      "__2008": "Narendra Dhan (NDR- 98301132)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "HM-10 (HKH-1200)",
+      "__2009": "HM-11(HKH-1237)",
+      "__2010": "HSC1",
+      "__2011": "DKC 9081 (MON 29)",
+      "__2012": "SMH-3904"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "Chandramani (R2005-2)",
+      "__2009": "DKC 7074R (MCH-35)",
+      "__2010": "HQPM-4",
+      "__2011": "IG 8011 (MCH 37)",
+      "__2012": "KMH-25K60 (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "PMH-3 (JH-10704)",
+      "__2009": "Vivek Sankul Makka 35 (VL 113)",
+      "__2010": "MCH 36 (Hybrid) (DKC 9099)",
+      "__2011": "IG 8237 (MCH 38)",
+      "__2012": "KMH 3712 (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "HQPM-7",
+      "__2009": "Vivek Sankul Makka 37 (VL 114)",
+      "__2010": "DHM 119 (BH 4062)",
+      "__2011": "Vivek Maize Hybrid 43 (FH 3358)",
+      "__2012": "KMH-218 Plus (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "Pant Sankul Makka-3 (D131)",
+      "__2009": "PINNACLE (M ON 25)",
+      "__2010": "PMH 4 (JH 31153)",
+      "__2011": "Vivek Maize Hybrid 39 (FH 3356)",
+      "__2012": "KMH-3426 (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "Bajaura Makka (L 201 Composite)",
+      "__2009": "PAC 740",
+      "__2010": "PMH 5 (JH 3110)",
+      "__2011": "P3501 (X7B401)",
+      "__2012": "NMH-731 (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "Vivek Maize Hybird 33 (FH 3352)",
+      "__2009": "JKMH-502",
+      "__2010": "KMH-22168*",
+      "__2011": "NA",
+      "__2012": "NMH-803 (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "Vivek QPM 9 (FQH)-4567",
+      "__2009": "EH-434042 (DH1)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "HM-12 (HKH 313) Hybrid"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "Pratap Makka Chari-6  (EC-3135)",
+      "__2009": "BH 40625 (DHM-117)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Vivek Maize hybrid   (FH 3483)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "Pratap Kanchan-2 WC-236(Y)",
+      "__2009": "BH 1620 (DHM-113)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Hishell (MCH-42) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Maize",
+      "__2008": "NA",
+      "__2009": "BH 1576 (DHM-111)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "CO 6  (Hyrid)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "SPV-1595 (CSV-18)",
+      "__2009": "CSH 24 MF (I.C. No. 560854) (UTMCH-1302)",
+      "__2010": "Phule Anuradha (RSV 458)*",
+      "__2011": "NA",
+      "__2012": "CSV 27  (SPV 1870)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "CSV-20 (SPV-1616)",
+      "__2009": "DSV 6*",
+      "__2010": "Pratap Chari 1080*",
+      "__2011": "NA",
+      "__2012": "CSH28 (NSH54)  (SPH 1647) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "CSV-17(SPV-1489",
+      "__2009": "Kinnerea (MJ-278)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "CSV26 (SPV 1829)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "AKSSV-22*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "CSV 29 R  (SPV 2033)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "SPH-1629 (MLSH 296 Gold/DJ 2002) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "CSH-27  (SPH-1644)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "CO 30*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Phule Panchami (RPOSV 3)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Phule Revati (RSV 1006)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Co5*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Ragi",
+      "__2008": "NA",
+      "__2009": "ML-365*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Ragi",
+      "__2008": "NA",
+      "__2009": "Paiyur(Ra)2*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Pearl millet/ Bajra",
+      "__2008": "PHB-2168",
+      "__2009": "JKBH-676 (MH-1299)",
+      "__2010": "Nandi-65 (MH-1549)",
+      "__2011": "PAC 909 (MH-1435)",
+      "__2012": "MP-7872  (MH-1610)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Pearl millet/ Bajra",
+      "__2008": "Narendra Chara Bajra-2(NDFB-2)",
+      "__2009": "RHB-154 (MH-1340)",
+      "__2010": "Nandi-61 (MH-1548)",
+      "__2011": "86M66(MH1617)",
+      "__2012": "MP-7792  (MH-1609)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Pearl millet/ Bajra",
+      "__2008": "B-2095(MH-1257)",
+      "__2009": "HHB  223 (MH 1468)",
+      "__2010": "86M64 (MSH 203) (Hybrid)",
+      "__2011": "Mandor Bajra Composite 2 (MBC2)",
+      "__2012": "86M86  (MH 1684) (Hybrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Pearl millet/ Bajra",
+      "__2008": "GK 1051 (MH1385)",
+      "__2009": "HHB  216 (MH 1421)",
+      "__2010": "MH 1540 (86M64) (Hybrid)",
+      "__2011": "Shine (VBBH 3040), (MH 1578) (Hybrid)",
+      "__2012": "86M66  (MSH 226) (Hyrid)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Pearl millet/ Bajra",
+      "__2008": "PUSA  COMPOSITE 443 (PPMP579)",
+      "__2009": "Nandi-64  (MSH 199) (NMH 69)",
+      "__2010": "MH 1541 (86M53)  (Hybrid)",
+      "__2011": "NA",
+      "__2012": "Kaveri Super Boss (Hybrid)  (MH 1553)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Pearl millet/ Bajra",
+      "__2008": "NA",
+      "__2009": "AVIKA BAJRA CHARI (AVKS-19)",
+      "__2010": "RHB 177 (MH 1486)",
+      "__2011": "NA",
+      "__2012": "CO 9 (Hybrid)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Pearl millet/ Bajra",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "HHB 226  (MH 1479)",
+      "__2011": "NA",
+      "__2012": "PKV-Raj (BBH 3)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Pearl millet/ Bajra",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "RHRBH-9808*",
+      "__2011": "NA",
+      "__2012": "ABPC4-3 (MP 484)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Finger millet",
+      "__2008": "Rathna (GPU-48)*",
+      "__2009": "Sri Chaitanya (VR 847)*",
+      "__2010": "GPU 67",
+      "__2011": "DHRS 1",
+      "__2012": "VL Mandua 347  (VL 347)"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Finger millet",
+      "__2008": "PRM-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "PRM-2",
+      "__2012": "Dapoli Safed -1"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Finger millet",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "KMr-301 (Gowri)",
+      "__2012": "Indira Ragi-1 (BR-7)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Finger millet",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Dapoli safed  1*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Little millet",
+      "__2008": "Jawahar Kuthi- 36 *",
+      "__2009": "SAURA (OLM 208)",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Kodo millet",
+      "__2008": "Jawahar Kodo-65 (RK-65-18)",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Indira Kodo-1 (BK-1)*"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Kodo millet",
+      "__2008": "Jawahar Kodo -106*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Barnyard millet",
+      "__2008": "VL Madira 207",
+      "__2009": "NA",
+      "__2010": "CO(KV)2*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Barnyard millet",
+      "__2008": "PRJ-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Foxtail millet",
+      "__2008": "HMT-100-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Foxtail millet",
+      "__2008": "Divya (MR-6)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Foxtail millet",
+      "__2008": "ML-365*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Foxtail millet",
+      "__2008": "Paiyur (Ra)  2*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Proso millet",
+      "__2008": "TNAU -151",
+      "__2009": "TNAU - 164",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Proso millet",
+      "__2008": "TNAU-145",
+      "__2009": "PRCI*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "CEREAL CROPS",
+      "name_of_crop": "Proso millet",
+      "__2008": "CO (PV) 5*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Green gram (Moong)",
+      "__2008": "WBM-29*",
+      "__2009": "IPM 02-3",
+      "__2010": "PKV AKM-4 (AKM-9904)",
+      "__2011": "IPM 02-14",
+      "__2012": "KM 2195 (Swati)"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Green gram (Moong)",
+      "__2008": "WBM-4-34-1-1*",
+      "__2009": "Pusa 0672",
+      "__2010": "VBN(Gg) 3*",
+      "__2011": "NA",
+      "__2012": "MH-421*"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Green gram (Moong)",
+      "__2008": "NA",
+      "__2009": "KKM-3*",
+      "__2010": "PKV GREEN GOLD*",
+      "__2011": "NA",
+      "__2012": "BM 2003-2*"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Green gram (Moong)",
+      "__2008": "NA",
+      "__2009": "Madhira Pesara 347*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Green gram (Moong)",
+      "__2008": "NA",
+      "__2009": "MH-125*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Green gram (Moong)",
+      "__2008": "NA",
+      "__2009": "Pant Mung-5*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Green gram (Moong)",
+      "__2008": "NA",
+      "__2009": "Piary Mung",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Black gram (Urdbean)",
+      "__2008": "Rashmi (LB-625)*",
+      "__2009": "IPU 02-43",
+      "__2010": "Mash 479 (KUG 479)",
+      "__2011": "Co6  COBG 653",
+      "__2012": "Vishwas (NUL-7)"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Black gram (Urdbean)",
+      "__2008": "Sulata (WBU 109)",
+      "__2009": "Madhira Minumu  207*",
+      "__2010": "Mash 391 (LU 391)",
+      "__2011": "VBN (Bg) 7 (VBG04-008)",
+      "__2012": "TU 40"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Black gram (Urdbean)",
+      "__2008": "Prasad *",
+      "__2009": "Lam Minumu 752*",
+      "__2010": "Mash 114*",
+      "__2011": "NA",
+      "__2012": "DU-1"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Black gram (Urdbean)",
+      "__2008": "VBN ( Bg) 5*",
+      "__2009": "NA",
+      "__2010": "UPU 00-31(Himachal Mash 1)*",
+      "__2011": "NA",
+      "__2012": "UH-1 (UH 04-06)* VBN 6*"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Cowpea",
+      "__2008": "IT-38 9561-1*",
+      "__2009": "Pant Lobia-1*",
+      "__2010": "Hissar Cowpea-46 (HC 98-46)*",
+      "__2011": "NA",
+      "__2012": "MFC-08-14 (Forage)"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Cowpea",
+      "__2008": "NA",
+      "__2009": "KM-5",
+      "__2010": "C 519(Himachal Lobiya 11)*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Cowpea",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Hidrudaya*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Gram/ Bengal gram/ Chickpea",
+      "__2008": "GNG-1581",
+      "__2009": "Shubhra  (IPCK 2002-29)",
+      "__2010": "Ujjawal (IPCK2004-29)",
+      "__2011": "Raj Vijay Kabuli gram 101 (JSC 42)*",
+      "__2012": "HK-4  (HK 05-169)"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Gram/ Bengal gram/ Chickpea",
+      "__2008": "Pusa 2024*",
+      "__2009": "BGD-103*",
+      "__2010": "PKV KABULI-4",
+      "__2011": "Raj Vijay gram 201 (JSC 40)*",
+      "__2012": "L-555 (GLK-26155)"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Gram/ Bengal gram/ Chickpea",
+      "__2008": "Jawahar Gram- 6 (JG-6) *",
+      "__2009": "Pant Kabuli Chana-1*",
+      "__2010": "MNK-1",
+      "__2011": "NA",
+      "__2012": "Raj Vijay Gram 203 (RVG 203)"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Gram/ Bengal gram/ Chickpea",
+      "__2008": "JG-14*",
+      "__2009": "NA",
+      "__2010": "Gujarat Junagadh Gram-3(GJG 0207)*",
+      "__2011": "NA",
+      "__2012": "PKV Harita (AKG 9303-12)*"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Gram/ Bengal gram/ Chickpea",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Kripa*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Gram/ Bengal gram/ Chickpea",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "GPF 2*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Gram/ Bengal gram/ Chickpea",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "RSG-974 (ABHILASHA)*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Pigeonpea (Arhar)",
+      "__2008": "Pusa 2002*",
+      "__2009": "TJT 501",
+      "__2010": "Rajeevlochan*",
+      "__2011": "TS-3R*",
+      "__2012": "BDN 711 (BDN 2004-3)*"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Pigeonpea (Arhar)",
+      "__2008": "BRG-2*",
+      "__2009": "Pant Arhar-291 (PA-291)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Anand Grain Tur-2 (AGT-2)*"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Pigeonpea (Arhar)",
+      "__2008": "NA",
+      "__2009": "Surya (MRG-1004)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Rajmash (French bean)",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Gujarat Rajmash-1 (DPR 88-1-2)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Indian bean",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Gujarat Wal-2*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Hourse gram or Kulthi",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "CRIDALATHA (CRHG-4)",
+      "__2011": "Indira Kulthi-1 (IKGH-05-01)*",
+      "__2012": "Gujarat Dantiwada Horsegram-1 (GHG-5)"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Field pea",
+      "__2008": "Plant Pea -42",
+      "__2009": "HA-4",
+      "__2010": "Aman  (IPF 5-19)",
+      "__2011": "IPF 4-9*",
+      "__2012": "Gomati (TRCP  8)"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Field pea",
+      "__2008": "Sweta (KM-2241)",
+      "__2009": "NA",
+      "__2010": "GOMATI (TRCP-8)",
+      "__2011": "VL Matar 47 (VL 47)*",
+      "__2012": "HFP 529"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Field pea",
+      "__2008": "HFP-9426*",
+      "__2009": "NA",
+      "__2010": "Dantiwada Fieldpea 1 (SKNP 04-09)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Lentil",
+      "__2008": "MOITREE (WBL-77)",
+      "__2009": "Pant Lentil 6 (PL 02)*",
+      "__2010": "Pant Lentil-8 (Pant L-063)",
+      "__2011": "VL Masoor 514 (VL 514)*",
+      "__2012": "IPL-316"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Lentil",
+      "__2008": "Shekhar Massor -2  (KLB -303)*",
+      "__2009": "Pant Lentil 7 (PL 024)*",
+      "__2010": "Pant Lentil-7 (Pant L-024)",
+      "__2011": "LL931*",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Lentil",
+      "__2008": "Shekhar Massor -3 (KL -320)*",
+      "__2009": "VL Masoor 129*",
+      "__2010": "NA",
+      "__2011": "VL Masoor 133 (VL 133)*",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Latharus",
+      "__2008": "Mahateora *",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Cluster bean",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "HG 884",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "PULSE CROPS",
+      "name_of_crop": "Cluster bean",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "HG 2-20",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "TG-51",
+      "__2009": "Vijetha (R-2001-2)",
+      "__2010": "Girnar - 3 (PBS 12160)",
+      "__2011": "Divya  (CSMG-2003-19)",
+      "__2012": "CO 6*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "Ajeya (R-2001-3)",
+      "__2009": "JL-501",
+      "__2010": "Kadiri Harithandhra (K 1319)",
+      "__2011": "ICGV 00350",
+      "__2012": "Gujarat Junagarh Groundnut 31  (GJG-31)  (J-71)*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "ICGV-00348",
+      "__2009": "HNG - 69",
+      "__2010": "GPBD 5",
+      "__2011": "HNG-123",
+      "__2012": "Gujarat Junagarh Groundnut 9  (GJG-9) (J-69)*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "VRI (Gn) 6  (VG 9816)",
+      "__2009": "Kadiri-9*",
+      "__2010": "GJG-HPS-1(JSP-HPS-44)*",
+      "__2011": "Raj Mungfali-1 (RG-510)",
+      "__2012": "Gujarat Junagarh Groundnut-22  (JSSP-36)*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "TG-39 (Trombay Bikaner)*",
+      "__2009": "VRI (Gn) 7*",
+      "__2010": "RARS-T-1 Groundnut*",
+      "__2011": "NA",
+      "__2012": "Gujarat Junagarh Groundnut-17   (JSP-48)*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "Jawahar Groundnut -23  (JGN-23)*",
+      "__2009": "Greeshma*",
+      "__2010": "RARS-T-2 Groundnut*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "AK-303*",
+      "__2009": "Kadiri-7*",
+      "__2010": "Pratap Raj Mungphali*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "TGLPS-3 (TDG-39)*",
+      "__2009": "Kadiri-8*",
+      "__2010": "RG 425*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "NA",
+      "__2009": "VL Moongphali 1*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Groundnut",
+      "__2008": "NA",
+      "__2009": "ICHG00440 (Mallika)",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Linseed",
+      "__2008": "Himani (KL-214)",
+      "__2009": "NA",
+      "__2010": "JLS-67 (Shival)",
+      "__2011": "Mau Azad Alsi-2 (LMS-149-4)",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Linseed",
+      "__2008": "Azad Aisi-1 (LMS9-2K)",
+      "__2009": "NA",
+      "__2010": "Ruchi (LCK 5021)",
+      "__2011": "Jawahar Linseed-41(PKDL-41)*",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Linseed",
+      "__2008": "RLC 92 (IC555926)",
+      "__2009": "NA",
+      "__2010": "JLS-73 (SLS-73)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Linseed",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Bhagsu*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Rapseed mustard group",
+      "__2008": "CS-56 (CS 234-2)",
+      "__2009": "RGN-145",
+      "__2010": "DRMR 601 (NRCDR 601)",
+      "__2011": "Pusa Mustard 28 (NPJ-124)",
+      "__2012": "Pant Rai-19 (PR-2006-1)"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Rapseed mustard group",
+      "__2008": "Pusa Mustard -24 (LET-18)",
+      "__2009": "Pusa Mustard  25 (NPJ  112)",
+      "__2010": "Pusa Mustard 26 (NPJ-113)",
+      "__2011": "NA",
+      "__2012": "CORAL-437  (PAC-437)"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Rapseed mustard group",
+      "__2008": "RGN-145",
+      "__2009": "RB-50",
+      "__2010": "Pusa Mustard 27 (EJ-17)",
+      "__2011": "NA",
+      "__2012": "RGN-236"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Rapseed mustard group",
+      "__2008": "Dhara Mustard Hybrid-1 (DMH-I)",
+      "__2009": "Pant Pili Sarson -1",
+      "__2010": "CORAL 432 (PAC 432) (Hybrid)",
+      "__2011": "NA",
+      "__2012": "RGN-229"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Rapseed mustard group",
+      "__2008": "Pusa Vijay (NPJ-93)*",
+      "__2009": "NA",
+      "__2010": "RH 0119*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Rapseed mustard group",
+      "__2008": "Pusa Mustard 22 (LET-17)*",
+      "__2009": "NA",
+      "__2010": "Chhattisgarh Sarson*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Yellow sarson",
+      "__2008": "NRCYS 05-02",
+      "__2009": "YSH 0401",
+      "__2010": "Pitambari (RYSK-05-02)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Yellow sarson",
+      "__2008": "NRCHB-101",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Yellow sarson",
+      "__2008": "NRCHB-506",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Brown Sarson",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Shalimar Sarson  1*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Gobhi",
+      "__2008": "NUDB-26-11",
+      "__2009": "Him Sarson-1",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "sarson",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Sunflower",
+      "__2008": "PAC-334",
+      "__2009": "KBSH-53*",
+      "__2010": "PSH 569*",
+      "__2011": "NA",
+      "__2012": "CO 2 (Hybrid)*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Sunflower hybrid",
+      "__2008": "NA",
+      "__2009": "PAC 334",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "SSF-708*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Sesame/ Sesamum",
+      "__2008": "Rajasthan Til-346 (RT 346)",
+      "__2009": "TKG-308*",
+      "__2010": "Rajasthan Till 351",
+      "__2011": "NA",
+      "__2012": "DSS-9"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Sesame/ Sesamum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "(RT 351)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Sesame/ Sesamum",
+      "__2008": "Savitri (SWB 32-10-1)*",
+      "__2009": "Jawahar Til-14 (PKDS-8)*",
+      "__2010": "TMV(Sv)7*",
+      "__2011": "NA",
+      "__2012": "JLT-408"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Sesame/ Sesamum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Sesame/ Sesamum",
+      "__2008": "AKT-101*",
+      "__2009": "Jawahar Til-12 (PKDS-12)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "JLT-408 (JLS-9848-2)*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Sesame/ Sesamum",
+      "__2008": "Gujarat Til -3 (AT-93)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Gujarat Til-4 (GTil-4) (AT-159)*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Safflower",
+      "__2008": "RSFH-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "RSFH-130 (Bhadra)"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Safflower",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "RSFV-901 (Kanthi)"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "SL-688",
+      "__2009": "VL Soya  65*",
+      "__2010": "MAUS 158*",
+      "__2011": "SL74",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "VL Soya 63",
+      "__2009": "NA",
+      "__2010": "RKS-24*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "VL Soya59",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "Jawahar Soybean 97-52",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "(JS 97-52)",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "Pant Soybean-1225",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "(PS-1225)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "DSb-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Soyabean",
+      "__2008": "PRS-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Niger",
+      "__2008": "Brisa Niger-1 (BNS-10)",
+      "__2009": "Birsa Niger-3 (BNS-11)",
+      "__2010": "Phule Karala(IGPN 2004-1)*",
+      "__2011": "UTKAL NIGER-150  (ONS-150)",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Niger",
+      "__2008": "Phule Karala- 1",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Niger",
+      "__2008": "(IGPN-2004-1)",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Niger",
+      "__2008": "KBN-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Castor",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "K-8501(Chandra Prabha)*",
+      "__2011": "DCS-107",
+      "__2012": "DSP 222 (Hyrid)"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Castor",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "YRCH-1*",
+      "__2011": "NA",
+      "__2012": "JI-273 (GC3)*"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Toria",
+      "__2008": "NA",
+      "__2009": "Uttara (PT-2002-25)*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Taramira",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Vallabh  Taramira-1 (PUT 93-11)*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Taramira",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Vallabh  Taramira-2 (PUT 93-1)*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "OILSEED CROPS",
+      "name_of_crop": "Babchi",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Pratap Babchi-1*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "Birendra (Colk 94184)",
+      "__2009": "NA",
+      "__2010": "Karan 6 (Co 0239)",
+      "__2011": "Haryana Ganna 128(CoH 128)",
+      "__2012": "Karan-9"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "(Co-05011)"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "Karan-2 (Co-0118)",
+      "__2009": "NA",
+      "__2010": "Karan 5 (Co 0124)",
+      "__2011": "CoOr 03151 (Neelamadhab)",
+      "__2012": "Co 0237"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "Sulabh (CO-2001-13)",
+      "__2009": "NA",
+      "__2010": "Co-0218",
+      "__2011": "NA",
+      "__2012": "Co 0403"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "CO-0232",
+      "__2009": "NA",
+      "__2010": "CoC(SC)24*",
+      "__2011": "NA",
+      "__2012": "Pratap Ganna-1  (CoPk-05191)"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "CO-2001-15",
+      "__2009": "NA",
+      "__2010": "Co 92005*",
+      "__2011": "NA",
+      "__2012": "CoVSI-9805"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "CO-0238",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "CO-0233",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "SUGAR CROPS",
+      "name_of_crop": "Sugarcane",
+      "__2008": "CO-94012*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "Hybrid CSHH 243",
+      "__2009": "CICR -1 (CISA 310)",
+      "__2010": "CNH012",
+      "__2011": "NA",
+      "__2012": "H-1300"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "Suraj (CCH 510-4)",
+      "__2009": "NA",
+      "__2010": "CICR-3 (CISA 614)",
+      "__2011": "NA",
+      "__2012": "Nirmal-12 (NACH-12)"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "RAHH-98",
+      "__2009": "NA",
+      "__2010": "VBCH 2231",
+      "__2011": "NA",
+      "__2012": "Phule Anmol (RAC 024)*"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "DHH-543 (Suvidha)*",
+      "__2009": "NA",
+      "__2010": "LH 2076*",
+      "__2011": "NA",
+      "__2012": "PhuleDhanwantry"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "RAS 299-1*",
+      "__2009": "NA",
+      "__2010": "Phule-688(RHC-688)*",
+      "__2011": "NA",
+      "__2012": "Anand Desi Cotton-1*"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "DDh C-11*",
+      "__2009": "NA",
+      "__2010": "SVPR 4*",
+      "__2011": "NA",
+      "__2012": "Desi Cotton (Hybrid) KR-64*"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "RAHH-95*",
+      "__2009": "NA",
+      "__2010": "HD 432*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "PKV *",
+      "__2009": "NA",
+      "__2010": "H 1236*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "NH-615*",
+      "__2009": "NA",
+      "__2010": "H 1098  improved*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "RAH-100*",
+      "__2009": "NA",
+      "__2010": "Orugallu Krishna  (WGHH-2)*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "RAHB-87*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "DLSA-17*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Cotton",
+      "__2008": "Sampoorna  (DHN-6)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Desi cotton",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "FDK 124",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Jute",
+      "__2008": "JRC-532 (C-532)",
+      "__2009": "MONALISA  (RRPS-27-C-3)",
+      "__2010": "SUDHANGSU (JBO-1)",
+      "__2011": "NA",
+      "__2012": "JROM-1 (PRADIP)"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Jute",
+      "__2008": "JRC-517 (C-517)",
+      "__2009": "ANKIT (NDC-2008)",
+      "__2010": "ARPITA  (JBC-5)",
+      "__2011": "NA",
+      "__2012": "JRCM-2 (PARTHO)"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Jute",
+      "__2008": "NA",
+      "__2009": "Sourav (CO-58)",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Sunhemp",
+      "__2008": "NA",
+      "__2009": "SUN-053",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Ankur (SUIN-037)"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Mesta (Roselle)",
+      "__2008": "JMB-2004- D",
+      "__2009": "NA",
+      "__2010": "SNEHA  (JRM-3)",
+      "__2011": "AMU-7 (AHS 160)",
+      "__2012": "Shakti (JBM-81)"
+    },
+    {
+      "type_of_crops": "FIBRE CROPS",
+      "name_of_crop": "Mesta (Roselle)",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "SHRESTHA (JRM-5)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "SPSSV 6 (CSV 24 SS)",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "Pant Chari 7",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "(UTFS 46)*",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "Pant Chari-8",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Sorghum",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "(UTMC 535)*",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Cluster bean",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "HG 870*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Cluster bean",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "GUAR KUNJAL (RGC- 1033)*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Forage bajra",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NDFB-3 (Narendra Chara Bajra-3)",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Napier bajra hybrid",
+      "__2008": "NA",
+      "__2009": "Napier Grass Culture 4*",
+      "__2010": "Phule Jaywant (RBN-13)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Napier bajra hybrid",
+      "__2008": "NA",
+      "__2009": "Napier Grass Culture 21*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Pearl millet",
+      "__2008": "NA",
+      "__2009": "BAIF Bajra-1",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Oat",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Narendra Jayee -1",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Oat",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "(NDO - 1)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Oat",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "OS 346",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Oat",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "JO 03-91 (SC)",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Cowpea",
+      "__2008": "UPC-625",
+      "__2009": "NA",
+      "__2010": "UPC 628",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Guar",
+      "__2008": "Rajasthan Guar-1038 (RGC1038)",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Guinea grass",
+      "__2008": "Bundel Guinea-2  (JHGG-04-1)",
+      "__2009": "Selection 1*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Lucerne",
+      "__2008": "AL-3 (Anand Lucane-3)*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Horse gram",
+      "__2008": "VL Gahat-15 (VLG-15)",
+      "__2009": "VL Gahat  19 (VLG-19)",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS",
+      "name_of_crop": "Horse gram",
+      "__2008": "CRIDA-1-18R",
+      "__2009": "GPM-6*",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS -GRASSES",
+      "name_of_crop": "Hybrid napier grass",
+      "__2008": "APBN-1*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS -GRASSES",
+      "name_of_crop": "Tall fescue grass",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "EC 178182",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS -GRASSES",
+      "name_of_crop": "Marvel grass",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "Gujarat Anand Marvel Grass-2*",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "FORAGE CROPS -GRASSES",
+      "name_of_crop": "Anjan Grass",
+      "__2008": "NA",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "Gujarat Anand Anjan Grass -1 (GAAG-1)*"
+    },
+    {
+      "type_of_crops": "UNDER UTILIZED CROPS",
+      "name_of_crop": "Grain amaranths",
+      "__2008": "SKNA-21",
+      "__2009": "NA",
+      "__2010": "Rajasthan Mandoor Amarnath 7 (RMA7)",
+      "__2011": "NA",
+      "__2012": "Phule Kartiki (RGAS 92-10-1)*"
+    },
+    {
+      "type_of_crops": "UNDER UTILIZED CROPS",
+      "name_of_crop": "Grain amaranths",
+      "__2008": "RMA-4 (Rajasthan  Mandor Amaranth-4)",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "UNDER UTILIZED CROPS",
+      "name_of_crop": "Jobs tear  (Coix aquatica )",
+      "__2008": "Bidhan Coix-1 (KCA-3)",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    },
+    {
+      "type_of_crops": "COMMERCIAL CROP",
+      "name_of_crop": "Tobacco",
+      "__2008": "NBO-43*",
+      "__2009": "NA",
+      "__2010": "NA",
+      "__2011": "NA",
+      "__2012": "NA"
+    }
+  ]
+}

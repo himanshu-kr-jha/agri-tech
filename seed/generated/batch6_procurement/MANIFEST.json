@@ -1,0 +1,42 @@
+{
+  "batch": 6,
+  "domain": "procurement",
+  "generated_at": "2026-08-27T20:10:27.911455+00:00",
+  "licence_note": "An UNKNOWN licence blocks a confidence-cap lift under ADR-0014. Data is cached but inert until a human confirms the licence.",
+  "resources": [
+    {
+      "key": "procurement-paddy-statewise",
+      "title": "State/UT-wise paddy procurement and value at MSP",
+      "publisher": "Department of Food & Public Distribution",
+      "access_route": "api.data.gov.in",
+      "resource_id": "e10ca3fd-2577-4f45-8b7c-2e0ae0fcf95e",
+      "url": null,
+      "language": "en",
+      "unit": "quantity in LMT, value in INR crore",
+      "temporal_coverage": "Apr-Jun 2021",
+      "authority": "authoritative",
+      "licence": "UNKNOWN",
+      "recheck_days": 90,
+      "records": 23,
+      "sha256_file": "60df930537bc302c2ad5be6fb7d9f6710287d70eb10dad724a852454619852d1",
+      "notes": "23 states. Narrow window, but the only state-wise procurement split found."
+    },
+    {
+      "key": "procurement-wheat-paddy",
+      "title": "Procurement of wheat and paddy, MSP value and farmers benefited",
+      "publisher": "Department of Food & Public Distribution / FCI",
+      "access_route": "api.data.gov.in",
+      "resource_id": "f8340bd2-2b3c-4049-84bd-89da9f98d76a",
+      "url": null,
+      "language": "en",
+      "unit": "quantity in LMT, value in INR crore, farmers as a count",
+      "temporal_coverage": "2018-19..2022-23",
+      "authority": "authoritative",
+      "licence": "UNKNOWN",
+      "recheck_days": 90,
+      "records": 5,
+      "sha256_file": "80c5a12f184caed02f19462448ec7419067a017db4623bcff7c726273f28d608",
+      "notes": "Carries farmers_benefited: 4,033,463 wheat farmers in 2018-19."
+    }
+  ]
+}

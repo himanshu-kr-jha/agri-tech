@@ -1,0 +1,1954 @@
+{
+  "index_name": "dc3ba615-2892-49c6-bdcd-ecdf0d24c8a5",
+  "title": "State-wise and Crop-wise Cost of Production (C2) for Important Crops from 2013-14 to 2017-18 (From: Ministry of Agriculture and Farmers Welfare)",
+  "desc": "State-wise and Crop-wise Cost of Production (C2) for Important Crops from 2013-14 to 2017-18 (From: Ministry of Agriculture and Farmers Welfare)",
+  "org_type": "Central",
+  "org": [
+    "Rajya Sabha"
+  ],
+  "sector": [
+    "All"
+  ],
+  "source": "data.gov.in",
+  "catalog_uuid": "88ec9509-df54-4c72-a623-f5d0183d2078",
+  "visualizable": "1",
+  "active": "1",
+  "created": 1645770944,
+  "updated": 1646023563,
+  "created_date": "2022-02-25T07:35:44Z",
+  "updated_date": "2022-02-28T10:16:03Z",
+  "external_ws": 0,
+  "external_ws_url": "",
+  "target_bucket": {
+    "index": "api",
+    "type": "88ec9509-df54-4c72-a623-f5d0183d2078",
+    "field": "dc3ba615-2892-49c6-bdcd-ecdf0d24c8a5"
+  },
+  "field": [
+    {
+      "id": "crop",
+      "name": "Crop",
+      "type": "keyword"
+    },
+    {
+      "id": "state",
+      "name": "State",
+      "type": "keyword"
+    },
+    {
+      "id": "cost_of_production_c2___2013_14",
+      "name": "Cost of Production C2 - 2013-14",
+      "type": "double"
+    },
+    {
+      "id": "cost_of_production_c2___2014_15",
+      "name": "Cost of Production C2 - 2014-15",
+      "type": "double"
+    },
+    {
+      "id": "cost_of_production_c2___2015_16",
+      "name": "Cost of Production C2 - 2015-16",
+      "type": "double"
+    },
+    {
+      "id": "cost_of_production_c2___2016_17",
+      "name": "Cost of Production C2 - 2016-17",
+      "type": "double"
+    },
+    {
+      "id": "cost_of_production_c2___2017_18",
+      "name": "Cost of Production C2 - 2017-18",
+      "type": "double"
+    }
+  ],
+  "message": "Resource lists",
+  "version": "2.2.0",
+  "status": "ok",
+  "total": 209,
+  "count": 209,
+  "limit": "5000",
+  "offset": "0",
+  "records": [
+    {
+      "crop": "Arhar",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 4701.06,
+      "cost_of_production_c2___2014_15": 6381.7,
+      "cost_of_production_c2___2015_16": 8938.88,
+      "cost_of_production_c2___2016_17": 6242.39,
+      "cost_of_production_c2___2017_18": 5236.58
+    },
+    {
+      "crop": "Arhar",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": 1384.01,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 2827.11
+    },
+    {
+      "crop": "Arhar",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4590.02
+    },
+    {
+      "crop": "Arhar",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 3889.45,
+      "cost_of_production_c2___2014_15": 4550.86,
+      "cost_of_production_c2___2015_16": 4437.12,
+      "cost_of_production_c2___2016_17": 3476.11,
+      "cost_of_production_c2___2017_18": 4419.14
+    },
+    {
+      "crop": "Arhar",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 2829.99,
+      "cost_of_production_c2___2014_15": 3963.24,
+      "cost_of_production_c2___2015_16": 7187.47,
+      "cost_of_production_c2___2016_17": 3210.39,
+      "cost_of_production_c2___2017_18": 4089.62
+    },
+    {
+      "crop": "Arhar",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 3058.02,
+      "cost_of_production_c2___2014_15": 4568.56,
+      "cost_of_production_c2___2015_16": 5144.49,
+      "cost_of_production_c2___2016_17": 3739.43,
+      "cost_of_production_c2___2017_18": 4315.66
+    },
+    {
+      "crop": "Arhar",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 2982.01,
+      "cost_of_production_c2___2014_15": 5715.19,
+      "cost_of_production_c2___2015_16": 5983.9,
+      "cost_of_production_c2___2016_17": 4166.22,
+      "cost_of_production_c2___2017_18": 4547.18
+    },
+    {
+      "crop": "Arhar",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": 4218.35,
+      "cost_of_production_c2___2014_15": 6806.19,
+      "cost_of_production_c2___2015_16": 6723.38,
+      "cost_of_production_c2___2016_17": 6471.39,
+      "cost_of_production_c2___2017_18": 4441.2
+    },
+    {
+      "crop": "Arhar",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 6651.45
+    },
+    {
+      "crop": "Arhar",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 7122.16
+    },
+    {
+      "crop": "Arhar",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 4717.69,
+      "cost_of_production_c2___2014_15": 4184.48,
+      "cost_of_production_c2___2015_16": 5391.53,
+      "cost_of_production_c2___2016_17": 4324.6,
+      "cost_of_production_c2___2017_18": 4261.47
+    },
+    {
+      "crop": "Bajra",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 1075.78,
+      "cost_of_production_c2___2014_15": 1125.22,
+      "cost_of_production_c2___2015_16": 1270.11,
+      "cost_of_production_c2___2016_17": 1322.87,
+      "cost_of_production_c2___2017_18": 1191.41
+    },
+    {
+      "crop": "Bajra",
+      "state": "Haryana",
+      "cost_of_production_c2___2013_14": 1263.65,
+      "cost_of_production_c2___2014_15": 1487.42,
+      "cost_of_production_c2___2015_16": 1763.76,
+      "cost_of_production_c2___2016_17": 1423.25,
+      "cost_of_production_c2___2017_18": 1584.37
+    },
+    {
+      "crop": "Bajra",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 1262.87,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Bajra",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 2004.97,
+      "cost_of_production_c2___2014_15": 2749.83,
+      "cost_of_production_c2___2015_16": 2702.56,
+      "cost_of_production_c2___2016_17": 1906.63,
+      "cost_of_production_c2___2017_18": 1921.22
+    },
+    {
+      "crop": "Bajra",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 1093.52,
+      "cost_of_production_c2___2014_15": 1149.16,
+      "cost_of_production_c2___2015_16": 1654.55,
+      "cost_of_production_c2___2016_17": 1290.01,
+      "cost_of_production_c2___2017_18": 1441.83
+    },
+    {
+      "crop": "Bajra",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 1132.77,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Bajra",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 1152.23,
+      "cost_of_production_c2___2014_15": 1038.43,
+      "cost_of_production_c2___2015_16": 1129.53,
+      "cost_of_production_c2___2016_17": 1116.88,
+      "cost_of_production_c2___2017_18": 1230.33
+    },
+    {
+      "crop": "Barley",
+      "state": "Himachal Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4076.19
+    },
+    {
+      "crop": "Barley",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 826.47,
+      "cost_of_production_c2___2014_15": 1002.76,
+      "cost_of_production_c2___2015_16": 1024.98,
+      "cost_of_production_c2___2016_17": 1090.08,
+      "cost_of_production_c2___2017_18": 1375.52
+    },
+    {
+      "crop": "Barley",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 1157.12,
+      "cost_of_production_c2___2014_15": 1450.72,
+      "cost_of_production_c2___2015_16": 1334.04,
+      "cost_of_production_c2___2016_17": 1272.91,
+      "cost_of_production_c2___2017_18": 1433.45
+    },
+    {
+      "crop": "Cotton",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 4252.82,
+      "cost_of_production_c2___2014_15": 4661.68,
+      "cost_of_production_c2___2015_16": 5067.31,
+      "cost_of_production_c2___2016_17": 4544.69,
+      "cost_of_production_c2___2017_18": 4922.55
+    },
+    {
+      "crop": "Cotton",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 3344.53,
+      "cost_of_production_c2___2014_15": 3659.32,
+      "cost_of_production_c2___2015_16": 3839.79,
+      "cost_of_production_c2___2016_17": 3933.8,
+      "cost_of_production_c2___2017_18": 3995.94
+    },
+    {
+      "crop": "Cotton",
+      "state": "Haryana",
+      "cost_of_production_c2___2013_14": 4182.82,
+      "cost_of_production_c2___2014_15": 5573.05,
+      "cost_of_production_c2___2015_16": 7053.7,
+      "cost_of_production_c2___2016_17": 4587.28,
+      "cost_of_production_c2___2017_18": 4747.42
+    },
+    {
+      "crop": "Cotton",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 3680.53,
+      "cost_of_production_c2___2014_15": 4084.52,
+      "cost_of_production_c2___2015_16": 4895.39,
+      "cost_of_production_c2___2016_17": 4134.33,
+      "cost_of_production_c2___2017_18": 4519.14
+    },
+    {
+      "crop": "Cotton",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 3119.2,
+      "cost_of_production_c2___2014_15": 5564.46,
+      "cost_of_production_c2___2015_16": 5585.01,
+      "cost_of_production_c2___2016_17": 5282.97,
+      "cost_of_production_c2___2017_18": 4077.25
+    },
+    {
+      "crop": "Cotton",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 4036.48,
+      "cost_of_production_c2___2014_15": 4631.87,
+      "cost_of_production_c2___2015_16": 4603.47,
+      "cost_of_production_c2___2016_17": 4354.92,
+      "cost_of_production_c2___2017_18": 5547.05
+    },
+    {
+      "crop": "Cotton",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": 4094.65,
+      "cost_of_production_c2___2014_15": 6348.29,
+      "cost_of_production_c2___2015_16": 4957.41,
+      "cost_of_production_c2___2016_17": 4287.24,
+      "cost_of_production_c2___2017_18": 4342.62
+    },
+    {
+      "crop": "Cotton",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": 4073.29,
+      "cost_of_production_c2___2014_15": 3890.58,
+      "cost_of_production_c2___2015_16": 7469.96,
+      "cost_of_production_c2___2016_17": 3988.15,
+      "cost_of_production_c2___2017_18": 4082.15
+    },
+    {
+      "crop": "Cotton",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 3930.1,
+      "cost_of_production_c2___2014_15": 3821.91,
+      "cost_of_production_c2___2015_16": 4070.84,
+      "cost_of_production_c2___2016_17": 4570.06,
+      "cost_of_production_c2___2017_18": 3988.94
+    },
+    {
+      "crop": "Cotton",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 5333.2,
+      "cost_of_production_c2___2014_15": 3770.22,
+      "cost_of_production_c2___2015_16": 3946.15,
+      "cost_of_production_c2___2016_17": 6707.83,
+      "cost_of_production_c2___2017_18": 6752.36
+    },
+    {
+      "crop": "Cotton",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 5802.69
+    },
+    {
+      "crop": "Gram",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 3087.19,
+      "cost_of_production_c2___2014_15": 3085.18,
+      "cost_of_production_c2___2015_16": 4422.99,
+      "cost_of_production_c2___2016_17": 4141.94,
+      "cost_of_production_c2___2017_18": 4992.83
+    },
+    {
+      "crop": "Gram",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": 2400.28,
+      "cost_of_production_c2___2014_15": 2389.66,
+      "cost_of_production_c2___2015_16": 2399.95,
+      "cost_of_production_c2___2016_17": 2406.59,
+      "cost_of_production_c2___2017_18": 2121.44
+    },
+    {
+      "crop": "Gram",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": 2972.49,
+      "cost_of_production_c2___2014_15": 3101.72,
+      "cost_of_production_c2___2015_16": 4736.6,
+      "cost_of_production_c2___2016_17": 2971.81,
+      "cost_of_production_c2___2017_18": 3176.09
+    },
+    {
+      "crop": "Gram",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 2438.55
+    },
+    {
+      "crop": "Gram",
+      "state": "Haryana",
+      "cost_of_production_c2___2013_14": 3346.17,
+      "cost_of_production_c2___2014_15": 3313.4,
+      "cost_of_production_c2___2015_16": 2879.84,
+      "cost_of_production_c2___2016_17": 4348.92,
+      "cost_of_production_c2___2017_18": 3419.45
+    },
+    {
+      "crop": "Gram",
+      "state": "Jharkhand",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 1631.31,
+      "cost_of_production_c2___2015_16": 1789.24,
+      "cost_of_production_c2___2016_17": 1727.72,
+      "cost_of_production_c2___2017_18": 2813.68
+    },
+    {
+      "crop": "Gram",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 2498.9,
+      "cost_of_production_c2___2014_15": 2919.6,
+      "cost_of_production_c2___2015_16": 5724.94,
+      "cost_of_production_c2___2016_17": 4805.28,
+      "cost_of_production_c2___2017_18": 3507.11
+    },
+    {
+      "crop": "Gram",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 2928.41,
+      "cost_of_production_c2___2014_15": 2911.56,
+      "cost_of_production_c2___2015_16": 3394.55,
+      "cost_of_production_c2___2016_17": 3207.48,
+      "cost_of_production_c2___2017_18": 2913.66
+    },
+    {
+      "crop": "Gram",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 2776.56,
+      "cost_of_production_c2___2014_15": 3401.88,
+      "cost_of_production_c2___2015_16": 4391.21,
+      "cost_of_production_c2___2016_17": 4112.76,
+      "cost_of_production_c2___2017_18": 4055.99
+    },
+    {
+      "crop": "Gram",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 8267.7
+    },
+    {
+      "crop": "Gram",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 2138.08,
+      "cost_of_production_c2___2014_15": 3440.21,
+      "cost_of_production_c2___2015_16": 3487.4,
+      "cost_of_production_c2___2016_17": 3215.39,
+      "cost_of_production_c2___2017_18": 3096.95
+    },
+    {
+      "crop": "Gram",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3509.78
+    },
+    {
+      "crop": "Gram",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 5158.56,
+      "cost_of_production_c2___2014_15": 5507.26,
+      "cost_of_production_c2___2015_16": 5546.67,
+      "cost_of_production_c2___2016_17": 3543.66,
+      "cost_of_production_c2___2017_18": 4996.03
+    },
+    {
+      "crop": "Gram",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 6799.33
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 4010.79,
+      "cost_of_production_c2___2014_15": 4607.64,
+      "cost_of_production_c2___2015_16": 4058,
+      "cost_of_production_c2___2016_17": 5019.01,
+      "cost_of_production_c2___2017_18": 4926.57
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 2859.24,
+      "cost_of_production_c2___2014_15": 3409.54,
+      "cost_of_production_c2___2015_16": 3288.94,
+      "cost_of_production_c2___2016_17": 3212.08,
+      "cost_of_production_c2___2017_18": 3429.36
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 3777.03,
+      "cost_of_production_c2___2014_15": 4541.52,
+      "cost_of_production_c2___2015_16": 5851.58,
+      "cost_of_production_c2___2016_17": 4694.71,
+      "cost_of_production_c2___2017_18": 5424.59
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3981.31
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 4265.35,
+      "cost_of_production_c2___2014_15": 5783.84,
+      "cost_of_production_c2___2015_16": 7243.58,
+      "cost_of_production_c2___2016_17": 9355.86,
+      "cost_of_production_c2___2017_18": 5453.99
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": 4075.23,
+      "cost_of_production_c2___2014_15": 4516.02,
+      "cost_of_production_c2___2015_16": 5918.02,
+      "cost_of_production_c2___2016_17": 5828.67,
+      "cost_of_production_c2___2017_18": 5982.74
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 3777.03,
+      "cost_of_production_c2___2015_16": 2316.16,
+      "cost_of_production_c2___2016_17": 2495.15,
+      "cost_of_production_c2___2017_18": 2870.56
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 4135.55,
+      "cost_of_production_c2___2014_15": 3571.59,
+      "cost_of_production_c2___2015_16": 4003.67,
+      "cost_of_production_c2___2016_17": 4122,
+      "cost_of_production_c2___2017_18": 5053.68
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4707.23
+    },
+    {
+      "crop": "Groundnut",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4091.09
+    },
+    {
+      "crop": "Jowar",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 1409.61,
+      "cost_of_production_c2___2014_15": 1732.18,
+      "cost_of_production_c2___2015_16": 1556.83,
+      "cost_of_production_c2___2016_17": 2864.57,
+      "cost_of_production_c2___2017_18": 1422.01
+    },
+    {
+      "crop": "Jowar",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 1643.14,
+      "cost_of_production_c2___2014_15": 2266.91,
+      "cost_of_production_c2___2015_16": 2628.41,
+      "cost_of_production_c2___2016_17": 2795.49,
+      "cost_of_production_c2___2017_18": 2174.84
+    },
+    {
+      "crop": "Jowar",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 1547.98,
+      "cost_of_production_c2___2014_15": 2710.85,
+      "cost_of_production_c2___2015_16": 969.15,
+      "cost_of_production_c2___2016_17": 1266.74,
+      "cost_of_production_c2___2017_18": 1217.89
+    },
+    {
+      "crop": "Jowar",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 1821.42,
+      "cost_of_production_c2___2014_15": 1951.96,
+      "cost_of_production_c2___2015_16": 2383.76,
+      "cost_of_production_c2___2016_17": 2037.93,
+      "cost_of_production_c2___2017_18": 2453.26
+    },
+    {
+      "crop": "Jowar",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 1537.81,
+      "cost_of_production_c2___2015_16": 2000.7,
+      "cost_of_production_c2___2016_17": 1782.99,
+      "cost_of_production_c2___2017_18": 2135.89
+    },
+    {
+      "crop": "Jowar",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 1579.47,
+      "cost_of_production_c2___2014_15": 1678.65,
+      "cost_of_production_c2___2015_16": 1925.12,
+      "cost_of_production_c2___2016_17": 3885.11,
+      "cost_of_production_c2___2017_18": 3695.85
+    },
+    {
+      "crop": "Jowar",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4558.11
+    },
+    {
+      "crop": "Jute",
+      "state": "Assam",
+      "cost_of_production_c2___2013_14": 2618.67,
+      "cost_of_production_c2___2014_15": 2627.43,
+      "cost_of_production_c2___2015_16": 3615.29,
+      "cost_of_production_c2___2016_17": 4024.58,
+      "cost_of_production_c2___2017_18": 3575.58
+    },
+    {
+      "crop": "Jute",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 2415.46,
+      "cost_of_production_c2___2015_16": 2473.11,
+      "cost_of_production_c2___2016_17": 2427.03,
+      "cost_of_production_c2___2017_18": 2493.41
+    },
+    {
+      "crop": "Jute",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": 2515.78,
+      "cost_of_production_c2___2014_15": 3495.91,
+      "cost_of_production_c2___2015_16": 4271.31,
+      "cost_of_production_c2___2016_17": 4096.95,
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Jute",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": 2286.91,
+      "cost_of_production_c2___2014_15": 2655.57,
+      "cost_of_production_c2___2015_16": 2963.14,
+      "cost_of_production_c2___2016_17": 3126.56,
+      "cost_of_production_c2___2017_18": 3227.24
+    },
+    {
+      "crop": "Lentil",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": 2246.18,
+      "cost_of_production_c2___2014_15": 2399.78,
+      "cost_of_production_c2___2015_16": 3020.82,
+      "cost_of_production_c2___2016_17": 2508.54,
+      "cost_of_production_c2___2017_18": 2621.98
+    },
+    {
+      "crop": "Lentil",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 3351.41,
+      "cost_of_production_c2___2014_15": 3575.36,
+      "cost_of_production_c2___2015_16": 3269.95,
+      "cost_of_production_c2___2016_17": 2364.25,
+      "cost_of_production_c2___2017_18": 2736.46
+    },
+    {
+      "crop": "Lentil",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 5928.57
+    },
+    {
+      "crop": "Lentil",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3589.32
+    },
+    {
+      "crop": "Lentil",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 3623.54,
+      "cost_of_production_c2___2014_15": 6797.93,
+      "cost_of_production_c2___2015_16": 7120.3,
+      "cost_of_production_c2___2016_17": 4518.34,
+      "cost_of_production_c2___2017_18": 4840.6
+    },
+    {
+      "crop": "Lentil",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": 3877.06,
+      "cost_of_production_c2___2014_15": 2518.08,
+      "cost_of_production_c2___2015_16": 3616.05,
+      "cost_of_production_c2___2016_17": 4058.59,
+      "cost_of_production_c2___2017_18": 2674.64
+    },
+    {
+      "crop": "Maize",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 1298.57,
+      "cost_of_production_c2___2014_15": 1130.4,
+      "cost_of_production_c2___2015_16": 1275.29,
+      "cost_of_production_c2___2016_17": 1218.28,
+      "cost_of_production_c2___2017_18": 1120.35
+    },
+    {
+      "crop": "Maize",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": 1026.37,
+      "cost_of_production_c2___2014_15": 1138.29,
+      "cost_of_production_c2___2015_16": 1164.76,
+      "cost_of_production_c2___2016_17": 1133.84,
+      "cost_of_production_c2___2017_18": 1030.87
+    },
+    {
+      "crop": "Maize",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": 1446.82,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 1556.32
+    },
+    {
+      "crop": "Maize",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 1839.16,
+      "cost_of_production_c2___2014_15": 1931,
+      "cost_of_production_c2___2015_16": 2393.22,
+      "cost_of_production_c2___2016_17": 1586.58,
+      "cost_of_production_c2___2017_18": 1821.34
+    },
+    {
+      "crop": "Maize",
+      "state": "Himachal Pradesh",
+      "cost_of_production_c2___2013_14": 1583.78,
+      "cost_of_production_c2___2014_15": 1673.25,
+      "cost_of_production_c2___2015_16": 1956.84,
+      "cost_of_production_c2___2016_17": 1728.13,
+      "cost_of_production_c2___2017_18": 1447.43
+    },
+    {
+      "crop": "Maize",
+      "state": "Jharkhand",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 1007.96,
+      "cost_of_production_c2___2015_16": 1022.03,
+      "cost_of_production_c2___2016_17": 749.02,
+      "cost_of_production_c2___2017_18": 1255.9
+    },
+    {
+      "crop": "Maize",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 1062.62,
+      "cost_of_production_c2___2014_15": 1273.66,
+      "cost_of_production_c2___2015_16": 1399.57,
+      "cost_of_production_c2___2016_17": 1251.72,
+      "cost_of_production_c2___2017_18": 1439.21
+    },
+    {
+      "crop": "Maize",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 1161.84,
+      "cost_of_production_c2___2014_15": 1262.09,
+      "cost_of_production_c2___2015_16": 1738.12,
+      "cost_of_production_c2___2016_17": 1388.84,
+      "cost_of_production_c2___2017_18": 1141.56
+    },
+    {
+      "crop": "Maize",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 1993.66,
+      "cost_of_production_c2___2015_16": 1502.64,
+      "cost_of_production_c2___2016_17": 1173.99,
+      "cost_of_production_c2___2017_18": 960.92
+    },
+    {
+      "crop": "Maize",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 1336.26,
+      "cost_of_production_c2___2015_16": 1360.93,
+      "cost_of_production_c2___2016_17": 1422.1,
+      "cost_of_production_c2___2017_18": 1253.66
+    },
+    {
+      "crop": "Maize",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 1154.79,
+      "cost_of_production_c2___2015_16": 1390.44,
+      "cost_of_production_c2___2016_17": 1380.65,
+      "cost_of_production_c2___2017_18": 1584.75
+    },
+    {
+      "crop": "Maize",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 1904.7,
+      "cost_of_production_c2___2014_15": 1628.96,
+      "cost_of_production_c2___2015_16": 2097.41,
+      "cost_of_production_c2___2016_17": 1932.19,
+      "cost_of_production_c2___2017_18": 1573.22
+    },
+    {
+      "crop": "Maize",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 1297.13,
+      "cost_of_production_c2___2014_15": 1253.92,
+      "cost_of_production_c2___2015_16": 1431.3,
+      "cost_of_production_c2___2016_17": 1981.82,
+      "cost_of_production_c2___2017_18": 1524.63
+    },
+    {
+      "crop": "Maize",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 1321.76
+    },
+    {
+      "crop": "Maize",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 1636.08,
+      "cost_of_production_c2___2014_15": 1888.58,
+      "cost_of_production_c2___2015_16": 1455.4,
+      "cost_of_production_c2___2016_17": 1508.9,
+      "cost_of_production_c2___2017_18": 1544.87
+    },
+    {
+      "crop": "Moong",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 4314.84,
+      "cost_of_production_c2___2014_15": 4655.63,
+      "cost_of_production_c2___2015_16": 8883.35,
+      "cost_of_production_c2___2016_17": 8895.6,
+      "cost_of_production_c2___2017_18": 3524.07
+    },
+    {
+      "crop": "Moong",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 6062.84
+    },
+    {
+      "crop": "Moong",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 11264.37,
+      "cost_of_production_c2___2015_16": 4774.29,
+      "cost_of_production_c2___2016_17": 3608.27,
+      "cost_of_production_c2___2017_18": 7841.61
+    },
+    {
+      "crop": "Moong",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 3699.01,
+      "cost_of_production_c2___2014_15": 5790.59,
+      "cost_of_production_c2___2015_16": 6610.05,
+      "cost_of_production_c2___2016_17": 4176.62,
+      "cost_of_production_c2___2017_18": 4416.27
+    },
+    {
+      "crop": "Moong",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 5661.62
+    },
+    {
+      "crop": "Moong",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 7816.61,
+      "cost_of_production_c2___2014_15": 8098.91,
+      "cost_of_production_c2___2015_16": 11332.97,
+      "cost_of_production_c2___2016_17": 5503.75,
+      "cost_of_production_c2___2017_18": 6495.09
+    },
+    {
+      "crop": "Moong",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": 5084.23,
+      "cost_of_production_c2___2014_15": 5618.72,
+      "cost_of_production_c2___2015_16": 7188.79,
+      "cost_of_production_c2___2016_17": 6555.15,
+      "cost_of_production_c2___2017_18": 5324.42
+    },
+    {
+      "crop": "Moong",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 5907.54,
+      "cost_of_production_c2___2014_15": 5267.63,
+      "cost_of_production_c2___2015_16": 5617.11,
+      "cost_of_production_c2___2016_17": 4125.32,
+      "cost_of_production_c2___2017_18": 4775.48
+    },
+    {
+      "crop": "Moong",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 4525.64,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 6419.02
+    },
+    {
+      "crop": "Moong",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 15527.4
+    },
+    {
+      "crop": "Moong",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 5452.05
+    },
+    {
+      "crop": "Moong",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4814.79
+    },
+    {
+      "crop": "Nigerseed",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": 14819.83,
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Nigerseed",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 5697.21,
+      "cost_of_production_c2___2015_16": 6904.46,
+      "cost_of_production_c2___2016_17": 6258.85,
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Nigerseed",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": 3900.66,
+      "cost_of_production_c2___2014_15": 6302.23,
+      "cost_of_production_c2___2015_16": 8288.48,
+      "cost_of_production_c2___2016_17": 8862.81,
+      "cost_of_production_c2___2017_18": 8140.97
+    },
+    {
+      "crop": "Onion",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 1629.75,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 647.34
+    },
+    {
+      "crop": "Onion",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 662.1,
+      "cost_of_production_c2___2014_15": 852.24,
+      "cost_of_production_c2___2015_16": 721.29,
+      "cost_of_production_c2___2016_17": 564.69,
+      "cost_of_production_c2___2017_18": 611.5
+    },
+    {
+      "crop": "Onion",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 973.3,
+      "cost_of_production_c2___2014_15": 1210.34,
+      "cost_of_production_c2___2015_16": 846,
+      "cost_of_production_c2___2016_17": 1442.29,
+      "cost_of_production_c2___2017_18": 1376.44
+    },
+    {
+      "crop": "Onion",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 409.66
+    },
+    {
+      "crop": "Onion",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 756.94,
+      "cost_of_production_c2___2014_15": 754.14,
+      "cost_of_production_c2___2015_16": 632.21,
+      "cost_of_production_c2___2016_17": 472.08,
+      "cost_of_production_c2___2017_18": 697.01
+    },
+    {
+      "crop": "Onion",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 715.15
+    },
+    {
+      "crop": "Paddy",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 1242.54,
+      "cost_of_production_c2___2014_15": 1282.17,
+      "cost_of_production_c2___2015_16": 1321.55,
+      "cost_of_production_c2___2016_17": 1264.33,
+      "cost_of_production_c2___2017_18": 1340.01
+    },
+    {
+      "crop": "Paddy",
+      "state": "Assam",
+      "cost_of_production_c2___2013_14": 1190.91,
+      "cost_of_production_c2___2014_15": 1427.84,
+      "cost_of_production_c2___2015_16": 1399.64,
+      "cost_of_production_c2___2016_17": 1575,
+      "cost_of_production_c2___2017_18": 1428.68
+    },
+    {
+      "crop": "Paddy",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": 1141.07,
+      "cost_of_production_c2___2014_15": 1054.94,
+      "cost_of_production_c2___2015_16": 1271.13,
+      "cost_of_production_c2___2016_17": 1157.31,
+      "cost_of_production_c2___2017_18": 1270.28
+    },
+    {
+      "crop": "Paddy",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": 1164.08,
+      "cost_of_production_c2___2014_15": 1229.85,
+      "cost_of_production_c2___2015_16": 1374.79,
+      "cost_of_production_c2___2016_17": 1292.49,
+      "cost_of_production_c2___2017_18": 1272.75
+    },
+    {
+      "crop": "Paddy",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 1210.5,
+      "cost_of_production_c2___2014_15": 1095.87,
+      "cost_of_production_c2___2015_16": 1097.31,
+      "cost_of_production_c2___2016_17": 1106.85,
+      "cost_of_production_c2___2017_18": 1115.95
+    },
+    {
+      "crop": "Paddy",
+      "state": "Haryana",
+      "cost_of_production_c2___2013_14": 1389.35,
+      "cost_of_production_c2___2014_15": 1531.08,
+      "cost_of_production_c2___2015_16": 1543.66,
+      "cost_of_production_c2___2016_17": 1582.47,
+      "cost_of_production_c2___2017_18": 1447.82
+    },
+    {
+      "crop": "Paddy",
+      "state": "Himachal Pradesh",
+      "cost_of_production_c2___2013_14": 1186.69,
+      "cost_of_production_c2___2014_15": 1099.8,
+      "cost_of_production_c2___2015_16": 1483.01,
+      "cost_of_production_c2___2016_17": 1536.19,
+      "cost_of_production_c2___2017_18": 1376.74
+    },
+    {
+      "crop": "Paddy",
+      "state": "Jharkhand",
+      "cost_of_production_c2___2013_14": 1274.85,
+      "cost_of_production_c2___2014_15": 1083.41,
+      "cost_of_production_c2___2015_16": 1349.11,
+      "cost_of_production_c2___2016_17": 1202.02,
+      "cost_of_production_c2___2017_18": 1314.85
+    },
+    {
+      "crop": "Paddy",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 1190.65,
+      "cost_of_production_c2___2014_15": 1195.71,
+      "cost_of_production_c2___2015_16": 1339.42,
+      "cost_of_production_c2___2016_17": 1266.88,
+      "cost_of_production_c2___2017_18": 2129.12
+    },
+    {
+      "crop": "Paddy",
+      "state": "Kerala",
+      "cost_of_production_c2___2013_14": 1346.36,
+      "cost_of_production_c2___2014_15": 1479.24,
+      "cost_of_production_c2___2015_16": 1669.81,
+      "cost_of_production_c2___2016_17": 1705.04,
+      "cost_of_production_c2___2017_18": 2398.89
+    },
+    {
+      "crop": "Paddy",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 1134.09,
+      "cost_of_production_c2___2014_15": 1416.12,
+      "cost_of_production_c2___2015_16": 1709.98,
+      "cost_of_production_c2___2016_17": 1204.1,
+      "cost_of_production_c2___2017_18": 1573.61
+    },
+    {
+      "crop": "Paddy",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 1508.66,
+      "cost_of_production_c2___2014_15": 2237.11,
+      "cost_of_production_c2___2015_16": 2468.55,
+      "cost_of_production_c2___2016_17": 2199.02,
+      "cost_of_production_c2___2017_18": 2732.58
+    },
+    {
+      "crop": "Paddy",
+      "state": "Orissa",
+      "cost_of_production_c2___2013_14": 1399.1,
+      "cost_of_production_c2___2014_15": 1405.45,
+      "cost_of_production_c2___2015_16": 1450.32,
+      "cost_of_production_c2___2016_17": 1426.87,
+      "cost_of_production_c2___2017_18": 1394.01
+    },
+    {
+      "crop": "Paddy",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": 1043.27,
+      "cost_of_production_c2___2014_15": 1091.75,
+      "cost_of_production_c2___2015_16": 1061.66,
+      "cost_of_production_c2___2016_17": 1091.67,
+      "cost_of_production_c2___2017_18": 1082.54
+    },
+    {
+      "crop": "Paddy",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 1257.77,
+      "cost_of_production_c2___2014_15": 1397.7,
+      "cost_of_production_c2___2015_16": 1435.17,
+      "cost_of_production_c2___2016_17": 1523.54,
+      "cost_of_production_c2___2017_18": 1671.41
+    },
+    {
+      "crop": "Paddy",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 1846.17
+    },
+    {
+      "crop": "Paddy",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 1025.31,
+      "cost_of_production_c2___2014_15": 1479.86,
+      "cost_of_production_c2___2015_16": 1541.04,
+      "cost_of_production_c2___2016_17": 1475.9,
+      "cost_of_production_c2___2017_18": 1562.8
+    },
+    {
+      "crop": "Paddy",
+      "state": "Uttarakhand",
+      "cost_of_production_c2___2013_14": 1126.35,
+      "cost_of_production_c2___2014_15": 896.47,
+      "cost_of_production_c2___2015_16": 935.36,
+      "cost_of_production_c2___2016_17": 1013.02,
+      "cost_of_production_c2___2017_18": 1694.63
+    },
+    {
+      "crop": "Paddy",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": 1366.8,
+      "cost_of_production_c2___2014_15": 1411.34,
+      "cost_of_production_c2___2015_16": 1423.29,
+      "cost_of_production_c2___2016_17": 1497.01,
+      "cost_of_production_c2___2017_18": 1632.12
+    },
+    {
+      "crop": "Potato",
+      "state": "Assam",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 1117.94,
+      "cost_of_production_c2___2015_16": 1148.05,
+      "cost_of_production_c2___2016_17": 1161.21,
+      "cost_of_production_c2___2017_18": 792.63
+    },
+    {
+      "crop": "Potato",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": 515.32,
+      "cost_of_production_c2___2014_15": 448.18,
+      "cost_of_production_c2___2015_16": 437.5,
+      "cost_of_production_c2___2016_17": 402.02,
+      "cost_of_production_c2___2017_18": 545.79
+    },
+    {
+      "crop": "Potato",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 362.58
+    },
+    {
+      "crop": "Potato",
+      "state": "Himachal Pradesh",
+      "cost_of_production_c2___2013_14": 907.01,
+      "cost_of_production_c2___2014_15": 993.84,
+      "cost_of_production_c2___2015_16": 1004.37,
+      "cost_of_production_c2___2016_17": 815.9,
+      "cost_of_production_c2___2017_18": 835.87
+    },
+    {
+      "crop": "Potato",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 631.9
+    },
+    {
+      "crop": "Potato",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 464.66
+    },
+    {
+      "crop": "Potato",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 342.63
+    },
+    {
+      "crop": "Potato",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 707.48,
+      "cost_of_production_c2___2014_15": 712.73,
+      "cost_of_production_c2___2015_16": 554.62,
+      "cost_of_production_c2___2016_17": 445.52,
+      "cost_of_production_c2___2017_18": 382.3
+    },
+    {
+      "crop": "Potato",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": 738.06,
+      "cost_of_production_c2___2014_15": 565.97,
+      "cost_of_production_c2___2015_16": 640.9,
+      "cost_of_production_c2___2016_17": 469.12,
+      "cost_of_production_c2___2017_18": 597.66
+    },
+    {
+      "crop": "R & M",
+      "state": "Assam",
+      "cost_of_production_c2___2013_14": 3658.13,
+      "cost_of_production_c2___2014_15": 4353.3,
+      "cost_of_production_c2___2015_16": 4286.74,
+      "cost_of_production_c2___2016_17": 4573.9,
+      "cost_of_production_c2___2017_18": 3491.8
+    },
+    {
+      "crop": "R & M",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": 2519.71,
+      "cost_of_production_c2___2014_15": 2307.82,
+      "cost_of_production_c2___2015_16": 2547.02,
+      "cost_of_production_c2___2016_17": 2512.95,
+      "cost_of_production_c2___2017_18": 2868.65
+    },
+    {
+      "crop": "R & M",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3651.67
+    },
+    {
+      "crop": "R & M",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 2116.37,
+      "cost_of_production_c2___2014_15": 2068.79,
+      "cost_of_production_c2___2015_16": 2799.19,
+      "cost_of_production_c2___2016_17": 2508.27,
+      "cost_of_production_c2___2017_18": 2896.76
+    },
+    {
+      "crop": "R & M",
+      "state": "Haryana",
+      "cost_of_production_c2___2013_14": 2538.45,
+      "cost_of_production_c2___2014_15": 2930.17,
+      "cost_of_production_c2___2015_16": 2983.49,
+      "cost_of_production_c2___2016_17": 2600.06,
+      "cost_of_production_c2___2017_18": 2508.99
+    },
+    {
+      "crop": "R & M",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 1907.18,
+      "cost_of_production_c2___2014_15": 2216.82,
+      "cost_of_production_c2___2015_16": 2234.99,
+      "cost_of_production_c2___2016_17": 1945.19,
+      "cost_of_production_c2___2017_18": 2454.85
+    },
+    {
+      "crop": "R & M",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4760.16
+    },
+    {
+      "crop": "R & M",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3396.19
+    },
+    {
+      "crop": "R & M",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 2377.46,
+      "cost_of_production_c2___2014_15": 2610.63,
+      "cost_of_production_c2___2015_16": 3022.78,
+      "cost_of_production_c2___2016_17": 2412.28,
+      "cost_of_production_c2___2017_18": 2452.02
+    },
+    {
+      "crop": "R & M",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 2862.76,
+      "cost_of_production_c2___2014_15": 3849.39,
+      "cost_of_production_c2___2015_16": 3476.15,
+      "cost_of_production_c2___2016_17": 2819.04,
+      "cost_of_production_c2___2017_18": 3034.54
+    },
+    {
+      "crop": "R & M",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": 3006.71,
+      "cost_of_production_c2___2014_15": 3113.76,
+      "cost_of_production_c2___2015_16": 3530.79,
+      "cost_of_production_c2___2016_17": 3799.65,
+      "cost_of_production_c2___2017_18": 3362.92
+    },
+    {
+      "crop": "Ragi",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 2251.3,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Ragi",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 1691.02,
+      "cost_of_production_c2___2014_15": 3240.98,
+      "cost_of_production_c2___2015_16": 2919.09,
+      "cost_of_production_c2___2016_17": 2186.14,
+      "cost_of_production_c2___2017_18": 2709.79
+    },
+    {
+      "crop": "Ragi",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 2054.63,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3982.18
+    },
+    {
+      "crop": "Ragi",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3802.76
+    },
+    {
+      "crop": "Ragi",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 1824.02,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4758.17
+    },
+    {
+      "crop": "Ragi",
+      "state": "Uttarakhand",
+      "cost_of_production_c2___2013_14": 695.71,
+      "cost_of_production_c2___2014_15": 905.79,
+      "cost_of_production_c2___2015_16": 1274.74,
+      "cost_of_production_c2___2016_17": 1482,
+      "cost_of_production_c2___2017_18": 4088.38
+    },
+    {
+      "crop": "Safflower",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 2113.43,
+      "cost_of_production_c2___2015_16": 3425.33,
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4041.84
+    },
+    {
+      "crop": "Safflower",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 2884.68,
+      "cost_of_production_c2___2014_15": 6972.54,
+      "cost_of_production_c2___2015_16": 4783.36,
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 5090.49
+    },
+    {
+      "crop": "Sesamum",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 8214.63,
+      "cost_of_production_c2___2014_15": 7177.67,
+      "cost_of_production_c2___2015_16": 9155.86,
+      "cost_of_production_c2___2016_17": 7800.68,
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Sesamum",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 6307.23,
+      "cost_of_production_c2___2014_15": 6903.85,
+      "cost_of_production_c2___2015_16": 6160.14,
+      "cost_of_production_c2___2016_17": 5557.2,
+      "cost_of_production_c2___2017_18": 6480.07
+    },
+    {
+      "crop": "Sesamum",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 16463.37
+    },
+    {
+      "crop": "Sesamum",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 5692.75,
+      "cost_of_production_c2___2014_15": 5289.28,
+      "cost_of_production_c2___2015_16": 6023.24,
+      "cost_of_production_c2___2016_17": 5376.56,
+      "cost_of_production_c2___2017_18": 5820.69
+    },
+    {
+      "crop": "Sesamum",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": 5590.06,
+      "cost_of_production_c2___2014_15": 5701.6,
+      "cost_of_production_c2___2015_16": 5283.25,
+      "cost_of_production_c2___2016_17": 4569.8,
+      "cost_of_production_c2___2017_18": 4718.79
+    },
+    {
+      "crop": "Sesamum",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 6860.24,
+      "cost_of_production_c2___2014_15": 7863.26,
+      "cost_of_production_c2___2015_16": 8066.09,
+      "cost_of_production_c2___2016_17": 7703.96,
+      "cost_of_production_c2___2017_18": 9445.59
+    },
+    {
+      "crop": "Sesamum",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 6272.4,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 9993.55
+    },
+    {
+      "crop": "Sesamum",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 6973.32,
+      "cost_of_production_c2___2015_16": 6484.48,
+      "cost_of_production_c2___2016_17": 5599.17,
+      "cost_of_production_c2___2017_18": 6697.51
+    },
+    {
+      "crop": "Sesamum",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": 3260.95,
+      "cost_of_production_c2___2014_15": 3375.65,
+      "cost_of_production_c2___2015_16": 3866.22,
+      "cost_of_production_c2___2016_17": 4857.77,
+      "cost_of_production_c2___2017_18": 4909.12
+    },
+    {
+      "crop": "Soyabean",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 3854.21,
+      "cost_of_production_c2___2015_16": 5928.34,
+      "cost_of_production_c2___2016_17": 3145.02,
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Soyabean",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": 3484.13,
+      "cost_of_production_c2___2014_15": 2510.75,
+      "cost_of_production_c2___2015_16": 4904.62,
+      "cost_of_production_c2___2016_17": 2495.31,
+      "cost_of_production_c2___2017_18": 3828.27
+    },
+    {
+      "crop": "Soyabean",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3131.21
+    },
+    {
+      "crop": "Soyabean",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 2989.38,
+      "cost_of_production_c2___2014_15": 2661.81,
+      "cost_of_production_c2___2015_16": 5845.28,
+      "cost_of_production_c2___2016_17": 2519.01,
+      "cost_of_production_c2___2017_18": 3298.96
+    },
+    {
+      "crop": "Soyabean",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 2949.75,
+      "cost_of_production_c2___2014_15": 4521.97,
+      "cost_of_production_c2___2015_16": 4709.72,
+      "cost_of_production_c2___2016_17": 3079.08,
+      "cost_of_production_c2___2017_18": 3495.22
+    },
+    {
+      "crop": "Soyabean",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 3534.21,
+      "cost_of_production_c2___2014_15": 3916.13,
+      "cost_of_production_c2___2015_16": 4530.73,
+      "cost_of_production_c2___2016_17": 3363.61,
+      "cost_of_production_c2___2017_18": 2312.15
+    },
+    {
+      "crop": "Soyabean",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 3039.17
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 147.79,
+      "cost_of_production_c2___2014_15": 218.45,
+      "cost_of_production_c2___2015_16": 213.77,
+      "cost_of_production_c2___2016_17": 235.79,
+      "cost_of_production_c2___2017_18": 239.67
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 128.98
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Haryana",
+      "cost_of_production_c2___2013_14": 198.23,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 140.26
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 130.46,
+      "cost_of_production_c2___2014_15": 143.45,
+      "cost_of_production_c2___2015_16": 138.19,
+      "cost_of_production_c2___2016_17": 143.48,
+      "cost_of_production_c2___2017_18": 129.28
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 152.53,
+      "cost_of_production_c2___2014_15": 182.74,
+      "cost_of_production_c2___2015_16": 189.37,
+      "cost_of_production_c2___2016_17": 183.1,
+      "cost_of_production_c2___2017_18": 193.48
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 190.78
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 161.29,
+      "cost_of_production_c2___2014_15": 171.05,
+      "cost_of_production_c2___2015_16": 170.23,
+      "cost_of_production_c2___2016_17": 188.89,
+      "cost_of_production_c2___2017_18": 242.1
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 165.24,
+      "cost_of_production_c2___2014_15": 173.25,
+      "cost_of_production_c2___2015_16": 176.28,
+      "cost_of_production_c2___2016_17": 171.94,
+      "cost_of_production_c2___2017_18": 199.05
+    },
+    {
+      "crop": "Sugarcane",
+      "state": "Uttarakhand",
+      "cost_of_production_c2___2013_14": 160.13,
+      "cost_of_production_c2___2014_15": 148.79,
+      "cost_of_production_c2___2015_16": 189.36,
+      "cost_of_production_c2___2016_17": 198.72,
+      "cost_of_production_c2___2017_18": 193.31
+    },
+    {
+      "crop": "Sunflower",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 4288.78,
+      "cost_of_production_c2___2014_15": 7923.19,
+      "cost_of_production_c2___2015_16": 4793.03,
+      "cost_of_production_c2___2016_17": 4465.41,
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Sunflower",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": 4042.78,
+      "cost_of_production_c2___2014_15": 3159.53,
+      "cost_of_production_c2___2015_16": 6534.37,
+      "cost_of_production_c2___2016_17": 2422.65,
+      "cost_of_production_c2___2017_18": 3504.81
+    },
+    {
+      "crop": "Sunflower",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 5214.95,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": "NA"
+    },
+    {
+      "crop": "Urad",
+      "state": "Andhra Pradesh",
+      "cost_of_production_c2___2013_14": 3148.6,
+      "cost_of_production_c2___2014_15": 3394.44,
+      "cost_of_production_c2___2015_16": 4898.37,
+      "cost_of_production_c2___2016_17": 6435.08,
+      "cost_of_production_c2___2017_18": 4138.44
+    },
+    {
+      "crop": "Urad",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": 2594.05,
+      "cost_of_production_c2___2014_15": 3394.59,
+      "cost_of_production_c2___2015_16": 11176.81,
+      "cost_of_production_c2___2016_17": 4705.82,
+      "cost_of_production_c2___2017_18": 10724.2
+    },
+    {
+      "crop": "Urad",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4269.99
+    },
+    {
+      "crop": "Urad",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 5037.47
+    },
+    {
+      "crop": "Urad",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 4362.77,
+      "cost_of_production_c2___2014_15": 3482.43,
+      "cost_of_production_c2___2015_16": 6259.63,
+      "cost_of_production_c2___2016_17": 4212.45,
+      "cost_of_production_c2___2017_18": 3964.77
+    },
+    {
+      "crop": "Urad",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 4874.5,
+      "cost_of_production_c2___2014_15": 6107.01,
+      "cost_of_production_c2___2015_16": 9643.64,
+      "cost_of_production_c2___2016_17": 5773.25,
+      "cost_of_production_c2___2017_18": 5641.7
+    },
+    {
+      "crop": "Urad",
+      "state": "Odisha",
+      "cost_of_production_c2___2013_14": 4874.03,
+      "cost_of_production_c2___2014_15": 5574.98,
+      "cost_of_production_c2___2015_16": 7631.26,
+      "cost_of_production_c2___2016_17": 6294.08,
+      "cost_of_production_c2___2017_18": 4837.97
+    },
+    {
+      "crop": "Urad",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 5392.99,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 4482.21
+    },
+    {
+      "crop": "Urad",
+      "state": "Tamil Nadu",
+      "cost_of_production_c2___2013_14": 4404.39,
+      "cost_of_production_c2___2014_15": 4446.77,
+      "cost_of_production_c2___2015_16": 6249.98,
+      "cost_of_production_c2___2016_17": 6860.81,
+      "cost_of_production_c2___2017_18": 6302.92
+    },
+    {
+      "crop": "Urad",
+      "state": "Telangana",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 11885.74
+    },
+    {
+      "crop": "Urad",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 4700.41,
+      "cost_of_production_c2___2014_15": 4756.45,
+      "cost_of_production_c2___2015_16": 11257.55,
+      "cost_of_production_c2___2016_17": 5599.5,
+      "cost_of_production_c2___2017_18": 5820.65
+    },
+    {
+      "crop": "Wheat",
+      "state": "Bihar",
+      "cost_of_production_c2___2013_14": 908.89,
+      "cost_of_production_c2___2014_15": 1230.82,
+      "cost_of_production_c2___2015_16": 1302.87,
+      "cost_of_production_c2___2016_17": 1135.36,
+      "cost_of_production_c2___2017_18": 1274.59
+    },
+    {
+      "crop": "Wheat",
+      "state": "Chhattisgarh",
+      "cost_of_production_c2___2013_14": 1821.47,
+      "cost_of_production_c2___2014_15": "NA",
+      "cost_of_production_c2___2015_16": "NA",
+      "cost_of_production_c2___2016_17": "NA",
+      "cost_of_production_c2___2017_18": 2114.84
+    },
+    {
+      "crop": "Wheat",
+      "state": "Gujarat",
+      "cost_of_production_c2___2013_14": 1114.27,
+      "cost_of_production_c2___2014_15": 1239.07,
+      "cost_of_production_c2___2015_16": 1253.87,
+      "cost_of_production_c2___2016_17": 1207.44,
+      "cost_of_production_c2___2017_18": 1358.31
+    },
+    {
+      "crop": "Wheat",
+      "state": "Haryana",
+      "cost_of_production_c2___2013_14": 1044.89,
+      "cost_of_production_c2___2014_15": 1240.99,
+      "cost_of_production_c2___2015_16": 1239.1,
+      "cost_of_production_c2___2016_17": 1192.13,
+      "cost_of_production_c2___2017_18": 1341.44
+    },
+    {
+      "crop": "Wheat",
+      "state": "Himachal Pradesh",
+      "cost_of_production_c2___2013_14": 1478.42,
+      "cost_of_production_c2___2014_15": 1750.37,
+      "cost_of_production_c2___2015_16": 1924.55,
+      "cost_of_production_c2___2016_17": 1837.77,
+      "cost_of_production_c2___2017_18": 1772.97
+    },
+    {
+      "crop": "Wheat",
+      "state": "Jharkhand",
+      "cost_of_production_c2___2013_14": 1027.56,
+      "cost_of_production_c2___2014_15": 1734.07,
+      "cost_of_production_c2___2015_16": 1424.39,
+      "cost_of_production_c2___2016_17": 1318.91,
+      "cost_of_production_c2___2017_18": 1791.24
+    },
+    {
+      "crop": "Wheat",
+      "state": "Karnataka",
+      "cost_of_production_c2___2013_14": "NA",
+      "cost_of_production_c2___2014_15": 2354.04,
+      "cost_of_production_c2___2015_16": 3861.93,
+      "cost_of_production_c2___2016_17": 3710.58,
+      "cost_of_production_c2___2017_18": 2233.98
+    },
+    {
+      "crop": "Wheat",
+      "state": "Madhya Pradesh",
+      "cost_of_production_c2___2013_14": 1074.73,
+      "cost_of_production_c2___2014_15": 1127.43,
+      "cost_of_production_c2___2015_16": 1222.47,
+      "cost_of_production_c2___2016_17": 1018.25,
+      "cost_of_production_c2___2017_18": 1109.88
+    },
+    {
+      "crop": "Wheat",
+      "state": "Maharashtra",
+      "cost_of_production_c2___2013_14": 1681.08,
+      "cost_of_production_c2___2014_15": 1992.76,
+      "cost_of_production_c2___2015_16": 2048.05,
+      "cost_of_production_c2___2016_17": 2088.53,
+      "cost_of_production_c2___2017_18": 2314.46
+    },
+    {
+      "crop": "Wheat",
+      "state": "Punjab",
+      "cost_of_production_c2___2013_14": 964.29,
+      "cost_of_production_c2___2014_15": 1081.84,
+      "cost_of_production_c2___2015_16": 1083.37,
+      "cost_of_production_c2___2016_17": 1102.62,
+      "cost_of_production_c2___2017_18": 1169.43
+    },
+    {
+      "crop": "Wheat",
+      "state": "Rajasthan",
+      "cost_of_production_c2___2013_14": 997.52,
+      "cost_of_production_c2___2014_15": 1156.25,
+      "cost_of_production_c2___2015_16": 1185.07,
+      "cost_of_production_c2___2016_17": 1172.27,
+      "cost_of_production_c2___2017_18": 1364.06
+    },
+    {
+      "crop": "Wheat",
+      "state": "Uttar Pradesh",
+      "cost_of_production_c2___2013_14": 1054.26,
+      "cost_of_production_c2___2014_15": 1502.89,
+      "cost_of_production_c2___2015_16": 1423.25,
+      "cost_of_production_c2___2016_17": 1260.47,
+      "cost_of_production_c2___2017_18": 1464.24
+    },
+    {
+      "crop": "Wheat",
+      "state": "Uttarakhand",
+      "cost_of_production_c2___2013_14": 942.13,
+      "cost_of_production_c2___2014_15": 1277.32,
+      "cost_of_production_c2___2015_16": 1203.15,
+      "cost_of_production_c2___2016_17": 1092.4,
+      "cost_of_production_c2___2017_18": 1432.22
+    },
+    {
+      "crop": "Wheat",
+      "state": "West Bengal",
+      "cost_of_production_c2___2013_14": 1404.88,
+      "cost_of_production_c2___2014_15": 1585.96,
+      "cost_of_production_c2___2015_16": 1949.51,
+      "cost_of_production_c2___2016_17": 1853.06,
+      "cost_of_production_c2___2017_18": 1541.29
+    }
+  ]
+}

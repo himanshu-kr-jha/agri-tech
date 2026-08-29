@@ -31,6 +31,7 @@ from typing import Any
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from agrivardhak.domain import irrigation
 from agrivardhak.domain.enums import (
     CropCycleStatus,
     ExternalRecordKind,
@@ -43,7 +44,7 @@ from agrivardhak.domain.models.market import Buyer, DemandSignal, Lot
 from agrivardhak.domain.models.organization import Farmer, Organization, OrgResource
 from agrivardhak.domain.models.provenance import ExternalRecord
 from agrivardhak.ingestion import agmarknet, weather
-from agrivardhak.intelligence import crop_health, farm, market, quality, risk, scheme
+from agrivardhak.intelligence import crop_health, farm, funding, market, quality, risk, scheme
 from agrivardhak.intelligence.contracts import EvidenceRef, ModuleInput
 from agrivardhak.provenance import resolver
 
@@ -212,7 +213,7 @@ def for_quality(session: Session, *, organization_id: uuid.UUID, as_of: dt.datet
                 ),
                 tract=farmer.tract,
                 health=health,
-                water_assured=(plot.irrigation_source or "").upper() not in ("", "RAINFED"),
+                water_assured=irrigation.water_assured(plot.irrigation_source),
                 weather_stress_sd=stress,
                 evidence=evidence,
             )
@@ -534,9 +535,7 @@ def for_farm(
 
     blocks: list[farm.LandBlock] = []
     for tract, group in by_tract.items():
-        irrigated = sum(
-            1 for _f, p in group if (p.irrigation_source or "").upper() not in ("", "RAINFED")
-        )
+        irrigated = sum(1 for _f, p in group if irrigation.water_assured(p.irrigation_source))
         blocks.append(
             farm.LandBlock(
                 tract=tract,
@@ -826,3 +825,121 @@ def for_scheme(
             "member_count": member_count,
         },
     )
+
+
+# --------------------------------------------------------------------------- funding (M12)
+
+
+def for_funding(
+    session: Session,
+    *,
+    organization_id: uuid.UUID,
+    as_of: dt.datetime,
+    quality_predictions: dict[str, dict[str, Any]] | None = None,
+) -> ModuleInput:
+    """What the season costs, per crop and per tract — never per farmer.
+
+    The grouping is the safety property, not a convenience. FR-605 and SAF-04 forbid this
+    system from ever ranking members by who is worth funding, and the cheapest way to keep
+    that promise is to make the per-farmer number impossible to compute here: the module is
+    handed crop-tract blocks and never sees a cost attached to a name.
+
+    ``funding.py`` has existed since M12 and until now nothing called it — there was no
+    gather function and no entry in ``engine.MODULES``, so no question could reach it.
+    """
+    del quality_predictions  # accepted for signature parity with risk/farm; unused today
+
+    rows = active_cycles(session, organization_id=organization_id, as_of=as_of)
+    grouped: dict[tuple[str, str], list[tuple[CropCycle, Farmer]]] = defaultdict(list)
+    for cycle, crop_name, _variety, farmer, _plot in rows:
+        grouped[(crop_name, farmer.tract or "unknown")].append((cycle, farmer))
+
+    needs: list[funding.CapitalNeed] = []
+    for (crop_name, tract), group in sorted(grouped.items()):
+        economics = farm.CROP_ECONOMICS.get(crop_name)
+        if economics is None:
+            # Costed crops only. A crop with no cost model is left out rather than given a
+            # borrowed one — an invented requirement is worse than a stated gap.
+            continue
+        sowings = [c.sowing_date for c, _f in group if c.sowing_date]
+        needs.append(
+            funding.CapitalNeed(
+                crop_name=crop_name,
+                tract=tract,
+                area_sqm=sum((Decimal(str(c.area_sqm)) for c, _f in group), Decimal(0)),
+                cost_paise_per_ha=economics.total_cost_paise_per_ha,
+                needed_by=min(sowings) if sowings else None,
+                farmer_ids=sorted({f.id for _c, f in group}, key=str),
+                evidence=[
+                    _domain_ref(c.id, f"{crop_name} cycle in {tract}", as_of) for c, _f in group[:3]
+                ],
+            )
+        )
+
+    return ModuleInput(
+        organization_id=organization_id,
+        as_of=as_of,
+        data={
+            "needs": needs,
+            "sources": _funding_sources(session, organization_id, as_of),
+            "working_capital_paise": working_capital_paise(session, organization_id),
+        },
+    )
+
+
+def _funding_sources(
+    session: Session, organization_id: uuid.UUID, as_of: dt.datetime
+) -> list[funding.FundingSource]:
+    """Capital the collective could actually draw on this season.
+
+    Only sources with a record behind them. We do not list "a bank loan" as an option the
+    way a brochure would: a source with no recorded terms cannot be compared against one
+    that has them, and offering it anyway invites a plan built on money nobody has agreed to.
+    """
+    sources: list[funding.FundingSource] = []
+
+    own = (
+        session.execute(
+            select(OrgResource).where(
+                OrgResource.organization_id == organization_id,
+                OrgResource.type == OrgResourceType.WORKING_CAPITAL,
+            )
+        )
+        .scalars()
+        .first()
+    )
+    if own is not None:
+        sources.append(
+            funding.FundingSource(
+                label="Own working capital",
+                available_paise=own.value_paise,
+                interest_rate=0.0,
+                lead_time_days=0,
+                evidence=_domain_ref(own.id, own.label or "working capital", as_of),
+            )
+        )
+
+    warehouse = (
+        session.execute(
+            select(OrgResource).where(
+                OrgResource.organization_id == organization_id,
+                OrgResource.type.in_((OrgResourceType.WAREHOUSE, OrgResourceType.COLD_STORAGE)),
+            )
+        )
+        .scalars()
+        .first()
+    )
+    if warehouse is not None:
+        sources.append(
+            funding.FundingSource(
+                label=f"Warehouse receipt against {warehouse.label}",
+                # Unknown, and unknown is not zero (FR-103). The module reports it as a
+                # sourcing option whose size has to be established, not as headroom.
+                available_paise=None,
+                interest_rate=None,
+                lead_time_days=21,
+                evidence=_domain_ref(warehouse.id, warehouse.label or "warehouse", as_of),
+            )
+        )
+
+    return sources

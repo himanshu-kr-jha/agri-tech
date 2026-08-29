@@ -26,6 +26,7 @@ from agrivardhak.domain.models.crops import Crop, CropCycle, Variety
 from agrivardhak.domain.models.land import Farm, FarmResource, Plot, PlotTenure
 from agrivardhak.domain.models.market import Buyer, DemandSignal, Lot, LotItem
 from agrivardhak.domain.models.organization import (
+    Announcement,
     Farmer,
     Membership,
     Organization,
@@ -170,6 +171,7 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
     crops = _seed_crops(session)
     _seed_buyers(session, org, rng)
     _seed_users(session, org)
+    _seed_announcements(session, org)
 
     farmers = _seed_farmers(session, org, rng)
     plots = _seed_land(session, farmers, rng)
@@ -435,6 +437,70 @@ def _seed_users(session: Session, org: Organization) -> None:
         ]
     )
     session.flush()
+
+
+def _seed_announcements(session: Session, org: Organization) -> int:
+    """Organization notices, deliberately mixed in visibility (FR-105, INV-5).
+
+    Three shared with members and two kept internal, and the internal pair is the important
+    half. INV-5 is easy to *claim* when there is nothing on the other side of the boundary;
+    it is only demonstrable when the collective is genuinely holding information a farmer
+    cannot see, and the farmer assistant declines to reveal it while still showing what it
+    can. A boundary with nothing behind it proves nothing.
+
+    ⚠️ SYNTHETIC — DEMO ONLY. Operational notices, not agronomic or scheme guidance, so no
+    citation is owed under CLAUDE.md §5; no official deadline or price is asserted here.
+    """
+    if (
+        session.execute(select(Announcement).where(Announcement.organization_id == org.id).limit(1))
+        .scalars()
+        .first()
+    ):
+        return 0
+
+    notices: list[tuple[str, str, enums.VisibilityScope]] = [
+        (
+            "Paddy collection centre timings",
+            "The Jhunsi collection centre will accept member paddy from 7am to 4pm on "
+            "weekdays this season. Bring your membership number. Grading happens at "
+            "intake, so lots are weighed and graded in front of you. (DEMO DATA)",
+            enums.VisibilityScope.SHARED_WITH_MEMBERS,
+        ),
+        (
+            "Soil health camp at the Doab block office",
+            "A soil testing camp for members with plots in the Doab tract. Samples are "
+            "taken free of charge and results are recorded against your plot. (DEMO DATA)",
+            enums.VisibilityScope.SHARED_WITH_MEMBERS,
+        ),
+        (
+            "Crop insurance enrolment support",
+            "The field officer team is available to help members complete crop insurance "
+            "paperwork. Check your own scheme list in this app for what applies to your "
+            "holding — enrolment windows are set by the scheme, not by us. (DEMO DATA)",
+            enums.VisibilityScope.SHARED_WITH_MEMBERS,
+        ),
+        (
+            "Buyer negotiation position — Ganga Cold Store",
+            "Internal only. Our walk-away price and the counter-offer schedule for the "
+            "potato lot. Not to be shared with members while the negotiation is open: a "
+            "disclosed floor is not a floor. (DEMO DATA)",
+            enums.VisibilityScope.ORG_INTERNAL,
+        ),
+        (
+            "Working capital position and disbursement sequencing",
+            "Internal only. Current working capital against this season's committed input "
+            "purchases, and the order in which tracts are funded if the shortfall persists. "
+            "(DEMO DATA)",
+            enums.VisibilityScope.ORG_INTERNAL,
+        ),
+    ]
+
+    for title, body, visibility in notices:
+        session.add(
+            Announcement(organization_id=org.id, title=title, body=body, visibility=visibility)
+        )
+    session.flush()
+    return len(notices)
 
 
 def _demo_hash() -> str:

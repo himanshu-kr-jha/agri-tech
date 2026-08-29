@@ -1,4 +1,4 @@
-.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed seed-reset check lint fmt typecheck test test-api test-web progress progress-check clean
+.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed seed-reset fetch fetch-due fetch-status check lint fmt typecheck test test-api test-web progress progress-check clean
 
 API := apps/api
 PY  := $(API)/.venv/bin/python
@@ -78,6 +78,16 @@ seed: ## Load the synthetic Prayagraj FPO
 seed-reset: ## Truncate all data and re-seed (faster than db-reset; keeps the schema)
 	cd $(API) && .venv/bin/python -m agrivardhak.seed --reset
 
+fetch-status: ## Show every registered external source, its health and whether it is due
+	@python3 seed/fetch_datagovin.py --status
+
+fetch-due: ## Re-fetch every source past its recheck cadence (the periodic entry point)
+	@python3 seed/fetch_datagovin.py --due
+	@python3 seed/fetch_up_schemes.py --due
+
+fetch: ## Fetch one batch of external sources, e.g. make fetch b=1
+	@python3 seed/fetch_datagovin.py $(if $(b),--batch $(b),)
+
 weather: ## Fetch real Open-Meteo weather:  make weather from=2024-06-01 to=2026-08-22
 	@test -n "$(from)" -a -n "$(to)" || (echo 'usage: make weather from=YYYY-MM-DD to=YYYY-MM-DD' && exit 1)
 	python3 seed/fetch_weather.py --from $(from) --to $(to)
@@ -132,6 +142,9 @@ test-api: ## pytest
 
 test-web: ## vitest — component tests, including partial-packet rendering
 	cd apps/web && npx vitest run
+
+routing-eval: ## Measure intent-routing accuracy against a live model:  make routing-eval a="--verbose"
+	$(PY) scripts/routing_eval.py $(a)
 
 progress: ## Regenerate PROGRESS.md from what the repo can prove
 	$(API)/.venv/bin/python scripts/progress.py

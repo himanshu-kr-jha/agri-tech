@@ -44,6 +44,12 @@ class BriefingItem:
     href: str | None = None
     count: int | None = None
     value_paise: int | None = None
+    #: The row this item is about. Added so the assistant can cite a briefing item rather
+    #: than restate it — a claim with no evidence ref is dropped before rendering (FR-804),
+    #: and "three things need your decision" is exactly the kind of sentence that has to be
+    #: checkable. ``None`` for items that summarise a count rather than a row.
+    subject_type: str | None = None
+    subject_id: uuid.UUID | None = None
     #: The unit ``value_paise`` is in. Carried because a buyer-selection value is paise *per
     #: kilogram*, not a total — rendering it as a rupee total produced "Rs 0.0 lakh · ₹18.54"
     #: side by side, both wrong in different ways.
@@ -113,6 +119,8 @@ def build(
                 href=f"/decisions/{row.packet_id}" if row.packet_id else None,
                 value_paise=row.recommended_value,
                 unit=row.value_unit,
+                subject_type="recommendation",
+                subject_id=row.id,
             )
         )
 
@@ -157,6 +165,8 @@ def build(
                     f"{'overdue since' if overdue else 'due'} "
                     f"{task.due_on:%d %b} · {task.assignee_role.value.replace('_', ' ').lower()}"
                 ),
+                subject_type="task",
+                subject_id=task.id,
             )
         )
 
@@ -182,6 +192,8 @@ def build(
                 href="/risk",
                 value_paise=risk.value_at_risk_paise,
                 unit="paise",
+                subject_type="risk_register_entry",
+                subject_id=risk.id,
             )
         )
 
@@ -213,6 +225,8 @@ def build(
                 href="/risk",
                 value_paise=risk.value_at_risk_paise,
                 unit="paise",
+                subject_type="risk_register_entry",
+                subject_id=risk.id,
             )
         )
 

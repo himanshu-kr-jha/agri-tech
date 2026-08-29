@@ -443,3 +443,38 @@ export const TRACT_LABEL: Record<string, string> = {
   DOAB: "Doab",
   YAMUNA_PAR: "Yamuna-par",
 };
+
+// --------------------------------------------------------------------------- assistant
+
+/** The four answer shapes. A question earns one; it does not always earn a packet. */
+export type ResponseShape = "DECISION" | "LOOKUP" | "EXPLAIN" | "REFUSE";
+
+/** What the router decided, streamed to the UI before any work begins. */
+export interface IntentPlan {
+  shape: ResponseShape;
+  lookup: string | null;
+  modules: string[];
+  entities: Record<string, unknown>;
+  rationale: string;
+  router_confidence: number;
+  /** True when the model was unavailable and keyword routing produced this. */
+  fell_back: boolean;
+}
+
+/**
+ * The only shape the web tier knows about.
+ *
+ * Deliberately the outer contract rather than the packet: a future orchestrator that returns
+ * one of these can replace everything behind it without this file changing.
+ */
+export interface AssistantAnswer {
+  shape: ResponseShape;
+  plan: IntentPlan;
+  claims: Claim[];
+  packet: Packet | null;
+  packet_id: string | null;
+  content_hash: string | null;
+  refusal: string | null;
+  grounded: boolean;
+  turn_id: string | null;
+}

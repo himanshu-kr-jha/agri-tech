@@ -1,0 +1,72 @@
+{
+  "batch": 1,
+  "domain": "msp",
+  "generated_at": "2026-08-27T19:48:18.665319+00:00",
+  "licence_note": "UNKNOWN licences block a confidence-cap lift under ADR-0014. Data here is cached but inert until a human confirms the licence.",
+  "resources": [
+    {
+      "key": "msp-kharif",
+      "title": "Kharif crop-wise MSP and cost of production",
+      "publisher": "Directorate of Economics & Statistics / CACP, Ministry of Agriculture & Farmers Welfare",
+      "access_route": "api.data.gov.in",
+      "resource_id": "aa823ea9-ecb3-45ea-9ec0-1fcb0c522feb",
+      "unit": "INR per quintal",
+      "temporal_coverage": "2021-22..2024-25",
+      "authority": "authoritative",
+      "licence": "UNKNOWN",
+      "recheck_days": 90,
+      "records": 17,
+      "fields": [
+        "sl__no_",
+        "kharif_crop_wise",
+        "_2021_22___cost",
+        "_2021_22___msp_",
+        "_2021_22___difference__msp_cost_",
+        "_2022_23___cost",
+        "_2022_23___msp",
+        "_2022_23___difference__msp_cost_",
+        "_2023_24___cost",
+        "_2023_24___msp",
+        "_2023_24___difference__msp_cost_",
+        "_2024_25___cost",
+        "_2024_25___msp",
+        "_2024_25___difference__msp_cost_"
+      ],
+      "sha256_file": "7fc070248c02b4778fb5453c13fc0b48dd9f6d447b981a46dc6a01109ab2c8d0",
+      "sha256_content": "87ad8e4d2f12eeec8d19166e742d484f31c30bf8b819984e239000282fb59b5c",
+      "notes": "Current. 17 rows incl. paddy grades and cotton staples."
+    },
+    {
+      "key": "msp-rabi",
+      "title": "Rabi crop-wise MSP and cost of production",
+      "publisher": "Directorate of Economics & Statistics / CACP, Ministry of Agriculture & Farmers Welfare",
+      "access_route": "api.data.gov.in",
+      "resource_id": "6f655085-856d-4246-a516-5d6b3bebb990",
+      "unit": "INR per quintal",
+      "temporal_coverage": "2022-23..2025-26",
+      "authority": "authoritative",
+      "licence": "UNKNOWN",
+      "recheck_days": 90,
+      "records": 6,
+      "fields": [
+        "_sl__no_",
+        "rabi_crop_wise",
+        "_2022_23___cost",
+        "_2022_23___msp",
+        "_2022_23___difference__msp_cost_",
+        "_2023_24___cost",
+        "_2023_24___msp",
+        "_2023_24___difference__msp_cost_",
+        "_2024_25___cost",
+        "_2024_25___msp",
+        "_2024_25___difference__msp_cost_",
+        "_2025_26___cost",
+        "_2025_26___msp",
+        "_2025_26___difference__msp_cost_"
+      ],
+      "sha256_file": "8ba5ada0ab3707c3381367f751fac62eb6517c23b89f0a98f049748caf7ebd4e",
+      "sha256_content": "8a20bc381607ee2d8ceadaf33b904ddcd2a8bad4ee0a0e7ede158fb46cb2c344",
+      "notes": "Current. Wheat, Barley, Gram, Masur, Rapeseed/Mustard, Safflower."
+    }
+  ]
+}

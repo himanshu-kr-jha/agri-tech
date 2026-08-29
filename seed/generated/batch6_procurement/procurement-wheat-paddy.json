@@ -1,0 +1,88 @@
+{
+  "records": [
+    {
+      "kms_rms": "2018-19",
+      "wheat___quantity_procured__in_lmt_": 357.95,
+      "wheat___msp_value__in_rs__crore_": 62104.33,
+      "wheat___number_of_farmers_benefited": 4033463,
+      "paddy__in_terms_of_rice____quantity_procured__in_lmt_": 443.99,
+      "paddy__in_terms_of_rice____msp_value__in_rs__crore_": 116839.47,
+      "paddy__in_terms_of_rice____number_of_farmers_benefited": 9705105
+    },
+    {
+      "kms_rms": "2019-20",
+      "wheat___quantity_procured__in_lmt_": 341.32,
+      "wheat___msp_value__in_rs__crore_": 62802.88,
+      "wheat___number_of_farmers_benefited": 3557080,
+      "paddy__in_terms_of_rice____quantity_procured__in_lmt_": 518.26,
+      "paddy__in_terms_of_rice____msp_value__in_rs__crore_": 141465.66,
+      "paddy__in_terms_of_rice____number_of_farmers_benefited": 12459354
+    },
+    {
+      "kms_rms": "2020-21",
+      "wheat___quantity_procured__in_lmt_": 389.92,
+      "wheat___msp_value__in_rs__crore_": 75059.6,
+      "wheat___number_of_farmers_benefited": 4335972,
+      "paddy__in_terms_of_rice____quantity_procured__in_lmt_": 602.45,
+      "paddy__in_terms_of_rice____msp_value__in_rs__crore_": 169098.72,
+      "paddy__in_terms_of_rice____number_of_farmers_benefited": 13112458
+    },
+    {
+      "kms_rms": "2021-22",
+      "wheat___quantity_procured__in_lmt_": 433.44,
+      "wheat___msp_value__in_rs__crore_": 85604.4,
+      "wheat___number_of_farmers_benefited": 4919891,
+      "paddy__in_terms_of_rice____quantity_procured__in_lmt_": 575.88,
+      "paddy__in_terms_of_rice____msp_value__in_rs__crore_": 168030.8,
+      "paddy__in_terms_of_rice____number_of_farmers_benefited": 12679650
+    },
+    {
+      "kms_rms": "2022-23",
+      "wheat___quantity_procured__in_lmt_": 187.92,
+      "wheat___msp_value__in_rs__crore_": 37865.88,
+      "wheat___number_of_farmers_benefited": 1783192,
+      "paddy__in_terms_of_rice____quantity_procured__in_lmt_": 568.66,
+      "paddy__in_terms_of_rice____msp_value__in_rs__crore_": 174370.76,
+      "paddy__in_terms_of_rice____number_of_farmers_benefited": 12497077
+    }
+  ],
+  "field": [
+    {
+      "id": "kms_rms",
+      "name": "KMS/RMS",
+      "type": "keyword"
+    },
+    {
+      "id": "wheat___quantity_procured__in_lmt_",
+      "name": "Wheat - Quantity procured (in LMT)",
+      "type": "double"
+    },
+    {
+      "id": "wheat___msp_value__in_rs__crore_",
+      "name": "Wheat - MSP value (in Rs. Crore)",
+      "type": "double"
+    },
+    {
+      "id": "wheat___number_of_farmers_benefited",
+      "name": "Wheat - Number of Farmers benefited",
+      "type": "double"
+    },
+    {
+      "id": "paddy__in_terms_of_rice____quantity_procured__in_lmt_",
+      "name": "Paddy (in terms of rice) - Quantity procured (in LMT)",
+      "type": "double"
+    },
+    {
+      "id": "paddy__in_terms_of_rice____msp_value__in_rs__crore_",
+      "name": "Paddy (in terms of rice) - MSP value (in Rs. Crore)",
+      "type": "double"
+    },
+    {
+      "id": "paddy__in_terms_of_rice____number_of_farmers_benefited",
+      "name": "Paddy (in terms of rice) - Number of Farmers benefited",
+      "type": "double"
+    }
+  ],
+  "total": 5,
+  "fetched_count": 5
+}
