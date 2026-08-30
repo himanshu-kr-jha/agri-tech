@@ -212,6 +212,7 @@ Additional engineering decisions:
 | T-15 | **One canonical alias table**, applied at gather not ingest, where an unmapped name raises rather than skips. Cross-source names are not derivable — `R & M` / `Rapeseed/Mustard` / `Mustard` — and `PRAYAGRAJ` matches zero rows where `ALLAHABAD` matches 470 | ADR-0017 |
 | T-16 | **Hybrid retrieval over a gated knowledge base.** pgvector + Postgres full-text fused by Reciprocal Rank Fusion, ranked by trust computed at query time, with an unlicensed passage capped at 0.40 — below the orchestrator's 0.45 floor, so it can be read and cannot become advice | ADR-0018 |
 | T-17 | **Vercel → Render → Supabase, and the web tier still cannot reach Postgres.** Managed Postgres makes direct browser access easy; taking it would relocate the INV-5 boundary into RLS policies. Extensions move from `initdb` into a base migration so `alembic upgrade head` is sufficient on any empty database | ADR-0019 |
+| T-18 | **The router model is a perishable dependency.** NVIDIA retired `llama-3.1-8b` mid-flight; a dead model does not raise, so routing fell back to keywords and every question silently became a Decision Packet again — the exact failure ADR-0011 removed. Router latency must be measured through `router.plan`, not `/chat/completions` | ADR-0020 |
 
 ---
 

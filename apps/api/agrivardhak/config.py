@@ -37,11 +37,16 @@ class Settings(BaseSettings):
     #: rather than adding the OpenAI SDK: two call sites do not justify a dependency.
     nvidia_api_key: str | None = None
     nvidia_base_url: str = "https://integrate.api.nvidia.com/v1"
-    #: An 8B, deliberately. The router picks one item from a closed enum — a task that
-    #: does not need a frontier model, and on this tier llama-3.3-70b answers in ~50s
-    #: against this one's ~500ms. A router slower than the work it schedules is worse
-    #: than the keyword planner it replaces. Measured in docs/adr/0011.
-    router_model: str = "meta/llama-3.1-8b-instruct"
+    #: A small instruct model, deliberately. The router picks one item from a closed enum —
+    #: a task that does not need a frontier model, and a router slower than the work it
+    #: schedules is worse than the keyword planner it replaces. Measured in docs/adr/0020;
+    #: the original llama-3.1-8b choice and its spike are in docs/adr/0011.
+    #:
+    #: This value has an expiry the code cannot see: NVIDIA retired the whole Llama family
+    #: on 2026-08-26 and served 410 to every routing call, which does not raise — it falls
+    #: back to keywords, and every question silently became a Decision Packet. If routing
+    #: looks wrong, check `fell_back` on the routing event before suspecting the prompt.
+    router_model: str = "openai/gpt-oss-20b"
 
     #: Shorter than the narrator's budget on purpose. The narrator runs after the answer
     #: exists, so it can afford to be slow; the router runs before any work starts, and a
