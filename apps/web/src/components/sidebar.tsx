@@ -27,38 +27,60 @@ import {
   IconRisk,
 } from "@/components/icons";
 
-type NavItem = { href: string; label: string; icon: typeof IconAsk };
+/**
+ * ``labelKey`` rather than a label. This is a client component — it cannot read the locale
+ * cookie, which lives on the server — so the shell resolves the strings and passes them in.
+ * Keeping the *keys* here means the navigation's shape and order stay in one place instead
+ * of being reassembled by whoever renders it.
+ */
+type NavItem = { href: string; labelKey: NavKey; icon: typeof IconAsk };
+
+export type NavKey =
+  | "con.nav.dashboard"
+  | "con.nav.assistant"
+  | "con.nav.decisions"
+  | "con.nav.risk"
+  | "con.nav.farmers"
+  | "con.nav.market"
+  | "con.nav.discrepancies"
+  | "con.nav.knowledge"
+  | "con.nav.impact";
+
+export type GroupKey = "con.nav.group.decide" | "con.nav.group.collective";
+
+/** Every string the shell has to resolve for this component. */
+export type NavLabels = Record<NavKey | GroupKey, string>;
 
 /**
  * Grouped the way the work is actually sequenced: you ask, you decide, then you look at
  * what the collective is made of. Not alphabetically, and not by which screen was built first.
  */
-const NAV_GROUPS: { label: string | null; items: NavItem[] }[] = [
+const NAV_GROUPS: { label: GroupKey | null; items: NavItem[] }[] = [
   {
     label: null,
-    items: [{ href: "/dashboard", label: "Dashboard", icon: IconDashboard }],
+    items: [{ href: "/dashboard", labelKey: "con.nav.dashboard", icon: IconDashboard }],
   },
   {
-    label: "Decide",
+    label: "con.nav.group.decide" as GroupKey,
     items: [
-      { href: "/assistant", label: "Ask", icon: IconAsk },
-      { href: "/decisions", label: "Decisions", icon: IconDecisions },
-      { href: "/risk", label: "Risk", icon: IconRisk },
+      { href: "/assistant", labelKey: "con.nav.assistant", icon: IconAsk },
+      { href: "/decisions", labelKey: "con.nav.decisions", icon: IconDecisions },
+      { href: "/risk", labelKey: "con.nav.risk", icon: IconRisk },
     ],
   },
   {
-    label: "Collective",
+    label: "con.nav.group.collective" as GroupKey,
     items: [
-      { href: "/farmers", label: "Farmers", icon: IconFarmers },
-      { href: "/market", label: "Market", icon: IconMarket },
-      { href: "/discrepancies", label: "Conflicts", icon: IconAlert },
-      { href: "/knowledge", label: "Published", icon: IconDatabase },
-      { href: "/impact", label: "Impact", icon: IconImpact },
+      { href: "/farmers", labelKey: "con.nav.farmers", icon: IconFarmers },
+      { href: "/market", labelKey: "con.nav.market", icon: IconMarket },
+      { href: "/discrepancies", labelKey: "con.nav.discrepancies", icon: IconAlert },
+      { href: "/knowledge", labelKey: "con.nav.knowledge", icon: IconDatabase },
+      { href: "/impact", labelKey: "con.nav.impact", icon: IconImpact },
     ],
   },
 ];
 
-export function Sidebar() {
+export function Sidebar({ labels }: { labels: NavLabels }) {
   const pathname = usePathname();
 
   return (
@@ -81,7 +103,7 @@ export function Sidebar() {
       <nav className="flex-1 space-y-6 px-3 py-2">
         {NAV_GROUPS.map((group, i) => (
           <div key={group.label ?? `group-${i}`} className="space-y-0.5">
-            {group.label && <p className="nav-group-label mb-2">{group.label}</p>}
+            {group.label && <p className="nav-group-label mb-2">{labels[group.label]}</p>}
             {group.items.map((item) => {
               const active =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -94,7 +116,7 @@ export function Sidebar() {
                   className={`nav-item ${active ? "nav-item-active" : ""}`}
                 >
                   <Glyph size={16} />
-                  {item.label}
+                  {labels[item.labelKey]}
                 </Link>
               );
             })}
@@ -118,7 +140,7 @@ export function Sidebar() {
 /**
  * The same nav, horizontally, for narrow screens where a 260px spine would eat the page.
  */
-export function MobileNav() {
+export function MobileNav({ labels }: { labels: NavLabels }) {
   const pathname = usePathname();
   const items = NAV_GROUPS.flatMap((g) => g.items);
 
@@ -133,7 +155,7 @@ export function MobileNav() {
             aria-current={active ? "page" : undefined}
             className={`nav-item shrink-0 ${active ? "nav-item-active" : ""}`}
           >
-            {item.label}
+            {labels[item.labelKey]}
           </Link>
         );
       })}

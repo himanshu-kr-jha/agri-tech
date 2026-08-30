@@ -27,6 +27,104 @@ export const STRINGS = {
   "lang.switchTo": { en: "हिन्दी", hi: "English" },
   "lang.label": { en: "Switch to Hindi", hi: "Switch to English" },
 
+  // --------------------------------------------------------------- console
+  //: The FPO console. Its *data* stays English — claims, units and refusals are assembled
+  //: by deterministic modules that write English, and translating a chrome label does not
+  //: change what a finding says. What is here is navigation and page headings: the parts a
+  //: reader uses to find their way rather than the parts they act on.
+  "con.nav.dashboard": { en: "Dashboard", hi: "डैशबोर्ड" },
+  "con.nav.group.decide": { en: "Decide", hi: "निर्णय" },
+  "con.nav.assistant": { en: "Ask", hi: "पूछिए" },
+  "con.nav.decisions": { en: "Decisions", hi: "निर्णय-सूची" },
+  "con.nav.risk": { en: "Risk", hi: "जोखिम" },
+  "con.nav.group.collective": { en: "Collective", hi: "समिति" },
+  "con.nav.farmers": { en: "Farmers", hi: "किसान" },
+  "con.nav.market": { en: "Market", hi: "बाज़ार" },
+  "con.nav.discrepancies": { en: "Conflicts", hi: "मतभेद" },
+  "con.nav.knowledge": { en: "Published", hi: "प्रकाशित" },
+  "con.nav.impact": { en: "Impact", hi: "प्रभाव" },
+
+  "con.dashboard.eyebrow": { en: "FPO Command Centre", hi: "एफ़पीओ कमांड सेंटर" },
+  "con.dashboard.title": { en: "Dashboard", hi: "डैशबोर्ड" },
+  "con.assistant.eyebrow": { en: "Assistant", hi: "सहायक" },
+  "con.assistant.title": { en: "Ask the collective", hi: "समिति से पूछिए" },
+  "con.decisions.eyebrow": { en: "Ledger", hi: "बही" },
+  "con.decisions.title": { en: "Decisions", hi: "निर्णय" },
+  "con.risk.eyebrow": { en: "Exposure", hi: "जोखिम-भार" },
+  "con.risk.title": { en: "Risk register", hi: "जोखिम रजिस्टर" },
+  "con.farmers.eyebrow": { en: "Membership", hi: "सदस्यता" },
+  "con.farmers.title": { en: "Farmers", hi: "किसान" },
+  "con.market.eyebrow": { en: "Aggregation", hi: "एकत्रीकरण" },
+  "con.market.title": { en: "Market", hi: "बाज़ार" },
+  "con.conflicts.title": { en: "Where the sources disagree", hi: "जहाँ स्रोत असहमत हैं" },
+  "con.impact.eyebrow": { en: "The closed loop", hi: "पूरा चक्र" },
+  "con.impact.title": { en: "Impact", hi: "प्रभाव" },
+  "con.knowledge.title": {
+    en: "What the government has published",
+    hi: "सरकार ने क्या प्रकाशित किया है",
+  },
+  //: Shown once in the console, in the reader's language, for the same reason the farmer
+  //: assistant carries one: the figures below it are English and pretending otherwise
+  //: would be a promise the page cannot keep.
+  //: The real page headings. (`INV-4` and `DR-07` stay as they are — a requirement id is a
+  //: name, not a phrase, and translating it would break the link to docs/SRS.md.)
+  "con.decisions.h1": {
+    en: "Every question, and what came of it",
+    hi: "हर प्रश्न, और उसका परिणाम",
+  },
+  "con.decisions.sub": {
+    en: "The evidence behind each answer is frozen at the moment it was given. Open one to approve, reject, or see why it said what it said.",
+    hi: "हर उत्तर के पीछे का प्रमाण उसी क्षण स्थिर कर दिया जाता है जब वह दिया गया था। स्वीकार करने, अस्वीकार करने, या यह देखने के लिए कि ऐसा क्यों कहा गया, किसी एक को खोलें।",
+  },
+  "con.risk.h1": { en: "What is exposed, worst first", hi: "क्या जोखिम में है — सबसे गंभीर पहले" },
+  "con.risk.sub": {
+    en: "Ordered by how much is at stake, not by how likely it is. Weather figures are frequencies from 30 years of record — how often the window has been hit, not a forecast that it will be.",
+    hi: "क्रम इस आधार पर है कि दाँव पर कितना है, इस पर नहीं कि सम्भावना कितनी है। मौसम के आँकड़े 30 वर्षों के अभिलेख से ली गई आवृत्तियाँ हैं — यह कि वह अवधि कितनी बार प्रभावित हुई, न कि यह पूर्वानुमान कि होगी।",
+  },
+  "con.impact.h1": { en: "What we can honestly claim", hi: "हम ईमानदारी से क्या कह सकते हैं" },
+  "con.impact.sub": {
+    en: "What the decision loop has actually recorded — including what it could not honestly claim.",
+    hi: "निर्णय-चक्र ने वास्तव में क्या दर्ज किया — वह भी जो वह ईमानदारी से नहीं कह सका।",
+  },
+  "con.market.h1": { en: "Lots and offers", hi: "लॉट एवं प्रस्ताव" },
+  "con.market.sub": {
+    en: "Buyer offers are anchored to real mandi prices from Agmarknet.",
+    hi: "क्रेता प्रस्ताव Agmarknet की वास्तविक मंडी कीमतों पर आधारित हैं।",
+  },
+  "con.conflicts.sub": {
+    en: "Nothing on this page has been resolved, and that is deliberate. When two records conflict beyond tolerance the system lowers its confidence and waits, rather than picking a number nobody chose.",
+    hi: "इस पृष्ठ पर कुछ भी सुलझाया नहीं गया है, और यह जानबूझकर है। जब दो अभिलेख सहनसीमा से अधिक भिन्न हों, तो प्रणाली अपना विश्वास घटाकर प्रतीक्षा करती है — कोई ऐसा आँकड़ा नहीं चुनती जिसे किसी ने तय न किया हो।",
+  },
+  "con.assistant.sub": {
+    en: "Every answer arrives with its evidence. Anything it proposes waits for a human before it happens.",
+    hi: "हर उत्तर अपने प्रमाण के साथ आता है। जो कुछ भी वह सुझाता है, वह होने से पहले किसी व्यक्ति की स्वीकृति की प्रतीक्षा करता है।",
+  },
+  "con.knowledge.sub": {
+    en: "Cached public agricultural text — Uttar Pradesh government orders and departmental guidance — searchable in Hindi or English. Results are ranked by relevance multiplied by how much the source is worth trusting, so a well-matching passage nobody has cleared us to rely on loses to a cited one.",
+    hi: "संचित सार्वजनिक कृषि पाठ — उत्तर प्रदेश के शासनादेश एवं विभागीय दिशा-निर्देश — हिन्दी या अंग्रेज़ी में खोजने योग्य। परिणाम प्रासंगिकता को स्रोत की विश्वसनीयता से गुणा करके क्रमबद्ध किए जाते हैं, इसलिए ऐसा अंश जो शब्दों से भले ही मेल खाता हो पर जिस पर निर्भर रहने की अनुमति किसी ने नहीं दी, उद्धृत अंश से पीछे रह जाता है।",
+  },
+
+  //: Dashboard panel headings. The landing screen, so worth translating even though the
+  //: figures inside each panel stay English.
+  "con.dash.waiting.eyebrow": { en: "Waiting on you", hi: "आपकी प्रतीक्षा में" },
+  "con.dash.waiting.title": { en: "Nothing here has happened yet", hi: "यहाँ अभी कुछ नहीं हुआ है" },
+  "con.dash.closing.eyebrow": { en: "Closing soon", hi: "जल्द बंद हो रहा" },
+  "con.dash.closing.title": { en: "Windows about to shut", hi: "अवधियाँ जो समाप्त होने वाली हैं" },
+  "con.dash.watch.eyebrow": { en: "Worth watching", hi: "ध्यान देने योग्य" },
+  "con.dash.watch.title": { en: "Moving, not yet actionable", hi: "गतिशील, पर अभी कार्रवाई योग्य नहीं" },
+  "con.dash.health.eyebrow": { en: "Data health", hi: "डेटा की स्थिति" },
+  "con.dash.health.title": { en: "What the answers rest on", hi: "उत्तर किस पर टिके हैं" },
+  "con.dash.briefing.eyebrow": { en: "Briefing", hi: "सार" },
+  "con.dash.briefing.title": {
+    en: "Nothing needs a decision today",
+    hi: "आज किसी निर्णय की आवश्यकता नहीं है",
+  },
+
+  "con.dataInEnglish": {
+    en: "Findings and figures are shown in English.",
+    hi: "निष्कर्ष एवं आँकड़े अंग्रेज़ी में दिखाए जाते हैं।",
+  },
+
   // --------------------------------------------------------------- today
   "today.myCrops": { en: "My crops", hi: "मेरी फ़सल" },
   "today.noCrop": { en: "No crop currently growing.", hi: "कोई चालू फ़सल नहीं।" },
@@ -140,7 +238,10 @@ export const STRINGS = {
 export type StringKey = keyof typeof STRINGS;
 
 /** Bind a locale once, at the top of a Server Component, and pass `t` down. */
-export function translator(locale: Locale): (key: StringKey) => string {
+/** What ``translator`` returns. Named so a component can take one as a prop. */
+export type Translate = (key: StringKey) => string;
+
+export function translator(locale: Locale): Translate {
   return (key) => STRINGS[key][locale];
 }
 

@@ -10,10 +10,13 @@
 import { ApiError, api } from "@/lib/api";
 import { formatMass } from "@/components/invariants";
 import { EmptyState, ErrorPanel, PageHeader, Panel, PanelHeader } from "@/components/ui";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
 export default async function MarketPage() {
+  const t = translator(await currentLocale());
   let data;
   try {
     data = await api.market();
@@ -21,7 +24,7 @@ export default async function MarketPage() {
     const status = error instanceof ApiError ? error.status : 0;
     return (
       <main className="px-6 py-10 md:px-10">
-        <PageHeader eyebrow="Aggregation" title="Market" />
+        <PageHeader eyebrow={t("con.market.eyebrow")} title={t("con.market.title")} />
         <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
           {status === 403
             ? "Buyer negotiations are organization-internal (INV-5)."
@@ -34,9 +37,9 @@ export default async function MarketPage() {
   return (
     <main className="max-w-6xl px-6 py-10 md:px-10">
       <PageHeader
-        eyebrow="Aggregation"
-        title="Lots and offers"
-        subtitle="Buyer offers are anchored to real mandi prices from Agmarknet."
+        eyebrow={t("con.market.eyebrow")}
+        title={t("con.market.h1")}
+        subtitle={t("con.market.sub")}
       />
 
       <div className="space-y-4">
