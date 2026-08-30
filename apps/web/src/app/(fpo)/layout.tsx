@@ -13,11 +13,14 @@
 
 import { redirect } from "next/navigation";
 
-import { MobileNav, Sidebar } from "@/components/sidebar";
+import { LanguageToggle } from "@/components/language-toggle";
+import { MobileNav, Sidebar, type NavLabels } from "@/components/sidebar";
 import { SignOutButton } from "@/components/sign-out";
 import { IconBell, IconSearch } from "@/components/icons";
 import { formatRole } from "@/components/invariants";
 import { api } from "@/lib/api";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 import { currentUser, homeFor } from "@/lib/session";
 
 /** "Ramesh Prajapati" → "RP". Two letters, because three is a logo and one is ambiguous. */
@@ -31,6 +34,24 @@ function initials(name: string): string {
 }
 
 export default async function FpoLayout({ children }: { children: React.ReactNode }) {
+  const locale = await currentLocale();
+  const t = translator(locale);
+  // The sidebar is a client component and cannot read the locale cookie, so the shell
+  // resolves its strings here. Listed rather than mapped so a missing key is a type error.
+  const nav: NavLabels = {
+    "con.nav.dashboard": t("con.nav.dashboard"),
+    "con.nav.assistant": t("con.nav.assistant"),
+    "con.nav.decisions": t("con.nav.decisions"),
+    "con.nav.risk": t("con.nav.risk"),
+    "con.nav.farmers": t("con.nav.farmers"),
+    "con.nav.market": t("con.nav.market"),
+    "con.nav.discrepancies": t("con.nav.discrepancies"),
+    "con.nav.knowledge": t("con.nav.knowledge"),
+    "con.nav.impact": t("con.nav.impact"),
+    "con.nav.group.decide": t("con.nav.group.decide"),
+    "con.nav.group.collective": t("con.nav.group.collective"),
+  };
+
   const user = await currentUser();
   if (!user) redirect("/login");
   if (user.audience !== "FPO") redirect(homeFor(user));
@@ -44,10 +65,10 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
+      <Sidebar labels={nav} />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <MobileNav />
+        <MobileNav labels={nav} />
 
         <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
           <div className="flex h-16 items-center gap-6 px-6">
@@ -92,6 +113,7 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
                   <span className="block text-[11px] text-muted-foreground">{role}</span>
                 </span>
               </div>
+              <LanguageToggle locale={locale} label={t("lang.switchTo")} />
               <SignOutButton />
             </div>
           </div>

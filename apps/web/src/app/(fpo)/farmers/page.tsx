@@ -10,6 +10,8 @@ import Link from "next/link";
 
 import { ApiError, TRACT_LABEL, api } from "@/lib/api";
 import { ErrorPanel, PageHeader, Panel } from "@/components/ui";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +22,7 @@ export default async function FarmersPage({
 }: {
   searchParams: Promise<{ tract?: string; offset?: string }>;
 }) {
+  const t = translator(await currentLocale());
   const params = await searchParams;
   const tract = params.tract;
   const offset = Number(params.offset ?? 0);
@@ -31,7 +34,7 @@ export default async function FarmersPage({
     const status = error instanceof ApiError ? error.status : 0;
     return (
       <main className="px-6 py-10 md:px-10">
-        <PageHeader eyebrow="Membership" title="Farmers" />
+        <PageHeader eyebrow={t("con.farmers.eyebrow")} title={t("con.farmers.title")} />
         <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
           {status === 403
             ? "The member list is organization-internal. A farmer sees only their own record."

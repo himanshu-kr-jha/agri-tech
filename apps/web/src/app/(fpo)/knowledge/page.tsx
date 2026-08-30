@@ -24,6 +24,8 @@
 
 import { ApiError, api, type KnowledgeHit } from "@/lib/api";
 import { Chip, EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -117,6 +119,7 @@ export default async function KnowledgePage({
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
+  const t = translator(await currentLocale());
   const { q } = await searchParams;
   const query = (q ?? "").trim();
 
@@ -137,8 +140,8 @@ export default async function KnowledgePage({
     <main className="max-w-4xl px-6 py-10 md:px-10">
       <PageHeader
         eyebrow="DR-07"
-        title="What the government has published"
-        subtitle="Cached public agricultural text — Uttar Pradesh government orders and departmental guidance — searchable in Hindi or English. Results are ranked by relevance multiplied by how much the source is worth trusting, so a well-matching passage nobody has cleared us to rely on loses to a cited one."
+        title={t("con.knowledge.title")}
+        subtitle={t("con.knowledge.sub")}
         aside={
           <>
             {data && (

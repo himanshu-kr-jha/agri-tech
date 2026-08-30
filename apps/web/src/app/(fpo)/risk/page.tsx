@@ -12,6 +12,8 @@
 import { ApiError, api, type RiskEntry } from "@/lib/api";
 import { formatInr, formatRole } from "@/components/invariants";
 import { EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +59,7 @@ function Exposure({ value, label }: { value: string; label: string }) {
 }
 
 export default async function RiskPage() {
+  const t = translator(await currentLocale());
   let data;
   try {
     data = await api.riskRegister();
@@ -64,7 +67,7 @@ export default async function RiskPage() {
     const status = error instanceof ApiError ? error.status : 0;
     return (
       <main className="px-6 py-10 md:px-10">
-        <PageHeader eyebrow="Exposure" title="Risk register" />
+        <PageHeader eyebrow={t("con.risk.eyebrow")} title={t("con.risk.title")} />
         <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
           {status === 403
             ? "The risk register is organization-internal."
@@ -79,9 +82,9 @@ export default async function RiskPage() {
   return (
     <main className="max-w-5xl px-6 py-10 md:px-10">
       <PageHeader
-        eyebrow="Exposure"
-        title="What is exposed, worst first"
-        subtitle="Ordered by how much is at stake, not by how likely it is. Weather figures are frequencies from 30 years of record — how often the window has been hit, not a forecast that it will be."
+        eyebrow={t("con.risk.eyebrow")}
+        title={t("con.risk.h1")}
+        subtitle={t("con.risk.sub")}
       />
 
       {entries.length === 0 ? (
