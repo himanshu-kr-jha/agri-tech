@@ -24,6 +24,25 @@ def org(session) -> Organization:
     return row
 
 
+@pytest.fixture(autouse=True)
+def drained_queue(session) -> None:
+    """Every test here asserts on an event it just wrote. Start from an empty queue.
+
+    ``dispatch_pending`` takes the oldest ``limit`` events, default 200. Anything already
+    unpublished — a seeded demo, an earlier test, a dev server someone left running against
+    this database — is older, so it eats the budget and the event under test is never
+    reached. The failure then looks like a dispatcher regression and is really a backlog:
+    observed at 183 leftover events, where 200 - 183 left room for 17 of one test's 20.
+
+    Draining is also the honest setup. These tests are about what the dispatcher does with
+    their own events, not about the state of a table they inherited. It runs before the test
+    body, so a leftover event of a type the test is about to listen for cannot reach its
+    handler. Bounded rather than a ``while`` loop, because ``dispatch_pending`` marks even a
+    failed handler's event published, so one pass over the current count always clears it.
+    """
+    outbox.dispatch_pending(session, limit=outbox.pending_count(session) + 1)
+
+
 def _event(org, event_type="TestEvent", aggregate_id=None) -> DomainEvent:
     return DomainEvent(
         event_type=event_type,
