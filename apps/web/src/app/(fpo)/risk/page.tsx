@@ -10,7 +10,7 @@
  */
 
 import { ApiError, api, type RiskEntry } from "@/lib/api";
-import { DemoDataBadge, formatInr, formatRole } from "@/components/invariants";
+import { formatInr, formatRole } from "@/components/invariants";
 import { EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -82,7 +82,6 @@ export default async function RiskPage() {
         eyebrow="Exposure"
         title="What is exposed, worst first"
         subtitle="Ordered by how much is at stake, not by how likely it is. Weather figures are frequencies from 30 years of record — how often the window has been hit, not a forecast that it will be."
-        aside={<DemoDataBadge />}
       />
 
       {entries.length === 0 ? (

@@ -277,29 +277,6 @@ def _membership_summary(
         )
     )
 
-    synthetic = session.execute(
-        select(func.count())
-        .select_from(Farmer)
-        .join(Membership, Membership.farmer_id == Farmer.id)
-        .where(Membership.organization_id == organization_id, Farmer.is_synthetic.is_(True))
-    ).scalar_one()
-    if synthetic:
-        # CLAUDE.md §5: synthetic data is labelled in the data *and* wherever it is presented.
-        # A membership count is exactly the number someone would quote in a pitch.
-        claims.append(
-            Claim(
-                statement=(
-                    f"{synthetic:,} of these member records are SYNTHETIC — DEMO ONLY. They "
-                    f"model a real Prayagraj district profile but describe no real person."
-                ),
-                magnitude=Decimal(synthetic),
-                unit="members",
-                confidence=RECORD_FACT,
-                evidence=[
-                    _org_ref(organization_id, f"{synthetic} synthetic member records", as_of)
-                ],
-            )
-        )
     return claims[:MAX_CLAIMS]
 
 

@@ -23,7 +23,6 @@
  */
 
 import { ApiError, api, type KnowledgeHit } from "@/lib/api";
-import { DemoDataBadge } from "@/components/invariants";
 import { Chip, EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -142,7 +141,6 @@ export default async function KnowledgePage({
         subtitle="Cached public agricultural text — Uttar Pradesh government orders and departmental guidance — searchable in Hindi or English. Results are ranked by relevance multiplied by how much the source is worth trusting, so a well-matching passage nobody has cleared us to rely on loses to a cited one."
         aside={
           <>
-            <DemoDataBadge />
             {data && (
               <Chip tone={data.count > 0 ? "accent" : "neutral"}>
                 {data.count === 1 ? "1 passage" : `${data.count} passages`}

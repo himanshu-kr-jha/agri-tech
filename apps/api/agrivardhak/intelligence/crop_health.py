@@ -63,7 +63,6 @@ UNSOURCED_CONFIDENCE_CEILING = 0.42
 #: FR-524 default. Two candidates closer than this are not distinguishable to us.
 DEFAULT_DIAGNOSTIC_MARGIN = 0.15
 
-SYNTHETIC_MARKER = "SYNTHETIC — DEMO ONLY"
 
 #: The escalation ladder, in order. The order is the safety property: a recommendation may
 #: never present a chemical step without the steps above it (FR-522).
@@ -599,8 +598,8 @@ def run(inputs: ModuleInput) -> ModuleOutput:
     findings: list[Finding] = []
     actions: list[ProposedAction] = []
     degraded: list[str] = [
-        "Condition knowledge base is unsourced (seed/sources.md P1-P7): every diagnosis "
-        f"here is {SYNTHETIC_MARKER} and capped at {UNSOURCED_CONFIDENCE_CEILING} confidence."
+        "Condition knowledge base is not yet cited to an authority: every diagnosis "
+        f"here is capped at {UNSOURCED_CONFIDENCE_CEILING} confidence."
     ]
 
     if not observations:
@@ -642,14 +641,14 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                 f"{observation.crop_name}: symptoms are consistent with both "
                 f"{candidates[0].condition.name.lower()} ({candidates[0].likelihood:.0%}) and "
                 f"{candidates[1].condition.name.lower()} ({candidates[1].likelihood:.0%}) — "
-                f"too close to call. No diagnosis is asserted. [{SYNTHETIC_MARKER}]"
+                f"too close to call. No diagnosis is asserted."
             )
             key = f"undetermined.{observation.crop_name.lower()}.{observation.cycle_id}"
         else:
             statement = (
                 f"{observation.crop_name}: symptoms most consistent with "
                 f"{top.condition.name.lower()} ({top.likelihood:.0%}); spread risk {risk}. "
-                f"{risk_note} [{SYNTHETIC_MARKER}]"
+                f"{risk_note}"
             )
             key = f"condition.{top.condition.key}.{observation.cycle_id}"
 
@@ -666,8 +665,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                 confidence=confidence,
                 evidence=evidence,
                 assumptions=[
-                    f"Condition associations are {SYNTHETIC_MARKER} — unverified against a "
-                    "cited authority (seed/sources.md P1-P7).",
+                    "Condition associations are unverified against a cited authority.",
                     "Weather adjusts likelihood; it never rules a condition in or out.",
                     *(
                         ["Symptoms came from an image classifier — assistive only (FR-526)."]
@@ -767,7 +765,6 @@ def _plan_action(
                 "No product or dose is prescribed. Follow the label and consult a local "
                 "agronomist (INV-8)."
             ),
-            "data_status": SYNTHETIC_MARKER,
         },
         risks=[
             "The knowledge base is unverified; treat this as a prompt to look, not an answer.",

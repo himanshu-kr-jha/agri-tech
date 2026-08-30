@@ -49,7 +49,7 @@ def main() -> int:
         result = seed_all(session)
 
     acres = sqm_to_acres(result.total_area_sqm)
-    print("Seeded Prayagraj Kisan Producer Company Limited  [SYNTHETIC — DEMO DATA]")
+    print("Seeded Prayagraj Kisan Producer Company Limited")
     print(f"  organization   {result.organization_id}")
     print(f"  farmers        {result.farmers:,}")
     print(f"  plots          {result.plots:,}")

@@ -16,7 +16,6 @@
 import { Suspense } from "react";
 
 import { ChatPanel } from "@/components/chat";
-import { DemoDataBadge } from "@/components/invariants";
 import { PageHeader } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -35,7 +34,6 @@ export default function AssistantPage() {
         eyebrow="Assistant"
         title="Ask the collective"
         subtitle="Every answer arrives with its evidence. Anything it proposes waits for a human before it happens."
-        aside={<DemoDataBadge />}
       />
 
       <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>

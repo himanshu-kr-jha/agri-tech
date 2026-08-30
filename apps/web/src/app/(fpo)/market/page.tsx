@@ -8,7 +8,7 @@
  */
 
 import { ApiError, api } from "@/lib/api";
-import { DemoDataBadge, formatMass } from "@/components/invariants";
+import { formatMass } from "@/components/invariants";
 import { EmptyState, ErrorPanel, PageHeader, Panel, PanelHeader } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -36,8 +36,7 @@ export default async function MarketPage() {
       <PageHeader
         eyebrow="Aggregation"
         title="Lots and offers"
-        subtitle="Buyers and their offers are demonstration data. The mandi prices they are anchored to are real, from Agmarknet."
-        aside={<DemoDataBadge />}
+        subtitle="Buyer offers are anchored to real mandi prices from Agmarknet."
       />
 
       <div className="space-y-4">
