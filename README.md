@@ -10,7 +10,7 @@
 Built for the **AI for Public Good** challenge — *Inclusive AI, Social Impact and Empowerment
 of Underserved Communities*.
 
-**Status:** all 44 MUST deliverables built and evidenced · 411 tests, none skipped · runs with
+**Status:** all 44 MUST deliverables built and evidenced · 417 tests, none skipped · runs with
 the network disconnected. See [`PROGRESS.md`](PROGRESS.md) — its lower half is generated from
 what the repository can prove, not from what someone typed.
 
@@ -90,7 +90,7 @@ already have. Credentials are `agrivardhak` / `agrivardhak` / `agrivardhak`.
 
 ```bash
 make check     # ruff + mypy (82 files) + eslint + tsc
-make test      # 411 tests (403 pytest + 8 vitest), ~1 min
+make test      # 417 tests (409 pytest + 8 vitest), ~1 min
 make progress  # regenerate PROGRESS.md from evidence
 ```
 
