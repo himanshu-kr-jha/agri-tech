@@ -79,6 +79,19 @@ DEFAULT_POLICIES: dict[str, AttributeDecayPolicy] = {
     # description of the crop very quickly — but it stays evidence that something was seen,
     # which is why it goes stale at 21 days rather than being deleted.
     "symptoms": AttributeDecayPolicy("symptoms", 7, 21, 0),
+    # Published text, unlike an observation, does not go out of date by being old: a
+    # government order issued in March still says exactly what it said in March. What
+    # decays is whether it is still the *operative* one. Both half-lives below are
+    # therefore much longer than an observation's, and the T-08 warning applies — do not
+    # conflate how fast the world changes with how fast our information about it does.
+    #
+    # Reference guidance ("what is a soil health card") is the slowest-moving thing here.
+    # At 180 days a two-year-old FAQ scored 0.02 and vanished from every result, which is
+    # not a judgement anyone would defend out loud.
+    "scheme_text": AttributeDecayPolicy("scheme_text", 730, 1460, 0),
+    # A dated policy act. Halving over a year reflects the real rate at which orders are
+    # superseded, amended or absorbed into standing practice.
+    "policy_event": AttributeDecayPolicy("policy_event", 365, 730, 0),
 }
 
 #: Used when an attribute has no policy row. Conservative: decays fast, so an unmodelled

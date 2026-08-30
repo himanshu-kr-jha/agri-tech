@@ -1,6 +1,7 @@
 # Data Sourcing — agreed design
 
-Date: 2026-08-28 · Status: agreed in design session; gathering built, wiring not started
+Date: 2026-08-28 · Status: agreed in design session; gathering built.
+**Wiring landed 2026-08-29** — see ADR-0018 and `apps/api/agrivardhak/knowledge/`.
 
 > **Resuming this work?** Read `docs/DATA-SOURCING-HANDOFF.md` first — it carries the state of
 > play, the traps that fail silently, what was rejected and why, and the next actions.
@@ -98,6 +99,6 @@ existing data.gov.in fetcher. Advisory-tier university cost studies remain outst
 
 ## Open
 
-- Licence for all four cached data.gov.in sources is `UNKNOWN`. Nothing lifts a cap until resolved.
+- Licence for **nine of the ten** cached sources is `UNKNOWN` (the count said "all four" until batches 4-6 were added). Nothing lifts a cap until resolved — and since ADR-0018 wired the corpus in, that unresolved licence is what caps those passages at 0.40, below the orchestrator's floor.
 - Itemised cost route unproven.
 - Crop-protection P1–P7 deliberately left at 0.42. That cap is doing useful work.

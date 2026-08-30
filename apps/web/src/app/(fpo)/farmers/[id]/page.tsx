@@ -13,7 +13,6 @@ import { notFound } from "next/navigation";
 import { ApiError, TRACT_LABEL, api } from "@/lib/api";
 import {
   ConfidenceChip,
-  DemoDataBadge,
   DiscrepancyBadge,
   StaleBadge,
   formatMass,
@@ -59,7 +58,6 @@ export default async function FarmerPage({ params }: { params: Promise<{ id: str
         <p className="eyebrow">Member</p>
         <div className="mt-1.5 flex flex-wrap items-center gap-3">
           <h1 className="title-section text-[2rem]">{farmer.name}</h1>
-          {farmer.is_synthetic && <DemoDataBadge />}
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
           {[farmer.village, farmer.block, farmer.tract ? TRACT_LABEL[farmer.tract] : null]

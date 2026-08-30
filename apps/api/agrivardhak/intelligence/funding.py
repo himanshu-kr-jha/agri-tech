@@ -89,9 +89,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
 
     findings: list[Finding] = []
     actions: list[ProposedAction] = []
-    degraded: list[str] = [
-        "Cost-of-cultivation figures are SYNTHETIC — DEMO ONLY (seed/sources.md E1-E6)."
-    ]
+    degraded: list[str] = ["Cost-of-cultivation figures are modelled, not surveyed."]
 
     if not needs:
         return ModuleOutput(

@@ -247,7 +247,7 @@ Priority: **MUST** (in the 72-hour build) · **SHOULD** (build if ahead of sched
 | FR-401 | The system SHALL ingest weather forecast and history per plot/district and store it as external observations. | MUST |
 | FR-402 | The system SHALL ingest mandi price and arrival data per commodity and market, retaining at least 24 months of history for trend and volatility computation. | MUST |
 | FR-403 | The system SHALL ingest government scheme definitions with eligibility criteria expressed as machine-evaluable rules plus the original text, and SHALL embed the text for retrieval. | MUST |
-| FR-404 | The system SHALL ingest agricultural news/policy events and classify them by domain (POLICY, CLIMATE, MARKET, SUPPLY_CHAIN, GLOBAL, INPUT_PRICE). | MUST |
+| FR-404 | The system SHALL ingest agricultural news/policy events and classify them by domain (POLICY, CLIMATE, MARKET, SUPPLY_CHAIN, GLOBAL, INPUT_PRICE). Satisfied by the UP शासनादेश stream (ADR-0018): classification is deterministic, and the event's *magnitude* is out of scope because the order listing carries a subject line, not the order text. | MUST |
 | FR-405 | The system SHALL retain the raw payload and fetch timestamp of every external record for evidence citation. | MUST |
 | FR-406 | Where a live source is unavailable, the system SHALL fall back to a fixture and SHALL mark all derived values as `FIXTURE` provenance, visible in the UI. | MUST |
 
@@ -431,7 +431,7 @@ Full specification in `docs/DATA-MODEL.md`. Requirements-level constraints:
 | DR-04 | `Observation`, `Prediction`, `Recommendation`, `EvidenceSnapshot`, `AuditRecord`, `DomainEvent` are **append-only**. Correction is a new row plus supersession, never an UPDATE or DELETE. |
 | DR-05 | Every domain-state change writes a `DomainEvent` to a transactional outbox in the same transaction. |
 | DR-06 | Plot boundaries use PostGIS `geography(Polygon, 4326)`; centroids are indexed for weather join. |
-| DR-07 | Scheme and news text is embedded with pgvector for retrieval; the raw text is retained. |
+| DR-07 | Scheme and news text is embedded with pgvector for retrieval; the raw text is retained. Retrieval is hybrid — pgvector plus Postgres full-text, fused by rank — and degrades to lexical-only when no encoder is installed, so NFR-303 still holds (ADR-0018). |
 | DR-08 | Retention: raw external payloads 12 months; observations, decisions and audit records indefinitely. |
 | DR-09 | Seed data SHALL be deterministic given a fixed random seed, so that the demo is reproducible. |
 

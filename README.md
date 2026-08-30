@@ -10,7 +10,7 @@
 Built for the **AI for Public Good** challenge — *Inclusive AI, Social Impact and Empowerment
 of Underserved Communities*.
 
-**Status:** all 44 MUST deliverables built and evidenced · 311 tests, none skipped · runs with
+**Status:** all 44 MUST deliverables built and evidenced · 417 tests, none skipped · runs with
 the network disconnected. See [`PROGRESS.md`](PROGRESS.md) — its lower half is generated from
 what the repository can prove, not from what someone typed.
 
@@ -18,7 +18,7 @@ what the repository can prove, not from what someone typed.
 
 ## Quick start
 
-Five commands from a fresh clone to a running demo. **No API keys needed** — the whole path
+Six commands from a fresh clone to a running demo. **No API keys needed** — the whole path
 works offline.
 
 ```bash
@@ -26,10 +26,24 @@ git clone <this repo> && cd agrivadhak
 
 make setup     # venv + npm install + Postgres in Docker + migrations   (~3 min first run)
 make demo      # seed 1,000 farmers, real prices/weather, write the dev token
+make ingest    # land the cached public corpus, then run the Data Observer
 make dev       # API on :8000, web on :3000
 ```
 
 Then open **<http://localhost:3000>** and sign in.
+
+**Do not skip `make ingest`.** It is what puts real government orders behind the answers: it
+lands the cached batches under `seed/` as external records, then runs the Data Observer over
+them — classify, segment, embed, retrieve
+([ADR-0018](docs/adr/0018-retrieval-and-the-data-observer.md)). Without it the demo still runs,
+but the corpus is empty, so no packet cites `knowledge_chunk` evidence and `/knowledge` has
+nothing to show. It is separate from `make seed` so the corpus can be refreshed without
+regenerating the synthetic FPO. It needs no network and is idempotent — running it twice is a
+no-op, not a duplicate.
+
+Retrieval works without a sentence encoder: chunks are written unembedded and search falls
+back to Postgres full-text. `make embed-model` (~120 MB, once) adds vector search and
+backfills the embeddings on the next `make ingest`. Everything works either way (NFR-303).
 
 ### Demo logins
 
@@ -75,8 +89,8 @@ already have. Credentials are `agrivardhak` / `agrivardhak` / `agrivardhak`.
 ### Verify it worked
 
 ```bash
-make check     # ruff + mypy (54 files) + eslint + tsc
-make test      # 311 tests, ~2 min
+make check     # ruff + mypy (82 files) + eslint + tsc
+make test      # 417 tests (409 pytest + 8 vitest), ~1 min
 make progress  # regenerate PROGRESS.md from evidence
 ```
 

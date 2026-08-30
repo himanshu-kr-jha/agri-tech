@@ -4,22 +4,23 @@
 .git/
 .gitignore
 
-# Python build scratch
-__pycache__/
+# Python build scratch. The **/ prefix is load-bearing: .dockerignore patterns are not
+# recursive, so a bare ".venv/" matches only the context root and would miss
+# apps/api/.venv (199 MB). Same trap for .next/ and node_modules/ below.
+**/__pycache__/
 *.py[cod]
-.venv/
-venv/
-*.egg-info/
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
+**/.venv/
+**/venv/
+**/*.egg-info/
+**/.mypy_cache/
+**/.pytest_cache/
+**/.ruff_cache/
 
 # Node — the web tier deploys to Vercel, none of this belongs in the API image
-node_modules/
-.next/
-out/
-*.tsbuildinfo
-apps/web/node_modules/
+**/node_modules/
+**/.next/
+**/out/
+**/*.tsbuildinfo
 
 # Local environment and editor state
 .env

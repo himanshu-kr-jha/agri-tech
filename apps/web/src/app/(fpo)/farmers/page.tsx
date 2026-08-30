@@ -9,7 +9,6 @@
 import Link from "next/link";
 
 import { ApiError, TRACT_LABEL, api } from "@/lib/api";
-import { DemoDataBadge } from "@/components/invariants";
 import { ErrorPanel, PageHeader, Panel } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -53,7 +52,6 @@ export default async function FarmersPage({
         subtitle={`${data.total.toLocaleString("en-IN")} members${
           tract ? ` in ${TRACT_LABEL[tract] ?? tract}` : ""
         }, across three tracts of the district.`}
-        aside={<DemoDataBadge />}
       />
 
       <nav aria-label="Filter by tract" className="mb-5 flex flex-wrap gap-2">

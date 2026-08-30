@@ -1,5 +1,8 @@
 "use client";
 
+import { translator, type StringKey } from "@/lib/i18n";
+import type { Locale } from "@/lib/locale";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -12,12 +15,13 @@ export interface DemoAccount {
   description: string;
 }
 
-const AUDIENCE_LABEL: Record<string, string> = {
-  FPO: "Organization console",
-  FARMER: "Farmer view",
-};
+const AUDIENCE_KEY = {
+  FPO: "login.audience.fpo",
+  FARMER: "login.audience.farmer",
+} as const satisfies Record<string, StringKey>;
 
-export function LoginForm({ accounts }: { accounts: DemoAccount[] }) {
+export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; locale: Locale }) {
+  const t = translator(locale);
   const router = useRouter();
   const [username, setUsername] = useState(accounts[0]?.username ?? "");
   const [password, setPassword] = useState(accounts[0]?.password ?? "");
@@ -44,7 +48,7 @@ export function LoginForm({ accounts }: { accounts: DemoAccount[] }) {
       router.replace(body.user?.audience === "FARMER" ? "/today" : "/dashboard");
       router.refresh();
     } catch {
-      setError("Could not reach the server.");
+      setError(t("login.failed"));
     } finally {
       setBusy(false);
     }
@@ -57,7 +61,7 @@ export function LoginForm({ accounts }: { accounts: DemoAccount[] }) {
     <>
       <form onSubmit={submit} className="space-y-5">
         <label className="block">
-          <span className="eyebrow-sm">Username</span>
+          <span className="eyebrow-sm">{t("login.username")}</span>
           <input
             type="text"
             value={username}
@@ -68,7 +72,7 @@ export function LoginForm({ accounts }: { accounts: DemoAccount[] }) {
           />
         </label>
         <label className="block">
-          <span className="eyebrow-sm">Password</span>
+          <span className="eyebrow-sm">{t("login.password")}</span>
           <input
             type="password"
             value={password}
@@ -89,16 +93,15 @@ export function LoginForm({ accounts }: { accounts: DemoAccount[] }) {
         )}
 
         <button type="submit" disabled={busy} className="btn-primary w-full py-2.5">
-          {busy ? "Signing in…" : "Sign in"}
+          {busy ? t("login.signingIn") : t("login.signIn")}
         </button>
       </form>
 
       {accounts.length > 0 && (
         <section className="mt-10">
-          <p className="eyebrow-sm">Demo accounts</p>
+          <p className="eyebrow-sm">{t("login.accounts")}</p>
           <p className="mb-4 mt-1.5 text-xs leading-relaxed text-muted-foreground">
-            Sign in as each to see the same system from both sides. What a member can reach is
-            enforced by the API, not by hiding pages.
+            {t("login.accountsHint")}
           </p>
           <ul className="space-y-2.5">
             {accounts.map((account) => {
@@ -124,7 +127,9 @@ export function LoginForm({ accounts }: { accounts: DemoAccount[] }) {
                         {account.display_name}
                       </span>
                       <span className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                        {AUDIENCE_LABEL[account.audience] ?? account.audience}
+                        {account.audience in AUDIENCE_KEY
+                          ? t(AUDIENCE_KEY[account.audience as keyof typeof AUDIENCE_KEY])
+                          : account.audience}
                       </span>
                     </div>
                     <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">

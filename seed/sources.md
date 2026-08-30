@@ -330,3 +330,31 @@ names the portal; a human files it.
 One exemption is deliberate: the *gap* findings ("one unrecorded fact blocks 812 assessments")
 sit **above** the cap. That is a count of our own data and is true whatever the scheme rules
 turn out to say, so capping it at the rules' confidence would understate something we know.
+
+---
+
+## 15. The retrieved knowledge base — real text, mostly uncleared
+
+Added 2026-08-29 (ADR-0018). These are not seeded *values*; they are published text the
+system retrieves and cites. They earn a row here for the same reason everything else does —
+nothing enters the system without a citation and a status.
+
+| id | Source | What it carries | Licence | Status |
+|---|---|---|---|---|
+| **K1** | `shasanadesh.up.gov.in` — UP Dept. of Agriculture शासनादेश | 75 government-order listing rows to 24/08/2026: number, date, section, category, subject | Non-commercial research and private study, with attribution. **COMMERCIAL USE NOT CLEARED** | ✅ real, cited, retrievable. Drives the POLICY findings |
+| **K2** | `agridarshan.up.gov.in/api/cms/getAll` | 125 CMS records; 24 bilingual FAQs carry real agronomic guidance, the rest are largely circulars and notices | `UNKNOWN` | ⚠️ retrievable as **context only** — capped at 0.40, below the orchestrator's floor |
+
+Three constraints a reader should not have to discover by experiment:
+
+- **The listing is not the order.** K1 gives a subject line, never the document. Eligibility
+  criteria, amounts and deadlines live in PDFs there is no fetch path for. Any structured
+  field extracted from a subject is a *proposal* under ADR-0014, stored `UNVERIFIED`.
+- **Hindi is canonical, stored byte-for-byte** (ADR-0015), zero-width joiners included. The
+  matching layer normalises a copy; nothing rewrites the stored text.
+- **An unconfirmed licence is a hard cap, not a warning.** K2 cannot reach a recommendation
+  at all. Confirming these licences is still the cheapest unblock in the repository, and
+  ADR-0014 requires a named human to do it.
+
+Not in the register, deliberately: **no news source exists.** `NewsDomain` and the 20 events
+in X8 remain synthetic. K1 fills the policy half of FR-404; market, global and input-price
+news from a press source is unsourced and stays that way.

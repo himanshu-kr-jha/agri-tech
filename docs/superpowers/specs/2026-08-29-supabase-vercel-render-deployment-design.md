@@ -1,6 +1,6 @@
 # Deployment: Supabase + Render + Vercel
 
-Date: 2026-08-29 · Status: §4 (C1–C7) implemented and verified against Docker; §7 repo obligations discharged (ADR-0018, ARCHITECTURE §2 "Hosted (pilot)", `M-DEPLOY` in `scripts/progress.py`, `.env.example`); **§5 runbook not yet run — no cloud resource exists yet**
+Date: 2026-08-29 · Status: §4 (C1–C7) implemented and verified against Docker; §7 repo obligations discharged (ADR-0019, ARCHITECTURE §2 "Hosted (pilot)", `M-DEPLOY` in `scripts/progress.py`, `.env.example`); **§5 runbook not yet run — no cloud resource exists yet**
 
 **Verification performed** (2026-08-29), against a database created with `TEMPLATE template0`
 holding nothing but `plpgsql` — the closest local simulation of a new Supabase project:
@@ -403,7 +403,7 @@ API, which is the correct default for a pilot.
 
 Per `CLAUDE.md` §8, this change also carries:
 
-- **ADR-0018 — Deployment topology and the Supabase extension boundary.** Records why the
+- **ADR-0019 — Deployment topology and the Supabase extension boundary.** Records why the
   web tier still cannot reach Postgres despite Supabase making it easy (ADR-0001, INV-5),
   why extensions moved from `initdb` into a migration, and why the session pooler.
 - **`docs/ARCHITECTURE.md`** — a deployment section; the 8-layer model currently implies

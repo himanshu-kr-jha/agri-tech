@@ -16,7 +16,7 @@
  */
 
 import { ApiError, api, type Discrepancy, type DiscrepancyClaim } from "@/lib/api";
-import { ConfidenceChip, DemoDataBadge, sqmToAcres } from "@/components/invariants";
+import { ConfidenceChip, sqmToAcres } from "@/components/invariants";
 import { Chip, EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +27,7 @@ const SOURCE_LABEL: Record<string, string> = {
   AI_INFERENCE: "AI inferred",
   EXTERNAL_SOURCE: "External source",
   ORG_RECORD: "Organization record",
-  FIXTURE: "Demo fixture",
+  FIXTURE: "Cached source",
 };
 
 const ATTRIBUTE_LABEL: Record<string, string> = {
@@ -179,7 +179,6 @@ export default async function DiscrepanciesPage() {
         subtitle="Nothing on this page has been resolved, and that is deliberate. When two records conflict beyond tolerance the system lowers its confidence and waits, rather than picking a number nobody chose."
         aside={
           <>
-            <DemoDataBadge />
             <Chip tone={total > 0 ? "accent" : "neutral"}>
               {total === 1 ? "1 open conflict" : `${total} open conflicts`}
             </Chip>

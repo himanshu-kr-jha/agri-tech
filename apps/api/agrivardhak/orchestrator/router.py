@@ -319,7 +319,16 @@ def _validate(raw: dict[str, Any], *, audience: str, has_anchor: bool) -> Intent
         log.warning("router proposed DECISION for a farmer; refused")
         return None
     if shape is ResponseShape.LOOKUP and lookup is None:
-        return None
+        # The model answered, and its answer was "none of these keys fits". Treat that as
+        # the refusal it is rather than as a malformed plan: returning None here sends the
+        # turn to ``_fallback``, which for staff is hardcoded to DECISION, so a two-word
+        # fragment came back as a full Decision Packet with a frozen snapshot and
+        # recommendations at SUGGESTED. Measured at 4 runs in 6 on "how many" (ADR-0021).
+        #
+        # Deliberately narrow. The other paths into ``_fallback`` — no key configured, a
+        # provider that has gone away — keep the keyword planner, because NFR-303 requires
+        # a keyless deployment to answer rather than refuse everything.
+        shape = ResponseShape.REFUSE
     if shape is ResponseShape.EXPLAIN and not has_anchor:
         # Nothing to explain. Better a fresh answer than a confident one about nothing.
         return None

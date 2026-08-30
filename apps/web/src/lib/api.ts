@@ -364,6 +364,44 @@ async function authHeaders(): Promise<Record<string, string>> {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
+/**
+ * A passage retrieved from the external knowledge base (ADR-0018).
+ *
+ * `inert` is the field that matters. It means the source's licence is unconfirmed, so under
+ * ADR-0014 the passage may be read as context and may never drive a recommendation — the
+ * API caps its confidence below the orchestrator's floor to make that structural rather
+ * than advisory. A UI that renders these without saying so undoes the gate at the last step.
+ */
+export interface KnowledgeHit {
+  chunk_id: string;
+  external_record_id: string;
+  source_key: string;
+  /** The published wording. Canonical, and never replaced by the English (ADR-0015). */
+  text_hi: string;
+  /** The publisher's own English, where they provide one. Never a translation we made. */
+  text_en: string | null;
+  news_domain: string | null;
+  observed_at: string;
+  relevance: number;
+  trust: number;
+  score: number;
+  ceiling: number;
+  licence: string;
+  licence_confirmed: boolean;
+  authority: "AUTHORITATIVE" | "ADVISORY";
+  verification_status: string;
+  inert: boolean;
+  evidence: { kind: string; id: string; label: string; as_of: string };
+}
+
+export interface KnowledgeSearch {
+  /** Absent on the "recent" listing, which has no query to echo back. */
+  query?: string;
+  count: number;
+  results: KnowledgeHit[];
+  note: string;
+}
+
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${API}${path}`, {
     headers: await authHeaders(),
@@ -399,6 +437,18 @@ export const api = {
       `/api/v1/recommendations${status ? `?status=${status}` : ""}`,
     ),
   riskRegister: () => get<{ entries: RiskEntry[] }>("/api/v1/risk-register"),
+  knowledgeRecent: (params: { k?: number; domain?: string } = {}) => {
+    const search = new URLSearchParams();
+    search.set("k", String(params.k ?? 6));
+    if (params.domain) search.set("domain", params.domain);
+    return get<KnowledgeSearch>(`/api/v1/knowledge/recent?${search}`);
+  },
+  knowledgeSearch: (params: { q: string; k?: number; domain?: string }) => {
+    const search = new URLSearchParams({ q: params.q });
+    search.set("k", String(params.k ?? 8));
+    if (params.domain) search.set("domain", params.domain);
+    return get<KnowledgeSearch>(`/api/v1/knowledge/search?${search}`);
+  },
   discrepancies: () =>
     get<{ total: number; discrepancies: Discrepancy[] }>("/api/v1/fpo/discrepancies"),
   briefing: () => get<Briefing>("/api/v1/briefing"),

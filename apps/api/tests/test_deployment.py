@@ -1,4 +1,4 @@
-"""What has to stay true for the hosted pilot (ADR-0018).
+"""What has to stay true for the hosted pilot (ADR-0019).
 
 None of these need a database. They guard three things that break silently — the kind of
 break that builds clean, starts clean, passes a health check, and fails on a real request:

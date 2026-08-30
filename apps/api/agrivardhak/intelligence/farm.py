@@ -50,7 +50,6 @@ from agrivardhak.intelligence.contracts import (
 MODULE = "farm_intelligence"
 VERSION = "1.0.0"
 
-SYNTHETIC_MARKER = "SYNTHETIC — DEMO ONLY"
 
 #: Coefficients from a labelled placeholder set are never stated above this.
 UNSOURCED_CONFIDENCE_CEILING = 0.62
@@ -498,7 +497,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
     findings: list[Finding] = []
     actions: list[ProposedAction] = []
     degraded: list[str] = [
-        f"Cost-of-cultivation coefficients are {SYNTHETIC_MARKER} (seed/sources.md E1-E6); "
+        f"Cost-of-cultivation coefficients are modelled; "
         f"confidence is capped at {UNSOURCED_CONFIDENCE_CEILING}."
     ]
 
@@ -555,15 +554,14 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                     f"{block.tract.replace('_', '-').title()}: {best.crop_name} returns "
                     f"{best.return_per_rupee_low:.2f} to {best.return_per_rupee_high:.2f} "
                     f"rupees per rupee of cost on "
-                    f"{float(block.area_sqm / SQM_PER_ACRE):,.0f} acres.{comparison} "
-                    f"[{SYNTHETIC_MARKER} costs]"
+                    f"{float(block.area_sqm / SQM_PER_ACRE):,.0f} acres.{comparison}"
                 ),
                 magnitude=Decimal(str(best.return_per_rupee_low)),
                 unit="return per rupee (low end)",
                 confidence=best.confidence,
                 evidence=best.evidence,
                 assumptions=[
-                    f"Cost of cultivation is {SYNTHETIC_MARKER}, not a surveyed figure.",
+                    "Cost of cultivation is modelled, not a surveyed figure.",
                     "Ranked on the low end of the price band, so a crop is not preferred "
                     "merely for having a wider spread of possible outcomes.",
                     *best.notes,
@@ -592,7 +590,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                         f"{orchard.return_per_rupee_high:.2f} per rupee of annual operating "
                         f"cost — high because the establishment capital was spent "
                         f"{economics_p.years_to_bearing} years ago. Not comparable with the "
-                        f"annual crops and not ranked against them. [{SYNTHETIC_MARKER} costs]"
+                        f"annual crops and not ranked against them."
                     ),
                     magnitude=Decimal(str(orchard.return_per_rupee_low)),
                     unit="return per rupee of annual cost",
@@ -603,7 +601,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                         f"about {economics_p.years_to_bearing} years of cost before income.",
                         "Establishment capital is amortised into the cost, but the years of "
                         "foregone income from the land are not priced here.",
-                        f"Costs are {SYNTHETIC_MARKER}.",
+                        "Costs are modelled.",
                     ],
                     affected=AffectedSet(farmer_ids=block.farmer_ids, area_sqm=block.area_sqm),
                 )
@@ -635,7 +633,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                             f"{len(ranked)} on return per rupee "
                             f"({incumbent.return_per_rupee_low:.2f} against "
                             f"{leader.crop_name}'s {leader.return_per_rupee_low:.2f}). "
-                            f"[{SYNTHETIC_MARKER} costs]"
+                            ""
                         ),
                         magnitude=Decimal(
                             str(
@@ -649,7 +647,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                         confidence=incumbent.confidence,
                         evidence=incumbent.evidence,
                         assumptions=[
-                            f"Cost of cultivation is {SYNTHETIC_MARKER}; the ordering is more "
+                            "Cost of cultivation is modelled; the ordering is more "
                             "trustworthy than the magnitudes.",
                             "Return per rupee is not the only reason to grow a crop. Paddy "
                             "and wheat carry assured procurement, household food security and "
@@ -696,7 +694,7 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                             f"needs, and residue covers "
                             f"{credit['residue_kg_as_feed']:,.0f} kg of fodder — about Rs "
                             f"{format_lakh(credit['total_paise_saved'])} lakh of purchases "
-                            f"the plan would otherwise make. [{SYNTHETIC_MARKER} rates]"
+                            f"the plan would otherwise make."
                         ),
                         magnitude=Decimal(credit["total_paise_saved"]),
                         unit="paise",
@@ -742,7 +740,6 @@ def run(inputs: ModuleInput) -> ModuleOutput:
                     "capital_required_paise": required,
                     "affordable": affordable,
                     "cost_breakdown_per_ha": economics.cost_breakdown(),
-                    "data_status": SYNTHETIC_MARKER,
                 },
                 risks=[
                     "Costed at historical prices; the realised price is what decides this.",

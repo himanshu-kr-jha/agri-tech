@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-export function SignOutButton() {
+export function SignOutButton({ label = "Sign out" }: { label?: string } = {}) {
   const router = useRouter();
   const [pending, start] = useTransition();
 
@@ -19,7 +19,7 @@ export function SignOutButton() {
       disabled={pending}
       className="rounded-md border border-border/70 px-2.5 py-1 text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:border-primary/30 hover:text-foreground disabled:opacity-50"
     >
-      {pending ? "…" : "Sign out"}
+      {pending ? "…" : label}
     </button>
   );
 }

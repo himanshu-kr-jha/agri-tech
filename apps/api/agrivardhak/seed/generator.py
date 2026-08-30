@@ -37,7 +37,11 @@ from agrivardhak.domain.models.organization import (
 from agrivardhak.domain.models.provenance import AttributePolicy, DataSource
 from agrivardhak.domain.units import hectares_to_sqm
 from agrivardhak.ingestion.agmarknet import latest_modal_paise_per_kg, load_series
+from agrivardhak.ingestion.policy import load_policy_events
+from agrivardhak.ingestion.registry import load_all
 from agrivardhak.ingestion.weather import load_weather
+from agrivardhak.knowledge.extract import apply_fixture
+from agrivardhak.knowledge.pipeline import backfill_embeddings, observe
 from agrivardhak.orchestrator import gather
 from agrivardhak.provenance import resolver, trust
 from agrivardhak.seed import reference as ref
@@ -124,6 +128,9 @@ class SeedResult:
     interventions: int = 0
     attributions: int = 0
     predictions_scored: int = 0
+    external_records: int = 0
+    knowledge_chunks: int = 0
+    policy_events: int = 0
 
 
 # --------------------------------------------------------------------------- helpers
@@ -183,6 +190,17 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
     price_records = load_series(session)
     weather_records = load_weather(session)
     weather_records += gather.load_climatology_files(session)
+
+    # The ten fetched public sources (seed/generated/batch*/), then the observer that turns
+    # the text-bearing ones into retrievable, gated passages. Both are idempotent, and both
+    # read committed payloads, so this path stays offline (NFR-303).
+    external_records = sum(load_all(session).values())
+    observed = observe(session)
+    backfill_embeddings(session)
+    # Committed extraction proposals, if anyone has run `make extract-schemes` and reviewed
+    # the diff. They land UNVERIFIED and capped; attaching them cannot promote anything.
+    apply_fixture(session)
+    policy_events = load_policy_events(session)
     _seed_farm_resources(session, rng)
     lots = _seed_lots(session, org, cycles, rng)
     offers = _seed_offers(session, org, lots, rng)
@@ -211,6 +229,9 @@ def seed_all(session: Session, *, rng_seed: int = SEED) -> SeedResult:
         interventions=loop.interventions,
         attributions=loop.attributions,
         predictions_scored=loop.predictions_scored,
+        external_records=external_records,
+        knowledge_chunks=observed.chunks_written,
+        policy_events=policy_events,
     )
 
 
@@ -229,6 +250,8 @@ def _summarize(session: Session, org: Organization) -> SeedResult:
         Prediction,
         Recommendation,
     )
+    from agrivardhak.domain.models.knowledge import KnowledgeChunk
+    from agrivardhak.domain.models.market import NewsEvent
     from agrivardhak.domain.models.provenance import (
         DataDiscrepancy,
         ExternalRecord,
@@ -267,6 +290,9 @@ def _summarize(session: Session, org: Organization) -> SeedResult:
         interventions=count(Intervention),
         attributions=count(Attribution),
         predictions_scored=count(Prediction, Prediction.actual_value.is_not(None)),
+        external_records=count(ExternalRecord),
+        knowledge_chunks=count(KnowledgeChunk),
+        policy_events=count(NewsEvent, NewsEvent.is_synthetic.is_(False)),
     )
 
 

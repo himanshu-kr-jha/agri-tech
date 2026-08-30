@@ -23,7 +23,9 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-EvidenceKind = Literal["observation", "external_record", "prediction", "domain_row"]
+EvidenceKind = Literal[
+    "observation", "external_record", "prediction", "domain_row", "knowledge_chunk"
+]
 
 
 class EvidenceRef(BaseModel):

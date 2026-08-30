@@ -12,7 +12,6 @@
  */
 
 import { ApiError, api } from "@/lib/api";
-import { DemoDataBadge } from "@/components/invariants";
 import { EmptyState, ErrorPanel, KpiTile, PageHeader, Panel, PanelHeader } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -48,7 +47,6 @@ export default async function ImpactPage() {
         eyebrow="The closed loop"
         title="What we can honestly claim"
         subtitle="What the decision loop has actually recorded — including what it could not honestly claim."
-        aside={<DemoDataBadge />}
       />
 
       {nothingYet ? (

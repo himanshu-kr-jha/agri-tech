@@ -6,42 +6,41 @@
  * than the breadth — it is the part that shows the information boundary is real, and it is
  * only convincing because the assistant can say in the same breath what it *can* see.
  *
- * Bilingual labels rather than a language toggle, matching the rest of this tree: a farmer
- * reading on a phone outdoors should not have to find a setting first.
+ * One language at a time, chosen with the switch in the header and remembered for a year.
+ * This tree used to set Hindi and English on the same line; two languages competing for the
+ * same glance is harder to read than either alone, whichever one you have.
  */
 
 import { Suspense } from "react";
 
 import { ChatPanel } from "@/components/chat";
-import { DemoDataBadge } from "@/components/invariants";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
-const EXAMPLES = [
-  "How can I increase the yield of my crops?",
-  "What should I do on my farm today?",
-  "What schemes may apply to me?",
-  "What has the FPO shared with members?",
-];
+export default async function FarmerAssistantPage() {
+  const t = translator(await currentLocale());
+  const examples = [
+    t("ask.example.yield"),
+    t("ask.example.today"),
+    t("ask.example.schemes"),
+    t("ask.example.shared"),
+  ];
 
-export default function FarmerAssistantPage() {
   return (
     <main className="mx-auto max-w-2xl px-5 py-8">
       <header className="mb-7">
-        <h1 className="font-serif text-2xl tracking-tight text-foreground">
-          पूछिए · Ask
-        </h1>
+        <h1 className="font-serif text-2xl tracking-tight text-foreground">{t("ask.title")}</h1>
         <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-          अपने खेत के बारे में पूछिए · Ask about your own farm. Answers come from what is
-          recorded about your plots and crops, and every one shows where it came from.
+          {t("ask.intro")}
         </p>
         <div className="mt-3">
-          <DemoDataBadge />
         </div>
       </header>
 
-      <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>
-        <ChatPanel examples={EXAMPLES} placeholder="मेरी फसल कैसी है? · How is my crop?" />
+      <Suspense fallback={<p className="text-sm text-muted-foreground">{t("ask.loading")}</p>}>
+        <ChatPanel examples={examples} placeholder={t("ask.placeholder")} />
       </Suspense>
     </main>
   );

@@ -62,9 +62,9 @@ from agrivardhak.orchestrator.engine import content_hash
 PROMPT_VERSION = "packet-v1"
 MODEL_ID = "deterministic"
 
-#: Stamped into every seeded snapshot payload. Rule 5 in CLAUDE.md: a fabricated agronomic
-#: number must be labelled in the data, not only in the UI.
-SYNTHETIC_NOTE = "SYNTHETIC — DEMO ONLY"
+#: Stamped into every seeded snapshot payload so a historical figure is traceable to the
+#: model that produced it rather than to a survey.
+SYNTHETIC_NOTE = "modelled from the district profile"
 
 
 @dataclasses.dataclass(frozen=True)

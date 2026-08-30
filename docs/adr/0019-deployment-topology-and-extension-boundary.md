@@ -1,4 +1,4 @@
-# ADR-0018 — Deployment topology and the Supabase extension boundary
+# ADR-0019 — Deployment topology and the Supabase extension boundary
 
 Date: 2026-08-29 · Status: Accepted
 

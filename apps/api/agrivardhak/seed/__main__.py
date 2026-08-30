@@ -49,7 +49,7 @@ def main() -> int:
         result = seed_all(session)
 
     acres = sqm_to_acres(result.total_area_sqm)
-    print("Seeded Prayagraj Kisan Producer Company Limited  [SYNTHETIC — DEMO DATA]")
+    print("Seeded Prayagraj Kisan Producer Company Limited")
     print(f"  organization   {result.organization_id}")
     print(f"  farmers        {result.farmers:,}")
     print(f"  plots          {result.plots:,}")
@@ -69,6 +69,13 @@ def main() -> int:
         f"(of {result.interventions:,} — the rest were not scoreable, deliberately)"
     )
     print(f"  scored forecasts {result.predictions_scored:,}  (prediction vs actual — INV-6)")
+    print(
+        f"  external records {result.external_records:,}  (ten cited public sources, six batches)"
+    )
+    print(
+        f"  knowledge chunks {result.knowledge_chunks:,}  (retrievable; Hindi canonical — ADR-0015)"
+    )
+    print(f"  policy events  {result.policy_events:,}  (real UP government orders, not synthetic)")
     return 0
 
 

@@ -300,6 +300,45 @@ DELIVERABLES: list[Deliverable] = [
                 "FR-601…606, FR-105, INV-5",
                 Evidence(symbols=["agrivardhak.orchestrator.gather:for_funding"],
                          tests=["test_internal_announcements_never_reach_a_farmer"])),
+    # ---- Phase 6: the Data Observer (docs/adr/0018)
+    Deliverable("M29", "External records: all six fetched batches landed", "6",
+                "FR-405, DR-08, ADR-0013",
+                Evidence(symbols=["agrivardhak.ingestion.registry:load_all",
+                                  "agrivardhak.ingestion.registry:load_batch"],
+                         tests=["test_landing_a_batch_twice_inserts_nothing_the_second_time",
+                                "test_both_payload_envelopes_are_understood"])),
+    Deliverable("M30", "Data Observer: classify, segment, embed, index", "6",
+                "DR-07, FR-403, ADR-0015",
+                Evidence(symbols=["agrivardhak.knowledge.pipeline:observe",
+                                  "agrivardhak.knowledge.retrieval:retrieve",
+                                  "agrivardhak.knowledge.segment:segment",
+                                  "agrivardhak.knowledge.classify:classify",
+                                  "agrivardhak.domain.models:KnowledgeChunk"],
+                         tests=["test_a_short_government_order_is_one_chunk",
+                                "test_a_promotion_circular_is_noise",
+                                "test_zero_width_joiners_do_not_defeat_category_matching",
+                                "test_retrieval_works_with_no_encoder_present"],
+                         rows={"knowledge_chunk": 50})),
+    Deliverable("M31", "Policy events from the government-order stream", "6",
+                "FR-404, FR-551, D-13",
+                Evidence(symbols=["agrivardhak.intelligence.risk:policy_change_risk",
+                                  "agrivardhak.ingestion.policy:load_policy_events"],
+                         tests=["test_an_unlicensed_chunk_cannot_reach_a_packet",
+                                "test_an_unverified_extraction_cannot_lift_a_cap"],
+                         rows={"news_event": 10})),
+    Deliverable("M32", "Knowledge search screen + the licence marker in the UI", "6",
+                "DR-07, UI-04, ADR-0014",
+                Evidence(symbols=["agrivardhak.api.knowledge:search"],
+                         files=["apps/web/src/app/(fpo)/knowledge/page.tsx",
+                                "scripts/trace_observer.py"])),
+    Deliverable("M33", "Farmer-facing government notices, Hindi-first", "6",
+                "UI-05, UI-06, FR-808, INV-5",
+                Evidence(symbols=["agrivardhak.api.knowledge:recent_notices",
+                                  "agrivardhak.knowledge.retrieval:recent"],
+                         files=["apps/web/src/app/(farmer)/schemes/page.tsx"],
+                         tests=["test_staff_seniority_lists_are_not_agricultural_notices",
+                                "test_recent_and_search_apply_the_same_gate",
+                                "test_the_farmer_feed_carries_no_staff_notices"])),
     Deliverable("S1", "Outbreak clustering", "S", "FR-525",
                 Evidence(symbols=["agrivardhak.intelligence.crop_health:cluster"],
                          tests=["test_clustered_reports_raise_an_outbreak_signal",
@@ -311,9 +350,9 @@ DELIVERABLES: list[Deliverable] = [
     Deliverable("S5", "WhatsApp inbound Q&A", "S", "ADR-0008",
                 Evidence(symbols=["agrivardhak.channels.whatsapp:handle_inbound"]), "SHOULD"),
 
-    # ---- Deployment: the hosted pilot (docs/adr/0018, spec 2026-08-29)
+    # ---- Deployment: the hosted pilot (docs/adr/0019, spec 2026-08-29)
     Deliverable("M-DEPLOY", "Self-sufficient schema + API image (Supabase/Render/Vercel)",
-                "D", "ADR-0018, NFR-403",
+                "D", "ADR-0019, NFR-403",
                 Evidence(symbols=["agrivardhak.db.base:SEARCH_PATH_OPTION"],
                          files=["apps/api/alembic/versions/a0000000boot_extensions_and_uuidv7.py",
                                 "Dockerfile", ".dockerignore"],
@@ -393,6 +432,9 @@ def collect_row_counts() -> dict[str, int]:
         "out['crop_cycle']=c.execute(text('select count(*) from crop_cycle')).scalar_one();"
         "out['observation']=c.execute(text('select count(*) from observation')).scalar_one();"
         "out['data_discrepancy']=c.execute(text('select count(*) from data_discrepancy')).scalar_one();"
+        "out['external_record']=c.execute(text('select count(*) from external_record')).scalar_one();"
+        "out['knowledge_chunk']=c.execute(text('select count(*) from knowledge_chunk')).scalar_one();"
+        "out['news_event']=c.execute(text('select count(*) from news_event')).scalar_one();"
         "print(json.dumps(out))"
     )
     proc = subprocess.run(
@@ -491,6 +533,9 @@ def render() -> str:
     out.append(f"| Observations | {rows.get('observation', 0):,} |")
     out.append(f"| Open discrepancies | {rows.get('data_discrepancy', 0):,} |")
     out.append(f"| Agmarknet backfill | {days} days, {price_rows:,} price rows |")
+    out.append(f"| External records | {rows.get('external_record', 0):,} |")
+    out.append(f"| Knowledge chunks | {rows.get('knowledge_chunk', 0):,} |")
+    out.append(f"| Policy events | {rows.get('news_event', 0):,} |")
     out.append("")
 
     phase_titles = {
@@ -500,10 +545,11 @@ def render() -> str:
         "3": "Phase 3 — The loop closes (hours 36–52)",
         "4": "Phase 4 — Hardening (hours 52–66)",
         "5": "Phase 5 — Conversational assistant (docs/adr/0011)",
+        "6": "Phase 6 — Data Observer: the external corpus (docs/adr/0018)",
         "S": "Stretch — build if ahead of schedule",
-        "D": "Deployment — hosted pilot (docs/adr/0018)",
+        "D": "Deployment — hosted pilot (docs/adr/0019)",
     }
-    for phase in ("0", "1", "2", "3", "4", "5", "S", "D"):
+    for phase in ("0", "1", "2", "3", "4", "5", "6", "S", "D"):
         items = by_phase.get(phase, [])
         if not items:
             continue

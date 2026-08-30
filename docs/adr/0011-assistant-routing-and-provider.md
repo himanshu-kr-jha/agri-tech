@@ -1,6 +1,6 @@
 # ADR-0011 — Conversational assistant: routing, response shapes, and the NIM provider
 
-Date: 2026-08-23 · Status: Accepted
+Date: 2026-08-23 · Status: Accepted · Amended by ADR-0020 (model) and ADR-0021 (ambiguity)
 
 ## Context
 
@@ -43,11 +43,17 @@ rendered.
 **Provider: NVIDIA NIM over `httpx`,** not the OpenAI SDK. Two call sites do not justify a
 dependency, and `httpx>=0.27` is already required.
 
-**Router model: `meta/llama-3.1-8b-instruct`.**
+**Router model: `meta/llama-3.1-8b-instruct`.** *Retired by NVIDIA on 2026-08-26; see
+ADR-0020. The reasoning below stands — a small model over a closed enum — but this id and
+both rows of the latency table are dead.*
 
 ## What the spike measured
 
 Run against `integrate.api.nvidia.com/v1` on 2026-08-23, before any of the above was built.
+**Both Llama rows were retired on 2026-08-26 and now return 410** — kept as the record of
+what was measured, not as a menu. ADR-0020 has the current numbers, and notes that this
+table measures raw `/chat/completions` latency rather than latency through `router.plan`,
+which is where the models differ by 8×.
 
 | Model | Latency (10 tokens, repeated) |
 |---|---|

@@ -22,6 +22,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import pathlib
+import re
 import statistics
 import uuid
 from collections import defaultdict
@@ -37,16 +38,20 @@ from agrivardhak.domain.enums import (
     ExternalRecordKind,
     FarmResourceType,
     OrgResourceType,
+    SourceType,
 )
 from agrivardhak.domain.models.crops import Crop, CropCycle, Variety
+from agrivardhak.domain.models.knowledge import KnowledgeChunk
 from agrivardhak.domain.models.land import Farm, FarmResource, Plot
-from agrivardhak.domain.models.market import Buyer, DemandSignal, Lot
+from agrivardhak.domain.models.market import Buyer, DemandSignal, Lot, NewsEvent
 from agrivardhak.domain.models.organization import Farmer, Organization, OrgResource
 from agrivardhak.domain.models.provenance import ExternalRecord
 from agrivardhak.ingestion import agmarknet, weather
 from agrivardhak.intelligence import crop_health, farm, funding, market, quality, risk, scheme
 from agrivardhak.intelligence.contracts import EvidenceRef, ModuleInput
-from agrivardhak.provenance import resolver
+from agrivardhak.knowledge import classify, gates
+from agrivardhak.knowledge import retrieval as knowledge_retrieval
+from agrivardhak.provenance import resolver, trust
 
 SQM_PER_HA = Decimal(10000)
 
@@ -62,6 +67,42 @@ AGMARKNET_COMMODITY = {
     "Paddy": "Paddy(Common)",
     "Mustard": "Mustard",
     "Guava": "Guava",
+}
+
+#: Crop names as UP government orders write them, against ours. ADR-0017: aliasing happens
+#: at gather, never at ingest, and aliases are declared rather than derived.
+#:
+#: **Matched as whole tokens, never as substrings.** ``धान`` (paddy) sits inside
+#: ``प्राविधानित`` ("provisioned"), which appears in almost every financial-sanction order —
+#: substring matching attributed 26 of 26 policy events to paddy, including soil-conservation
+#: budget releases. Inflected forms are therefore listed explicitly rather than approximated
+#: with a suffix rule, because guessing Hindi morphology is how that bug comes back.
+#:
+#: Deliberately small. An order naming no crop is department-wide, which
+#: ``risk.policy_change_risk`` reads as "every standing crop is exposed" — so a missing
+#: alias widens the reported exposure rather than hiding the order. That is the safe
+#: direction to fail.
+#:
+#: **Measured, 2026-08-29: not one of the 75 cached orders names an individual crop.** The
+#: subjects speak in budget heads and scheme names, and where they mention crops at all it
+#: is generically — ``फसल`` 23 times, ``दलहन`` twice, ``तिलहन`` once. So every policy event
+#: currently resolves as department-wide, and this table is exercised only by the tests
+#: until a source that names crops arrives (the order PDFs would).
+#:
+#: Mapping the group terms onto demo crops was considered and rejected: ``तिलहन`` covers
+#: every oilseed, and quietly resolving it to Mustard would manufacture a precision the
+#: order does not have — the exact failure ADR-0017 exists to prevent.
+POLICY_CROP_ALIASES: dict[str, str] = {
+    "धान": "Paddy",
+    "धानों": "Paddy",
+    "चावल": "Paddy",
+    "गेहूं": "Wheat",
+    "गेहूँ": "Wheat",
+    "गेहू": "Wheat",
+    "आलू": "Potato",
+    "सरसों": "Mustard",
+    "राई": "Mustard",
+    "अमरूद": "Guava",
 }
 
 #: Irrigations a tract's water can support over one season. ⚠️ SYNTHETIC — DEMO ONLY,
@@ -393,8 +434,98 @@ def for_risk(
             "current_price_paise_per_kg": {
                 crop: points[-1].modal_paise_per_kg for crop, points in history.items() if points
             },
+            "policy_events": policy_events(session, as_of=as_of),
         },
     )
+
+
+#: Anything that is not a Devanagari or Latin letter ends a token. Devanagari matras and
+#: virama live inside U+0900-U+097F, so conjuncts stay whole.
+_TOKEN = re.compile(r"[\u0900-\u097F]+|[A-Za-z]+")
+
+
+def crops_named_in(text: str) -> list[str]:
+    """Our crop names mentioned in a Hindi policy subject (ADR-0017).
+
+    Whole-token matching. See the note on :data:`POLICY_CROP_ALIASES` for why substring
+    matching is not merely imprecise here but actively wrong.
+    """
+    tokens = {classify.normalise(t) for t in _TOKEN.findall(text)}
+    return sorted(
+        {
+            canonical
+            for alias, canonical in POLICY_CROP_ALIASES.items()
+            if classify.normalise(alias) in tokens
+        }
+    )
+
+
+def policy_events(
+    session: Session, *, as_of: dt.datetime, window_days: int | None = None
+) -> list[risk.PolicyEvent]:
+    """Recent classified government orders, gated and ready for the Risk module (FR-404).
+
+    The confidence handed to the module is source trust after age decay, clamped by the
+    licence and verification gate. Doing it here rather than in the module is what keeps the
+    module pure: ``knowledge/gates.py`` reads the registry, which is I/O, and a module that
+    read a licence file could not be replayed against a stored snapshot (INV-2).
+    """
+    window = window_days if window_days is not None else risk.POLICY_WINDOW_DAYS
+    cutoff = as_of - dt.timedelta(days=window)
+
+    rows = session.execute(
+        select(NewsEvent, KnowledgeChunk)
+        .join(
+            KnowledgeChunk,
+            (KnowledgeChunk.external_record_id == NewsEvent.external_record_id)
+            & (KnowledgeChunk.chunk_index == 0),
+        )
+        .where(
+            NewsEvent.is_synthetic.is_(False),
+            NewsEvent.occurred_at >= cutoff,
+            KnowledgeChunk.is_noise.is_(False),
+            KnowledgeChunk.superseded_by.is_(None),
+        )
+        .order_by(NewsEvent.occurred_at.desc())
+    ).all()
+
+    facts = knowledge_retrieval._source_facts()
+    out: list[risk.PolicyEvent] = []
+    for event, chunk in rows:
+        licence, authoritative = facts.get(chunk.source_key, ("UNKNOWN", False))
+        ceiling = gates.ceiling_for(
+            licence=licence,
+            verification_status=chunk.verification_status,
+            has_extraction=chunk.extracted is not None,
+        )
+        decayed = trust.effective_confidence(
+            source_type=SourceType.EXTERNAL_SOURCE,
+            verification_status=chunk.verification_status,
+            observed_at=event.occurred_at,
+            as_of=as_of,
+            attribute=knowledge_retrieval.POLICY_ATTRIBUTE,
+        )
+        if not authoritative:
+            decayed *= knowledge_retrieval.ADVISORY_DISCOUNT
+        out.append(
+            risk.PolicyEvent(
+                key=f"go.{event.id}",
+                domain=event.domain.value,
+                headline=event.headline,
+                occurred_at=event.occurred_at.date(),
+                crops=crops_named_in(event.body or event.headline),
+                ceiling=ceiling,
+                confidence=min(decayed, ceiling),
+                evidence=_ref(
+                    "knowledge_chunk",
+                    chunk.id,
+                    knowledge_retrieval._label(chunk, licence),
+                    event.occurred_at,
+                ),
+                licence_confirmed=licence.upper() != gates.UNKNOWN_LICENCE,
+            )
+        )
+    return out
 
 
 def seasonality_from(crop_name: str, points: list[market.PricePoint]) -> risk.PriceSeasonality:

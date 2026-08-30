@@ -53,3 +53,9 @@ packages/contracts/src/generated/
 # Per-clone fetch log; append-only and conflicts on every merge.
 # The shared state that matters is seed/generated/fetch_state.json, which IS tracked.
 seed/generated/fetch_log.jsonl
+
+# The ONNX sentence encoder, fetched by `make embed-model`. NOT committed, unlike the data
+# fixtures above: it is ~120 MB of redistributable model weights that add nothing to the
+# audit trail, and retrieval degrades to Postgres full-text search without it, so a clone
+# that never runs the target still works offline.
+apps/api/models/

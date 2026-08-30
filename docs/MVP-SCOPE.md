@@ -211,6 +211,7 @@ labelled as such on every screen.
 | 3 | The packet streams | Nine sections appear in order. Every number has a confidence chip. | 1:00 |
 | 4 | **The override moment** | The banner above the recommendations: *paddy is 99% of operated area across 749 farmers; it harvests into the annual price trough (₹20.30/kg in November against ₹23.69 in January); November arrivals run 36.6× the median month; and on both irrigated tracts it ranks last of four on return per rupee.* Four findings, two independent modules, same crop, same window. **Nobody proposed this cropping pattern — it is simply what is planted, which is why it would otherwise go unexamined.** The packet prices the alternative and explicitly declines to tell the board what to grow — and the finding itself notes that assured procurement and food security are real reasons to grow paddy that the cost model does not price. | 0:40 |
 | 5 | **Provenance moment** | Hover a number → source, observed date, verification status. Click a disputed plot area → three conflicting claims (farmer 2.0 ac / record 1.6 / officer 1.8), no silent winner. | 0:30 |
+| 5a | **The licence moment** | Open **Published** and search `मृदा नमूना` (soil sample). The best textual match — a departmental FAQ literally titled *"when is the right time to take a soil sample?"*, **2.6× more relevant than anything else returned** — ranks **last**, marked `context only`. Not because it is wrong, but because nobody has confirmed that source's licence, so its confidence is capped at 0.40 against an orchestrator floor of 0.45. Then open the **Risk** register: three `policy` entries, built from 75 real UP government orders in Hindi, sized to 750 farmers and 1,842 acres. **The system read the government, told the CEO what it found, and refused to let the part it is not entitled to rely on move a decision** — arithmetic, not a review checklist (ADR-0014, ADR-0018). | 0:35 |
 | 6 | Drill-down | The packet's drill-down resolves to 749 named farmers → their plots → crop cycles → health readings, each with its own provenance. Filter the member list by tract to see the exposure cluster. | 0:40 |
 | 7 | Market depth | Headline price versus what the collective actually banks. The punchline is *which* cost does it — not the 180 km of freight (₹0.81/kg) but the rejection rate (₹3.74/kg on ₹34), four times as much. Second punchline: months of accrued storage are shown and **deliberately not deducted** — sunk cost cannot inform a choice between buyers, and subtracting it once turned a fair ₹7.05/kg offer into a ruinous-looking ₹3.23. | 0:45 |
 | 8 | Approve with modification | ₹35,000 → ₹32,000. Both values persist. Tasks and calendar events are created, pending field approval. | 0:30 |
@@ -225,7 +226,7 @@ labelled as such on every screen.
 before the spread. Slot after beat 6. This is the strongest available demonstration that we are
 detecting *organizational* risk rather than classifying a leaf.
 
-**Total ≈ 7 minutes.** Beats 4, 5, 9, 11 and 12 are the ones that separate this from a
+**Total ≈ 7.5 minutes.** Beats 4, 5, 5a, 9, 11 and 12 are the ones that separate this from a
 dashboard with a chatbot. If time is cut, drop 7 and 13 — never 4, 5, 9 or 11.
 
 **The line that ties it together, and it is true rather than a slogan:** every number on
@@ -258,7 +259,7 @@ execute, and one that runs the entire pipeline with every socket blocked.
 The MVP is done when all of the following are true:
 
 - [ ] `make seed && make dev` reproduces the demo with the network disabled
-- [ ] All 13 demo beats run without intervention
+- [ ] All 14 demo beats run without intervention
 - [ ] The nine invariant tests pass
 - [ ] The replay test passes (module purity proven)
 - [ ] Seed is deterministic: two runs produce identical content hashes

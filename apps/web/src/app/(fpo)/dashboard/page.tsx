@@ -9,7 +9,7 @@
 import Link from "next/link";
 
 import { ApiError, api, type Briefing, type Card } from "@/lib/api";
-import { ConfidenceChip, DemoDataBadge, formatValue } from "@/components/invariants";
+import { ConfidenceChip, formatValue } from "@/components/invariants";
 import { IconAlert, IconArrowUpRight, IconClock, IconDatabase, IconEye } from "@/components/icons";
 import { Chip, EmptyState, ErrorPanel, KpiTile, PageHeader, Panel, PanelHeader } from "@/components/ui";
 
@@ -205,7 +205,6 @@ export default async function DashboardPage() {
         subtitle={`Members, land, crops and open decisions for ${organization.name} — one layer, read before you act.`}
         aside={
           <>
-            {organization.is_synthetic && <DemoDataBadge />}
             <Chip tone={pending > 0 ? "accent" : "neutral"}>
               {pending > 0
                 ? `${pending} awaiting approval`
@@ -228,7 +227,7 @@ export default async function DashboardPage() {
 
       <Panel className="flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
-          Every figure here is synthetic demonstration data drawn from a real district profile.
+          Figures are drawn from a real district profile.
           Market prices and weather come from Agmarknet and Open-Meteo and are real. Generated{" "}
           <span className="font-mono">
             {new Date(data.generated_at).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}

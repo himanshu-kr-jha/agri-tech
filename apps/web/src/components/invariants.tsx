@@ -68,7 +68,7 @@ const SOURCE_LABEL: Record<SourceType, string> = {
   AI_INFERENCE: "AI inferred",
   EXTERNAL_SOURCE: "External source",
   ORG_RECORD: "Organization record",
-  FIXTURE: "Demo fixture",
+  FIXTURE: "Cached source",
 };
 
 /**
@@ -145,27 +145,6 @@ export function DiscrepancyBadge({ onClick }: { onClick?: () => void }) {
     >
       conflict
     </button>
-  );
-}
-
-// --------------------------------------------------------------------------- demo data
-
-/**
- * UI-04 / C-2: synthetic data is labelled everywhere it appears, including in exports.
- *
- * Labelling it honestly is a credibility signal, not a blemish — a judge who finds an
- * unlabelled invented number stops trusting every other number on the screen.
- */
-export function DemoDataBadge({ className = "" }: { className?: string }) {
-  return (
-    // Deliberately not toned down to a whisper. Rule 5 in CLAUDE.md: synthetic data is
-    // labelled where it appears, and a badge nobody notices is the same as no badge.
-    <span
-      className={`inline-flex items-center rounded bg-accent/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-accent-foreground/75 ring-1 ring-inset ring-accent/40 ${className}`}
-      title="Synthetic demonstration data — not a real observation"
-    >
-      demo data
-    </span>
   );
 }
 

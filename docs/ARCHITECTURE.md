@@ -92,7 +92,7 @@ that authorization, provenance and the information boundary have exactly one enf
 
 The diagram above is the process topology; it says nothing about hosts, and for a pilot the two
 diverge. Each tier is hosted separately, and the arrow from the browser to the database is still
-absent — deliberately, even though the managed Postgres would make it trivial (ADR-0018).
+absent — deliberately, even though the managed Postgres would make it trivial (ADR-0019).
 
 ```
   Browser ──HTTPS──▶ Vercel            apps/web, Next.js 16
@@ -477,6 +477,13 @@ CEO: "What should we do this season to maximize sustainable farmer income?"
 | Mandi price ingest | daily | Price + arrivals per commodity/market |
 | News classify | hourly | Fetch → classify domain → detect FPO exposure → `PolicyEventDetected` |
 | Scheme refresh | daily | Re-embed changed scheme text |
+
+**As built, these two are one batch and there is no scheduler.** `make ingest` runs
+land → classify → segment → embed → index over whatever `make fetch-due` last cached, and it
+is idempotent, so an external cron can call it without coordination. `DATA-SOURCING.md`
+decision 5 rejected an in-app scheduler deliberately — *"No scheduler. Staleness signalling
+and a fetch log only"* — and ADR-0018 did not relitigate it. The cadence lives in
+`seed/source_registry.py` (`CADENCE_DAYS`), which is what `make fetch-due` reads.
 | Eligibility recompute | nightly | All members × all active schemes (NFR-104) |
 | Risk recompute | nightly + on event | Refresh the register |
 | Quality/yield predictions | nightly | Per active crop cycle |
