@@ -9,12 +9,19 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from agrivardhak.config import get_settings
+from agrivardhak.db.base import SEARCH_PATH_OPTION
 
 _settings = get_settings()
 
 engine = create_engine(
     _settings.database_url,
     pool_pre_ping=True,
+    # A pooler reaps idle server connections; recycling below that horizon turns a stale
+    # socket into a new connection rather than into a request-time error.
+    pool_recycle=300,
+    pool_size=5,
+    max_overflow=5,
+    connect_args={"options": SEARCH_PATH_OPTION},
     echo=False,
     future=True,
 )

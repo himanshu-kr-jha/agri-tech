@@ -1,7 +1,7 @@
 """initial schema
 
 Revision ID: b8effdc6a2cb
-Revises: 
+Revises: a0000000boot
 Create Date: 2026-08-22 22:29:03.346925
 """
 from collections.abc import Sequence
@@ -12,7 +12,7 @@ import geoalchemy2
 from sqlalchemy.dialects import postgresql
 
 revision: str = 'b8effdc6a2cb'
-down_revision: str | None = None
+down_revision: str | None = 'a0000000boot'
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

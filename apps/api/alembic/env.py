@@ -12,7 +12,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 
 from agrivardhak.config import get_settings
-from agrivardhak.db.base import Base
+from agrivardhak.db.base import Base, SEARCH_PATH_OPTION
 from agrivardhak.domain import models  # noqa: F401  — registers all tables
 
 config = context.config
@@ -57,6 +57,12 @@ def run_migrations_online() -> None:
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
+        # The same search path the runtime engine uses, supplied here because
+        # engine_from_config does not inherit db/session.py's connect_args. Without it the
+        # geography columns in b8effdc6a2cb cannot resolve wherever PostGIS lives outside
+        # public — which is every Supabase database. It must be a connection *option* and
+        # not a ``SET`` statement; SEARCH_PATH_OPTION documents why.
+        connect_args={"options": SEARCH_PATH_OPTION},
     )
     with connectable.connect() as connection:
         context.configure(

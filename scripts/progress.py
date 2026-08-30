@@ -349,6 +349,17 @@ DELIVERABLES: list[Deliverable] = [
                 Evidence(symbols=["agrivardhak.intelligence.market:supply_gap"]), "SHOULD"),
     Deliverable("S5", "WhatsApp inbound Q&A", "S", "ADR-0008",
                 Evidence(symbols=["agrivardhak.channels.whatsapp:handle_inbound"]), "SHOULD"),
+
+    # ---- Deployment: the hosted pilot (docs/adr/0019, spec 2026-08-29)
+    Deliverable("M-DEPLOY", "Self-sufficient schema + API image (Supabase/Render/Vercel)",
+                "D", "ADR-0019, NFR-403",
+                Evidence(symbols=["agrivardhak.db.base:SEARCH_PATH_OPTION"],
+                         files=["apps/api/alembic/versions/a0000000boot_extensions_and_uuidv7.py",
+                                "Dockerfile", ".dockerignore"],
+                         tests=["test_the_chain_has_one_base_and_it_creates_the_extensions",
+                                "test_the_chain_is_linear_and_ends_in_one_head",
+                                "test_alembic_and_the_runtime_engine_share_one_search_path",
+                                "test_the_api_image_ships_the_runtime_fixtures"])),
 ]
 
 
@@ -536,8 +547,9 @@ def render() -> str:
         "5": "Phase 5 — Conversational assistant (docs/adr/0011)",
         "6": "Phase 6 — Data Observer: the external corpus (docs/adr/0018)",
         "S": "Stretch — build if ahead of schedule",
+        "D": "Deployment — hosted pilot (docs/adr/0019)",
     }
-    for phase in ("0", "1", "2", "3", "4", "5", "6", "S"):
+    for phase in ("0", "1", "2", "3", "4", "5", "6", "S", "D"):
         items = by_phase.get(phase, [])
         if not items:
             continue

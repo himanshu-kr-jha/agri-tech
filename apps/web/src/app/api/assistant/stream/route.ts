@@ -12,6 +12,14 @@ import { sessionToken } from "@/lib/session";
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
+// Deployment (Vercel). The Node runtime, because Edge would sever the streaming proxy from
+// the Node fetch semantics this route relies on. maxDuration because a decision packet that
+// calls six modules and then narrates outlives the default serverless budget — and the
+// failure mode is a truncated stream mid-answer, which reads as a broken product rather
+// than as a timeout. Both are inert in local dev.
+export const runtime = "nodejs";
+export const maxDuration = 60;
+
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => ({}));

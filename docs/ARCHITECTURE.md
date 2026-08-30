@@ -88,6 +88,44 @@ in a Decision Packet reproducible and every recommendation defensible.
 The web tier never touches the database. All reads and writes go through the FastAPI API so
 that authorization, provenance and the information boundary have exactly one enforcement point.
 
+### Hosted (pilot)
+
+The diagram above is the process topology; it says nothing about hosts, and for a pilot the two
+diverge. Each tier is hosted separately, and the arrow from the browser to the database is still
+absent — deliberately, even though the managed Postgres would make it trivial (ADR-0019).
+
+```
+  Browser ──HTTPS──▶ Vercel            apps/web, Next.js 16
+                     (session cookie set by its own route handler)
+             │
+             └──HTTPS, Bearer JWT──▶ Render           FastAPI, Docker, built from the REPO ROOT
+                                     Singapore        ships seed/generated/ — ingestion reads it
+                                        │             at runtime via parents[4]
+                                        │
+                                        └──Postgres wire, Supavisor session pooler :5432──▶
+                                           Supabase   Postgres + PostGIS + pgvector
+                                           Singapore  schema owned by Alembic, not the dashboard
+```
+
+Three things about this arrangement are load-bearing rather than incidental:
+
+- **No Supabase key ever reaches Vercel.** The managed database offers direct browser access; taking
+  it would move the INV-5 information boundary into RLS policies and client code. FastAPI stays the
+  only tier with a connection string (ADR-0001).
+- **Extensions and `uuid_generate_v7()` come from a base migration**, not from
+  `infra/initdb/01-extensions.sql`, which only ever runs under Docker. `alembic upgrade head` is
+  sufficient on any empty Postgres. Because the managed host installs extensions into an
+  `extensions` schema and Docker leaves them in `public`, both the runtime engine and Alembic
+  connect with `search_path = public, extensions` from one constant — as a libpq connection option,
+  never as a `SET` statement (`db/base.py:SEARCH_PATH_OPTION` records why).
+- **Deploy migrates, it never seeds.** Render's pre-deploy command is `alembic upgrade head`.
+  `make seed` is a one-time hand-run bootstrap and `make seed-reset` truncates every table, so
+  neither belongs in a deploy hook.
+
+Render and Supabase share a region because the orchestrator makes many database round trips per
+decision packet against a browser's one. Full runbook:
+`docs/superpowers/specs/2026-08-29-supabase-vercel-render-deployment-design.md`.
+
 ---
 
 ## 3. The module contract {#module-contract}

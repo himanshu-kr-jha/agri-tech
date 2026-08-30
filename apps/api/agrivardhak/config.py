@@ -59,7 +59,14 @@ class Settings(BaseSettings):
     #: FR-524: no diagnosis is asserted when the top two candidates are this close.
     diagnostic_margin: float = 0.15
 
-    #: Offline demo mode — every adapter uses its fixture (NFR-303).
+    #: Offline demo mode: an LLM kill-switch. When true, ``orchestrator/llm.py`` reports no
+    #: model available, so the intent router falls back to keyword routing and the narrator
+    #: returns packets unrewritten (NFR-303) — deterministic module output, no network.
+    #:
+    #: It does **not** switch the ingestion adapters. They read committed files from
+    #: ``seed/generated`` unconditionally (ingestion/weather.py, ingestion/agmarknet.py), so
+    #: external data is already fixture-backed whatever this is set to. A deployment wanting
+    #: a live assistant over committed data therefore wants ``false``, not ``true``.
     use_fixtures: bool = False
 
     cors_origins: list[str] = ["http://localhost:3000"]
