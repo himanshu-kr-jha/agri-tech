@@ -49,6 +49,12 @@ export const STRINGS = {
   },
   "ask.placeholder": { en: "How is my crop?", hi: "मेरी फसल कैसी है?" },
   "ask.loading": { en: "Loading…", hi: "लोड हो रहा है…" },
+  //: Shown on the assistant page in the reader's own language, explaining why the rest of
+  //: that page is not. See the note in (farmer)/ask/page.tsx.
+  "ask.englishOnly": {
+    en: "The assistant answers in English.",
+    hi: "सहायक अंग्रेज़ी में उत्तर देता है। प्रश्न आप हिन्दी में भी पूछ सकते हैं।",
+  },
   "ask.example.yield": {
     en: "How can I increase the yield of my crops?",
     hi: "मैं अपनी फ़सल की पैदावार कैसे बढ़ाऊँ?",

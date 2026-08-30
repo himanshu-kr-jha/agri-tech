@@ -6,9 +6,18 @@
  * than the breadth — it is the part that shows the information boundary is real, and it is
  * only convincing because the assistant can say in the same breath what it *can* see.
  *
- * One language at a time, chosen with the switch in the header and remembered for a year.
- * This tree used to set Hindi and English on the same line; two languages competing for the
- * same glance is harder to read than either alone, whichever one you have.
+ * **This page stays in English while the rest of the tree follows the switch**, and that is
+ * a deliberate exception rather than an oversight. Every answer the assistant produces is
+ * assembled from deterministic module output that is written in English — the claims, the
+ * units, the refusals. Putting a Hindi shell around English answers does not make the page
+ * Hindi; it makes it half-translated, which reads worse than either language alone and
+ * promises a Hindi experience the reply cannot keep.
+ *
+ * The one line that does follow the switch is the note saying so. A reader who has chosen
+ * Hindi is owed that explanation in Hindi — and it also tells them the thing worth knowing,
+ * which is that they may still *ask* in Hindi.
+ *
+ * When the assistant can answer in Hindi, delete the exception, not the note.
  */
 
 import { Suspense } from "react";
@@ -20,7 +29,11 @@ import { currentLocale } from "@/lib/locale";
 export const dynamic = "force-dynamic";
 
 export default async function FarmerAssistantPage() {
-  const t = translator(await currentLocale());
+  // The reader's language, used for exactly one line: the note explaining why this page is
+  // not in it.
+  const reader = translator(await currentLocale());
+  // Everything else is English, to match the answers.
+  const t = translator("en");
   const examples = [
     t("ask.example.yield"),
     t("ask.example.today"),
@@ -35,8 +48,9 @@ export default async function FarmerAssistantPage() {
         <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
           {t("ask.intro")}
         </p>
-        <div className="mt-3">
-        </div>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          {reader("ask.englishOnly")}
+        </p>
       </header>
 
       <Suspense fallback={<p className="text-sm text-muted-foreground">{t("ask.loading")}</p>}>
