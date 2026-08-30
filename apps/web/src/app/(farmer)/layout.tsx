@@ -15,13 +15,19 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { IconLeaf } from "@/components/icons";
+import { LanguageToggle } from "@/components/language-toggle";
 import { SignOutButton } from "@/components/sign-out";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 import { currentUser, homeFor } from "@/lib/session";
 
 export default async function FarmerLayout({ children }: { children: React.ReactNode }) {
   const user = await currentUser();
   if (!user) redirect("/login");
   if (user.audience !== "FARMER") redirect(homeFor(user));
+
+  const locale = await currentLocale();
+  const t = translator(locale);
 
   return (
     <div className="flex min-h-screen flex-col text-[17px]">
@@ -35,21 +41,22 @@ export default async function FarmerLayout({ children }: { children: React.React
               AgriVardhak
             </span>
           </Link>
-          <span className="text-sm text-muted-foreground">मेरा खेत · My farm</span>
+          <span className="text-sm text-muted-foreground">{t("nav.myFarm")}</span>
           <Link
             href="/ask"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            पूछिए · Ask
+            {t("nav.ask")}
           </Link>
           <Link
             href="/schemes"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            सूचनाएँ · Notices
+            {t("nav.notices")}
           </Link>
-          <div className="ml-auto">
-            <SignOutButton />
+          <div className="ml-auto flex items-center gap-2">
+            <LanguageToggle locale={locale} label={t("lang.switchTo")} />
+            <SignOutButton label={t("nav.signOut")} />
           </div>
         </nav>
       </header>

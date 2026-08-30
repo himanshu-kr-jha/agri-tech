@@ -23,22 +23,19 @@
  * states the relationship it actually has — these apply to every farmer in the state,
  * including you.
  *
- * Hindi leads on every line. Not a toggle: on a shared phone the setting is never the one
- * you left it on (the `today` page reached the same conclusion first).
+ * One language at a time, set by the switch in the header. This page used to lead in Hindi
+ * with an English gloss under every line; that reversal was asked for deliberately, and the
+ * cost is named rather than hidden: in English the published Devanagari is not on screen,
+ * so what you are reading is a rendering of a legal order and not the order itself. Where
+ * no English rendering exists the Hindi is shown anyway, labelled — an order with no
+ * translation must not silently vanish from the list.
  */
 
 import { ApiError, api, type KnowledgeHit } from "@/lib/api";
-import { DemoDataBadge } from "@/components/invariants";
+import { NOTICE_SUGGESTIONS, translator, type StringKey } from "@/lib/i18n";
+import { currentLocale, type Locale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
-
-const SUGGESTIONS: { hi: string; en: string }[] = [
-  { hi: "फसल बीमा", en: "crop insurance" },
-  { hi: "मृदा नमूना", en: "soil sample" },
-  { hi: "उर्वरक अनुदान", en: "fertiliser subsidy" },
-  { hi: "सिंचाई", en: "irrigation" },
-  { hi: "बीज", en: "seed" },
-];
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString("en-IN", {
@@ -48,29 +45,39 @@ function formatDate(iso: string): string {
   });
 }
 
-function Notice({ hit }: { hit: KnowledgeHit }) {
+function Notice({
+  hit,
+  locale,
+  t,
+}: {
+  hit: KnowledgeHit;
+  locale: Locale;
+  t: (key: StringKey) => string;
+}) {
+  // In Hindi the canonical text is what you get. In English the rendering is preferred, and
+  // the Hindi stands in when there is none — never an empty card, never a silent omission.
+  const englishOnly = locale === "en" && Boolean(hit.text_en);
+  const body = englishOnly ? hit.text_en : hit.text_hi;
+  const untranslated = locale === "en" && !hit.text_en;
+
   return (
     <li className="panel">
       <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="text-sm text-muted-foreground">{formatDate(hit.observed_at)}</span>
-        <span className="text-sm text-muted-foreground">
-          कृषि विभाग, उत्तर प्रदेश · UP Agriculture Dept
-        </span>
+        <span className="text-sm text-muted-foreground">{t("notices.department")}</span>
       </div>
 
-      {/* The published wording, at reading size. Hindi is the canonical text (ADR-0015). */}
-      <p className="text-[17px] leading-relaxed text-foreground">{hit.text_hi}</p>
+      <p className="text-[17px] leading-relaxed text-foreground">{body}</p>
 
-      {hit.text_en && (
-        <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{hit.text_en}</p>
+      {untranslated && (
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          {t("notices.originalHindi")}
+        </p>
       )}
 
       {hit.inert && (
         <p className="mt-3 border-t border-border/60 pt-2.5 text-sm leading-relaxed text-muted-foreground">
-          यह विभाग की सामान्य जानकारी है — किसी लाभ की पुष्टि नहीं।
-          <span className="block">
-            General departmental guidance, not confirmation of any benefit.
-          </span>
+          {t("notices.inert")}
         </p>
       )}
     </li>
@@ -83,6 +90,8 @@ export default async function SchemesPage({
   searchParams: Promise<{ q?: string }>;
 }) {
   const { q } = await searchParams;
+  const locale = await currentLocale();
+  const t = translator(locale);
   const query = (q ?? "").trim();
 
   let notices = null;
@@ -106,23 +115,16 @@ export default async function SchemesPage({
     <main className="mx-auto max-w-2xl px-5 py-8">
       <header className="mb-6">
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="title-section text-[2rem]">सरकारी सूचनाएँ</h1>
-          <DemoDataBadge />
+          <h1 className="title-section text-[2rem]">{t("notices.title")}</h1>
         </div>
-        <p className="mt-1 text-[17px] text-muted-foreground">Government notices</p>
         <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-          कृषि विभाग, उत्तर प्रदेश द्वारा प्रकाशित शासनादेश एवं जानकारी — जैसा प्रकाशित हुआ,
-          वैसा ही।
-          <span className="mt-1 block">
-            Orders and guidance published by the UP Agriculture Department, shown exactly as
-            published.
-          </span>
+          {t("notices.intro")}
         </p>
       </header>
 
       <form method="GET" className="panel mb-4">
         <label htmlFor="q" className="mb-2 block text-sm text-muted-foreground">
-          खोजें · Search
+          {t("notices.search")}
         </label>
         <div className="flex flex-wrap items-center gap-3">
           <input
@@ -130,24 +132,24 @@ export default async function SchemesPage({
             name="q"
             type="search"
             defaultValue={query}
-            placeholder="फसल बीमा · crop insurance"
+            placeholder={t("notices.searchPlaceholder")}
             className="min-w-0 flex-1 border-b border-border bg-transparent py-2 text-[17px] text-foreground outline-none placeholder:text-muted-foreground/60 focus:border-accent"
           />
           <button
             type="submit"
             className="border border-border px-5 py-2 text-[15px] text-foreground transition-colors hover:border-accent hover:text-accent"
           >
-            खोजें
+            {t("notices.search")}
           </button>
         </div>
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
-          {SUGGESTIONS.map((s) => (
+          {NOTICE_SUGGESTIONS.map((suggestion) => (
             <a
-              key={s.hi}
-              href={`/schemes?q=${encodeURIComponent(s.hi)}`}
+              key={suggestion.en}
+              href={`/schemes?q=${encodeURIComponent(suggestion[locale])}`}
               className="text-[15px] text-muted-foreground underline-offset-4 hover:text-accent hover:underline"
             >
-              {s.hi}
+              {suggestion[locale]}
             </a>
           ))}
         </div>
@@ -156,18 +158,14 @@ export default async function SchemesPage({
       {failure !== null && (
         <p className="panel text-[15px] leading-relaxed text-muted-foreground">
           {failure === 403
-            ? "यह पृष्ठ किसान खाते के लिए है। · This view is for a farmer account."
-            : "जानकारी नहीं मिल सकी। · Could not reach the API. Run `make api`."}
+            ? t("notices.forbidden")
+            : t("notices.unreachable")}
         </p>
       )}
 
       {notices && notices.count === 0 && (
         <p className="panel text-[15px] leading-relaxed text-muted-foreground">
-          इस विषय पर विभाग ने कुछ प्रकाशित नहीं किया है।
-          <span className="mt-1 block">
-            The department has not published anything on this. That is a real answer — this
-            page searches only what the government has actually issued, and invents nothing.
-          </span>
+          {t("notices.none")}
         </p>
       )}
 
@@ -175,12 +173,12 @@ export default async function SchemesPage({
         <>
           <p className="mb-3 text-sm text-muted-foreground">
             {query
-              ? `“${query}” — ${notices.count} सूचनाएँ · ${notices.count} notices`
-              : "हाल की सूचनाएँ · Recent notices"}
+              ? `“${query}” — ${notices.count} ${t("notices.countSuffix")}`
+              : t("notices.recent")}
           </p>
           <ul className="space-y-3">
             {notices.results.map((hit) => (
-              <Notice key={hit.chunk_id} hit={hit} />
+              <Notice key={hit.chunk_id} hit={hit} locale={locale} t={t} />
             ))}
           </ul>
         </>
@@ -192,28 +190,18 @@ export default async function SchemesPage({
         <p className="text-[15px] leading-relaxed text-muted-foreground">
           {crops.length > 0 ? (
             <>
-              आपकी फ़सलें: <span className="text-foreground">{crops.join(", ")}</span>. ये
-              सूचनाएँ पूरे विभाग के लिए हैं — किसी एक फ़सल के लिए नहीं।
-              <span className="mt-1 block">
-                Your crops: {crops.join(", ")}. These notices are department-wide — none of
-                them names a specific crop, so none is matched to your farm.
-              </span>
+              {t("notices.yourCrops")}:{" "}
+              <span className="text-foreground">{crops.join(", ")}</span>.{" "}
+              {t("notices.departmentWideWithCrops")}
             </>
           ) : (
             <>
-              ये सूचनाएँ पूरे विभाग के लिए हैं।
-              <span className="mt-1 block">These notices are department-wide.</span>
+              {t("notices.departmentWide")}
             </>
           )}
         </p>
         <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-          यह पृष्ठ यह नहीं बताता कि आप किसी योजना के पात्र हैं या नहीं। पात्रता एवं अंतिम
-          तिथि की पुष्टि अपने विकास खंड कार्यालय या कृषि रक्षा इकाई से करें।
-          <span className="mt-1 block">
-            This page does not tell you whether you qualify for anything. It shows what was
-            published and when. Confirm eligibility and deadlines at your block office —
-            saying you qualify when you might not would do real harm.
-          </span>
+          {t("notices.disclaimer")}
         </p>
       </section>
     </main>

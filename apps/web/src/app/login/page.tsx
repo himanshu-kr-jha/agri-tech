@@ -14,8 +14,12 @@
 
 import { redirect } from "next/navigation";
 
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
+
 import { LoginForm, type DemoAccount } from "./login-form";
 import { IconLeaf } from "@/components/icons";
+import { LanguageToggle } from "@/components/language-toggle";
 import { currentUser, homeFor } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
@@ -38,26 +42,29 @@ export default async function LoginPage() {
   if (user) redirect(homeFor(user));
 
   const accounts = await demoAccounts();
+  const locale = await currentLocale();
+  const t = translator(locale);
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center px-6 py-16">
       <header className="mb-9">
-        <span className="mb-6 flex h-11 w-11 items-center justify-center rounded-md bg-primary text-primary-foreground">
-          <IconLeaf size={20} />
-        </span>
-        <p className="eyebrow">Farmer collectives</p>
+        <div className="mb-6 flex items-center justify-between">
+          <span className="flex h-11 w-11 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <IconLeaf size={20} />
+          </span>
+          <LanguageToggle locale={locale} label={t("lang.switchTo")} />
+        </div>
+        <p className="eyebrow">{t("login.eyebrow")}</p>
         <h1 className="title-page mt-1.5 text-[2.5rem]">AgriVardhak</h1>
         <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-          Decision support that recommends, never decides. Sign in to continue.
+          {t("login.tagline")}
         </p>
       </header>
 
-      <LoginForm accounts={accounts} />
+      <LoginForm accounts={accounts} locale={locale} />
 
       <p className="mt-10 border-t border-border/60 pt-6 text-xs leading-relaxed text-muted-foreground">
-        Every farmer, plot and buyer in this system is synthetic and labelled{" "}
-        <span className="font-medium text-foreground/70">DEMO DATA</span> wherever it appears.
-        The market prices, weather and hazard climatology are real and cited in{" "}
+        Market prices, weather and hazard climatology are cited in{" "}
         <code className="font-mono text-[11px]">seed/sources.md</code>.
       </p>
     </main>

@@ -12,11 +12,14 @@
  */
 
 import { ApiError, api } from "@/lib/api";
-import { ConfidenceChip, DemoDataBadge, formatMass } from "@/components/invariants";
+import { ConfidenceChip, formatMass } from "@/components/invariants";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
 export default async function TodayPage() {
+  const t = translator(await currentLocale());
   let data;
   try {
     data = await api.farmerToday();
@@ -27,7 +30,7 @@ export default async function TodayPage() {
         <p className="rounded-md border border-accent/40 bg-accent/[0.06] p-4 text-[15px] leading-relaxed text-foreground/85">
           {status === 403
             ? "This view is for a farmer account. Organization staff have the FPO console — the two see different data by design (INV-5)."
-            : "Could not reach the API. Run `make api`, and set AGRI_DEV_TOKEN to a farmer token to see this view."}
+            : t("today.unreachable")}
         </p>
       </main>
     );
@@ -40,7 +43,6 @@ export default async function TodayPage() {
       <header className="mb-8">
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="title-section text-[2rem]">{farmer.name}</h1>
-          {farmer.is_synthetic && <DemoDataBadge />}
         </div>
         <p className="mt-1.5 text-[15px] text-muted-foreground">
           {[farmer.village, farmer.block].filter(Boolean).join(" · ")}
@@ -48,10 +50,10 @@ export default async function TodayPage() {
       </header>
 
       <section className="mb-8">
-        <h2 className="eyebrow mb-3">मेरी फ़सल · My crops</h2>
+        <h2 className="eyebrow mb-3">{t("today.myCrops")}</h2>
         {crops.length === 0 ? (
           <p className="panel text-[15px] text-muted-foreground">
-            कोई चालू फ़सल नहीं · No crop currently growing.
+            {t("today.noCrop")}
           </p>
         ) : (
           <ul className="space-y-3">
@@ -66,14 +68,14 @@ export default async function TodayPage() {
                     <span className="font-serif text-lg text-primary">
                       {crop.area_acres.toFixed(2)}
                     </span>
-                    <span className="ml-1 text-sm text-muted-foreground">एकड़</span>
+                    <span className="ml-1 text-sm text-muted-foreground">{t("today.acres")}</span>
                   </span>
                 </div>
 
                 {crop.health_pct != null ? (
                   <p className="mt-3 flex flex-wrap items-center gap-2 text-[15px]">
                     <span>
-                      फ़सल की स्थिति · Crop health{" "}
+                      {t("today.cropHealth")}{" "}
                       <strong className="font-serif text-lg tabular-nums text-primary">
                         {Math.round(crop.health_pct)}%
                       </strong>
@@ -93,13 +95,13 @@ export default async function TodayPage() {
                 ) : (
                   <p className="mt-3 flex items-center gap-2 text-[15px] text-muted-foreground">
                     <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-                    अभी तक कोई जाँच नहीं · No field visit recorded yet.
+                    {t("today.noVisit")}
                   </p>
                 )}
 
                 {crop.expected_harvest && (
                   <p className="mt-2 text-[15px] text-muted-foreground">
-                    कटाई · Expected harvest{" "}
+                    {t("today.expectedHarvest")}{" "}
                     {new Date(crop.expected_harvest).toLocaleDateString("en-IN", {
                       day: "numeric",
                       month: "long",
@@ -114,7 +116,7 @@ export default async function TodayPage() {
 
       {contributions.length > 0 && (
         <section className="mb-8">
-          <h2 className="eyebrow mb-3">समिति को दिया · Given to the collective</h2>
+          <h2 className="eyebrow mb-3">{t("today.givenToCollective")}</h2>
           <ul className="panel p-0">
             {contributions.map((item, i) => (
               <li
@@ -126,7 +128,9 @@ export default async function TodayPage() {
                   {formatMass(item.quantity_kg)}
                 </span>
                 {item.grade && (
-                  <span className="text-sm text-muted-foreground">श्रेणी {item.grade}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {t("today.grade")} {item.grade}
+                  </span>
                 )}
               </li>
             ))}
