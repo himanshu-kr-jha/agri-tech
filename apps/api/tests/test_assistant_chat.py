@@ -678,3 +678,35 @@ def test_asking_about_a_crop_we_do_not_grow_says_so(session, ceo) -> None:
     # Naming what *is* grown turns a dead end into a next question.
     for crop in ("Paddy", "Guava"):
         assert crop in (answer.refusal or "")
+
+
+def test_an_ambiguous_question_refuses_rather_than_deciding() -> None:
+    """``LOOKUP`` with no key is the model saying "I cannot tell which of these you mean".
+
+    It used to fail validation and fall through to ``_fallback``, which for staff is
+    hardcoded to ``DECISION`` — so "how many" produced a full Decision Packet, freezing a
+    snapshot and writing recommendations for a two-word fragment. Measured at 4 runs in 6
+    before this changed. A refusal names the gap; a Decision Packet answers a question
+    nobody asked, which is the failure ADR-0011 exists to prevent.
+
+    The other two ``_fallback`` reasons — no key configured, provider unreachable — keep the
+    keyword planner, because NFR-303 requires a keyless deployment to still answer.
+    """
+    for audience in ("FPO", "FARMER"):
+        plan = router._validate(
+            {
+                "shape": "LOOKUP",
+                "lookup": None,
+                "modules": [],
+                "named_crop_text": None,
+                "horizon_days": None,
+                "rationale": "the question does not say what to count",
+                "router_confidence": 1.0,
+            },
+            audience=audience,
+            has_anchor=False,
+        )
+        assert plan is not None, f"{audience}: an ambiguous plan must resolve, not fall back"
+        assert plan.shape is ResponseShape.REFUSE
+        assert plan.lookup is None
+        assert not plan.fell_back, "the model answered; this is not a degraded path"

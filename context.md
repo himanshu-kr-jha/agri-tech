@@ -213,6 +213,7 @@ Additional engineering decisions:
 | T-16 | **Hybrid retrieval over a gated knowledge base.** pgvector + Postgres full-text fused by Reciprocal Rank Fusion, ranked by trust computed at query time, with an unlicensed passage capped at 0.40 — below the orchestrator's 0.45 floor, so it can be read and cannot become advice | ADR-0018 |
 | T-17 | **Vercel → Render → Supabase, and the web tier still cannot reach Postgres.** Managed Postgres makes direct browser access easy; taking it would relocate the INV-5 boundary into RLS policies. Extensions move from `initdb` into a base migration so `alembic upgrade head` is sufficient on any empty database | ADR-0019 |
 | T-18 | **The router model is a perishable dependency.** NVIDIA retired `llama-3.1-8b` mid-flight; a dead model does not raise, so routing fell back to keywords and every question silently became a Decision Packet again — the exact failure ADR-0011 removed. Router latency must be measured through `router.plan`, not `/chat/completions` | ADR-0020 |
+| T-19 | **An ambiguous question refuses rather than deciding.** `LOOKUP` with a null key is the model saying "none of these fits", not a malformed plan; it used to fall through to the keyword `DECISION`, so a two-word fragment froze a snapshot and wrote recommendations 7 times in 18. The no-key and provider-down paths keep the keyword planner — NFR-303 | ADR-0021 |
 
 ---
 
