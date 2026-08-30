@@ -81,6 +81,28 @@ class Settings(BaseSettings):
     #: never runs and the process dies at import.
     cors_origins: Annotated[list[str], NoDecode] = ["http://localhost:3000"]
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def _name_the_driver(cls, value: object) -> object:
+        """Accept the URL a hosting provider hands you, not just SQLAlchemy's spelling.
+
+        Supabase, Render and Neon all give out ``postgresql://…``. SQLAlchemy reads a bare
+        ``postgresql://`` as "use psycopg2", which is not a dependency here and never has
+        been — ``pyproject.toml`` pins ``psycopg[binary]`` (v3), addressed as
+        ``postgresql+psycopg://``. So the pasted URL fails at import with
+        ``ModuleNotFoundError: No module named 'psycopg2'``, which points at a package nobody
+        asked for rather than at the string that is actually wrong.
+
+        Since psycopg2 cannot be present, rewriting the prefix has no ambiguity to resolve:
+        the bare form has exactly one correct meaning in this application. An explicit
+        ``+driver`` of any kind is left alone.
+        """
+        if isinstance(value, str):
+            for bare in ("postgresql://", "postgres://"):
+                if value.startswith(bare):
+                    return "postgresql+psycopg://" + value[len(bare) :]
+        return value
+
     @field_validator("cors_origins", mode="before")
     @classmethod
     def _accept_a_plain_list(cls, value: object) -> object:
