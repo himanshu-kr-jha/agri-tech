@@ -1,6 +1,8 @@
 "use client";
 
-import { translator, type StringKey } from "@/lib/i18n";
+import type { StringKey } from "@/lib/i18n";
+import { useTranslation } from "@/components/language-provider";
+import { recordText } from "@/lib/localized-data";
 import type { Locale } from "@/lib/locale";
 
 import { useState } from "react";
@@ -20,8 +22,8 @@ const AUDIENCE_KEY = {
   FARMER: "login.audience.farmer",
 } as const satisfies Record<string, StringKey>;
 
-export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; locale: Locale }) {
-  const t = translator(locale);
+export function LoginForm({ accounts }: { accounts: DemoAccount[]; locale: Locale }) {
+  const { t, copy, locale } = useTranslation();
   const router = useRouter();
   const [username, setUsername] = useState(accounts[0]?.username ?? "");
   const [password, setPassword] = useState(accounts[0]?.password ?? "");
@@ -30,6 +32,10 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    if (!username.trim() || !password) {
+      setError("required");
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -40,7 +46,7 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
       });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(body.detail ?? "Sign-in failed.");
+        setError(res.status === 401 ? "credentials" : "failed");
         return;
       }
       // Where you land is decided by the API's `audience`, not by this form. One authority
@@ -48,7 +54,7 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
       router.replace(body.user?.audience === "FARMER" ? "/today" : "/dashboard");
       router.refresh();
     } catch {
-      setError(t("login.failed"));
+      setError("network");
     } finally {
       setBusy(false);
     }
@@ -59,7 +65,7 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
 
   return (
     <>
-      <form onSubmit={submit} className="space-y-5">
+      <form onSubmit={submit} noValidate className="space-y-5">
         <label className="block">
           <span className="eyebrow-sm">{t("login.username")}</span>
           <input
@@ -88,7 +94,7 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
             role="alert"
             className="rounded-md border border-destructive/25 bg-destructive/[0.04] p-3 text-sm text-destructive"
           >
-            {error}
+            {error === "required" ? copy("Enter your username and password.") : error === "credentials" ? copy("Incorrect username or password.") : error === "network" ? t("login.failed") : copy("Sign-in failed.")}
           </p>
         )}
 
@@ -133,7 +139,7 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
                       </span>
                     </div>
                     <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-                      {account.description}
+                      {recordText(account.description, locale)}
                     </p>
                     <p className="mt-2 font-mono text-[11px] text-muted-foreground/80">
                       {account.username} · {account.password}

@@ -85,9 +85,9 @@
   --color-chart-4: hsl(var(--chart-4));
   --color-chart-5: hsl(var(--chart-5));
 
-  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-inter-tight), var(--font-devanagari), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), var(--font-devanagari), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), var(--font-devanagari), ui-monospace, SFMono-Regular, monospace;
 
   --radius-md: calc(var(--radius) - 2px);
 }
@@ -328,6 +328,21 @@ body {
     opacity: 0.45;
     cursor: not-allowed;
   }
+}
+
+:lang(hi) .title-page {
+  line-height: 1.4;
+}
+
+:lang(hi) :is(.eyebrow, .eyebrow-sm, .kpi-label, .nav-group-label) {
+  letter-spacing: normal;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+:lang(hi) :is(button, .chip, .nav-item) {
+  letter-spacing: normal;
+  line-height: 1.5;
 }
 
 /* Focus is a ring in the primary, matching --ring. Never removed, only restyled. */

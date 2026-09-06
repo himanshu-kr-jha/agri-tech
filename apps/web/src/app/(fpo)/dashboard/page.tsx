@@ -13,7 +13,8 @@ import { ConfidenceChip, formatValue } from "@/components/invariants";
 import { IconAlert, IconArrowUpRight, IconClock, IconDatabase, IconEye } from "@/components/icons";
 import { Chip, EmptyState, ErrorPanel, KpiTile, PageHeader, Panel, PanelHeader } from "@/components/ui";
 import { translator, type Translate } from "@/lib/i18n";
-import { currentLocale } from "@/lib/locale";
+import { currentLocale, type Locale } from "@/lib/locale";
+import { term, recordText, localeDateTime } from "@/lib/localized-data";
 
 export const dynamic = "force-dynamic";
 
@@ -28,15 +29,15 @@ function formatCardValue(card: Card): string {
   return String(card.value);
 }
 
-function StatCard({ card }: { card: Card }) {
+function StatCard({ card, locale }: { card: Card; locale: Locale }) {
   const tile = (
     <KpiTile
-      label={card.label}
+      label={recordText(card.label, locale)}
       value={formatCardValue(card)}
       // "₹" is already inside the formatted value; showing it again as a suffix would read
       // as a currency-per-currency unit.
-      unit={card.unit && card.unit !== "₹" ? card.unit : null}
-      caption={card.detail}
+      unit={card.unit && card.unit !== "₹" ? term(card.unit, locale) : null}
+      caption={recordText(card.detail, locale)}
       chip={card.confidence !== null ? <ConfidenceChip value={card.confidence} /> : null}
     />
   );
@@ -60,18 +61,17 @@ function StatCard({ card }: { card: Card }) {
 function BriefingPanel({ briefing, t }: { briefing: Briefing; t: Translate }) {
   if (briefing.quiet) {
     return (
-      <Panel className="mb-8" aria-label="Briefing">
+      <Panel className="mb-8" aria-label={t("Briefing")}>
         <PanelHeader eyebrow={t("con.dash.briefing.eyebrow")} title={t("con.dash.briefing.title")} />
         <EmptyState>
-          That is a real answer, not an empty state — the briefing stays short so that the day
-          it is long, you read it.
+          {t("That is a real answer, not an empty state — the briefing stays short so that the day it is long, you read it.")}
         </EmptyState>
       </Panel>
     );
   }
 
   return (
-    <section aria-label="Briefing" className="mb-8 grid gap-4 lg:grid-cols-2">
+    <section aria-label={t("Briefing")} className="mb-8 grid gap-4 lg:grid-cols-2">
       {briefing.needs_decision.length > 0 && (
         <BriefingGroup
           eyebrow={t("con.dash.waiting.eyebrow")}
@@ -166,7 +166,8 @@ function BriefingGroup({
 }
 
 export default async function DashboardPage() {
-  const t = translator(await currentLocale());
+  const locale = await currentLocale();
+  const t = translator(locale);
   let data;
   let briefing: Briefing | null = null;
   try {
@@ -177,10 +178,10 @@ export default async function DashboardPage() {
     return (
       <main className="px-6 py-10 md:px-10">
         <PageHeader eyebrow={t("con.dashboard.eyebrow")} title={t("con.dashboard.title")} />
-        <ErrorPanel title={status === 403 ? "Not your view" : "API unreachable"}>
-          {status === 403
+        <ErrorPanel title={t(status === 403 ? "Not your view" : "API unreachable")}>
+          {t(status === 403
             ? "This view is for organization staff. A farmer account sees their own farm instead — the boundary is enforced by the API, not by hiding this page."
-            : "Could not reach the API. Run `make api`, and set AGRI_DEV_TOKEN for an authenticated view."}
+            : "Could not reach the API. Run `make api`, and set AGRI_DEV_TOKEN for an authenticated view.")}
         </ErrorPanel>
       </main>
     );
@@ -197,48 +198,47 @@ export default async function DashboardPage() {
   return (
     <main className="px-6 py-10 md:px-10">
       <PageHeader
-        eyebrow="FPO Command Centre"
+        eyebrow={t("con.dashboard.eyebrow")}
         title={
           <>
-            What the collective
+            {t("What the collective")}
             <br />
-            looks like today
+            {t("looks like today")}
           </>
         }
-        subtitle={`Members, land, crops and open decisions for ${organization.name} — one layer, read before you act.`}
+        subtitle={t("Members, land, crops and open decisions for {organization} — one layer, read before you act.", { organization: organization.name })}
         aside={
           <>
             <Chip tone={pending > 0 ? "accent" : "neutral"}>
               {pending > 0
-                ? `${pending} awaiting approval`
-                : `${organization.district}, ${organization.state}`}
+                ? t("{count} awaiting approval", { count: pending })
+                : `${term(organization.district, locale)}, ${term(organization.state, locale)}`}
             </Chip>
           </>
         }
       />
 
       <section
-        aria-label="Organization at a glance"
+        aria-label={t("Organization at a glance")}
         className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
         {cards.map((card) => (
-          <StatCard key={card.key} card={card} />
+          <StatCard key={card.key} card={card} locale={locale} />
         ))}
       </section>
 
-      {briefing && <BriefingPanel briefing={briefing} t={t} />}
+      {briefing && <BriefingPanel briefing={{ ...briefing, ...Object.fromEntries((["needs_decision", "closing_soon", "watch", "data_health"] as const).map((key) => [key, briefing[key].map((item) => ({ ...item, headline: recordText(item.headline, locale), detail: recordText(item.detail, locale) }))])) }} t={t} />}
 
       <Panel className="flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
-          Figures are drawn from a real district profile.
-          Market prices and weather come from Agmarknet and Open-Meteo and are real. Generated{" "}
+          {t("Figures are drawn from a real district profile. Market prices and weather come from Agmarknet and Open-Meteo and are real. Generated")}{" "}
           <span className="font-mono">
-            {new Date(data.generated_at).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+            {localeDateTime(data.generated_at, locale)}
           </span>
           .
         </p>
         <Link href="/decisions" className="btn-ghost">
-          Open decisions
+          {t("Open decisions")}
           <IconArrowUpRight size={14} />
         </Link>
       </Panel>

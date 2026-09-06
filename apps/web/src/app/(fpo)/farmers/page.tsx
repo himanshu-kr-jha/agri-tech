@@ -12,6 +12,7 @@ import { ApiError, TRACT_LABEL, api } from "@/lib/api";
 import { ErrorPanel, PageHeader, Panel } from "@/components/ui";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
+import { term } from "@/lib/localized-data";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +23,8 @@ export default async function FarmersPage({
 }: {
   searchParams: Promise<{ tract?: string; offset?: string }>;
 }) {
-  const t = translator(await currentLocale());
+  const locale = await currentLocale();
+  const t = translator(locale);
   const params = await searchParams;
   const tract = params.tract;
   const offset = Number(params.offset ?? 0);
@@ -35,10 +37,10 @@ export default async function FarmersPage({
     return (
       <main className="px-6 py-10 md:px-10">
         <PageHeader eyebrow={t("con.farmers.eyebrow")} title={t("con.farmers.title")} />
-        <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
-          {status === 403
+        <ErrorPanel title={t(status === 403 ? "Organization-internal" : "API unreachable")}>
+          {t(status === 403
             ? "The member list is organization-internal. A farmer sees only their own record."
-            : "Could not reach the API. Run `make api`."}
+            : "Could not reach the API. Run `make api`.")}
         </ErrorPanel>
       </main>
     );
@@ -50,19 +52,17 @@ export default async function FarmersPage({
   return (
     <main className="max-w-6xl px-6 py-10 md:px-10">
       <PageHeader
-        eyebrow="Membership"
-        title="Farmers"
-        subtitle={`${data.total.toLocaleString("en-IN")} members${
-          tract ? ` in ${TRACT_LABEL[tract] ?? tract}` : ""
-        }, across three tracts of the district.`}
+        eyebrow={t("Membership")}
+        title={t("Farmers")}
+        subtitle={t("{count} members{tract}, across three tracts of the district.", { count: data.total.toLocaleString(locale === "hi" ? "hi-IN" : "en-IN"), tract: tract ? t(" in {tract}", { tract: term(TRACT_LABEL[tract] ?? tract, locale) }) : "" })}
       />
 
-      <nav aria-label="Filter by tract" className="mb-5 flex flex-wrap gap-2">
-        <FilterLink label="All tracts" href="/farmers" active={!tract} />
+      <nav aria-label={t("Filter by tract")} className="mb-5 flex flex-wrap gap-2">
+        <FilterLink label={t("All tracts")} href="/farmers" active={!tract} />
         {TRACTS.map((key) => (
           <FilterLink
             key={key}
-            label={TRACT_LABEL[key]}
+            label={term(TRACT_LABEL[key], locale)}
             href={`/farmers?tract=${key}`}
             active={tract === key}
           />
@@ -73,14 +73,14 @@ export default async function FarmersPage({
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border/70 text-left">
-              {["Name", "Village", "Block", "Tract", "Area"].map((h, i) => (
+              {(["Name", "Village", "Block", "Tract", "Area"] as const).map((h, i) => (
                 <th
                   key={h}
                   className={`px-6 py-3.5 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground ${
                     i === 4 ? "text-right" : ""
                   }`}
                 >
-                  {h}
+{t(h)}
                 </th>
               ))}
             </tr>
@@ -102,13 +102,13 @@ export default async function FarmersPage({
                 <td className="px-6 py-3 text-muted-foreground">{farmer.village ?? "—"}</td>
                 <td className="px-6 py-3 text-muted-foreground">{farmer.block ?? "—"}</td>
                 <td className="px-6 py-3 text-muted-foreground">
-                  {farmer.tract ? (TRACT_LABEL[farmer.tract] ?? farmer.tract) : "—"}
+                  {farmer.tract ? term(TRACT_LABEL[farmer.tract] ?? farmer.tract, locale) : "—"}
                 </td>
                 <td className="px-6 py-3 text-right tabular-nums">
                   <span className="font-serif text-[15px] text-primary">
                     {farmer.area_acres.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
                   </span>
-                  <span className="ml-1 text-xs text-muted-foreground">ac</span>
+                  <span className="ml-1 text-xs text-muted-foreground">{term("ac", locale)}</span>
                 </td>
               </tr>
             ))}
@@ -118,13 +118,13 @@ export default async function FarmersPage({
 
       <div className="mt-4 flex items-center justify-between text-sm">
         <span className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
-          {shown === 0 ? "No farmers match" : `Showing ${offset + 1}–${end} of ${data.total}`}
+          {shown === 0 ? t("No farmers match") : t("Showing {start}–{end} of {total}", { start: offset + 1, end, total: data.total })}
         </span>
         <div className="flex gap-2">
           {offset > 0 && (
-            <PageLink label="Previous" tract={tract} offset={Math.max(0, offset - 50)} />
+            <PageLink label={t("Previous")} tract={tract} offset={Math.max(0, offset - 50)} />
           )}
-          {end < data.total && <PageLink label="Next" tract={tract} offset={end} />}
+          {end < data.total && <PageLink label={t("Next")} tract={tract} offset={end} />}
         </div>
       </div>
     </main>

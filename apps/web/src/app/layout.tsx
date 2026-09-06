@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Inter_Tight, JetBrains_Mono, Noto_Sans_Devanagari } from "next/font/google";
+import { LanguageProvider } from "@/components/language-provider";
+import { currentLocale } from "@/lib/locale";
 import "./globals.css";
+
+const devanagari = Noto_Sans_Devanagari({
+  variable: "--font-devanagari",
+  subsets: ["devanagari"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
 
 /*
  * Three families, three jobs, no overlap.
@@ -41,13 +50,16 @@ export const metadata: Metadata = {
   description: "AI decision & orchestration platform for farmer collectives",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await currentLocale();
   return (
     <html
-      lang="en"
-      className={`${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      lang={locale}
+      className={`${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable} ${devanagari.variable} h-full bg-background antialiased`}
     >
-      <body className="paper-noise flex min-h-full flex-col">{children}</body>
+      <body className="paper-noise flex min-h-full flex-col font-sans">
+        <LanguageProvider locale={locale}>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

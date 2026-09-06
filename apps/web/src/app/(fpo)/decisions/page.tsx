@@ -18,7 +18,8 @@ import { currentLocale } from "@/lib/locale";
 export const dynamic = "force-dynamic";
 
 export default async function DecisionsPage() {
-  const t = translator(await currentLocale());
+  const locale = await currentLocale();
+  const t = translator(locale);
   let data;
   try {
     data = await api.decisions();
@@ -27,10 +28,10 @@ export default async function DecisionsPage() {
     return (
       <main className="px-6 py-10 md:px-10">
         <PageHeader eyebrow={t("con.decisions.eyebrow")} title={t("con.decisions.title")} />
-        <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
-          {status === 403
+        <ErrorPanel title={t(status === 403 ? "Organization-internal" : "API unreachable")}>
+          {t(status === 403
             ? "The decision history is organization-internal."
-            : "Could not reach the API. Run `make api`."}
+            : "Could not reach the API. Run `make api`.")}
         </ErrorPanel>
       </main>
     );
@@ -47,9 +48,9 @@ export default async function DecisionsPage() {
       {data.decisions.length === 0 ? (
         <Panel>
           <EmptyState>
-            Nothing asked yet.{" "}
+            {t("Nothing asked yet.")}{" "}
             <Link href="/assistant" className="text-primary underline underline-offset-4">
-              Ask the first question
+              {t("Ask the first question")}
             </Link>
             .
           </EmptyState>
@@ -68,11 +69,10 @@ export default async function DecisionsPage() {
                   </span>
                   <ConfidenceChip value={decision.overall_confidence} />
                   <span className="text-xs text-muted-foreground">
-                    {decision.recommendations} recommendation
-                    {decision.recommendations === 1 ? "" : "s"}
+                    {t("{count} recommendations", { count: decision.recommendations })}
                   </span>
                   <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground/70">
-                    {new Date(decision.generated_at).toLocaleString("en-IN", {
+                    {new Date(decision.generated_at).toLocaleString(locale === "hi" ? "hi-IN" : "en-IN", {
                       timeZone: "Asia/Kolkata",
                       day: "numeric",
                       month: "short",

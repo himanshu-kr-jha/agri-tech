@@ -15,6 +15,7 @@
 import { redirect } from "next/navigation";
 
 import { translator } from "@/lib/i18n";
+import { interfaceCopy } from "@/lib/ui-copy";
 import { currentLocale } from "@/lib/locale";
 
 import { LoginForm, type DemoAccount } from "./login-form";
@@ -44,6 +45,7 @@ export default async function LoginPage() {
   const accounts = await demoAccounts();
   const locale = await currentLocale();
   const t = translator(locale);
+  const copy = interfaceCopy(locale);
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center px-6 py-16">
@@ -55,7 +57,7 @@ export default async function LoginPage() {
           <LanguageToggle locale={locale} label={t("lang.switchTo")} />
         </div>
         <p className="eyebrow">{t("login.eyebrow")}</p>
-        <h1 className="title-page mt-1.5 text-[2.5rem]">AgriVardhak</h1>
+        <h1 className="title-page mt-1.5 text-[2.5rem]">{copy("AgriVardhak")}</h1>
         <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
           {t("login.tagline")}
         </p>
@@ -64,7 +66,7 @@ export default async function LoginPage() {
       <LoginForm accounts={accounts} locale={locale} />
 
       <p className="mt-10 border-t border-border/60 pt-6 text-xs leading-relaxed text-muted-foreground">
-        Market prices, weather and hazard climatology are cited in{" "}
+        {copy("Market prices, weather and hazard climatology are cited in")}{" "}
         <code className="font-mono text-[11px]">seed/sources.md</code>.
       </p>
     </main>

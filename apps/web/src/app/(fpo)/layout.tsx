@@ -20,6 +20,8 @@ import { IconBell, IconSearch } from "@/components/icons";
 import { formatRole } from "@/components/invariants";
 import { api } from "@/lib/api";
 import { translator } from "@/lib/i18n";
+import { interfaceCopy } from "@/lib/ui-copy";
+import { term } from "@/lib/localized-data";
 import { currentLocale } from "@/lib/locale";
 import { currentUser, homeFor } from "@/lib/session";
 
@@ -36,6 +38,7 @@ function initials(name: string): string {
 export default async function FpoLayout({ children }: { children: React.ReactNode }) {
   const locale = await currentLocale();
   const t = translator(locale);
+  const copy = interfaceCopy(locale);
   // The sidebar is a client component and cannot read the locale cookie, so the shell
   // resolves its strings here. Listed rather than mapped so a missing key is a type error.
   const nav: NavLabels = {
@@ -71,21 +74,21 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
         <MobileNav labels={nav} />
 
         <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
-          <div className="flex h-16 items-center gap-6 px-6">
+          <div className="flex min-h-16 flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
             <div className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-3">
                 <span className="truncate font-serif text-[17px] tracking-tight text-primary">
-                  {organization?.name ?? "AgriVardhak"}
+                  {organization?.name ?? copy("AgriVardhak")}
                 </span>
                 {organization && (
                   <span className="text-xs text-muted-foreground">
-                    {organization.district}, {organization.state}
+                    {term(organization.district, locale)}, {term(organization.state, locale)}
                   </span>
                 )}
               </div>
               {organization && (
                 <p className="mt-0.5 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-                  {organization.type}
+                  {term(organization.type, locale)}
                 </p>
               )}
             </div>
@@ -97,7 +100,7 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
              */}
             <div className="ml-auto hidden items-center gap-2 rounded-full border border-border/60 bg-card px-4 py-2 text-sm text-muted-foreground/60 lg:flex lg:w-72">
               <IconSearch size={15} />
-              <span className="truncate">Search farmers, decisions, lots…</span>
+              <span className="truncate">{copy("Search farmers, decisions, lots…")}</span>
             </div>
 
             <div className="flex items-center gap-4">
@@ -110,11 +113,11 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
                 </span>
                 <span className="hidden leading-tight sm:block">
                   <span className="block text-[13px] text-foreground">{user.display_name}</span>
-                  <span className="block text-[11px] text-muted-foreground">{role}</span>
+                  <span className="block text-[11px] text-muted-foreground">{term(role, locale)}</span>
                 </span>
               </div>
               <LanguageToggle locale={locale} label={t("lang.switchTo")} />
-              <SignOutButton />
+              <SignOutButton label={t("nav.signOut")} />
             </div>
           </div>
         </header>

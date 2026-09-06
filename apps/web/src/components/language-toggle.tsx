@@ -1,9 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-
-import { setLocale } from "@/app/actions/locale";
+import { useTranslation } from "@/components/language-provider";
 import type { Locale } from "@/lib/locale";
 
 /**
@@ -27,26 +24,27 @@ import type { Locale } from "@/lib/locale";
  * the refresh the client can still paint its cached RSC payload — the old language — until
  * the next hard navigation.
  */
-export function LanguageToggle({ locale, label }: { locale: Locale; label: string }) {
-  const router = useRouter();
-  const [pending, startTransition] = useTransition();
-  const next: Locale = locale === "en" ? "hi" : "en";
+export function LanguageToggle(_props: { locale?: Locale; label?: string } = {}) {
+  const { locale, copy, changeLanguage, pending, error } = useTranslation();
 
   return (
-    <button
-      type="button"
-      aria-label={locale === "en" ? "Switch to Hindi" : "Switch to English"}
-      aria-busy={pending}
-      disabled={pending}
-      onClick={() =>
-        startTransition(async () => {
-          await setLocale(next);
-          router.refresh();
-        })
-      }
-      className="border border-border px-2.5 py-1 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
-    >
-      {label}
-    </button>
+    <div className="shrink-0">
+      <div role="group" aria-label={copy("Language")} aria-busy={pending} className="inline-flex rounded-md border border-border bg-card text-card-foreground">
+        {(["en", "hi"] as const).map((language) => (
+          <button
+            key={language}
+            type="button"
+            lang={language}
+            aria-pressed={locale === language}
+            disabled={pending}
+            onClick={() => changeLanguage(language)}
+            className={`min-h-9 rounded px-3 py-1.5 font-sans text-sm transition-colors disabled:cursor-wait ${locale === language ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+          >
+            {language === "en" ? "English" : "हिंदी"}
+          </button>
+        ))}
+      </div>
+      {error && <p role="alert" className="max-w-48 text-sm text-destructive">{copy("Could not change language. Please try again.")}</p>}
+    </div>
   );
 }

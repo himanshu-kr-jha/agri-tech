@@ -13,6 +13,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "@/components/language-provider";
 
 import {
   IconAlert,
@@ -82,6 +83,7 @@ const NAV_GROUPS: { label: GroupKey | null; items: NavItem[] }[] = [
 
 export function Sidebar({ labels }: { labels: NavLabels }) {
   const pathname = usePathname();
+  const { copy } = useTranslation();
 
   return (
     <aside className="hidden w-[260px] shrink-0 flex-col bg-sidebar text-sidebar-foreground md:flex">
@@ -93,9 +95,9 @@ export function Sidebar({ labels }: { labels: NavLabels }) {
           <IconLeaf size={18} />
         </span>
         <span className="leading-tight">
-          <span className="block font-serif text-[15px] tracking-tight">AgriVardhak</span>
+          <span className="block font-serif text-[15px] tracking-tight">{copy("AgriVardhak")}</span>
           <span className="block text-[9px] font-medium uppercase tracking-[0.15em] text-sidebar-foreground/40">
-            FPO Console
+            {copy("FPO Console")}
           </span>
         </span>
       </Link>
@@ -130,8 +132,8 @@ export function Sidebar({ labels }: { labels: NavLabels }) {
        * trains people to expect the software to act on its own.
        */}
       <p className="border-t border-sidebar-foreground/10 px-5 py-4 text-[11px] leading-relaxed text-sidebar-foreground/35">
-        AgriVardhak recommends.
-        <br />A human approves before anything executes.
+        {copy("AgriVardhak recommends.")}
+        <br />{copy("A human approves before anything executes.")}
       </p>
     </aside>
   );

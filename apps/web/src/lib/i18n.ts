@@ -15,6 +15,7 @@
  */
 
 import type { Locale } from "@/lib/locale";
+import { interfaceCopy, type CopyKey, type CopyValues } from "@/lib/ui-copy";
 
 type Entry = { en: string; hi: string };
 
@@ -235,14 +236,17 @@ export const STRINGS = {
   "login.audience.farmer": { en: "Farmer view", hi: "किसान दृश्य" },
 } as const satisfies Record<string, Entry>;
 
-export type StringKey = keyof typeof STRINGS;
+export type StringKey = keyof typeof STRINGS | CopyKey;
 
 /** Bind a locale once, at the top of a Server Component, and pass `t` down. */
 /** What ``translator`` returns. Named so a component can take one as a prop. */
-export type Translate = (key: StringKey) => string;
+export type Translate = (key: StringKey, values?: CopyValues) => string;
 
 export function translator(locale: Locale): Translate {
-  return (key) => STRINGS[key][locale];
+  const copy = interfaceCopy(locale);
+  return (key, values) => key in STRINGS
+    ? STRINGS[key as keyof typeof STRINGS][locale]
+    : copy(key as CopyKey, values);
 }
 
 /** The five canned searches on the notices page, in the reader's language. */
