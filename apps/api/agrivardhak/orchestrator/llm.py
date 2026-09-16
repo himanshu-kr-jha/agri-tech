@@ -15,10 +15,11 @@ page (NFR-302).
 how a system starts trusting whatever a model happened to say; every response here is JSON
 that survived ``json.loads`` and the caller's own Pydantic validation on top.
 
-**It degrades in three steps, not one.** NVIDIA NIM exposes an OpenAI-compatible endpoint,
-but ``response_format`` support varies by model. So we ask for a JSON schema, fall back to
-JSON mode, then to plain prompting with extraction — rather than assuming a capability and
-discovering at demo time that this particular model does not have it.
+**It degrades in three steps, not one.** Every provider wired in here (NVIDIA NIM, Sarvam)
+exposes an OpenAI-compatible endpoint, but ``response_format`` support varies by model. So we
+ask for a JSON schema, fall back to JSON mode, then to plain prompting with extraction —
+rather than assuming a capability and discovering at demo time that this particular model
+does not have it.
 
 We call the endpoint over ``httpx``, already a first-class dependency, instead of adding the
 OpenAI SDK. Two call sites do not justify a dependency.
@@ -57,6 +58,8 @@ def available() -> bool:
         return bool(settings.nvidia_api_key)
     if provider == "anthropic":
         return bool(settings.anthropic_api_key)
+    if provider == "sarvam":
+        return bool(settings.sarvam_api_key)
     return False
 
 
@@ -68,14 +71,18 @@ def structured(
         return None
     settings = get_settings()
     provider = (settings.llm_provider or "none").lower()
-    if provider != "nvidia":
+    if provider == "nvidia":
+        base_url, api_key = settings.nvidia_base_url, settings.nvidia_api_key
+    elif provider == "sarvam":
+        base_url, api_key = settings.sarvam_base_url, settings.sarvam_api_key
+    else:
         log.warning("llm provider %r has no adapter; falling back", provider)
         return None
 
     payloads = _payload_ladder(settings.router_model, system, user, schema, schema_name)
-    url = f"{settings.nvidia_base_url.rstrip('/')}/chat/completions"
+    url = f"{base_url.rstrip('/')}/chat/completions"
     headers = {
-        "Authorization": f"Bearer {settings.nvidia_api_key}",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
         "Accept": "application/json",
     }
