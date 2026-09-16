@@ -43,6 +43,7 @@ class Settings(BaseSettings):
     #: the same request path in orchestrator/llm.py with no header or parsing changes.
     sarvam_api_key: str | None = None
     sarvam_base_url: str = "https://api.sarvam.ai/v1"
+
     #: A small/fast instruct model, deliberately. The router picks one item from a closed
     #: enum — a task that does not need a frontier model, and a router slower than the work
     #: it schedules is worse than the keyword planner it replaces. Measured in docs/adr/0020;
@@ -60,6 +61,23 @@ class Settings(BaseSettings):
     #: exists, so it can afford to be slow; the router runs before any work starts, and a
     #: slow classification is worse than the keyword one it falls back to.
     router_timeout_seconds: float = 8.0
+
+    # ------------------------------------------------------------- page translation
+    #: The page translator (ADR-0023). Same key as above, different endpoint and header:
+    #: /translate lives at the API root, not under /v1, and takes ``api-subscription-key``.
+    sarvam_translate_url: str = "https://api.sarvam.ai/translate"
+    #: mayura:v1, not the newer sarvam-translate:v1 — measured, not assumed (ADR-0023): 28/29
+    #: vs 24/29 on `make translation-eval`, and the newer model's misses changed meaning
+    #: (blight → bollworm, "a human" → "a woman"). Re-run the eval before changing this.
+    sarvam_translate_model: str = "mayura:v1"
+    translate_timeout_seconds: float = 15.0
+    #: Per-request caps on POST /api/v1/translate. The browser batches under these; a
+    #: request over them is refused rather than silently truncated.
+    translate_max_texts_per_request: int = 100
+    translate_max_chars_per_request: int = 20_000
+    #: Machine translations per hour shared by every *anonymous* caller (the sign-in page).
+    #: Signed-in callers are uncapped. See api/translate.py.
+    translate_anonymous_budget_per_hour: int = 200
 
     #: NFR-302: below this, we return deterministic module output without narrative
     #: synthesis rather than an error page.

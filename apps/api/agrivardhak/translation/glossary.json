@@ -1,0 +1,412 @@
+{
+  "_about": "The lexical corpus (ADR-0023 §9). Every term here has ONE Hindi and ONE English rendering, enforced on every translation in both directions: the model never chooses these words. Add a term when a translation changes the meaning of a domain word; do not add ordinary vocabulary. `en` / `hi` are canonical outputs. `en_patterns` are Python regexes matched against English source text (a named group `term` limits the replaced span, so an article can be required without being swallowed); `hi_forms` are literal Hindi spellings matched as whole words. Order matters only for overlaps: longer matches win. `unit: true` terms take the number in front of them into the same placeholder, so the model cannot separate '857' from 'acres'.",
+  "terms": [
+    {
+      "id": "fpo_ceo",
+      "en": "FPO CEO",
+      "hi": "किसान उत्पादक संगठन के मुख्य कार्यकारी अधिकारी",
+      "en_patterns": [
+        "\\bFPO CEO\\b"
+      ],
+      "hi_forms": [
+        "किसान उत्पादक संगठन के मुख्य कार्यकारी अधिकारी"
+      ],
+      "why": "Sarvam rendered 'FPO CEO' as 'महिला आरक्षण आयोग की अध्यक्ष' (chair of the Women's Reservation Commission)."
+    },
+    {
+      "id": "fpo",
+      "en": "FPO",
+      "hi": "किसान उत्पादक संगठन",
+      "en_patterns": [
+        "\\bFPOs?\\b",
+        "(?i:\\bfarmer producer organi[sz]ations?\\b)"
+      ],
+      "hi_forms": [
+        "किसान उत्पादक संगठन",
+        "एफपीओ",
+        "एफ़पीओ",
+        "एफ.पी.ओ.",
+        "एफ़.पी.ओ."
+      ],
+      "why": "Farmer Producer Organisation. Was rendered as एफपीओ, एफ.पी.ओ., समिति, and once as a women's commission."
+    },
+    {
+      "id": "ceo",
+      "en": "CEO",
+      "hi": "मुख्य कार्यकारी अधिकारी",
+      "en_patterns": [
+        "\\bCEO\\b"
+      ],
+      "hi_forms": [
+        "मुख्य कार्यकारी अधिकारी"
+      ]
+    },
+    {
+      "id": "collective",
+      "en": "collective",
+      "hi": "संगठन",
+      "en_patterns": [
+        "(?i:\\b(?:the|this|that|our|your|a|each|every) (?P<term>collective)\\b)"
+      ],
+      "hi_forms": [],
+      "why": "The organisation, a noun. Was rendered as 'सामूहिक रूप से' (collectively, an adverb): 'Runs the collective' became 'runs collectively'. Hindi संगठन also means organisation in general, so it is not mapped back to 'collective'."
+    },
+    {
+      "id": "pacs",
+      "en": "PACS",
+      "hi": "प्राथमिक कृषि ऋण समिति",
+      "en_patterns": [
+        "\\bPACS\\b"
+      ],
+      "hi_forms": [
+        "प्राथमिक कृषि ऋण समिति"
+      ]
+    },
+    {
+      "id": "shg",
+      "en": "SHG",
+      "hi": "स्वयं सहायता समूह",
+      "en_patterns": [
+        "\\bSHGs?\\b"
+      ],
+      "hi_forms": [
+        "स्वयं सहायता समूह"
+      ]
+    },
+    {
+      "id": "field_officer",
+      "en": "Field Officer",
+      "hi": "क्षेत्र अधिकारी",
+      "en_patterns": [
+        "(?i:\\bfield officers?\\b)"
+      ],
+      "hi_forms": [
+        "क्षेत्र अधिकारी"
+      ]
+    },
+    {
+      "id": "village",
+      "en": "Village",
+      "hi": "गाँव",
+      "en_patterns": [
+        "(?i:\\bvillages?\\b)"
+      ],
+      "hi_forms": [
+        "गाँव",
+        "गांव"
+      ],
+      "why": "The farmers-table header 'Village' was rendered as 'मोहल्ला' (an urban neighbourhood)."
+    },
+    {
+      "id": "block",
+      "en": "Block",
+      "hi": "विकास खंड",
+      "en_patterns": [
+        "(?i:\\bblock\\b(?=\\s+(?:office|officer|level|development)\\b))",
+        "^Block$"
+      ],
+      "hi_forms": [
+        "विकास खंड",
+        "विकासखंड"
+      ],
+      "why": "The administrative block (विकास खंड), not a physical block. Matched only as a header or before office/officer/level, so 'block the sale' is left to the model."
+    },
+    {
+      "id": "tract",
+      "en": "Tract",
+      "hi": "क्षेत्र",
+      "en_patterns": [
+        "(?i:\\btracts?\\b)"
+      ],
+      "hi_forms": [],
+      "why": "The farmers-table header 'Tract' (Doab, Ganga-Par, Yamuna-Par) was rendered as 'लेख' (an article). Not mapped back: क्षेत्र also means area and field."
+    },
+    {
+      "id": "doab",
+      "en": "Doab",
+      "hi": "दोआब",
+      "en_patterns": [
+        "(?i:\\bdoab\\b)"
+      ],
+      "hi_forms": [
+        "दोआब"
+      ],
+      "why": "The land between the Ganga and Yamuna, one of the three tracts. Was rendered 'दोहा' (Doha)."
+    },
+    {
+      "id": "ganga_par",
+      "en": "Ganga-Par",
+      "hi": "गंगा-पार",
+      "en_patterns": [
+        "(?i:\\bganga[-_ ]?par\\b)"
+      ],
+      "hi_forms": [
+        "गंगा-पार",
+        "गंगापार",
+        "गंगा पार"
+      ],
+      "why": "Tract name: across the Ganga. A region, not a phrase to paraphrase ('गंगानदी के पार')."
+    },
+    {
+      "id": "yamuna_par",
+      "en": "Yamuna-Par",
+      "hi": "यमुना-पार",
+      "en_patterns": [
+        "(?i:\\byamuna[-_ ]?par\\b)"
+      ],
+      "hi_forms": [
+        "यमुना-पार",
+        "यमुनापार",
+        "यमुना पार"
+      ],
+      "why": "Tract name: across the Yamuna. Was paraphrased as 'यमुना के पार'."
+    },
+    {
+      "id": "decision_packet",
+      "en": "Decision Packet",
+      "hi": "निर्णय पैकेट",
+      "en_patterns": [
+        "(?i:\\bdecision packets?\\b)"
+      ],
+      "hi_forms": [
+        "निर्णय पैकेट"
+      ]
+    },
+    {
+      "id": "msp",
+      "en": "MSP",
+      "hi": "न्यूनतम समर्थन मूल्य",
+      "en_patterns": [
+        "\\bMSP\\b",
+        "(?i:\\bminimum support price\\b)"
+      ],
+      "hi_forms": [
+        "न्यूनतम समर्थन मूल्य"
+      ]
+    },
+    {
+      "id": "mandi",
+      "en": "mandi",
+      "hi": "मंडी",
+      "en_patterns": [
+        "(?i:\\bmandis?\\b)"
+      ],
+      "hi_forms": [
+        "मंडी"
+      ]
+    },
+    {
+      "id": "kharif",
+      "en": "Kharif",
+      "hi": "खरीफ",
+      "en_patterns": [
+        "(?i:\\bkharif\\b)"
+      ],
+      "hi_forms": [
+        "खरीफ",
+        "ख़रीफ़"
+      ]
+    },
+    {
+      "id": "rabi",
+      "en": "Rabi",
+      "hi": "रबी",
+      "en_patterns": [
+        "(?i:\\brabi\\b)"
+      ],
+      "hi_forms": [
+        "रबी"
+      ]
+    },
+    {
+      "id": "source",
+      "en": "sources",
+      "hi": "स्रोत",
+      "en_patterns": [
+        "(?i:\\bsources?\\b)"
+      ],
+      "hi_forms": [],
+      "why": "'4 sources.' was rendered as '4 स्रोतस.'. Not mapped back: स्रोत is singular and plural."
+    },
+    {
+      "id": "acre",
+      "en": "acres",
+      "hi": "एकड़",
+      "en_patterns": [
+        "(?i:\\bacres?\\b)",
+        "(?:(?<=\\d )|(?<=\\d))ac\\b",
+        "^ac$"
+      ],
+      "hi_forms": [
+        "एकड़",
+        "एकड"
+      ],
+      "why": "The abbreviation 'ac' on its own was rendered as 'ए.सी.' (air conditioner letters); '1.48 ac' was left in English. Always एकड़.",
+      "unit": true
+    },
+    {
+      "id": "hectare",
+      "en": "hectares",
+      "hi": "हेक्टेयर",
+      "en_patterns": [
+        "(?i:\\bhectares?\\b)",
+        "(?:(?<=\\d )|(?<=\\d))ha\\b",
+        "^ha$"
+      ],
+      "hi_forms": [
+        "हेक्टेयर"
+      ],
+      "unit": true
+    },
+    {
+      "id": "tonne",
+      "en": "tonnes",
+      "hi": "टन",
+      "en_patterns": [
+        "(?i:\\btonnes?\\b)",
+        "(?i:\\btons?\\b)",
+        "(?:(?<=\\d )|(?<=\\d))t\\b",
+        "^t$"
+      ],
+      "hi_forms": [
+        "टन"
+      ],
+      "why": "'13.8 t' (tonnes) was rendered as '13.8 किग्रा' (kilograms) and '2.5 t' as 'दो सौ पाँच'.",
+      "unit": true
+    },
+    {
+      "id": "quintal",
+      "en": "quintals",
+      "hi": "क्विंटल",
+      "en_patterns": [
+        "(?i:\\bquintals?\\b)",
+        "(?:(?<=\\d )|(?<=\\d))(?:q|qtl)\\b",
+        "^(?:q|qtl)$"
+      ],
+      "hi_forms": [
+        "क्विंटल",
+        "कुंतल"
+      ],
+      "unit": true
+    },
+    {
+      "id": "kilogram",
+      "en": "kg",
+      "hi": "किलोग्राम",
+      "en_patterns": [
+        "(?i:\\bkilograms?\\b)",
+        "(?:(?<=\\d )|(?<=\\d))kg\\b",
+        "^kg$"
+      ],
+      "hi_forms": [
+        "किलोग्राम",
+        "किग्रा",
+        "कि.ग्रा."
+      ],
+      "unit": true
+    },
+    {
+      "id": "paddy",
+      "en": "Paddy",
+      "hi": "धान",
+      "en_patterns": [
+        "(?i:\\bpaddy\\b)"
+      ],
+      "hi_forms": [
+        "धान"
+      ],
+      "why": "'धान की उपज' was once rendered as 'yield of the crop'."
+    },
+    {
+      "id": "wheat",
+      "en": "Wheat",
+      "hi": "गेहूँ",
+      "en_patterns": [
+        "(?i:\\bwheat\\b)"
+      ],
+      "hi_forms": [
+        "गेहूँ",
+        "गेहूं"
+      ]
+    },
+    {
+      "id": "mustard",
+      "en": "Mustard",
+      "hi": "सरसों",
+      "en_patterns": [
+        "(?i:\\bmustard\\b)"
+      ],
+      "hi_forms": [
+        "सरसों"
+      ]
+    },
+    {
+      "id": "potato",
+      "en": "Potato",
+      "hi": "आलू",
+      "en_patterns": [
+        "(?i:\\bpotato(?:es)?\\b)"
+      ],
+      "hi_forms": [
+        "आलू"
+      ]
+    },
+    {
+      "id": "guava",
+      "en": "Guava",
+      "hi": "अमरूद",
+      "en_patterns": [
+        "(?i:\\bguavas?\\b)"
+      ],
+      "hi_forms": [
+        "अमरूद"
+      ],
+      "why": "Rendered as both अमरूद and आंवला (Indian gooseberry, a different fruit)."
+    },
+    {
+      "id": "sugarcane",
+      "en": "Sugarcane",
+      "hi": "गन्ना",
+      "en_patterns": [
+        "(?i:\\bsugarcane\\b)"
+      ],
+      "hi_forms": [
+        "गन्ना"
+      ]
+    },
+    {
+      "id": "maize",
+      "en": "Maize",
+      "hi": "मक्का",
+      "en_patterns": [
+        "(?i:\\bmaize\\b)"
+      ],
+      "hi_forms": [
+        "मक्का"
+      ]
+    },
+    {
+      "id": "chickpea",
+      "en": "Chickpea",
+      "hi": "चना",
+      "en_patterns": [
+        "(?i:\\bchickpeas?\\b)"
+      ],
+      "hi_forms": [
+        "चना"
+      ]
+    },
+    {
+      "id": "pigeon_pea",
+      "en": "Pigeon pea",
+      "hi": "अरहर",
+      "en_patterns": [
+        "(?i:\\bpigeon ?peas?\\b)",
+        "(?i:\\barhar\\b)"
+      ],
+      "hi_forms": [
+        "अरहर"
+      ]
+    }
+  ]
+}

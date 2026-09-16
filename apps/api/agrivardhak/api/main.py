@@ -16,7 +16,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from agrivardhak.api import assistant, chat, dashboard, knowledge, login
+from agrivardhak.api import assistant, chat, dashboard, knowledge, login, translate
 from agrivardhak.api.auth import CurrentScope
 from agrivardhak.api.scope import ScopeViolation
 from agrivardhak.config import get_settings
@@ -116,3 +116,4 @@ app.include_router(assistant.router)
 app.include_router(chat.router)
 app.include_router(knowledge.router)
 app.include_router(login.router)
+app.include_router(translate.router)

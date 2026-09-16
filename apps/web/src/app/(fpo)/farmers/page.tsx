@@ -91,6 +91,7 @@ export default async function FarmersPage({
                 <td className="px-6 py-3">
                   <Link
                     href={`/farmers/${farmer.id}`}
+                    translate="no"
                     className="font-medium text-foreground underline-offset-4 hover:underline"
                   >
                     {farmer.name}

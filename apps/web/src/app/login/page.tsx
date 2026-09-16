@@ -52,10 +52,12 @@ export default async function LoginPage() {
           <span className="flex h-11 w-11 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <IconLeaf size={20} />
           </span>
-          <LanguageToggle locale={locale} label={t("lang.switchTo")} />
+          <LanguageToggle />
         </div>
         <p className="eyebrow">{t("login.eyebrow")}</p>
-        <h1 className="title-page mt-1.5 text-[2.5rem]">AgriVardhak</h1>
+        <h1 translate="no" className="title-page mt-1.5 text-[2.5rem]">
+          AgriVardhak
+        </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
           {t("login.tagline")}
         </p>
@@ -64,7 +66,7 @@ export default async function LoginPage() {
       <LoginForm accounts={accounts} locale={locale} />
 
       <p className="mt-10 border-t border-border/60 pt-6 text-xs leading-relaxed text-muted-foreground">
-        Market prices, weather and hazard climatology are cited in{" "}
+        {t("login.sourcesCited")}{" "}
         <code className="font-mono text-[11px]">seed/sources.md</code>.
       </p>
     </main>

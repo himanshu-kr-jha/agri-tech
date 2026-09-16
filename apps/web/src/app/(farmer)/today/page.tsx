@@ -42,7 +42,9 @@ export default async function TodayPage() {
     <main className="mx-auto max-w-2xl px-5 py-8">
       <header className="mb-8">
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="title-section text-[2rem]">{farmer.name}</h1>
+          <h1 translate="no" className="title-section text-[2rem]">
+            {farmer.name}
+          </h1>
         </div>
         <p className="mt-1.5 text-[15px] text-muted-foreground">
           {[farmer.village, farmer.block].filter(Boolean).join(" · ")}

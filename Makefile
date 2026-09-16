@@ -1,4 +1,4 @@
-.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed seed-reset fetch fetch-due fetch-status ingest embed-model extract-schemes weather agmarknet climatology dev-token routing-eval check lint fmt typecheck test test-api test-web trace progress progress-check clean
+.PHONY: help setup demo dev-env farmer-env dev api web db-up db-down db-reset migrate upgrade downgrade seed i18n-seed seed-reset fetch fetch-due fetch-status ingest embed-model extract-schemes weather agmarknet climatology dev-token routing-eval translation-eval check lint fmt typecheck test test-api test-web trace progress progress-check clean
 
 API := apps/api
 PY  := $(API)/.venv/bin/python
@@ -74,6 +74,10 @@ downgrade: ## Roll back one migration
 
 seed: ## Load the synthetic Prayagraj FPO
 	cd $(API) && .venv/bin/python -m agrivardhak.seed
+	$(MAKE) i18n-seed
+
+i18n-seed: ## Load the hand-written interface dictionary into the translation memory (ADR-0023)
+	cd $(API) && .venv/bin/python -m agrivardhak.translation seed
 
 seed-reset: ## Truncate all data and re-seed (faster than db-reset; keeps the schema)
 	cd $(API) && .venv/bin/python -m agrivardhak.seed --reset
@@ -160,6 +164,9 @@ test-web: ## vitest — component tests, including partial-packet rendering
 
 routing-eval: ## Measure intent-routing accuracy against a live model:  make routing-eval a="--verbose"
 	$(PY) scripts/routing_eval.py $(a)
+
+translation-eval: ## Measure Sarvam translation accuracy on golden cases (live):  make translation-eval a="--verbose"
+	$(PY) scripts/translation_eval.py $(a)
 
 trace: ## Walk one government order through every Data Observer stage (read-only)
 	@cd $(API) && .venv/bin/python ../../scripts/trace_observer.py

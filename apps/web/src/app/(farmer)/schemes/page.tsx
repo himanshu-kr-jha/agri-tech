@@ -54,11 +54,11 @@ function Notice({
   locale: Locale;
   t: (key: StringKey) => string;
 }) {
-  // In Hindi the canonical text is what you get. In English the rendering is preferred, and
-  // the Hindi stands in when there is none — never an empty card, never a silent omission.
-  const englishOnly = locale === "en" && Boolean(hit.text_en);
-  const body = englishOnly ? hit.text_en : hit.text_hi;
-  const untranslated = locale === "en" && !hit.text_en;
+  // In Hindi the canonical text is what you get. In English the publisher's own rendering is
+  // preferred; where there is none the published Hindi is rendered and the page translator
+  // turns it into English on screen, unlabelled (ADR-0023). `text_hi` itself is never
+  // replaced — only what is displayed changes.
+  const body = locale === "en" && hit.text_en ? hit.text_en : hit.text_hi;
 
   return (
     <li className="panel">
@@ -68,12 +68,6 @@ function Notice({
       </div>
 
       <p className="text-[17px] leading-relaxed text-foreground">{body}</p>
-
-      {untranslated && (
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          {t("notices.originalHindi")}
-        </p>
-      )}
 
       {hit.inert && (
         <p className="mt-3 border-t border-border/60 pt-2.5 text-sm leading-relaxed text-muted-foreground">

@@ -172,6 +172,7 @@ auditable decisions.
 | UI-08 | The risk register SHALL render as a sortable table: risk, probability, impact, farmers affected, recommended action, status. | MUST |
 | UI-09 | The calendar SHALL visually distinguish MANUAL / AUTO_GENERATED / AI_RECOMMENDED / OFFICIAL_DEADLINE events, and SHALL show pending-approval events in a distinct state. | MUST |
 | UI-10 | Data discrepancies SHALL be shown inline at the point of use, never hidden in an admin screen. | MUST |
+| UI-11 | Every screen — sign-in, farmer portal and FPO console — SHALL carry one Hindi/English switch at the top right. Switching SHALL translate all visible text on the page, including API-derived content and content rendered after load, without changing layout, routing or interactions. Static interface text SHALL come from a stored dictionary; everything else SHALL be translated on demand through Sarvam and kept in a translation memory so the same string is never paid for twice (ADR-0023). Personal names, identifiers, numbers and code SHALL NOT be translated. Domain terms (FPO, the collective, units such as acres, crop names) SHALL always render with the single Hindi/English equivalent recorded in the translation glossary, never a model's choice (ADR-0023 §9). | MUST |
 
 ### 3.2 API interfaces
 
@@ -462,6 +463,7 @@ Full specification in `docs/DATA-MODEL.md`. Requirements-level constraints:
 | NFR-301 | Failure of any single external source SHALL degrade the affected module's confidence and state the degradation — never fail the whole Decision Packet. |
 | NFR-302 | LLM call failures SHALL be retried with backoff; on exhaustion the system SHALL return the deterministic module outputs without narrative synthesis rather than an error page. |
 | NFR-303 | The demo path SHALL be reproducible from `make seed && make dev` with no network access, using fixtures. |
+| NFR-304 | A translation failure (no key, provider error, timeout) SHALL leave the affected text in its source language — never blank, never an error page. Anonymous callers SHALL be served from the translation memory only and SHALL NOT spend provider calls (ADR-0023). |
 
 ### 6.4 Security
 
@@ -481,6 +483,7 @@ Full specification in `docs/DATA-MODEL.md`. Requirements-level constraints:
 | NFR-502 | Farmer-facing content SHALL be available in Hindi and English; no untranslated English fragments in the Hindi view. |
 | NFR-503 | Farmer-facing pages SHALL be usable on a 3G connection: initial payload ≤200 KB gzipped for the daily-actions view. |
 | NFR-504 | Numbers SHALL be formatted in the Indian numbering system (lakh/crore) in Hindi views. |
+| NFR-505 | Switching back to a language already shown on the page SHALL NOT make a network call, and a string translated once SHALL be served from memory thereafter (UI-11). |
 
 ### 6.6 Maintainability & observability
 

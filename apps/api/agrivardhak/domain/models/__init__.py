@@ -75,6 +75,7 @@ from agrivardhak.domain.models.schemes import (
     Scheme,
     SchemeApplication,
 )
+from agrivardhak.domain.models.translation import TranslationMemory
 
 __all__ = [
     "EMBEDDING_DIM",
@@ -127,6 +128,7 @@ __all__ = [
     "Scheme",
     "SchemeApplication",
     "Task",
+    "TranslationMemory",
     "User",
     "Variety",
 ]
