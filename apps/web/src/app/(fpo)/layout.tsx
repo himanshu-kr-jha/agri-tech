@@ -14,11 +14,10 @@
 import { redirect } from "next/navigation";
 
 import { LanguageToggle } from "@/components/language-toggle";
-import { MobileNav, Sidebar, type NavLabels } from "@/components/sidebar";
+import { MobileNav, Sidebar } from "@/components/sidebar";
 import { SignOutButton } from "@/components/sign-out";
 import { IconBell, IconSearch } from "@/components/icons";
 import { formatRole } from "@/components/invariants";
-import { LanguageToggle } from "@/components/language-toggle";
 import { api } from "@/lib/api";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
@@ -37,21 +36,6 @@ function initials(name: string): string {
 export default async function FpoLayout({ children }: { children: React.ReactNode }) {
   const locale = await currentLocale();
   const t = translator(locale);
-  // The sidebar is a client component and cannot read the locale cookie, so the shell
-  // resolves its strings here. Listed rather than mapped so a missing key is a type error.
-  const nav: NavLabels = {
-    "con.nav.dashboard": t("con.nav.dashboard"),
-    "con.nav.assistant": t("con.nav.assistant"),
-    "con.nav.decisions": t("con.nav.decisions"),
-    "con.nav.risk": t("con.nav.risk"),
-    "con.nav.farmers": t("con.nav.farmers"),
-    "con.nav.market": t("con.nav.market"),
-    "con.nav.discrepancies": t("con.nav.discrepancies"),
-    "con.nav.knowledge": t("con.nav.knowledge"),
-    "con.nav.impact": t("con.nav.impact"),
-    "con.nav.group.decide": t("con.nav.group.decide"),
-    "con.nav.group.collective": t("con.nav.group.collective"),
-  };
 
   const user = await currentUser();
   if (!user) redirect("/login");
@@ -62,8 +46,6 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
     .then((d) => d.organization)
     .catch(() => null);
 
-  const locale = await currentLocale();
-  const t = translator(locale);
   const role = user.roles[0] ? formatRole(user.roles[0]) : t("console.member");
 
   return (

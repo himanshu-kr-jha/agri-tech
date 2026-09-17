@@ -1,11 +1,6 @@
 "use client";
 
 import { usePageTranslation } from "@/components/page-translator";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-
-import { setLocale } from "@/app/actions/locale";
-import type { Locale } from "@/lib/locale";
 
 /**
  * The language switch — one component, top right of every screen (UI-11).

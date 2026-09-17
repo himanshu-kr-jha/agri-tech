@@ -25,8 +25,11 @@ export const STRINGS: Record<keyof typeof strings, Entry> = strings;
 
 export type StringKey = keyof typeof strings;
 
+/** A locale already bound. Components that take `t` as a prop name this type. */
+export type Translate = (key: StringKey) => string;
+
 /** Bind a locale once, at the top of a component, and pass `t` down. */
-export function translator(locale: Locale): (key: StringKey) => string {
+export function translator(locale: Locale): Translate {
   return (key) => STRINGS[key][locale];
 }
 
