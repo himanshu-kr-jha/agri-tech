@@ -339,6 +339,28 @@ DELIVERABLES: list[Deliverable] = [
                          tests=["test_staff_seniority_lists_are_not_agricultural_notices",
                                 "test_recent_and_search_apply_the_same_gate",
                                 "test_the_farmer_feed_carries_no_staff_notices"])),
+    Deliverable("M34", "Site-wide Hindi/English page translation over Sarvam", "6",
+                "UI-11, NFR-304, NFR-505, ADR-0023",
+                Evidence(symbols=["agrivardhak.api.translate:translate",
+                                  "agrivardhak.translation.service:translate",
+                                  "agrivardhak.translation.quality:score",
+                                "agrivardhak.translation.glossary:mask",
+                                  "agrivardhak.domain.models:TranslationMemory"],
+                         files=["apps/api/alembic/versions/c4000000transmem_translation_memory.py",
+                                "apps/web/src/lib/dom-translate.ts",
+                                "apps/web/src/components/page-translator.tsx",
+                                "apps/web/src/components/__tests__/dom-translate.test.ts",
+                                "scripts/translation_eval.py"],
+                         tests=["test_response_keeps_order_and_length_and_deduplicates",
+                                "test_machine_write_never_overwrites_a_human_row",
+                                "test_anonymous_callers_share_a_bounded_budget",
+                                "test_a_5xx_that_never_recovers_returns_source_text",
+                                "test_a_changed_number_fails",
+                                "test_fpo_ceo_is_never_left_to_the_model",
+                                "test_the_collective_keeps_its_article_and_its_meaning",
+                                "test_units_and_terms_alone_resolve_without_the_model",
+                                "test_the_hand_written_dictionary_uses_the_glossary"],
+                         rows={"translation_memory": 60})),
     Deliverable("S1", "Outbreak clustering", "S", "FR-525",
                 Evidence(symbols=["agrivardhak.intelligence.crop_health:cluster"],
                          tests=["test_clustered_reports_raise_an_outbreak_signal",
@@ -435,6 +457,7 @@ def collect_row_counts() -> dict[str, int]:
         "out['external_record']=c.execute(text('select count(*) from external_record')).scalar_one();"
         "out['knowledge_chunk']=c.execute(text('select count(*) from knowledge_chunk')).scalar_one();"
         "out['news_event']=c.execute(text('select count(*) from news_event')).scalar_one();"
+        "out['translation_memory']=c.execute(text('select count(*) from translation_memory')).scalar_one();"
         "print(json.dumps(out))"
     )
     proc = subprocess.run(

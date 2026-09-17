@@ -57,7 +57,9 @@ export default async function FarmerPage({ params }: { params: Promise<{ id: str
       <header className="mb-10 mt-4">
         <p className="eyebrow">Member</p>
         <div className="mt-1.5 flex flex-wrap items-center gap-3">
-          <h1 className="title-section text-[2rem]">{farmer.name}</h1>
+          <h1 translate="no" className="title-section text-[2rem]">
+            {farmer.name}
+          </h1>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
           {[farmer.village, farmer.block, farmer.tract ? TRACT_LABEL[farmer.tract] : null]

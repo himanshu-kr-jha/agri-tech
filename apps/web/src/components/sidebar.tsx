@@ -14,6 +14,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import type { StringKey } from "@/lib/i18n";
+import { translator } from "@/lib/i18n";
+import type { Locale } from "@/lib/locale";
 import {
   IconAlert,
   IconAsk,
@@ -27,61 +30,43 @@ import {
   IconRisk,
 } from "@/components/icons";
 
-/**
- * ``labelKey`` rather than a label. This is a client component — it cannot read the locale
- * cookie, which lives on the server — so the shell resolves the strings and passes them in.
- * Keeping the *keys* here means the navigation's shape and order stay in one place instead
- * of being reassembled by whoever renders it.
- */
-type NavItem = { href: string; labelKey: NavKey; icon: typeof IconAsk };
-
-export type NavKey =
-  | "con.nav.dashboard"
-  | "con.nav.assistant"
-  | "con.nav.decisions"
-  | "con.nav.risk"
-  | "con.nav.farmers"
-  | "con.nav.market"
-  | "con.nav.discrepancies"
-  | "con.nav.knowledge"
-  | "con.nav.impact";
-
-export type GroupKey = "con.nav.group.decide" | "con.nav.group.collective";
-
-/** Every string the shell has to resolve for this component. */
-export type NavLabels = Record<NavKey | GroupKey, string>;
+type NavItem = { href: string; label: StringKey; icon: typeof IconAsk };
 
 /**
  * Grouped the way the work is actually sequenced: you ask, you decide, then you look at
  * what the collective is made of. Not alphabetically, and not by which screen was built first.
+ *
+ * Labels are dictionary keys, not strings: this is static chrome, so it renders in the
+ * reader's language on the server and never costs a translation call (ADR-0023).
  */
-const NAV_GROUPS: { label: GroupKey | null; items: NavItem[] }[] = [
+const NAV_GROUPS: { label: StringKey | null; items: NavItem[] }[] = [
   {
     label: null,
-    items: [{ href: "/dashboard", labelKey: "con.nav.dashboard", icon: IconDashboard }],
+    items: [{ href: "/dashboard", label: "nav.dashboard", icon: IconDashboard }],
   },
   {
-    label: "con.nav.group.decide" as GroupKey,
+    label: "nav.group.decide",
     items: [
-      { href: "/assistant", labelKey: "con.nav.assistant", icon: IconAsk },
-      { href: "/decisions", labelKey: "con.nav.decisions", icon: IconDecisions },
-      { href: "/risk", labelKey: "con.nav.risk", icon: IconRisk },
+      { href: "/assistant", label: "nav.ask", icon: IconAsk },
+      { href: "/decisions", label: "nav.decisions", icon: IconDecisions },
+      { href: "/risk", label: "nav.risk", icon: IconRisk },
     ],
   },
   {
-    label: "con.nav.group.collective" as GroupKey,
+    label: "nav.group.collective",
     items: [
-      { href: "/farmers", labelKey: "con.nav.farmers", icon: IconFarmers },
-      { href: "/market", labelKey: "con.nav.market", icon: IconMarket },
-      { href: "/discrepancies", labelKey: "con.nav.discrepancies", icon: IconAlert },
-      { href: "/knowledge", labelKey: "con.nav.knowledge", icon: IconDatabase },
-      { href: "/impact", labelKey: "con.nav.impact", icon: IconImpact },
+      { href: "/farmers", label: "nav.farmers", icon: IconFarmers },
+      { href: "/market", label: "nav.market", icon: IconMarket },
+      { href: "/discrepancies", label: "nav.conflicts", icon: IconAlert },
+      { href: "/knowledge", label: "nav.published", icon: IconDatabase },
+      { href: "/impact", label: "nav.impact", icon: IconImpact },
     ],
   },
 ];
 
-export function Sidebar({ labels }: { labels: NavLabels }) {
+export function Sidebar({ locale }: { locale: Locale }) {
   const pathname = usePathname();
+  const t = translator(locale);
 
   return (
     <aside className="hidden w-[260px] shrink-0 flex-col bg-sidebar text-sidebar-foreground md:flex">
@@ -93,9 +78,11 @@ export function Sidebar({ labels }: { labels: NavLabels }) {
           <IconLeaf size={18} />
         </span>
         <span className="leading-tight">
-          <span className="block font-serif text-[15px] tracking-tight">AgriVardhak</span>
+          <span translate="no" className="block font-serif text-[15px] tracking-tight">
+            AgriVardhak
+          </span>
           <span className="block text-[9px] font-medium uppercase tracking-[0.15em] text-sidebar-foreground/40">
-            FPO Console
+            {t("console.label")}
           </span>
         </span>
       </Link>
@@ -103,7 +90,7 @@ export function Sidebar({ labels }: { labels: NavLabels }) {
       <nav className="flex-1 space-y-6 px-3 py-2">
         {NAV_GROUPS.map((group, i) => (
           <div key={group.label ?? `group-${i}`} className="space-y-0.5">
-            {group.label && <p className="nav-group-label mb-2">{labels[group.label]}</p>}
+            {group.label && <p className="nav-group-label mb-2">{t(group.label)}</p>}
             {group.items.map((item) => {
               const active =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -116,7 +103,7 @@ export function Sidebar({ labels }: { labels: NavLabels }) {
                   className={`nav-item ${active ? "nav-item-active" : ""}`}
                 >
                   <Glyph size={16} />
-                  {labels[item.labelKey]}
+                  {t(item.label)}
                 </Link>
               );
             })}
@@ -130,8 +117,9 @@ export function Sidebar({ labels }: { labels: NavLabels }) {
        * trains people to expect the software to act on its own.
        */}
       <p className="border-t border-sidebar-foreground/10 px-5 py-4 text-[11px] leading-relaxed text-sidebar-foreground/35">
-        AgriVardhak recommends.
-        <br />A human approves before anything executes.
+        {t("console.recommends")}
+        <br />
+        {t("console.humanApproves")}
       </p>
     </aside>
   );
@@ -140,8 +128,9 @@ export function Sidebar({ labels }: { labels: NavLabels }) {
 /**
  * The same nav, horizontally, for narrow screens where a 260px spine would eat the page.
  */
-export function MobileNav({ labels }: { labels: NavLabels }) {
+export function MobileNav({ locale }: { locale: Locale }) {
   const pathname = usePathname();
+  const t = translator(locale);
   const items = NAV_GROUPS.flatMap((g) => g.items);
 
   return (
@@ -155,7 +144,7 @@ export function MobileNav({ labels }: { labels: NavLabels }) {
             aria-current={active ? "page" : undefined}
             className={`nav-item shrink-0 ${active ? "nav-item-active" : ""}`}
           >
-            {labels[item.labelKey]}
+            {t(item.label)}
           </Link>
         );
       })}

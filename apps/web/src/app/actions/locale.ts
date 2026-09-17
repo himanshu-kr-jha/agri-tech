@@ -1,17 +1,16 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 import { LOCALE_COOKIE, isLocale, type Locale } from "@/lib/locale";
 
 /**
- * Persist the reader's language and rebuild the tree in it.
+ * Persist the reader's language for the next server render.
  *
- * A Server Action rather than a client-side store because the pages that read this are
- * Server Components: the language has to be settled before the HTML exists. `revalidatePath`
- * with the `layout` scope is what makes the switch apply to the shell as well as the page —
- * without it the nav keeps the old language until the next hard navigation.
+ * Deliberately no `revalidatePath`. The page on screen is translated in place by the page
+ * translator (ADR-0023); rebuilding the tree on the server as well would race it, and React
+ * would write the server's text over the translation mid-switch. The cookie matters on the
+ * next reload or navigation, where it lets static text arrive already in the right language.
  */
 export async function setLocale(next: Locale): Promise<void> {
   if (!isLocale(next)) return;
@@ -22,5 +21,4 @@ export async function setLocale(next: Locale): Promise<void> {
     sameSite: "lax",
     httpOnly: false,
   });
-  revalidatePath("/", "layout");
 }

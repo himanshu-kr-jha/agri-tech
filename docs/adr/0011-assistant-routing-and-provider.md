@@ -1,6 +1,7 @@
 # ADR-0011 — Conversational assistant: routing, response shapes, and the NIM provider
 
-Date: 2026-08-23 · Status: Accepted · Amended by ADR-0020 (model) and ADR-0021 (ambiguity)
+Date: 2026-08-23 · Status: Accepted · Amended by ADR-0020 (model), ADR-0021 (ambiguity), and
+ADR-0022 (provider)
 
 ## Context
 

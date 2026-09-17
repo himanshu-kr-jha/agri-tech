@@ -123,7 +123,10 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
                     }`}
                   >
                     <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <span className="font-serif text-[15px] tracking-tight text-primary">
+                      <span
+                        translate="no"
+                        className="font-serif text-[15px] tracking-tight text-primary"
+                      >
                         {account.display_name}
                       </span>
                       <span className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">

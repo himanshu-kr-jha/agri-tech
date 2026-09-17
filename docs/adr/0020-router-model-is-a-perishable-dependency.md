@@ -1,6 +1,6 @@
 # ADR-0020 — The router model is a perishable dependency
 
-Date: 2026-08-30 · Status: Accepted · Amends ADR-0011
+Date: 2026-08-30 · Status: Accepted · Amends ADR-0011 · Amended by ADR-0022 (provider)
 
 ## Context
 

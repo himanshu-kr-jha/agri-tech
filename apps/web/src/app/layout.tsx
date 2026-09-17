@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
+import { TranslationProvider } from "@/components/page-translator";
+import { currentLocale } from "@/lib/locale";
+
 /*
  * Three families, three jobs, no overlap.
  *
@@ -41,13 +44,17 @@ export const metadata: Metadata = {
   description: "AI decision & orchestration platform for farmer collectives",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  // Read once here so `<html lang>` and the page translator agree with the server render.
+  const locale = await currentLocale();
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="paper-noise flex min-h-full flex-col">{children}</body>
+      <body className="paper-noise flex min-h-full flex-col">
+        <TranslationProvider initialLocale={locale}>{children}</TranslationProvider>
+      </body>
     </html>
   );
 }

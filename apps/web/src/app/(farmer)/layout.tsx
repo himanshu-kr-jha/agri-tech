@@ -37,7 +37,7 @@ export default async function FarmerLayout({ children }: { children: React.React
             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <IconLeaf size={16} />
             </span>
-            <span className="font-serif text-[17px] tracking-tight text-primary">
+            <span translate="no" className="font-serif text-[17px] tracking-tight text-primary">
               AgriVardhak
             </span>
           </Link>
@@ -55,8 +55,8 @@ export default async function FarmerLayout({ children }: { children: React.React
             {t("nav.notices")}
           </Link>
           <div className="ml-auto flex items-center gap-2">
-            <LanguageToggle locale={locale} label={t("lang.switchTo")} />
             <SignOutButton label={t("nav.signOut")} />
+            <LanguageToggle />
           </div>
         </nav>
       </header>

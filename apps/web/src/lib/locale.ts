@@ -6,9 +6,10 @@
  * paint is in the wrong language and corrects itself, which is worse than being slow. A
  * cookie is the only one of the three that is readable on the server *and* survives a reload.
  *
- * This governs interface text only. It does not translate anything — the Hindi strings are
- * written by hand in `i18n.ts`, and the published Hindi of a government order is data, never
- * a string in that table (ADR-0015).
+ * The cookie settles the *server* render: static chrome from the dictionary in `i18n.ts`
+ * arrives already in this language. Everything else on the page is translated in the browser
+ * by the page translator (`lib/dom-translate.ts`, ADR-0023), which reads the same language
+ * from `TranslationProvider`.
  */
 
 import { cookies } from "next/headers";

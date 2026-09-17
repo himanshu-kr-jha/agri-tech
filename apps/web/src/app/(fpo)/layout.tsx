@@ -18,6 +18,7 @@ import { MobileNav, Sidebar, type NavLabels } from "@/components/sidebar";
 import { SignOutButton } from "@/components/sign-out";
 import { IconBell, IconSearch } from "@/components/icons";
 import { formatRole } from "@/components/invariants";
+import { LanguageToggle } from "@/components/language-toggle";
 import { api } from "@/lib/api";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
@@ -61,20 +62,25 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
     .then((d) => d.organization)
     .catch(() => null);
 
-  const role = user.roles[0] ? formatRole(user.roles[0]) : "Member";
+  const locale = await currentLocale();
+  const t = translator(locale);
+  const role = user.roles[0] ? formatRole(user.roles[0]) : t("console.member");
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar labels={nav} />
+      <Sidebar locale={locale} />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <MobileNav labels={nav} />
+        <MobileNav locale={locale} />
 
         <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
           <div className="flex h-16 items-center gap-6 px-6">
             <div className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-3">
-                <span className="truncate font-serif text-[17px] tracking-tight text-primary">
+                <span
+                  translate="no"
+                  className="truncate font-serif text-[17px] tracking-tight text-primary"
+                >
                   {organization?.name ?? "AgriVardhak"}
                 </span>
                 {organization && (
@@ -97,7 +103,7 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
              */}
             <div className="ml-auto hidden items-center gap-2 rounded-full border border-border/60 bg-card px-4 py-2 text-sm text-muted-foreground/60 lg:flex lg:w-72">
               <IconSearch size={15} />
-              <span className="truncate">Search farmers, decisions, lots…</span>
+              <span className="truncate">{t("console.search")}</span>
             </div>
 
             <div className="flex items-center gap-4">
@@ -105,16 +111,21 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
                 <IconBell size={17} />
               </span>
               <div className="flex items-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[11px] font-medium text-primary-foreground">
+                <span
+                  translate="no"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[11px] font-medium text-primary-foreground"
+                >
                   {initials(user.display_name)}
                 </span>
                 <span className="hidden leading-tight sm:block">
-                  <span className="block text-[13px] text-foreground">{user.display_name}</span>
+                  <span translate="no" className="block text-[13px] text-foreground">
+                    {user.display_name}
+                  </span>
                   <span className="block text-[11px] text-muted-foreground">{role}</span>
                 </span>
               </div>
-              <LanguageToggle locale={locale} label={t("lang.switchTo")} />
-              <SignOutButton />
+              <SignOutButton label={t("nav.signOut")} />
+              <LanguageToggle />
             </div>
           </div>
         </header>

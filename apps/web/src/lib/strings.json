@@ -1,0 +1,286 @@
+{
+  "nav.myFarm": {
+    "en": "My farm",
+    "hi": "मेरा खेत"
+  },
+  "nav.ask": {
+    "en": "Ask",
+    "hi": "पूछिए"
+  },
+  "nav.notices": {
+    "en": "Notices",
+    "hi": "सूचनाएँ"
+  },
+  "nav.signOut": {
+    "en": "Sign out",
+    "hi": "साइन आउट"
+  },
+  "today.myCrops": {
+    "en": "My crops",
+    "hi": "मेरी फ़सल"
+  },
+  "today.noCrop": {
+    "en": "No crop currently growing.",
+    "hi": "कोई चालू फ़सल नहीं।"
+  },
+  "today.acres": {
+    "en": "acres",
+    "hi": "एकड़"
+  },
+  "today.cropHealth": {
+    "en": "Crop health",
+    "hi": "फ़सल की स्थिति"
+  },
+  "today.noVisit": {
+    "en": "No field visit recorded yet.",
+    "hi": "अभी तक कोई जाँच नहीं।"
+  },
+  "today.expectedHarvest": {
+    "en": "Expected harvest",
+    "hi": "कटाई"
+  },
+  "today.givenToCollective": {
+    "en": "Given to the collective",
+    "hi": "संगठन को दिया"
+  },
+  "today.grade": {
+    "en": "Grade",
+    "hi": "श्रेणी"
+  },
+  "today.unreachable": {
+    "en": "Could not reach the API. Run `make api`, and set AGRI_DEV_TOKEN to a farmer token to see this view.",
+    "hi": "जानकारी नहीं मिल सकी। कृपया बाद में देखें।"
+  },
+  "ask.title": {
+    "en": "Ask",
+    "hi": "पूछिए"
+  },
+  "ask.intro": {
+    "en": "Ask about your own farm. Answers come from what is recorded about your plots and crops, and every one shows where it came from.",
+    "hi": "अपने खेत के बारे में पूछिए। उत्तर आपके खेत और फ़सल के दर्ज विवरण से आते हैं, और हर उत्तर अपना स्रोत दिखाता है।"
+  },
+  "ask.placeholder": {
+    "en": "How is my crop?",
+    "hi": "मेरी फसल कैसी है?"
+  },
+  "ask.loading": {
+    "en": "Loading…",
+    "hi": "लोड हो रहा है…"
+  },
+  "ask.example.yield": {
+    "en": "How can I increase the yield of my crops?",
+    "hi": "मैं अपनी फ़सल की पैदावार कैसे बढ़ाऊँ?"
+  },
+  "ask.example.today": {
+    "en": "What should I do on my farm today?",
+    "hi": "आज मुझे अपने खेत में क्या करना चाहिए?"
+  },
+  "ask.example.schemes": {
+    "en": "What schemes may apply to me?",
+    "hi": "मुझ पर कौन सी योजनाएँ लागू हो सकती हैं?"
+  },
+  "ask.example.shared": {
+    "en": "What has the FPO shared with members?",
+    "hi": "किसान उत्पादक संगठन ने सदस्यों के साथ क्या साझा किया है?"
+  },
+  "notices.title": {
+    "en": "Government notices",
+    "hi": "सरकारी सूचनाएँ"
+  },
+  "notices.intro": {
+    "en": "Orders and guidance published by the UP Agriculture Department, shown exactly as published.",
+    "hi": "कृषि विभाग, उत्तर प्रदेश द्वारा प्रकाशित शासनादेश एवं जानकारी — जैसा प्रकाशित हुआ, वैसा ही।"
+  },
+  "notices.department": {
+    "en": "UP Agriculture Dept",
+    "hi": "कृषि विभाग, उत्तर प्रदेश"
+  },
+  "notices.search": {
+    "en": "Search",
+    "hi": "खोजें"
+  },
+  "notices.searchPlaceholder": {
+    "en": "crop insurance",
+    "hi": "फसल बीमा"
+  },
+  "notices.inert": {
+    "en": "General departmental guidance, not confirmation of any benefit.",
+    "hi": "यह विभाग की सामान्य जानकारी है — किसी लाभ की पुष्टि नहीं।"
+  },
+  "notices.forbidden": {
+    "en": "This view is for a farmer account.",
+    "hi": "यह पृष्ठ किसान खाते के लिए है।"
+  },
+  "notices.unreachable": {
+    "en": "Could not reach the API. Run `make api`.",
+    "hi": "जानकारी नहीं मिल सकी।"
+  },
+  "notices.none": {
+    "en": "The department has not published anything on this. That is a real answer — this page searches only what the government has actually issued, and invents nothing.",
+    "hi": "इस विषय पर विभाग ने कुछ प्रकाशित नहीं किया है। यह पृष्ठ केवल वही खोजता है जो सरकार ने वास्तव में जारी किया है।"
+  },
+  "notices.recent": {
+    "en": "Recent notices",
+    "hi": "हाल की सूचनाएँ"
+  },
+  "notices.countSuffix": {
+    "en": "notices",
+    "hi": "सूचनाएँ"
+  },
+  "notices.yourCrops": {
+    "en": "Your crops",
+    "hi": "आपकी फ़सलें"
+  },
+  "notices.departmentWideWithCrops": {
+    "en": "These notices are department-wide — none of them names a specific crop, so none is matched to your farm.",
+    "hi": "ये सूचनाएँ पूरे विभाग के लिए हैं — किसी एक फ़सल के लिए नहीं।"
+  },
+  "notices.departmentWide": {
+    "en": "These notices are department-wide.",
+    "hi": "ये सूचनाएँ पूरे विभाग के लिए हैं।"
+  },
+  "notices.disclaimer": {
+    "en": "This page does not tell you whether you qualify for anything. It shows what was published and when. Confirm eligibility and deadlines at your block office — saying you qualify when you might not would do real harm.",
+    "hi": "यह पृष्ठ यह नहीं बताता कि आप किसी योजना के पात्र हैं या नहीं। पात्रता एवं अंतिम तिथि की पुष्टि अपने विकास खंड कार्यालय या कृषि रक्षा इकाई से करें।"
+  },
+  "login.accounts": {
+    "en": "Sign in as",
+    "hi": "इस रूप में साइन इन करें"
+  },
+  "login.username": {
+    "en": "Username",
+    "hi": "उपयोगकर्ता नाम"
+  },
+  "login.password": {
+    "en": "Password",
+    "hi": "पासवर्ड"
+  },
+  "login.signIn": {
+    "en": "Sign in",
+    "hi": "साइन इन करें"
+  },
+  "login.signingIn": {
+    "en": "Signing in…",
+    "hi": "साइन इन हो रहा है…"
+  },
+  "login.failed": {
+    "en": "Could not reach the server.",
+    "hi": "सर्वर से संपर्क नहीं हो सका।"
+  },
+  "login.accountsHint": {
+    "en": "Sign in as each to see the same system from both sides. What a member can reach is enforced by the API, not by hiding pages.",
+    "hi": "दोनों दृष्टिकोणों से एक ही प्रणाली देखने के लिए बारी-बारी से साइन इन करें। कोई सदस्य क्या देख सकता है, यह API तय करता है — पृष्ठ छिपाकर नहीं।"
+  },
+  "login.tagline": {
+    "en": "Decision support that recommends, never decides. Sign in to continue.",
+    "hi": "निर्णय में सहायता — सुझाव देता है, निर्णय कभी नहीं। जारी रखने के लिए साइन इन करें।"
+  },
+  "login.eyebrow": {
+    "en": "Farmer collectives",
+    "hi": "किसान उत्पादक संगठन"
+  },
+  "login.audience.fpo": {
+    "en": "Organization console",
+    "hi": "संगठन कंसोल"
+  },
+  "login.audience.farmer": {
+    "en": "Farmer view",
+    "hi": "किसान दृश्य"
+  },
+  "nav.dashboard": {
+    "en": "Dashboard",
+    "hi": "डैशबोर्ड"
+  },
+  "nav.group.decide": {
+    "en": "Decide",
+    "hi": "निर्णय लें"
+  },
+  "nav.decisions": {
+    "en": "Decisions",
+    "hi": "निर्णय"
+  },
+  "nav.risk": {
+    "en": "Risk",
+    "hi": "जोखिम"
+  },
+  "nav.group.collective": {
+    "en": "Collective",
+    "hi": "संगठन"
+  },
+  "nav.farmers": {
+    "en": "Farmers",
+    "hi": "किसान"
+  },
+  "nav.market": {
+    "en": "Market",
+    "hi": "बाज़ार"
+  },
+  "nav.conflicts": {
+    "en": "Conflicts",
+    "hi": "विसंगतियाँ"
+  },
+  "nav.published": {
+    "en": "Published",
+    "hi": "प्रकाशित"
+  },
+  "nav.impact": {
+    "en": "Impact",
+    "hi": "प्रभाव"
+  },
+  "console.label": {
+    "en": "FPO Console",
+    "hi": "किसान उत्पादक संगठन कंसोल"
+  },
+  "console.recommends": {
+    "en": "AgriVardhak recommends.",
+    "hi": "AgriVardhak सुझाव देता है।"
+  },
+  "console.humanApproves": {
+    "en": "A human approves before anything executes.",
+    "hi": "कुछ भी लागू होने से पहले एक व्यक्ति स्वीकृति देता है।"
+  },
+  "console.search": {
+    "en": "Search farmers, decisions, lots…",
+    "hi": "किसान, निर्णय, लॉट खोजें…"
+  },
+  "console.member": {
+    "en": "Member",
+    "hi": "सदस्य"
+  },
+  "login.sourcesCited": {
+    "en": "Market prices, weather and hazard climatology are cited in",
+    "hi": "बाज़ार भाव, मौसम और आपदा-जलवायु आँकड़ों के स्रोत यहाँ दर्ज हैं:"
+  },
+  "notices.suggest.insurance": {
+    "en": "crop insurance",
+    "hi": "फसल बीमा"
+  },
+  "notices.suggest.soil": {
+    "en": "soil sample",
+    "hi": "मृदा नमूना"
+  },
+  "notices.suggest.fertiliser": {
+    "en": "fertiliser subsidy",
+    "hi": "उर्वरक अनुदान"
+  },
+  "notices.suggest.irrigation": {
+    "en": "irrigation",
+    "hi": "सिंचाई"
+  },
+  "notices.suggest.seed": {
+    "en": "seed",
+    "hi": "बीज"
+  },
+  "dashboard.eyebrow": {
+    "en": "FPO Command Centre",
+    "hi": "किसान उत्पादक संगठन नियंत्रण केंद्र"
+  },
+  "dashboard.titleTop": {
+    "en": "What the collective",
+    "hi": "संगठन की"
+  },
+  "dashboard.titleBottom": {
+    "en": "looks like today",
+    "hi": "आज की स्थिति"
+  }
+}
