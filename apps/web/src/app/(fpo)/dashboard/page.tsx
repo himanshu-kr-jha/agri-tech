@@ -12,6 +12,8 @@ import { ApiError, api, type Briefing, type Card } from "@/lib/api";
 import { ConfidenceChip, formatValue } from "@/components/invariants";
 import { IconAlert, IconArrowUpRight, IconClock, IconDatabase, IconEye } from "@/components/icons";
 import { Chip, EmptyState, ErrorPanel, KpiTile, PageHeader, Panel, PanelHeader } from "@/components/ui";
+import { translator, type Translate } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -55,11 +57,11 @@ function StatCard({ card }: { card: Card }) {
  * *stops* if it is ignored. Ten healthy totals underneath are context; an unapproved
  * recommendation is work the collective has already paid for and is not yet getting.
  */
-function BriefingPanel({ briefing }: { briefing: Briefing }) {
+function BriefingPanel({ briefing, t }: { briefing: Briefing; t: Translate }) {
   if (briefing.quiet) {
     return (
       <Panel className="mb-8" aria-label="Briefing">
-        <PanelHeader eyebrow="Briefing" title="Nothing needs a decision today" />
+        <PanelHeader eyebrow={t("con.dash.briefing.eyebrow")} title={t("con.dash.briefing.title")} />
         <EmptyState>
           That is a real answer, not an empty state — the briefing stays short so that the day
           it is long, you read it.
@@ -72,8 +74,8 @@ function BriefingPanel({ briefing }: { briefing: Briefing }) {
     <section aria-label="Briefing" className="mb-8 grid gap-4 lg:grid-cols-2">
       {briefing.needs_decision.length > 0 && (
         <BriefingGroup
-          eyebrow="Waiting on you"
-          title="Nothing here has happened yet"
+          eyebrow={t("con.dash.waiting.eyebrow")}
+          title={t("con.dash.waiting.title")}
           items={briefing.needs_decision}
           icon={<IconAlert size={15} />}
           emphasis
@@ -81,24 +83,24 @@ function BriefingPanel({ briefing }: { briefing: Briefing }) {
       )}
       {briefing.closing_soon.length > 0 && (
         <BriefingGroup
-          eyebrow="Closing soon"
-          title="Windows about to shut"
+          eyebrow={t("con.dash.closing.eyebrow")}
+          title={t("con.dash.closing.title")}
           items={briefing.closing_soon}
           icon={<IconClock size={15} />}
         />
       )}
       {briefing.watch.length > 0 && (
         <BriefingGroup
-          eyebrow="Worth watching"
-          title="Moving, not yet actionable"
+          eyebrow={t("con.dash.watch.eyebrow")}
+          title={t("con.dash.watch.title")}
           items={briefing.watch}
           icon={<IconEye size={15} />}
         />
       )}
       {briefing.data_health.length > 0 && (
         <BriefingGroup
-          eyebrow="Data health"
-          title="What the answers rest on"
+          eyebrow={t("con.dash.health.eyebrow")}
+          title={t("con.dash.health.title")}
           items={briefing.data_health}
           icon={<IconDatabase size={15} />}
         />
@@ -164,6 +166,7 @@ function BriefingGroup({
 }
 
 export default async function DashboardPage() {
+  const t = translator(await currentLocale());
   let data;
   let briefing: Briefing | null = null;
   try {
@@ -173,7 +176,7 @@ export default async function DashboardPage() {
     const status = error instanceof ApiError ? error.status : 0;
     return (
       <main className="px-6 py-10 md:px-10">
-        <PageHeader eyebrow="FPO Command Centre" title="Dashboard" />
+        <PageHeader eyebrow={t("con.dashboard.eyebrow")} title={t("con.dashboard.title")} />
         <ErrorPanel title={status === 403 ? "Not your view" : "API unreachable"}>
           {status === 403
             ? "This view is for organization staff. A farmer account sees their own farm instead — the boundary is enforced by the API, not by hiding this page."
@@ -223,7 +226,7 @@ export default async function DashboardPage() {
         ))}
       </section>
 
-      {briefing && <BriefingPanel briefing={briefing} />}
+      {briefing && <BriefingPanel briefing={briefing} t={t} />}
 
       <Panel className="flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">

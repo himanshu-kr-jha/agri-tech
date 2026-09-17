@@ -2,8 +2,10 @@
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Annotated
 
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import field_validator
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 #: Resolved against the package rather than the working directory. A bare ``".env"`` is read
 #: relative to CWD, so the same settings loaded fine under ``make dev`` (which cds into
@@ -100,7 +102,55 @@ class Settings(BaseSettings):
     #: a live assistant over committed data therefore wants ``false``, not ``true``.
     use_fixtures: bool = False
 
-    cors_origins: list[str] = ["http://localhost:3000"]
+    #: ``NoDecode`` because pydantic-settings JSON-decodes a complex field inside the
+    #: *source*, before any field validator can see it. Without it the validator below
+    #: never runs and the process dies at import.
+    cors_origins: Annotated[list[str], NoDecode] = ["http://localhost:3000"]
+
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def _name_the_driver(cls, value: object) -> object:
+        """Accept the URL a hosting provider hands you, not just SQLAlchemy's spelling.
+
+        Supabase, Render and Neon all give out ``postgresql://…``. SQLAlchemy reads a bare
+        ``postgresql://`` as "use psycopg2", which is not a dependency here and never has
+        been — ``pyproject.toml`` pins ``psycopg[binary]`` (v3), addressed as
+        ``postgresql+psycopg://``. So the pasted URL fails at import with
+        ``ModuleNotFoundError: No module named 'psycopg2'``, which points at a package nobody
+        asked for rather than at the string that is actually wrong.
+
+        Since psycopg2 cannot be present, rewriting the prefix has no ambiguity to resolve:
+        the bare form has exactly one correct meaning in this application. An explicit
+        ``+driver`` of any kind is left alone.
+        """
+        if isinstance(value, str):
+            for bare in ("postgresql://", "postgres://"):
+                if value.startswith(bare):
+                    return "postgresql+psycopg://" + value[len(bare) :]
+        return value
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def _accept_a_plain_list(cls, value: object) -> object:
+        """Accept ``a,b`` as well as ``["a","b"]`` from the environment.
+
+        By default pydantic-settings parses a complex field from an env var as JSON, so the
+        obvious ``AGRI_CORS_ORIGINS=https://app.vercel.app`` raised ``SettingsError`` and the
+        process exited before serving anything. On a platform where environment variables are
+        typed into a web form that is a genuinely bad failure: the health check never goes
+        green, and the error names a JSON parser rather than the variable anyone would suspect.
+
+        A comma-separated list is what a person types into that form, so accept it — and keep
+        accepting JSON, which is what an existing deployment may already be setting.
+        """
+        if isinstance(value, str):
+            text = value.strip()
+            if text.startswith("["):
+                import json
+
+                return json.loads(text)
+            return [origin.strip() for origin in text.split(",") if origin.strip()]
+        return value
 
 
 @lru_cache

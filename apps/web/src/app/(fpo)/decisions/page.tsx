@@ -12,10 +12,13 @@ import Link from "next/link";
 import { ApiError, api } from "@/lib/api";
 import { ConfidenceChip } from "@/components/invariants";
 import { EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
 export default async function DecisionsPage() {
+  const t = translator(await currentLocale());
   let data;
   try {
     data = await api.decisions();
@@ -23,7 +26,7 @@ export default async function DecisionsPage() {
     const status = error instanceof ApiError ? error.status : 0;
     return (
       <main className="px-6 py-10 md:px-10">
-        <PageHeader eyebrow="Ledger" title="Decisions" />
+        <PageHeader eyebrow={t("con.decisions.eyebrow")} title={t("con.decisions.title")} />
         <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
           {status === 403
             ? "The decision history is organization-internal."
@@ -36,9 +39,9 @@ export default async function DecisionsPage() {
   return (
     <main className="max-w-5xl px-6 py-10 md:px-10">
       <PageHeader
-        eyebrow="Ledger"
-        title="Every question, and what came of it"
-        subtitle="The evidence behind each answer is frozen at the moment it was given. Open one to approve, reject, or see why it said what it said."
+        eyebrow={t("con.decisions.eyebrow")}
+        title={t("con.decisions.h1")}
+        subtitle={t("con.decisions.sub")}
       />
 
       {data.decisions.length === 0 ? (

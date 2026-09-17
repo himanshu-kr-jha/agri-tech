@@ -13,6 +13,8 @@
 
 import { ApiError, api } from "@/lib/api";
 import { EmptyState, ErrorPanel, KpiTile, PageHeader, Panel, PanelHeader } from "@/components/ui";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +26,7 @@ const STRENGTH_NOTE: Record<string, string> = {
 };
 
 export default async function ImpactPage() {
+  const t = translator(await currentLocale());
   let data;
   try {
     data = await api.impact();
@@ -31,7 +34,7 @@ export default async function ImpactPage() {
     const status = error instanceof ApiError ? error.status : 0;
     return (
       <main className="px-6 py-10 md:px-10">
-        <PageHeader eyebrow="The closed loop" title="Impact" />
+        <PageHeader eyebrow={t("con.impact.eyebrow")} title={t("con.impact.title")} />
         <ErrorPanel title={status === 403 ? "Organization-internal" : "API unreachable"}>
           {status === 403 ? "Organization-internal." : "Could not reach the API. Run `make api`."}
         </ErrorPanel>
@@ -44,9 +47,9 @@ export default async function ImpactPage() {
   return (
     <main className="max-w-5xl px-6 py-10 md:px-10">
       <PageHeader
-        eyebrow="The closed loop"
-        title="What we can honestly claim"
-        subtitle="What the decision loop has actually recorded — including what it could not honestly claim."
+        eyebrow={t("con.impact.eyebrow")}
+        title={t("con.impact.h1")}
+        subtitle={t("con.impact.sub")}
       />
 
       {nothingYet ? (

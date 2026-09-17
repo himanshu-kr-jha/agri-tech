@@ -18,6 +18,8 @@
 import { ApiError, api, type Discrepancy, type DiscrepancyClaim } from "@/lib/api";
 import { ConfidenceChip, sqmToAcres } from "@/components/invariants";
 import { Chip, EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -152,6 +154,7 @@ function DiscrepancyCard({ item }: { item: Discrepancy }) {
 }
 
 export default async function DiscrepanciesPage() {
+  const t = translator(await currentLocale());
   let data;
   try {
     data = await api.discrepancies();
@@ -175,8 +178,8 @@ export default async function DiscrepanciesPage() {
     <main className="max-w-5xl px-6 py-10 md:px-10">
       <PageHeader
         eyebrow="INV-4"
-        title="Where the sources disagree"
-        subtitle="Nothing on this page has been resolved, and that is deliberate. When two records conflict beyond tolerance the system lowers its confidence and waits, rather than picking a number nobody chose."
+        title={t("con.conflicts.title")}
+        subtitle={t("con.conflicts.sub")}
         aside={
           <>
             <Chip tone={total > 0 ? "accent" : "neutral"}>

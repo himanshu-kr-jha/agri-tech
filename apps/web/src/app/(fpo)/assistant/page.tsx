@@ -17,6 +17,8 @@ import { Suspense } from "react";
 
 import { ChatPanel } from "@/components/chat";
 import { PageHeader } from "@/components/ui";
+import { translator } from "@/lib/i18n";
+import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -27,13 +29,14 @@ const EXAMPLES = [
   "What should I prioritize today?",
 ];
 
-export default function AssistantPage() {
+export default async function AssistantPage() {
+  const t = translator(await currentLocale());
   return (
     <main className="max-w-4xl px-6 py-10 md:px-10">
       <PageHeader
-        eyebrow="Assistant"
-        title="Ask the collective"
-        subtitle="Every answer arrives with its evidence. Anything it proposes waits for a human before it happens."
+        eyebrow={t("con.assistant.eyebrow")}
+        title={t("con.assistant.title")}
+        subtitle={t("con.assistant.sub")}
       />
 
       <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>
