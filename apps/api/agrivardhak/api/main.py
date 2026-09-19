@@ -69,6 +69,18 @@ SessionDep = Annotated[Session, Depends(get_session)]
 v1 = APIRouter(prefix="/api/v1")
 
 
+@v1.get("/ping", tags=["meta"])
+def ping() -> dict[str, str]:
+    """Liveness only: no database, no settings work, no I/O.
+
+    This is the endpoint an uptime monitor or keep-alive cron should hit on an interval.
+    It answers exactly one question - is the process accepting requests - so it stays cheap
+    enough to call every minute forever. Use /health when you need to know whether the
+    process can actually serve traffic.
+    """
+    return {"status": "ok"}
+
+
 @v1.get("/health", tags=["meta"])
 def health(session: SessionDep) -> dict[str, Any]:
     """Liveness plus the things the demo actually depends on."""
