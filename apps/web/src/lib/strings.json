@@ -664,8 +664,16 @@
     "hi": "सामान्य प्रश्न"
   },
   "faq.title": {
-    "en": "Questions we expect",
-    "hi": "अपेक्षित प्रश्न"
+    "en": "Frequently Asked Questions",
+    "hi": "अक्सर पूछे जाने वाले प्रश्न"
+  },
+  "faq.qLabel": {
+    "en": "Q",
+    "hi": "प्र"
+  },
+  "faq.aLabel": {
+    "en": "A",
+    "hi": "उ"
   },
   "faq.q1": {
     "en": "Is the farmer and market data in this demo real?",

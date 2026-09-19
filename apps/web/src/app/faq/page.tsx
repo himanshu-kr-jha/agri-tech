@@ -8,6 +8,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { FaqAccordion } from "@/components/faq-accordion";
 import { Footer } from "@/components/footer";
 import { IconLeaf } from "@/components/icons";
 import { translator, type StringKey } from "@/lib/i18n";
@@ -39,14 +40,11 @@ export default async function FaqPage() {
         <p className="eyebrow">{t("faq.eyebrow")}</p>
         <h1 className="title-page mt-2 text-[2rem]">{t("faq.title")}</h1>
 
-        <div className="mt-10 space-y-3">
-          {QUESTIONS.map(({ q, a }) => (
-            <details key={q} className="panel">
-              <summary className="title-panel cursor-pointer text-[15px]">{t(q)}</summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t(a)}</p>
-            </details>
-          ))}
-        </div>
+        <FaqAccordion
+          items={QUESTIONS.map(({ q, a }) => ({ q: t(q), a: t(a) }))}
+          qLabel={t("faq.qLabel")}
+          aLabel={t("faq.aLabel")}
+        />
       </main>
 
       <Footer />
