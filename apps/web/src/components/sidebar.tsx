@@ -9,6 +9,13 @@
  * The active item is marked with a 2px gold rail *inset* on its left edge rather than a
  * filled background. That is the design's one use of the accent colour, and keeping it to
  * a single 2px line per screen is what stops the gold reading as decoration.
+ *
+ * `fixed inset-y-0 left-0` rather than a normal flex-row sibling: it stays put — never
+ * scrolls with page content — and, being fixed rather than sticky, keeps rendering on top of
+ * whatever is behind it at any scroll position, including the footer once a page is short
+ * enough (or scrolled far enough) for the footer to reach that screen region. The content
+ * column carries `md:pl-[260px]` to stay clear of it; the footer deliberately does not, so
+ * the menu overlaps its left edge rather than being pushed aside by it.
  */
 
 import Link from "next/link";
@@ -69,7 +76,7 @@ export function Sidebar({ locale }: { locale: Locale }) {
   const t = translator(locale);
 
   return (
-    <aside className="hidden w-[260px] shrink-0 flex-col bg-sidebar text-sidebar-foreground md:flex">
+    <aside className="fixed inset-y-0 left-0 z-50 hidden w-[260px] flex-col bg-sidebar text-sidebar-foreground md:flex">
       <Link
         href="/dashboard"
         className="flex items-center gap-3 px-5 py-5 transition-opacity hover:opacity-90"
@@ -115,11 +122,16 @@ export function Sidebar({ locale }: { locale: Locale }) {
        * The invariant, stated where staff see it every day rather than in a doc nobody
        * opens. INV-1 is the product's central promise; a console that never mentions it
        * trains people to expect the software to act on its own.
+       *
+       * Styled off the footer's own tokens (`footer-border`/`footer-muted`), not the
+       * sidebar's, with the same `text-xs` size and `pb-5` bottom padding as the footer's
+       * legal line, and no forced line break (that's what let it run to three lines and
+       * pushed its top divider noticeably higher than the footer's) — the sidebar and footer
+       * now share one background colour and sit flush against the same bottom edge, so both
+       * the text and the divider above it land level with their footer counterparts.
        */}
-      <p className="border-t border-sidebar-foreground/10 px-5 py-4 text-[11px] leading-relaxed text-sidebar-foreground/35">
-        {t("console.recommends")}
-        <br />
-        {t("console.humanApproves")}
+      <p className="border-t border-footer-border/60 px-5 pb-5 pt-1 text-xs leading-snug text-footer-muted">
+        {t("console.recommends")} {t("console.humanApproves")}
       </p>
     </aside>
   );

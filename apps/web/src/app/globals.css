@@ -46,6 +46,15 @@
   --sidebar: 145 37% 12%; /* #132A1D — darker than primary, reads as a spine */
   --sidebar-foreground: 60 20% 97%;
 
+  /* The footer reuses the sidebar's dark forest rather than its own colour, so the two read
+     as one surface — a spine down the left on desktop, a band across the bottom on every
+     page. Its own token names stay distinct because the muted/border shades below are
+     footer-specific (nothing else needs a "hairline on dark forest" tone). */
+  --footer: 145 37% 12%;
+  --footer-foreground: 60 20% 97%;
+  --footer-muted: 145 10% 70%;
+  --footer-border: 145 15% 26%;
+
   --chart-1: 145 37% 16%;
   --chart-2: 132 20% 45%;
   --chart-3: 43 55% 51%;
@@ -79,6 +88,10 @@
   --color-ring: hsl(var(--ring));
   --color-sidebar: hsl(var(--sidebar));
   --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-footer: hsl(var(--footer));
+  --color-footer-foreground: hsl(var(--footer-foreground));
+  --color-footer-muted: hsl(var(--footer-muted));
+  --color-footer-border: hsl(var(--footer-border));
   --color-chart-1: hsl(var(--chart-1));
   --color-chart-2: hsl(var(--chart-2));
   --color-chart-3: hsl(var(--chart-3));
@@ -96,6 +109,9 @@ body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: var(--font-sans);
+  /* The full-bleed footer breaks out of the page's max-w container via negative margins
+     (see footer.tsx); this stops that trick from adding a horizontal scrollbar. */
+  overflow-x: clip;
 }
 
 @layer components {

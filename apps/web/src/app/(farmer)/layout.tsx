@@ -14,6 +14,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { Footer } from "@/components/footer";
 import { IconLeaf } from "@/components/icons";
 import { LanguageToggle } from "@/components/language-toggle";
 import { SignOutButton } from "@/components/sign-out";
@@ -60,7 +61,8 @@ export default async function FarmerLayout({ children }: { children: React.React
           </div>
         </nav>
       </header>
-      <div className="flex-1">{children}</div>
+      <div>{children}</div>
+      <Footer />
     </div>
   );
 }

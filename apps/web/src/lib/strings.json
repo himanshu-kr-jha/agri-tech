@@ -239,10 +239,6 @@
     "en": "A human approves before anything executes.",
     "hi": "कुछ भी लागू होने से पहले एक व्यक्ति स्वीकृति देता है।"
   },
-  "console.search": {
-    "en": "Search farmers, decisions, lots…",
-    "hi": "किसान, निर्णय, लॉट खोजें…"
-  },
   "console.member": {
     "en": "Member",
     "hi": "सदस्य"
@@ -434,5 +430,365 @@
   "ask.englishOnly": {
     "en": "The assistant answers in English.",
     "hi": "सहायक अंग्रेज़ी में उत्तर देता है। प्रश्न आप हिन्दी में भी पूछ सकते हैं।"
+  },
+  "common.loading": {
+    "en": "Loading…",
+    "hi": "लोड हो रहा है…"
+  },
+  "landing.eyebrow": {
+    "en": "AI decision & orchestration platform",
+    "hi": "एआई निर्णय एवं समन्वय मंच"
+  },
+  "landing.hero.title": {
+    "en": "Sustainable farmer income, one approved decision at a time.",
+    "hi": "सतत किसान आय — हर निर्णय मानव की स्वीकृति से।"
+  },
+  "landing.hero.subtitle": {
+    "en": "AgriVardhak turns fragmented farmer data and outside intelligence into decision packets an FPO can act on — evidence, confidence, and a human approval gate in front of every recommendation.",
+    "hi": "AgriVardhak बिखरे किसान आँकड़ों और बाहरी कृषि सूचना को ऐसे निर्णय-पैकेट में बदलता है जिन पर एफपीओ काम कर सके — प्रमाण, विश्वास-स्तर, और हर सुझाव के आगे मानव स्वीकृति की चौकी।"
+  },
+  "landing.hero.ctaPrimary": {
+    "en": "Sign in",
+    "hi": "साइन इन करें"
+  },
+  "landing.hero.ctaSecondary": {
+    "en": "Read the FAQ",
+    "hi": "अक्सर पूछे जाने वाले प्रश्न पढ़ें"
+  },
+  "landing.mobileCta.label": {
+    "en": "Sign in to AgriVardhak",
+    "hi": "AgriVardhak में साइन इन करें"
+  },
+  "landing.thesis": {
+    "en": "Optimized for sustainable farmer income and FPO financial health which is subject to risk, available capital, demand, crop suitability, and sustainability. Never for FPO profit alone.",
+    "hi": "लक्ष्य है सतत किसान आय और एफपीओ की वित्तीय सेहत, जोखिम, उपलब्ध पूँजी, माँग, फ़सल-उपयुक्तता और स्थिरता की सीमा में। कभी केवल एफपीओ के लाभ के लिए नहीं।"
+  },
+  "privacy.eyebrow": {
+    "en": "Privacy",
+    "hi": "गोपनीयता"
+  },
+  "privacy.title": {
+    "en": "Privacy Policy",
+    "hi": "गोपनीयता नीति"
+  },
+  "privacy.intro": {
+    "en": "This describes how AgriVardhak collects, uses, and protects farmer and organization data. It reflects the consent model built into the product itself, not a generic template.",
+    "hi": "यह बताता है कि AgriVardhak किसान और संगठन का डेटा कैसे एकत्र, उपयोग और सुरक्षित करता है। यह उत्पाद में निर्मित सहमति-मॉडल का वर्णन है, कोई सामान्य टेम्पलेट नहीं।"
+  },
+  "privacy.consent.title": {
+    "en": "1. Information We Collect & Consent",
+    "hi": "1. एकत्रित जानकारी एवं सहमति"
+  },
+  "privacy.consent.body": {
+    "en": "Consent is captured separately for each purpose below, is recorded with a timestamp and the version of the consent text shown, and can be withdrawn at any time.",
+    "hi": "नीचे दिए गए हर उद्देश्य के लिए सहमति अलग-अलग ली जाती है, तिथि व सहमति-पाठ के संस्करण के साथ दर्ज होती है, और किसी भी समय वापस ली जा सकती है।"
+  },
+  "privacy.consent.serviceDelivery": {
+    "en": "Service delivery — the minimum farm and plot data needed to generate recommendations for you.",
+    "hi": "सेवा-प्रदायगी — आपके लिए सुझाव बनाने हेतु आवश्यक न्यूनतम खेत व प्लॉट डेटा।"
+  },
+  "privacy.consent.orgAnalytics": {
+    "en": "Organization analytics — aggregated, non-identifying trends the FPO uses to plan the season.",
+    "hi": "संगठन विश्लेषण — समुच्चित, गैर-पहचान योग्य रुझान जिनसे एफपीओ मौसम की योजना बनाता है।"
+  },
+  "privacy.consent.modelImprovement": {
+    "en": "Model improvement — outcomes and adherence data used to make future recommendations more accurate.",
+    "hi": "मॉडल सुधार — परिणाम व अनुपालन डेटा, जिससे भविष्य के सुझाव अधिक सटीक बनते हैं।"
+  },
+  "privacy.consent.anonymizedResearch": {
+    "en": "Anonymized research — identity stripped and grouped so no fewer than five farmers share a group, used only if you opt in.",
+    "hi": "गुमनाम शोध — पहचान हटाकर इस तरह समूहीकृत कि किसी भी समूह में पाँच से कम किसान न हों; केवल तभी उपयोग जब आप स्वीकृति दें।"
+  },
+  "privacy.revocation.title": {
+    "en": "2. Withdrawing Your Consent",
+    "hi": "2. सहमति वापस लेना"
+  },
+  "privacy.revocation.body": {
+    "en": "Withdrawing consent for a purpose stops new processing for that purpose going forward. It does not undo recommendations already generated.",
+    "hi": "किसी उद्देश्य के लिए सहमति वापस लेने पर आगे से उस उद्देश्य हेतु नई प्रोसेसिंग रुक जाती है। पहले से बने सुझाव इससे पूर्ववत नहीं होते।"
+  },
+  "privacy.sensitive.title": {
+    "en": "3. Sensitive Information",
+    "hi": "3. संवेदनशील जानकारी"
+  },
+  "privacy.sensitive.body": {
+    "en": "Attributes such as caste category, income band, gender, or disability are optional, used only to check scheme eligibility, and never used to rank or compare farmers.",
+    "hi": "जाति-श्रेणी, आय-वर्ग, लिंग या दिव्यांगता जैसी जानकारी वैकल्पिक है, केवल योजना-पात्रता जाँचने हेतु उपयोग होती है, और किसानों की रैंकिंग या तुलना के लिए कभी नहीं।"
+  },
+  "privacy.export.title": {
+    "en": "4. Your Rights & Data Access",
+    "hi": "4. आपके अधिकार एवं डेटा तक पहुँच"
+  },
+  "privacy.export.body": {
+    "en": "Farmers can request a copy of their own recorded data from their organization.",
+    "hi": "किसान अपने संगठन से अपने दर्ज डेटा की प्रति माँग सकते हैं।"
+  },
+  "privacy.ai.title": {
+    "en": "5. How We Use AI",
+    "hi": "5. एआई का उपयोग"
+  },
+  "privacy.ai.body": {
+    "en": "AgriVardhak uses a large language model (Claude, by Anthropic) to help assemble recommendations from underlying data. The model never executes an action on its own — every recommendation is reviewed and approved by a person before anything happens, and every one stays explainable against the evidence it was built from.",
+    "hi": "AgriVardhak अंतर्निहित डेटा से सुझाव बनाने हेतु एक बड़े भाषा मॉडल (Claude, Anthropic द्वारा) का उपयोग करता है। मॉडल कभी स्वयं कोई कार्रवाई नहीं करता — कुछ भी होने से पहले हर सुझाव की समीक्षा व स्वीकृति एक व्यक्ति करता है, और हर सुझाव उस प्रमाण के आधार पर स्पष्ट रहता है जिससे वह बना था।"
+  },
+  "privacy.contact.title": {
+    "en": "6. Contact Us",
+    "hi": "6. संपर्क करें"
+  },
+  "privacy.contact.body": {
+    "en": "Questions about this policy, or a request about your own data? Write to us and we'll respond.",
+    "hi": "इस नीति से जुड़ा कोई प्रश्न है, या अपने डेटा से संबंधित कोई अनुरोध? हमें लिखें, हम उत्तर देंगे।"
+  },
+  "about.eyebrow": {
+    "en": "About us",
+    "hi": "हमारे बारे में"
+  },
+  "about.title": {
+    "en": "Why AgriVardhak exists",
+    "hi": "AgriVardhak क्यों बना"
+  },
+  "about.intro": {
+    "en": "AgriVardhak started from a brief to build AI that helps an underserved community make better decisions — not another farmer app. This is the short version of why it's shaped the way it is.",
+    "hi": "AgriVardhak की शुरुआत एक ऐसे एआई के निर्माण से हुई जो किसी वंचित समुदाय को बेहतर निर्णय लेने में मदद करे — न कि एक और किसान ऐप। यह पृष्ठ बताता है कि यह जैसा है वैसा क्यों है, संक्षेप में।"
+  },
+  "about.origin.title": {
+    "en": "Where this started",
+    "hi": "शुरुआत कहाँ से हुई"
+  },
+  "about.origin.body": {
+    "en": "An early idea — a farmer-facing app for crop advice, disease detection, and scheme discovery — was set aside deliberately: individual-advisory apps already exist, and they don't fix the structural problem. The pivot was to make the unit of intelligence the organization, not the individual — a Farmer Producer Organization (FPO), PACS, or SHG that already aggregates demand, supply, and risk across hundreds of farmers, and needs better decisions, not another chatbot.",
+    "hi": "एक शुरुआती विचार — फ़सल सलाह, रोग पहचान और योजना खोज हेतु किसान-केंद्रित ऐप — को जानबूझकर छोड़ दिया गया: व्यक्तिगत-सलाहकार ऐप पहले से मौजूद हैं, और वे संरचनात्मक समस्या हल नहीं करते। इसके बजाय ध्यान संगठन पर केंद्रित किया गया — एक कृषक उत्पादक संगठन (FPO), PACS या SHG, जो पहले से ही सैकड़ों किसानों की माँग, आपूर्ति और जोखिम को समेकित करता है, और जिसे एक और चैटबॉट नहीं बल्कि बेहतर निर्णयों की ज़रूरत है।"
+  },
+  "about.problem.title": {
+    "en": "The problem we're attacking",
+    "hi": "जिस समस्या पर हम काम कर रहे हैं"
+  },
+  "about.problem.body": {
+    "en": "FPOs regularly lose money not because they lack effort, but because they lack foresight: not knowing months ahead how much of a crop will be ready means buyers, storage, and logistics can't be secured in time. Add disputes over shares, sudden policy shifts, and patchy access to inputs, and the collective — and the farmers in it — absorb the loss.",
+    "hi": "एफपीओ अक्सर पैसा गँवाते हैं, प्रयास की कमी से नहीं बल्कि दूरदर्शिता की कमी से: महीनों पहले यह न पता होना कि कितनी फ़सल तैयार होगी, इसका मतलब है कि खरीदार, भंडारण और रसद समय पर सुनिश्चित नहीं हो पाते। हिस्सों को लेकर विवाद, अचानक नीतिगत बदलाव, और इनपुट तक असमान पहुँच जोड़ दें, तो नुकसान संगठन और उसके किसान दोनों उठाते हैं।"
+  },
+  "about.mission.title": {
+    "en": "What we build",
+    "hi": "हम क्या बनाते हैं"
+  },
+  "about.mission.body": {
+    "en": "AgriVardhak converts fragmented farmer-level data and outside agricultural intelligence into auditable, human-approved organization-level actions. The goal, stated exactly as it's written into the product: maximize sustainable farmer income and FPO financial health, subject to risk, available capital, demand, crop suitability, and sustainability — never FPO profit on its own.",
+    "hi": "AgriVardhak बिखरे हुए किसान-स्तरीय डेटा और बाहरी कृषि सूचना को प्रमाण-सहित, मानव-स्वीकृत संगठन-स्तरीय कार्रवाइयों में बदलता है। लक्ष्य, ठीक वैसे ही जैसे उत्पाद में तय है: सतत किसान आय और एफपीओ की वित्तीय सेहत को अधिकतम करना — जोखिम, उपलब्ध पूँजी, माँग, फ़सल-उपयुक्तता और स्थिरता की सीमा में — कभी केवल एफपीओ के लाभ के लिए नहीं।"
+  },
+  "about.loop.title": {
+    "en": "How a decision moves through the system",
+    "hi": "सिस्टम में एक निर्णय कैसे आगे बढ़ता है"
+  },
+  "about.loop.body": {
+    "en": "Every recommendation moves through the same fixed lifecycle: observe, understand, recommend, and only then — after a person with the right role reviews and approves it — execute, measure, and learn. AI never acts on its own; a human is always the last step before anything happens.",
+    "hi": "हर सुझाव एक ही तय जीवन-चक्र से गुज़रता है: अवलोकन, समझ, सुझाव, और उसके बाद ही — उचित भूमिका वाले व्यक्ति की समीक्षा व स्वीकृति के बाद — निष्पादन, मापन और सीख। एआई कभी स्वयं कार्रवाई नहीं करता; कुछ भी होने से पहले अंतिम चरण सदैव एक व्यक्ति होता है।"
+  },
+  "about.contact.title": {
+    "en": "Contact us",
+    "hi": "संपर्क करें"
+  },
+  "about.contact.body": {
+    "en": "Questions about AgriVardhak or this project? Write to us.",
+    "hi": "AgriVardhak या इस परियोजना के बारे में कोई प्रश्न? हमें लिखें।"
+  },
+  "terms.eyebrow": {
+    "en": "Terms",
+    "hi": "शर्तें"
+  },
+  "terms.title": {
+    "en": "Terms of Use",
+    "hi": "उपयोग की शर्तें"
+  },
+  "terms.intro": {
+    "en": "These Terms of Use govern access to and use of the AgriVardhak platform — the web console, farmer portal, and any associated service. By signing in or otherwise using the platform, you agree to be bound by them.",
+    "hi": "ये उपयोग की शर्तें AgriVardhak प्लेटफ़ॉर्म — वेब कंसोल, किसान पोर्टल और किसी भी संबंधित सेवा — तक पहुँच व उपयोग को नियंत्रित करती हैं। साइन इन करके या प्लेटफ़ॉर्म का उपयोग करके, आप इनसे बँधने के लिए सहमत होते हैं।"
+  },
+  "terms.acceptance.title": {
+    "en": "1. Acceptance of Terms",
+    "hi": "1. शर्तों की स्वीकृति"
+  },
+  "terms.acceptance.body": {
+    "en": "By accessing or using AgriVardhak, you accept and agree to be bound by these Terms of Use. If you do not agree, do not use the platform.",
+    "hi": "AgriVardhak तक पहुँच बनाकर या उसका उपयोग करके, आप इन उपयोग-शर्तों से बँधने हेतु स्वीकृति व सहमति देते हैं। यदि आप सहमत नहीं हैं, तो कृपया प्लेटफ़ॉर्म का उपयोग न करें।"
+  },
+  "terms.use.title": {
+    "en": "2. Platform Use and Conduct",
+    "hi": "2. प्लेटफ़ॉर्म का उपयोग एवं आचरण"
+  },
+  "terms.use.body": {
+    "en": "You agree to use AgriVardhak only for its intended purpose: supporting decisions for your farmer organization. You will not misuse the platform, attempt to access data or accounts outside your assigned role, interfere with its operation, or use it to harass or misrepresent other members of the collective.",
+    "hi": "आप AgriVardhak का उपयोग केवल इसके तयशुदा उद्देश्य — अपने किसान संगठन हेतु निर्णयों में सहायता — के लिए करने पर सहमत होते हैं। आप प्लेटफ़ॉर्म का दुरुपयोग नहीं करेंगे, अपनी नियत भूमिका से बाहर डेटा या खातों तक पहुँचने का प्रयास नहीं करेंगे, इसके संचालन में बाधा नहीं डालेंगे, या इसका उपयोग संगठन के अन्य सदस्यों को परेशान करने या ग़लत तरीक़े से प्रस्तुत करने के लिए नहीं करेंगे।"
+  },
+  "terms.accounts.title": {
+    "en": "3. Accounts and Access",
+    "hi": "3. खाते एवं पहुँच"
+  },
+  "terms.accounts.body": {
+    "en": "Accounts are issued by your organization (FPO, PACS, or SHG) and access is scoped to your assigned role. You are responsible for keeping your credentials confidential and for activity under your account. An organization may suspend or revoke access at its discretion.",
+    "hi": "खाते आपके संगठन (FPO, PACS, या SHG) द्वारा जारी किए जाते हैं और पहुँच आपकी नियत भूमिका तक सीमित रहती है। अपने लॉगिन विवरण गोपनीय रखना और अपने खाते के अंतर्गत गतिविधि के लिए आप ज़िम्मेदार हैं। कोई संगठन अपने विवेक से पहुँच निलंबित या रद्द कर सकता है।"
+  },
+  "terms.warranty.title": {
+    "en": "4. No Warranty; Human Oversight Required",
+    "hi": "4. कोई वारंटी नहीं; मानव निगरानी आवश्यक"
+  },
+  "terms.warranty.body": {
+    "en": "AgriVardhak generates recommendations to support decisions — it does not make decisions for you. Every recommendation requires human review and approval before any action is taken, and nothing on the platform is a substitute for professional agronomic, financial, or legal advice. Crop-protection guidance follows an IPM-first order and never names an exact product and dosage without a cited source; always confirm with the product label and a local agronomist before applying any input. You are responsible for the decisions you approve and the actions you take.",
+    "hi": "AgriVardhak निर्णयों में सहायता हेतु सुझाव बनाता है — यह आपके लिए निर्णय नहीं लेता। किसी भी कार्रवाई से पहले हर सुझाव की मानव समीक्षा व स्वीकृति आवश्यक है, और प्लेटफ़ॉर्म पर कुछ भी पेशेवर कृषि, वित्तीय या कानूनी सलाह का विकल्प नहीं है। फ़सल-सुरक्षा सलाह IPM-प्राथमिकता क्रम का पालन करती है और उद्धरण के बिना कभी सटीक उत्पाद व मात्रा नहीं बताती; कोई भी इनपुट लगाने से पहले हमेशा उत्पाद लेबल व स्थानीय कृषि विशेषज्ञ से पुष्टि करें। आपके द्वारा स्वीकृत निर्णयों और की गई कार्रवाइयों के लिए आप स्वयं ज़िम्मेदार हैं।"
+  },
+  "terms.ip.title": {
+    "en": "5. Intellectual Property",
+    "hi": "5. बौद्धिक संपदा"
+  },
+  "terms.ip.body": {
+    "en": "The AgriVardhak name, interface, and underlying software are the property of its operators and are protected by applicable intellectual property law. Farmer- and organization-submitted data remains the property of the farmer or organization that submitted it, governed by the Privacy Policy.",
+    "hi": "AgriVardhak नाम, इंटरफ़ेस और अंतर्निहित सॉफ़्टवेयर इसके संचालकों की संपत्ति है और लागू बौद्धिक संपदा क़ानून द्वारा संरक्षित है। किसान व संगठन द्वारा प्रस्तुत डेटा उसी किसान या संगठन की संपत्ति बना रहता है, जो गोपनीयता नीति द्वारा नियंत्रित होता है।"
+  },
+  "terms.changes.title": {
+    "en": "6. Changes to These Terms",
+    "hi": "6. इन शर्तों में परिवर्तन"
+  },
+  "terms.changes.body": {
+    "en": "These Terms may be updated from time to time. Continued use of the platform after a change is posted means you accept the revised Terms.",
+    "hi": "ये शर्तें समय-समय पर अपडेट की जा सकती हैं। परिवर्तन प्रकाशित होने के बाद प्लेटफ़ॉर्म का निरंतर उपयोग इसका अर्थ है कि आप संशोधित शर्तों को स्वीकार करते हैं।"
+  },
+  "terms.contact.title": {
+    "en": "7. Contact Information",
+    "hi": "7. संपर्क जानकारी"
+  },
+  "terms.contact.body": {
+    "en": "Questions about these Terms? Write to us and we'll respond.",
+    "hi": "इन शर्तों के बारे में कोई प्रश्न? हमें लिखें, हम उत्तर देंगे।"
+  },
+  "faq.eyebrow": {
+    "en": "FAQ",
+    "hi": "सामान्य प्रश्न"
+  },
+  "faq.title": {
+    "en": "Frequently Asked Questions",
+    "hi": "अक्सर पूछे जाने वाले प्रश्न"
+  },
+  "faq.qLabel": {
+    "en": "Q",
+    "hi": "प्र"
+  },
+  "faq.aLabel": {
+    "en": "A",
+    "hi": "उ"
+  },
+  "faq.q1": {
+    "en": "Is the farmer and market data in this demo real?",
+    "hi": "क्या इस डेमो में किसान और बाज़ार का डेटा असली है?"
+  },
+  "faq.a1": {
+    "en": "No — this build runs on a synthetic 1,000-farmer FPO modeled on Prayagraj district. Every synthetic figure is labelled as such in the interface; nothing here is presented as a real farmer's data.",
+    "hi": "नहीं — यह बिल्ड प्रयागराज ज़िले पर आधारित एक काल्पनिक 1,000-किसान एफपीओ पर चलता है। हर काल्पनिक आँकड़ा इंटरफ़ेस में उसी रूप में अंकित है; यहाँ कुछ भी किसी वास्तविक किसान के डेटा के रूप में प्रस्तुत नहीं है।"
+  },
+  "faq.q2": {
+    "en": "Can the AI take action on its own?",
+    "hi": "क्या एआई स्वयं कोई कार्रवाई कर सकता है?"
+  },
+  "faq.a2": {
+    "en": "No. Every recommendation moves through a fixed lifecycle — suggested, reviewed, approved, executed — and nothing reaches \"executed\" without a signed-off approval from a person with the right role.",
+    "hi": "नहीं। हर सुझाव एक तय जीवन-चक्र से गुज़रता है — सुझाया गया, समीक्षित, स्वीकृत, निष्पादित — और उचित भूमिका वाले व्यक्ति की हस्ताक्षरित स्वीकृति के बिना कुछ भी \"निष्पादित\" तक नहीं पहुँचता।"
+  },
+  "faq.q3": {
+    "en": "How do you keep crop-protection advice safe?",
+    "hi": "फ़सल-सुरक्षा सलाह को सुरक्षित कैसे रखा जाता है?"
+  },
+  "faq.a3": {
+    "en": "Guidance follows an IPM-first order — prevention, then cultural, then biological, then chemical — and any chemical guidance names a class or option with a citation, never an exact product and dosage without one, always pointing back to the label and a local agronomist.",
+    "hi": "सलाह IPM-प्राथमिकता क्रम में दी जाती है — रोकथाम, फिर सांस्कृतिक, फिर जैविक, फिर रासायनिक — और कोई भी रासायनिक सलाह उद्धरण-सहित केवल वर्ग या विकल्प बताती है, बिना उद्धरण के सटीक उत्पाद व मात्रा कभी नहीं, हमेशा लेबल व स्थानीय कृषि विशेषज्ञ से परामर्श की ओर संकेत करते हुए।"
+  },
+  "faq.q4": {
+    "en": "What happens when two data sources disagree?",
+    "hi": "जब दो डेटा स्रोत असहमत हों तो क्या होता है?"
+  },
+  "faq.a4": {
+    "en": "The disagreement is surfaced as a flagged discrepancy and the recommendation's confidence is lowered — the system never silently picks one number and moves on.",
+    "hi": "असहमति को चिह्नित विसंगति के रूप में सामने लाया जाता है और सुझाव का विश्वास-स्तर घटा दिया जाता है — सिस्टम कभी चुपचाप एक आँकड़ा चुनकर आगे नहीं बढ़ता।"
+  },
+  "faq.q5": {
+    "en": "How is farmer data protected?",
+    "hi": "किसान का डेटा कैसे सुरक्षित रखा जाता है?"
+  },
+  "faq.a5": {
+    "en": "Consent is captured per purpose, is revocable at any time, and research data is anonymized and aggregated before it leaves the organization. See the Privacy page for the full model.",
+    "hi": "सहमति हर उद्देश्य के लिए अलग ली जाती है, किसी भी समय वापस ली जा सकती है, और शोध डेटा संगठन से बाहर जाने से पहले गुमनाम व समुच्चित कर दिया जाता है। पूरा मॉडल गोपनीयता पृष्ठ पर देखें।"
+  },
+  "footer.faq": {
+    "en": "FAQ",
+    "hi": "सामान्य प्रश्न"
+  },
+  "footer.aboutUs": {
+    "en": "About us",
+    "hi": "हमारे बारे में"
+  },
+  "footer.privacyPolicy": {
+    "en": "Privacy Policy",
+    "hi": "गोपनीयता नीति"
+  },
+  "footer.termsOfUse": {
+    "en": "Terms of Use",
+    "hi": "उपयोग की शर्तें"
+  },
+  "footer.tagline": {
+    "en": "Auditable, human-approved decisions for farmer collectives.",
+    "hi": "किसान संगठनों के लिए प्रमाण-सहित, मानव-स्वीकृत निर्णय।"
+  },
+  "footer.sitemapTitle": {
+    "en": "Sitemap",
+    "hi": "साइटमैप"
+  },
+  "footer.home": {
+    "en": "Home",
+    "hi": "होम"
+  },
+  "footer.signIn": {
+    "en": "Sign in",
+    "hi": "साइन इन करें"
+  },
+  "footer.contactTitle": {
+    "en": "Contact",
+    "hi": "संपर्क"
+  },
+  "footer.contactBody": {
+    "en": "Questions about AgriVardhak? Write to us.",
+    "hi": "AgriVardhak के बारे में कोई प्रश्न? हमें लिखें।"
+  },
+  "footer.rightsReserved": {
+    "en": "All rights reserved.",
+    "hi": "सर्वाधिकार सुरक्षित।"
+  },
+  "footer.feedbackEmailPlaceholder": {
+    "en": "Your Email",
+    "hi": "आपका ईमेल"
+  },
+  "footer.feedbackMessagePlaceholder": {
+    "en": "Any suggestions for us?",
+    "hi": "हमारे लिए कोई सुझाव?"
+  },
+  "footer.feedbackSubmit": {
+    "en": "Send",
+    "hi": "भेजें"
+  },
+  "footer.feedbackSending": {
+    "en": "Sending…",
+    "hi": "भेजा जा रहा है…"
+  },
+  "footer.feedbackSuccess": {
+    "en": "Thank you for your valuable feedback.",
+    "hi": "धन्यवाद, आपके बहुमूल्य सुझाव के लिए"
+  },
+  "footer.feedbackError": {
+    "en": "Couldn't send that. Please try again.",
+    "hi": "भेजा नहीं जा सका। कृपया दोबारा प्रयास करें।"
+  },
+  "login.error.usernameRequired": {
+    "en": "Enter a username.",
+    "hi": "उपयोगकर्ता नाम दर्ज करें।"
+  },
+  "login.error.passwordRequired": {
+    "en": "Enter a password.",
+    "hi": "पासवर्ड दर्ज करें।"
   }
 }

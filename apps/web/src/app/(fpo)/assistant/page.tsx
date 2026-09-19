@@ -13,14 +13,18 @@
  * on the same answer.
  */
 
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { ChatPanel } from "@/components/chat";
+import { ChatSkeleton } from "@/components/loading-skeleton";
 import { PageHeader } from "@/components/ui";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Assistant" };
 
 const EXAMPLES = [
   "What should we do this season to maximize sustainable farmer income?",
@@ -39,7 +43,7 @@ export default async function AssistantPage() {
         subtitle={t("con.assistant.sub")}
       />
 
-      <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>
+      <Suspense fallback={<ChatSkeleton label={t("common.loading")} />}>
         <ChatPanel
           examples={EXAMPLES}
           placeholder="What should we do this season?"

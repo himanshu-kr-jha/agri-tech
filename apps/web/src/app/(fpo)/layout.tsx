@@ -13,10 +13,11 @@
 
 import { redirect } from "next/navigation";
 
+import { Footer } from "@/components/footer";
 import { LanguageToggle } from "@/components/language-toggle";
 import { MobileNav, Sidebar } from "@/components/sidebar";
 import { SignOutButton } from "@/components/sign-out";
-import { IconBell, IconSearch } from "@/components/icons";
+import { IconBell } from "@/components/icons";
 import { formatRole } from "@/components/invariants";
 import { api } from "@/lib/api";
 import { translator } from "@/lib/i18n";
@@ -49,10 +50,10 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
   const role = user.roles[0] ? formatRole(user.roles[0]) : t("console.member");
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Sidebar locale={locale} />
 
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex flex-col md:pl-[260px]">
         <MobileNav locale={locale} />
 
         <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
@@ -78,17 +79,7 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
               )}
             </div>
 
-            {/*
-             * Presentational for now: search is not built, and a box that does nothing when
-             * you type in it is worse than one that says so. It carries the header's
-             * proportions until the real thing lands.
-             */}
-            <div className="ml-auto hidden items-center gap-2 rounded-full border border-border/60 bg-card px-4 py-2 text-sm text-muted-foreground/60 lg:flex lg:w-72">
-              <IconSearch size={15} />
-              <span className="truncate">{t("console.search")}</span>
-            </div>
-
-            <div className="flex items-center gap-4">
+            <div className="ml-auto flex items-center gap-4">
               <span className="text-muted-foreground/60">
                 <IconBell size={17} />
               </span>
@@ -112,8 +103,10 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
           </div>
         </header>
 
-        <div className="flex-1">{children}</div>
+        <div>{children}</div>
       </div>
+
+      <Footer sidebarOffset />
     </div>
   );
 }

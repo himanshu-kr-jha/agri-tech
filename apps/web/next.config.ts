@@ -9,6 +9,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  // Hides the Next.js dev-mode build-activity badge (bottom-left corner) — it's tooling
+  // chrome, not part of the product, and it visually collides with the footer.
+  devIndicators: false,
   allowedDevOrigins: process.env.DEV_ALLOWED_ORIGINS?.split(",")
     .map((origin) => origin.trim())
     .filter(Boolean),

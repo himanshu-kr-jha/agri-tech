@@ -11,12 +11,16 @@
  * would be the exact dishonesty this screen exists to avoid.
  */
 
+import type { Metadata } from "next";
+
 import { ApiError, api } from "@/lib/api";
 import { EmptyState, ErrorPanel, KpiTile, PageHeader, Panel, PanelHeader } from "@/components/ui";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Impact" };
 
 const STRENGTH_NOTE: Record<string, string> = {
   HIGH: "Followed faithfully, moved materially, no confounder we track",

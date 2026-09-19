@@ -6,6 +6,7 @@
  * list that could not be filtered that way would show a pattern as a flat roll of names.
  */
 
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ApiError, TRACT_LABEL, api } from "@/lib/api";
@@ -14,6 +15,8 @@ import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Farmers" };
 
 const TRACTS = ["GANGA_PAR", "DOAB", "YAMUNA_PAR"] as const;
 

@@ -6,6 +6,7 @@
  * which is where the actual reasoning happens.
  */
 
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ApiError, api, type Briefing, type Card } from "@/lib/api";
@@ -16,6 +17,8 @@ import { translator, type Translate } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Dashboard" };
 
 function formatCardValue(card: Card): string {
   if (card.value === null || card.value === undefined) return "—";

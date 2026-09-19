@@ -26,10 +26,17 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
   const [username, setUsername] = useState(accounts[0]?.username ?? "");
   const [password, setPassword] = useState(accounts[0]?.password ?? "");
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ username?: string; password?: string }>({});
   const [busy, setBusy] = useState(false);
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    const nextFieldErrors: typeof fieldErrors = {};
+    if (!username.trim()) nextFieldErrors.username = t("login.error.usernameRequired");
+    if (!password) nextFieldErrors.password = t("login.error.passwordRequired");
+    setFieldErrors(nextFieldErrors);
+    if (nextFieldErrors.username || nextFieldErrors.password) return;
+
     setBusy(true);
     setError(null);
     try {
@@ -65,22 +72,42 @@ export function LoginForm({ accounts, locale }: { accounts: DemoAccount[]; local
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              if (fieldErrors.username) setFieldErrors((prev) => ({ ...prev, username: undefined }));
+            }}
             autoComplete="username"
             required
+            aria-invalid={!!fieldErrors.username}
+            aria-describedby={fieldErrors.username ? "username-error" : undefined}
             className={field}
           />
+          {fieldErrors.username && (
+            <p id="username-error" role="alert" className="mt-1 text-xs text-destructive">
+              {fieldErrors.username}
+            </p>
+          )}
         </label>
         <label className="block">
           <span className="eyebrow-sm">{t("login.password")}</span>
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: undefined }));
+            }}
             autoComplete="current-password"
             required
+            aria-invalid={!!fieldErrors.password}
+            aria-describedby={fieldErrors.password ? "password-error" : undefined}
             className={field}
           />
+          {fieldErrors.password && (
+            <p id="password-error" role="alert" className="mt-1 text-xs text-destructive">
+              {fieldErrors.password}
+            </p>
+          )}
         </label>
 
         {error && (

@@ -7,6 +7,7 @@
  * no.
  */
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -16,6 +17,8 @@ import { ApiError, api } from "@/lib/api";
 import { ErrorPanel } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Decision" };
 
 export default async function DecisionPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

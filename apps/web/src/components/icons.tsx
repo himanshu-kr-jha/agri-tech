@@ -185,6 +185,14 @@ export function IconDatabase(props: IconProps) {
   );
 }
 
+export function IconChevronDown(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="m6 9 6 6 6-6" />
+    </Icon>
+  );
+}
+
 /** The brand mark. A leaf on a stem — the only filled shape in the whole UI. */
 export function IconLeaf({ size = 18, ...props }: IconProps) {
   return (
