@@ -16,9 +16,22 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { LandingPage } from "@/components/landing";
+import { LandingPage } from "@/components/landing/landing-page";
 import { currentUser, homeFor } from "@/lib/session";
 
+/**
+ * Per-request, because the redirect above reads the session cookie. Two things must never
+ * be added to this file or to the `(public)` layout, and both fail silently rather than
+ * loudly:
+ *
+ * - `export const fetchCache = …`. `force-dynamic` alone does NOT defeat the landing
+ *   page's hourly stats cache — Next only applies its no-store rule to fetches that carry
+ *   no explicit config of their own, and `getPublic()` passes `next.revalidate`. An
+ *   explicit `fetchCache`, though, is honoured, and would turn that hourly read into a
+ *   database round-trip on every cold view.
+ * - Routing the stats call through `api.ts`'s `get<T>()`, which attaches a bearer token —
+ *   any fetch carrying an `authorization` header is classed uncacheable.
+ */
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {

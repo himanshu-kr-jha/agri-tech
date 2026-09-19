@@ -435,34 +435,6 @@
     "en": "Loading…",
     "hi": "लोड हो रहा है…"
   },
-  "landing.eyebrow": {
-    "en": "AI decision & orchestration platform",
-    "hi": "एआई निर्णय एवं समन्वय मंच"
-  },
-  "landing.hero.title": {
-    "en": "Sustainable farmer income, one approved decision at a time.",
-    "hi": "सतत किसान आय — हर निर्णय मानव की स्वीकृति से।"
-  },
-  "landing.hero.subtitle": {
-    "en": "AgriVardhak turns fragmented farmer data and outside intelligence into decision packets an FPO can act on — evidence, confidence, and a human approval gate in front of every recommendation.",
-    "hi": "AgriVardhak बिखरे किसान आँकड़ों और बाहरी कृषि सूचना को ऐसे निर्णय-पैकेट में बदलता है जिन पर एफपीओ काम कर सके — प्रमाण, विश्वास-स्तर, और हर सुझाव के आगे मानव स्वीकृति की चौकी।"
-  },
-  "landing.hero.ctaPrimary": {
-    "en": "Sign in",
-    "hi": "साइन इन करें"
-  },
-  "landing.hero.ctaSecondary": {
-    "en": "Read the FAQ",
-    "hi": "अक्सर पूछे जाने वाले प्रश्न पढ़ें"
-  },
-  "landing.mobileCta.label": {
-    "en": "Sign in to AgriVardhak",
-    "hi": "AgriVardhak में साइन इन करें"
-  },
-  "landing.thesis": {
-    "en": "Optimized for sustainable farmer income and FPO financial health which is subject to risk, available capital, demand, crop suitability, and sustainability. Never for FPO profit alone.",
-    "hi": "लक्ष्य है सतत किसान आय और एफपीओ की वित्तीय सेहत, जोखिम, उपलब्ध पूँजी, माँग, फ़सल-उपयुक्तता और स्थिरता की सीमा में। कभी केवल एफपीओ के लाभ के लिए नहीं।"
-  },
   "privacy.eyebrow": {
     "en": "Privacy",
     "hi": "गोपनीयता"
@@ -790,5 +762,209 @@
   "login.error.passwordRequired": {
     "en": "Enter a password.",
     "hi": "पासवर्ड दर्ज करें।"
+  },
+  "publicNav.home": {
+    "en": "Home",
+    "hi": "होम"
+  },
+  "publicNav.about": {
+    "en": "About us",
+    "hi": "हमारे बारे में"
+  },
+  "publicNav.privacy": {
+    "en": "Privacy policy",
+    "hi": "गोपनीयता नीति"
+  },
+  "publicNav.faq": {
+    "en": "FAQ",
+    "hi": "सामान्य प्रश्न"
+  },
+  "publicNav.signIn": {
+    "en": "Sign in",
+    "hi": "साइन इन करें"
+  },
+  "publicNav.openMenu": {
+    "en": "Open menu",
+    "hi": "मेन्यू खोलें"
+  },
+  "publicNav.closeMenu": {
+    "en": "Close menu",
+    "hi": "मेन्यू बंद करें"
+  },
+  "landing.hero.carouselLabel": {
+    "en": "AgriVardhak in the field",
+    "hi": "खेत में AgriVardhak"
+  },
+  "landing.hero.pause": {
+    "en": "Pause video",
+    "hi": "वीडियो रोकें"
+  },
+  "landing.hero.play": {
+    "en": "Play video",
+    "hi": "वीडियो चलाएँ"
+  },
+  "landing.hero.goToSlide": {
+    "en": "Go to slide",
+    "hi": "स्लाइड पर जाएँ"
+  },
+  "landing.hero.plot.eyebrow": {
+    "en": "Where it begins",
+    "hi": "यहाँ से शुरुआत"
+  },
+  "landing.hero.plot.headline": {
+    "en": "Every decision starts on someone's half-acre.",
+    "hi": "हर निर्णय किसी के आधे एकड़ से शुरू होता है।"
+  },
+  "landing.hero.market.eyebrow": {
+    "en": "Where it adds up",
+    "hi": "यहाँ जुड़ाव बनता है"
+  },
+  "landing.hero.market.headline": {
+    "en": "One farmer's crate is a lot. Ten thousand is a market.",
+    "hi": "एक किसान की पेटी एक लॉट है। दस हज़ार पेटियाँ एक बाज़ार हैं।"
+  },
+  "landing.hero.harvest.eyebrow": {
+    "en": "Where it is settled",
+    "hi": "यहाँ हिसाब होता है"
+  },
+  "landing.hero.harvest.headline": {
+    "en": "Harvest is the exam. The work was done months earlier.",
+    "hi": "कटाई तो परीक्षा है। मेहनत महीनों पहले हो चुकी होती है।"
+  },
+  "landing.stats.eyebrow": {
+    "en": "Where we are today",
+    "hi": "आज हम कहाँ हैं"
+  },
+  "landing.stats.farmers": {
+    "en": "Farmers modelled",
+    "hi": "किसान मॉडल में"
+  },
+  "landing.stats.cycles": {
+    "en": "Crop cycles analysed",
+    "hi": "फ़सल-चक्र विश्लेषित"
+  },
+  "landing.stats.acres": {
+    "en": "Acres mapped",
+    "hi": "एकड़ मानचित्रित"
+  },
+  "landing.stats.footnote": {
+    "en": "Prayagraj pilot dataset.",
+    "hi": "प्रयागराज पायलट डेटासेट।"
+  },
+  "landing.about.eyebrow": {
+    "en": "Who we are",
+    "hi": "हम कौन हैं"
+  },
+  "landing.about.title": {
+    "en": "An ecosystem for the collective, not a dashboard for the office.",
+    "hi": "संगठन के लिए बना एक पूरा तंत्र — दफ़्तर का डैशबोर्ड नहीं।"
+  },
+  "landing.about.body": {
+    "en": "AgriVardhak exists because the hardest problem in Indian agriculture is not growing the crop — it is everything around it. Which crop, on whose land, with what water, sold to whom, at what price, under which scheme, carrying how much risk. Those questions are answered today by whoever happens to be in the room. We think they deserve evidence.",
+    "hi": "AgriVardhak इसलिए है क्योंकि भारतीय कृषि की सबसे कठिन समस्या फ़सल उगाना नहीं — उसके चारों ओर का सब कुछ है। कौन-सी फ़सल, किसकी ज़मीन पर, कितने पानी में, किसे बेची जाए, किस दाम पर, किस योजना के तहत, कितने जोखिम के साथ। आज इन सवालों का उत्तर वही देता है जो उस समय कमरे में मौजूद हो। हमारा मानना है कि इनके पीछे प्रमाण होना चाहिए।"
+  },
+  "landing.about.point1.title": {
+    "en": "Built around the collective",
+    "hi": "संगठन के इर्द-गिर्द बना"
+  },
+  "landing.about.point1.body": {
+    "en": "The FPO, PACS or SHG is the unit that can actually negotiate, aggregate and borrow. We build for it, and the farmer gains through it.",
+    "hi": "किसान उत्पादक संगठन, प्राथमिक कृषि ऋण समिति या स्वयं सहायता समूह ही वह इकाई है जो सचमुच मोल-भाव कर सकती है, उपज एकत्र कर सकती है और ऋण ले सकती है। हम उसी के लिए बनाते हैं, और किसान का लाभ उसी के माध्यम से होता है।"
+  },
+  "landing.about.point2.title": {
+    "en": "Evidence, not assertion",
+    "hi": "दावा नहीं, प्रमाण"
+  },
+  "landing.about.point2.body": {
+    "en": "Every number carries where it came from, when it was observed and how far we trust it. When sources disagree, we say so instead of quietly picking one.",
+    "hi": "हर आँकड़े के साथ रहता है — वह कहाँ से आया, कब देखा गया, और उस पर कितना भरोसा है। जब स्रोत आपस में असहमत हों, हम चुपचाप कोई एक नहीं चुन लेते, बल्कि असहमति बताते हैं।"
+  },
+  "landing.about.point3.title": {
+    "en": "A person decides",
+    "hi": "निर्णय व्यक्ति करता है"
+  },
+  "landing.about.point3.body": {
+    "en": "Nothing consequential happens without a named human approving it. The system recommends; the collective decides. That order is not negotiable.",
+    "hi": "कोई भी महत्वपूर्ण कार्य तब तक नहीं होता जब तक कोई नामित व्यक्ति उसे स्वीकृति न दे। प्रणाली सुझाव देती है; निर्णय संगठन लेता है। यह क्रम अटल है।"
+  },
+  "landing.pillars.eyebrow": {
+    "en": "The ecosystem",
+    "hi": "यह तंत्र"
+  },
+  "landing.pillars.title": {
+    "en": "Five things a collective has to get right.",
+    "hi": "पाँच बातें, जो हर संगठन को ठीक करनी होती हैं।"
+  },
+  "landing.pillars.intro": {
+    "en": "Advice alone changes nothing. Income moves when price, knowledge, entitlement, risk and the decision itself all move together.",
+    "hi": "केवल सलाह से कुछ नहीं बदलता। आय तब बढ़ती है जब दाम, ज्ञान, अधिकार, जोखिम और स्वयं निर्णय — पाँचों एक साथ आगे बढ़ें।"
+  },
+  "landing.pillars.market.title": {
+    "en": "Market linkage",
+    "hi": "बाज़ार से जुड़ाव"
+  },
+  "landing.pillars.market.body": {
+    "en": "Aggregate the lot, read the mandi, compare what a buyer actually nets the farmer after freight, commission and payment terms — not the headline price.",
+    "hi": "लॉट एकत्र करें, मंडी को पढ़ें, और देखें कि भाड़ा, आढ़त और भुगतान की शर्तों के बाद खरीदार वास्तव में किसान को क्या देता है — केवल घोषित दाम नहीं।"
+  },
+  "landing.pillars.advisory.title": {
+    "en": "Knowledge & advisory",
+    "hi": "ज्ञान और सलाह"
+  },
+  "landing.pillars.advisory.body": {
+    "en": "Agronomy that arrives in the language the decision is made in, prevention first, and never an unattributed chemical dose.",
+    "hi": "कृषि-ज्ञान उसी भाषा में पहुँचे जिसमें निर्णय लिया जाता है — रोकथाम पहले, और कभी भी बिना स्रोत बताए कोई रासायनिक मात्रा नहीं।"
+  },
+  "landing.pillars.schemes.title": {
+    "en": "Schemes & entitlements",
+    "hi": "योजनाएँ और अधिकार"
+  },
+  "landing.pillars.schemes.body": {
+    "en": "Most members are eligible for more than they claim. We match the scheme to the member and show what the eligibility rests on.",
+    "hi": "अधिकांश सदस्य जितना लेते हैं, उससे अधिक के पात्र हैं। हम योजना को सदस्य से मिलाते हैं और बताते हैं कि पात्रता किस आधार पर है।"
+  },
+  "landing.pillars.risk.title": {
+    "en": "Risk evaluation",
+    "hi": "जोखिम का आकलन"
+  },
+  "landing.pillars.risk.body": {
+    "en": "Weather, price, pest, water and credit risk carried on the register together — so a plan is judged on what it might cost, not only what it might earn.",
+    "hi": "मौसम, दाम, कीट, पानी और ऋण का जोखिम एक ही पंजी में साथ रखा जाता है — ताकि किसी योजना को केवल संभावित कमाई से नहीं, संभावित नुक़सान से भी परखा जाए।"
+  },
+  "landing.pillars.human.title": {
+    "en": "Human-in-the-loop decisions",
+    "hi": "मानव-स्वीकृत निर्णय"
+  },
+  "landing.pillars.human.body": {
+    "en": "Every recommendation arrives as a packet — situation, evidence, confidence, expected outcome — and waits for a named person to approve it.",
+    "hi": "हर सुझाव एक पैकेट के रूप में आता है — स्थिति, प्रमाण, विश्वास-स्तर, अपेक्षित परिणाम — और किसी नामित व्यक्ति की स्वीकृति की प्रतीक्षा करता है।"
+  },
+  "landing.strip.eyebrow": {
+    "en": "On the ground",
+    "hi": "ज़मीन पर"
+  },
+  "landing.strip.advisory": {
+    "en": "Advice arrives in the language the decision is made in.",
+    "hi": "सलाह उसी भाषा में पहुँचती है जिसमें निर्णय लिया जाता है।"
+  },
+  "landing.strip.officer": {
+    "en": "A person signs every recommendation before it moves.",
+    "hi": "हर सुझाव आगे बढ़ने से पहले किसी व्यक्ति की स्वीकृति लेता है।"
+  },
+  "landing.cta.eyebrow": {
+    "en": "See it working",
+    "hi": "इसे चलते हुए देखें"
+  },
+  "landing.cta.title": {
+    "en": "Explore our ecosystem.",
+    "hi": "हमारे तंत्र को देखिए।"
+  },
+  "landing.cta.body": {
+    "en": "Sign in with a demo account and walk a real decision from evidence to approval — as the CEO of a collective, or as one of its members.",
+    "hi": "डेमो खाते से साइन इन कीजिए और एक वास्तविक निर्णय को प्रमाण से स्वीकृति तक चलते देखिए — संगठन के मुख्य कार्यकारी अधिकारी के रूप में, या उसके किसी सदस्य के रूप में।"
+  },
+  "landing.cta.button": {
+    "en": "Explore our ecosystem",
+    "hi": "हमारा तंत्र देखें"
   }
 }

@@ -165,7 +165,7 @@ auditable decisions.
 | UI-01 | The FPO console SHALL present a 10-card organizational dashboard: total farmers, total acreage, crop mix, expected production, expected sales value, market opportunities, risk alerts, fund requirement, scheme opportunity, pending actions/approvals. | MUST |
 | UI-02 | Every AI-derived number SHALL render with a **confidence chip** and a **provenance popover** (source, observed date, verification status). | MUST |
 | UI-03 | Every Decision Packet SHALL render its nine sections in fixed order and SHALL expose a one-click **Drill-down** to the affected farmers → plots → crop cycles. | MUST |
-| UI-04 | Any value derived from synthetic seed data SHALL carry a visible `DEMO DATA` marker. | MUST |
+| UI-04 | Any value derived from synthetic seed data and presented as a fact about a specific organization, farmer, plot or decision SHALL carry a visible `DEMO DATA` marker. On the public surface (UI-12), where figures are platform-wide aggregates rather than claims about an identifiable party, the marker is satisfied instead by stating the figure as a property of the dataset — a verb such as *modelled*, *analysed* or *mapped* — together with a named dataset (ADR-0026). | MUST |
 | UI-05 | The farmer portal SHALL be usable at 360px width, at ≤3 taps to the day's actions, with a Hindi/English toggle persisted per user. | MUST |
 | UI-06 | The farmer portal SHALL accept voice input for its primary question field (browser ASR, Hindi + English). | SHOULD |
 | UI-07 | Approval controls SHALL be disabled, with an explanatory tooltip, for users whose role lacks approval authority. | MUST |
@@ -173,6 +173,7 @@ auditable decisions.
 | UI-09 | The calendar SHALL visually distinguish MANUAL / AUTO_GENERATED / AI_RECOMMENDED / OFFICIAL_DEADLINE events, and SHALL show pending-approval events in a distinct state. | MUST |
 | UI-10 | Data discrepancies SHALL be shown inline at the point of use, never hidden in an admin screen. | MUST |
 | UI-11 | Every screen — sign-in, farmer portal and FPO console — SHALL carry one Hindi/English switch at the top right. Switching SHALL translate all visible text on the page, including API-derived content and content rendered after load, without changing layout, routing or interactions. Static interface text SHALL come from a stored dictionary; everything else SHALL be translated on demand through Sarvam and kept in a translation memory so the same string is never paid for twice (ADR-0023). Personal names, identifiers, numbers and code SHALL NOT be translated. Domain terms (FPO, the collective, units such as acres, crop names) SHALL always render with the single Hindi/English equivalent recorded in the translation glossary, never a model's choice (ADR-0023 §9). | MUST |
+| UI-12 | The public landing page SHALL be readable without an account and SHALL present the platform as an agriculture ecosystem — market linkage, knowledge and advisory, schemes and entitlements, risk evaluation, and human-approved decisions. Its platform totals SHALL be read live from the API and SHALL degrade to documented constants rather than to an error state when the API is unavailable. Its footage SHALL NOT be required for the page to render correctly: posters ship with the application, and video is an enhancement withheld on narrow viewports, on Save-Data, and under `prefers-reduced-motion` (ADR-0024, ADR-0025). | MUST |
 
 ### 3.2 API interfaces
 
@@ -506,7 +507,7 @@ Full specification in `docs/DATA-MODEL.md`. Requirements-level constraints:
 | SAF-04 | **No harmful framing about people.** The system never recommends withholding support from a named farmer, never ranks farmers by a "worth investing in" score, and never uses sensitive attributes for prioritization. (FR-605, FR-566) |
 | SAF-05 | **Market predictions are ranges.** Price guidance is a range with confidence, historical trend and a downside scenario — never a point forecast presented as fact. |
 | SAF-06 | **Uncertainty is stated, not hidden.** Low-confidence answers say what data would improve them. (FR-813) |
-| SAF-07 | **Synthetic data is labelled** everywhere it appears, including in exported reports and screenshots. (UI-04) |
+| SAF-07 | **Synthetic data is labelled** everywhere it appears, including in exported reports and screenshots. Public aggregate totals satisfy this through the dataset framing UI-04 describes, not through the `DEMO DATA` chip. (UI-04, UI-12) |
 | SAF-08 | **Consent is real.** Per-purpose, revocable, versioned, and enforced in dataset generation. (FR-1101) |
 | SAF-09 | **Value flows back.** Data-derived revenue goes to an ecosystem fund, not to platform margin. (FR-1104) |
 | SAF-10 | **Auditability is a farmer protection.** The decision trail exists so a farmer can contest an FPO decision that affected them, not only so the FPO can defend itself. (FR-709) |
