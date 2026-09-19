@@ -7,6 +7,8 @@
  * no way to know that.
  */
 
+import type { Metadata } from "next";
+
 import { ApiError, api } from "@/lib/api";
 import { formatMass } from "@/components/invariants";
 import { EmptyState, ErrorPanel, PageHeader, Panel, PanelHeader } from "@/components/ui";
@@ -14,6 +16,8 @@ import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Market" };
 
 export default async function MarketPage() {
   const t = translator(await currentLocale());

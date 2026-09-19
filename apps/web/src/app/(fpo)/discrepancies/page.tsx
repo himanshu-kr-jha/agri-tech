@@ -15,6 +15,8 @@
  * existed; that tile 404'd. The API endpoint had been there the whole time.
  */
 
+import type { Metadata } from "next";
+
 import { ApiError, api, type Discrepancy, type DiscrepancyClaim } from "@/lib/api";
 import { ConfidenceChip, sqmToAcres } from "@/components/invariants";
 import { Chip, EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
@@ -22,6 +24,8 @@ import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Discrepancies" };
 
 const SOURCE_LABEL: Record<string, string> = {
   FIELD_OFFICER: "Field officer",

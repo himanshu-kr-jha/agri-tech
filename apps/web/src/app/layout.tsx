@@ -40,7 +40,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AgriVardhak",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://agri-tech-gold.vercel.app"),
+  title: { default: "AgriVardhak", template: "%s — AgriVardhak" },
   description: "AI decision & orchestration platform for farmer collectives",
 };
 

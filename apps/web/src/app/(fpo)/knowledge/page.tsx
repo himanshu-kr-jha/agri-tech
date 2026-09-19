@@ -22,12 +22,16 @@
  * because the thing people will want to do with a surprising result is send it to someone.
  */
 
+import type { Metadata } from "next";
+
 import { ApiError, api, type KnowledgeHit } from "@/lib/api";
 import { Chip, EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Knowledge" };
 
 const DOMAIN_LABEL: Record<string, string> = {
   POLICY: "policy",

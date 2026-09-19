@@ -7,6 +7,7 @@
  * looking at a field-officer measurement from Tuesday or a self-report from March.
  */
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -20,6 +21,8 @@ import {
 import { ErrorPanel } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Farmer" };
 
 export default async function FarmerPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

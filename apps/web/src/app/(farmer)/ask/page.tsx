@@ -20,13 +20,17 @@
  * When the assistant can answer in Hindi, delete the exception, not the note.
  */
 
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { ChatPanel } from "@/components/chat";
+import { ChatSkeleton } from "@/components/loading-skeleton";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Ask" };
 
 export default async function FarmerAssistantPage() {
   // The reader's language, used for exactly one line: the note explaining why this page is
@@ -53,7 +57,7 @@ export default async function FarmerAssistantPage() {
         </p>
       </header>
 
-      <Suspense fallback={<p className="text-sm text-muted-foreground">{t("ask.loading")}</p>}>
+      <Suspense fallback={<ChatSkeleton label={t("ask.loading")} />}>
         <ChatPanel examples={examples} placeholder={t("ask.placeholder")} />
       </Suspense>
     </main>

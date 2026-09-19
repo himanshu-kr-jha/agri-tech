@@ -7,6 +7,7 @@
  * outcomes, never a ranking of who the system was "right" about.
  */
 
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ApiError, api } from "@/lib/api";
@@ -16,6 +17,8 @@ import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Decisions" };
 
 export default async function DecisionsPage() {
   const t = translator(await currentLocale());

@@ -31,11 +31,15 @@
  * translation must not silently vanish from the list.
  */
 
+import type { Metadata } from "next";
+
 import { ApiError, api, type KnowledgeHit } from "@/lib/api";
 import { NOTICE_SUGGESTIONS, translator, type StringKey } from "@/lib/i18n";
 import { currentLocale, type Locale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Schemes" };
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString("en-IN", {

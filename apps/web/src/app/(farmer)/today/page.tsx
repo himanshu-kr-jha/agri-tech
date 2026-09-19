@@ -11,12 +11,16 @@
  * (INV-9).
  */
 
+import type { Metadata } from "next";
+
 import { ApiError, api } from "@/lib/api";
 import { ConfidenceChip, formatMass } from "@/components/invariants";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Today" };
 
 export default async function TodayPage() {
   const t = translator(await currentLocale());

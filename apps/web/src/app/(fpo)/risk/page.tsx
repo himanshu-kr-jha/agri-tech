@@ -9,6 +9,8 @@
  * Every row names who is exposed. A hazard with no exposure attached is a weather report.
  */
 
+import type { Metadata } from "next";
+
 import { ApiError, api, type RiskEntry } from "@/lib/api";
 import { formatInr, formatRole } from "@/components/invariants";
 import { EmptyState, ErrorPanel, PageHeader, Panel } from "@/components/ui";
@@ -16,6 +18,8 @@ import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Risk" };
 
 /**
  * Bands are hairline rings, not filled blocks.
