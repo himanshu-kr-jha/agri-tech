@@ -16,6 +16,7 @@
  * footer's parent is itself full viewport width or centered in the viewport, which is why
  * the FPO layout renders the fixed-position sidebar out of flow and the footer as an
  * unindented sibling, rather than nesting either inside the (narrower, offset) content column.
+ * That's also why `(fpo)/layout.tsx` passes `sidebarOffset` — see the constant below.
  *
  * `flex-1`: every call site wraps this in a `flex min-h-screen flex-col` column, and none of
  * those columns' other children carry their own `flex-1` any more — so on a short page the
@@ -30,20 +31,32 @@
 
 import Link from "next/link";
 
+import { FooterFeedbackForm } from "@/components/footer-feedback-form";
 import { IconLeaf } from "@/components/icons";
 import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 const CONTACT_EMAIL = "agritechbuzz@gmail.com";
 
-export async function Footer() {
-  const t = translator(await currentLocale());
+// The FPO console's sidebar is `fixed left-0 w-[260px]` and always paints over whatever is
+// behind it (sidebar.tsx) — including this footer, since it renders as a full-bleed sibling
+// rather than inside the sidebar layout's own `md:pl-[260px]` column. Centering the content
+// on the full window width (as the public pages do) would put the left column half-hidden
+// behind the sidebar at ordinary laptop widths, so the FPO layout opts into a fixed left
+// inset instead of the `mx-auto` max-width treatment.
+const SIDEBAR_INSET = "px-6 md:pl-[292px] md:pr-10";
+const CENTERED = "mx-auto max-w-7xl px-6 md:px-10";
+
+export async function Footer({ sidebarOffset = false }: { sidebarOffset?: boolean } = {}) {
+  const locale = await currentLocale();
+  const t = translator(locale);
   const year = new Date().getFullYear();
+  const containerWidth = sidebarOffset ? SIDEBAR_INSET : CENTERED;
 
   return (
     <footer className="relative left-1/2 flex w-screen flex-1 -translate-x-1/2 flex-col justify-end bg-footer text-footer-foreground">
-      <div className="mx-auto w-full max-w-4xl px-6 pt-8 md:px-10 md:pt-10">
-        <div className="grid gap-8 md:grid-cols-[1.3fr_1fr_1fr]">
+      <div className={`w-full pt-8 md:pt-10 ${containerWidth}`}>
+        <div className="grid gap-8 md:grid-cols-[1.1fr_0.8fr_0.9fr_1.1fr] md:gap-14">
           <div>
             <Link href="/" className="flex items-center gap-3">
               <span className="flex h-9 w-9 items-center justify-center rounded-md bg-accent/15 text-accent">
@@ -94,18 +107,24 @@ export async function Footer() {
               {CONTACT_EMAIL}
             </a>
           </div>
+
+          <div>
+            <FooterFeedbackForm locale={locale} />
+          </div>
         </div>
       </div>
 
       {/*
-       * Full-bleed divider — deliberately not confined to the `max-w-4xl` column above it,
-       * so it runs edge to edge the way the sidebar's own divider runs edge to edge of the
-       * console spine. On the FPO console the sidebar sits on top of its left ~260px, so what
-       * reads on screen is the two dividers meeting at the sidebar's right edge as one
-       * continuous line across the page.
+       * Full-bleed divider — deliberately not confined to the column above it, so it runs
+       * edge to edge the way the sidebar's own divider runs edge to edge of the console
+       * spine. On the FPO console the sidebar sits on top of its left ~260px, so what reads
+       * on screen is the two dividers meeting at the sidebar's right edge as one continuous
+       * line across the page.
        */}
       <div className="mt-8 border-t border-footer-border/60">
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-3 px-6 py-5 text-xs text-footer-muted md:flex-row md:items-center md:justify-between md:px-10">
+        <div
+          className={`flex w-full flex-col gap-3 py-5 text-xs text-footer-muted md:flex-row md:items-center md:justify-between ${containerWidth}`}
+        >
           <p>
             © {year} <span translate="no">AgriVardhak</span>. {t("footer.rightsReserved")}
           </p>

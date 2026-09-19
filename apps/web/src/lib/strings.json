@@ -460,8 +460,8 @@
     "hi": "AgriVardhak में साइन इन करें"
   },
   "landing.thesis": {
-    "en": "Optimized for sustainable farmer income and FPO financial health — subject to risk, available capital, demand, crop suitability, and sustainability. Never for FPO profit alone.",
-    "hi": "लक्ष्य है सतत किसान आय और एफपीओ की वित्तीय सेहत — जोखिम, उपलब्ध पूँजी, माँग, फ़सल-उपयुक्तता और स्थिरता की सीमा में। कभी केवल एफपीओ के लाभ के लिए नहीं।"
+    "en": "Optimized for sustainable farmer income and FPO financial health which is subject to risk, available capital, demand, crop suitability, and sustainability. Never for FPO profit alone.",
+    "hi": "लक्ष्य है सतत किसान आय और एफपीओ की वित्तीय सेहत, जोखिम, उपलब्ध पूँजी, माँग, फ़सल-उपयुक्तता और स्थिरता की सीमा में। कभी केवल एफपीओ के लाभ के लिए नहीं।"
   },
   "privacy.eyebrow": {
     "en": "Privacy",
@@ -750,6 +750,30 @@
   "footer.rightsReserved": {
     "en": "All rights reserved.",
     "hi": "सर्वाधिकार सुरक्षित।"
+  },
+  "footer.feedbackEmailPlaceholder": {
+    "en": "Your Email",
+    "hi": "आपका ईमेल"
+  },
+  "footer.feedbackMessagePlaceholder": {
+    "en": "Any suggestions for us?",
+    "hi": "हमारे लिए कोई सुझाव?"
+  },
+  "footer.feedbackSubmit": {
+    "en": "Send",
+    "hi": "भेजें"
+  },
+  "footer.feedbackSending": {
+    "en": "Sending…",
+    "hi": "भेजा जा रहा है…"
+  },
+  "footer.feedbackSuccess": {
+    "en": "Thank you for your valuable feedback.",
+    "hi": "धन्यवाद, आपके बहुमूल्य सुझाव के लिए"
+  },
+  "footer.feedbackError": {
+    "en": "Couldn't send that. Please try again.",
+    "hi": "भेजा नहीं जा सका। कृपया दोबारा प्रयास करें।"
   },
   "login.error.usernameRequired": {
     "en": "Enter a username.",

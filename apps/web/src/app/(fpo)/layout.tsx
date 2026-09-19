@@ -106,7 +106,7 @@ export default async function FpoLayout({ children }: { children: React.ReactNod
         <div>{children}</div>
       </div>
 
-      <Footer />
+      <Footer sidebarOffset />
     </div>
   );
 }
