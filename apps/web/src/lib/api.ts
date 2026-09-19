@@ -402,6 +402,51 @@ export interface KnowledgeSearch {
   note: string;
 }
 
+/**
+ * The public read. Deliberately not `get<T>()`, for two reasons that are both easy to
+ * undo by accident:
+ *
+ * 1. `get<T>()` attaches a bearer token. A signed-out visitor — every visitor this call
+ *    serves — has no session to attach, so the header would be pointless here.
+ * 2. More importantly, it would be *harmful*. Next classifies any fetch carrying an
+ *    `authorization` or `cookie` header as uncacheable and silently ignores
+ *    `next.revalidate` on it (`patch-fetch.js`, `hasUnCacheableHeader`). Routing this
+ *    call through `get<T>()` would therefore turn a once-an-hour read into a database
+ *    round-trip on every cold view of the landing page — with no error to notice.
+ *
+ * So: no auth header, an explicit revalidate window, and a timeout, because the one page
+ * a funder opens cold must not sit waiting on a slow API. The caller catches (see
+ * `lib/public-stats.ts`).
+ */
+async function getPublic<T>(
+  path: string,
+  { revalidate, tags, timeoutMs = 2000 }: { revalidate: number; tags?: string[]; timeoutMs?: number },
+): Promise<T> {
+  const res = await fetch(`${API}${path}`, {
+    next: { revalidate, tags },
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+  if (!res.ok) {
+    throw new ApiError(res.status, `${path} returned ${res.status}`);
+  }
+  return (await res.json()) as T;
+}
+
+/**
+ * Platform-wide totals for the public landing page (UI-12).
+ *
+ * The verbs are part of the contract, not decoration: "farmers modelled" is a true claim
+ * about a dataset where a bare "farmers" would read as a customer count. Keep them.
+ */
+export interface PlatformStats {
+  farmers_modelled: number;
+  crop_cycles_analysed: number;
+  acres_mapped: number;
+  organizations: number;
+  is_synthetic: boolean;
+  generated_at: string;
+}
+
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${API}${path}`, {
     headers: await authHeaders(),
@@ -414,6 +459,11 @@ async function get<T>(path: string): Promise<T> {
 }
 
 export const api = {
+  platformStats: () =>
+    getPublic<PlatformStats>("/api/v1/public/platform-stats", {
+      revalidate: 3600,
+      tags: ["public-stats"],
+    }),
   dashboard: () => get<Dashboard>("/api/v1/fpo/dashboard"),
   farmers: (params: { tract?: string; block?: string; limit?: number; offset?: number } = {}) => {
     const search = new URLSearchParams();

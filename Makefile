@@ -171,6 +171,9 @@ translation-eval: ## Measure Sarvam translation accuracy on golden cases (live):
 trace: ## Walk one government order through every Data Observer stage (read-only)
 	@cd $(API) && .venv/bin/python ../../scripts/trace_observer.py
 
+hero-media: ## Transcode the landing-page clips:  make hero-media src=~/Downloads/stockvideos
+	$(API)/.venv/bin/python scripts/build_hero_media.py --src "$(src)"
+
 progress: ## Regenerate PROGRESS.md from what the repo can prove
 	$(API)/.venv/bin/python scripts/progress.py
 

@@ -344,10 +344,117 @@ body {
     opacity: 0.45;
     cursor: not-allowed;
   }
+
+  /* ---------------------------------------------------------------- public site (ADR-0024)
+   * The landing page is the one surface in the product with photography and movement on
+   * it. Everything below is scoped to it and to the public header; the console keeps the
+   * ledger it has always been.
+   */
+
+  /* The header's nav link. Not `.nav-item` — that one is built for the dark sidebar and
+     reads at 0.62 alpha on a forest ground, which is invisible on paper. */
+  .public-nav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.75rem;
+    font-size: 13.5px;
+    color: hsl(var(--muted-foreground));
+    transition-property: color, background-color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .public-nav-item:hover {
+    background-color: hsl(var(--muted) / 0.7);
+    color: hsl(var(--primary));
+  }
+
+  /* The page's one use of gold, and the same 2px inset rail the console spends its own on
+     (.nav-item-active). Nothing else on the landing page may use the accent — that rule is
+     what keeps it meaning "you are here" rather than reading as decoration. */
+  .public-nav-item-active {
+    color: hsl(var(--primary));
+    font-weight: 500;
+    box-shadow: inset 0 -2px 0 0 hsl(var(--accent));
+    border-radius: 0;
+  }
+
+  /*
+   * The hero carousel track.
+   *
+   * Animation Tier 1 says "CSS transitions only, 150ms, cubic-bezier(0,0,0.2,1), named
+   * properties, never `all`" — and this obeys all of it except the number. 150ms applied
+   * to a full-viewport slide is a jump cut, not a slide.
+   *
+   * The distinction the tier is really drawing is between *interaction feedback* and
+   * *content transport*. Feedback must feel instant, so every button, link and hover on
+   * this page is still 150ms. Transport has to be legible, so it gets its own named token
+   * and nothing else may borrow it. One property, on the compositor, house easing.
+   */
+  .hero-track {
+    transition-property: transform;
+    transition-duration: var(--motion-slide);
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  /*
+   * The scrim over the footage.
+   *
+   * Two gradients, not one: a horizontal pass that darkens the left third where the
+   * headline sits, and a vertical pass that seats the controls along the bottom. A flat
+   * overlay heavy enough to make white type legible over bright green paddy makes the
+   * whole frame muddy, which defeats the reason for using footage at all.
+   */
+  .hero-scrim {
+    background-image:
+      linear-gradient(
+        to right,
+        hsl(var(--sidebar) / 0.88) 0%,
+        hsl(var(--sidebar) / 0.62) 42%,
+        hsl(var(--sidebar) / 0.22) 100%
+      ),
+      linear-gradient(to top, hsl(var(--sidebar) / 0.55) 0%, transparent 38%);
+  }
+
+  /* A control that sits on footage rather than on paper: hairline in white, not in
+     --border, because a hairline in --border over video is invisible. */
+  .hero-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid hsl(var(--primary-foreground) / 0.45);
+    color: hsl(var(--primary-foreground));
+    backdrop-filter: blur(4px);
+    transition-property: border-color, background-color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .hero-control:hover {
+    background-color: hsl(var(--primary-foreground) / 0.14);
+    border-color: hsl(var(--primary-foreground) / 0.8);
+  }
 }
 
 /* Focus is a ring in the primary, matching --ring. Never removed, only restyled. */
 :focus-visible {
   outline: 2px solid hsl(var(--ring) / 0.55);
   outline-offset: 2px;
+}
+
+/*
+ * Content transport, as a token so there is exactly one place to change it and exactly one
+ * place that honours the reduced-motion preference. See `.hero-track`.
+ */
+:root {
+  --motion-slide: 700ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-slide: 0ms;
+  }
 }

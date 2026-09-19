@@ -6,11 +6,8 @@
  */
 
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { FaqAccordion } from "@/components/faq-accordion";
-import { Footer } from "@/components/footer";
-import { IconLeaf } from "@/components/icons";
 import { translator, type StringKey } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
@@ -31,23 +28,15 @@ export default async function FaqPage() {
   const t = translator(await currentLocale());
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <main className="mx-auto w-full max-w-2xl px-6 py-12 md:px-10 md:py-16">
-        <Link href="/" className="mb-8 flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
-          <IconLeaf size={16} />
-        </Link>
+    <main className="mx-auto w-full max-w-2xl px-6 py-12 md:px-10 md:py-16">
+      <p className="eyebrow">{t("faq.eyebrow")}</p>
+      <h1 className="title-page mt-2 text-[2rem]">{t("faq.title")}</h1>
 
-        <p className="eyebrow">{t("faq.eyebrow")}</p>
-        <h1 className="title-page mt-2 text-[2rem]">{t("faq.title")}</h1>
-
-        <FaqAccordion
-          items={QUESTIONS.map(({ q, a }) => ({ q: t(q), a: t(a) }))}
-          qLabel={t("faq.qLabel")}
-          aLabel={t("faq.aLabel")}
-        />
-      </main>
-
-      <Footer />
-    </div>
+      <FaqAccordion
+        items={QUESTIONS.map(({ q, a }) => ({ q: t(q), a: t(a) }))}
+        qLabel={t("faq.qLabel")}
+        aLabel={t("faq.aLabel")}
+      />
+    </main>
   );
 }

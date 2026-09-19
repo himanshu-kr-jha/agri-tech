@@ -19,9 +19,6 @@ import { translator } from "@/lib/i18n";
 import { currentLocale } from "@/lib/locale";
 
 import { LoginForm, type DemoAccount } from "./login-form";
-import { Footer } from "@/components/footer";
-import { IconLeaf } from "@/components/icons";
-import { LanguageToggle } from "@/components/language-toggle";
 import { currentUser, homeFor } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
@@ -53,33 +50,23 @@ export default async function LoginPage() {
   const t = translator(locale);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <main className="mx-auto flex w-full max-w-lg flex-col justify-center px-6 py-16">
-        <header className="mb-9">
-          <div className="mb-6 flex items-center justify-between">
-            <span className="flex h-11 w-11 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <IconLeaf size={20} />
-            </span>
-            <LanguageToggle />
-          </div>
-          <p className="eyebrow">{t("login.eyebrow")}</p>
-          <h1 translate="no" className="title-page mt-1.5 text-[2.5rem]">
-            AgriVardhak
-          </h1>
-          <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            {t("login.tagline")}
-          </p>
-        </header>
-
-        <LoginForm accounts={accounts} locale={locale} />
-
-        <p className="mt-10 border-t border-border/60 pt-6 text-xs leading-relaxed text-muted-foreground">
-          {t("login.sourcesCited")}{" "}
-          <code className="font-mono text-[11px]">seed/sources.md</code>.
+    <main className="mx-auto flex w-full max-w-lg flex-col justify-center px-6 py-16">
+      <header className="mb-9">
+        <p className="eyebrow">{t("login.eyebrow")}</p>
+        <h1 translate="no" className="title-page mt-1.5 text-[2.5rem]">
+          AgriVardhak
+        </h1>
+        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+          {t("login.tagline")}
         </p>
-      </main>
+      </header>
 
-      <Footer />
-    </div>
+      <LoginForm accounts={accounts} locale={locale} />
+
+      <p className="mt-10 border-t border-border/60 pt-6 text-xs leading-relaxed text-muted-foreground">
+        {t("login.sourcesCited")}{" "}
+        <code className="font-mono text-[11px]">seed/sources.md</code>.
+      </p>
+    </main>
   );
 }

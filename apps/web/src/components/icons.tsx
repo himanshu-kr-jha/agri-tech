@@ -213,3 +213,101 @@ export function IconLeaf({ size = 18, ...props }: IconProps) {
     </svg>
   );
 }
+
+/* ---------------------------------------------------------------------------------------
+ * Landing page (ADR-0024).
+ *
+ * The public page renders these at `size={28}` rather than the console's 16 — a marketing
+ * surface needs a glyph you can read across a room. The 1.5 stroke was chosen for 16px but
+ * holds at 28; going heavier to "balance" the larger size is what makes an icon set look
+ * like two icon sets.
+ * ------------------------------------------------------------------------------------ */
+
+/** A closed loop. Crop cycles — the product's own noun, so it gets its own mark. */
+export function IconCycle(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M21 12a9 9 0 0 0-9-9 9 9 0 0 0-6.4 2.6L3 8" />
+      <path d="M3 3v5h5" />
+      <path d="M3 12a9 9 0 0 0 9 9 9 9 0 0 0 6.4-2.6L21 16" />
+      <path d="M21 21v-5h-5" />
+    </Icon>
+  );
+}
+
+/** Parcelled land seen from above. Acres mapped — plots, not a generic grid. */
+export function IconAcres(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <rect x="3" y="5" width="18" height="14" rx="1.5" />
+      <path d="M9 5v14" />
+      <path d="M15 5v14" />
+      <path d="M3 12h18" />
+    </Icon>
+  );
+}
+
+/** A hub with four members. The collective as a shape: nobody at the edge, one centre. */
+export function IconCollective(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="2.5" />
+      <circle cx="5" cy="6" r="2" />
+      <circle cx="19" cy="6" r="2" />
+      <circle cx="5" cy="18" r="2" />
+      <circle cx="19" cy="18" r="2" />
+      <path d="M6.6 7.5 10 10.4" />
+      <path d="M17.4 7.5 14 10.4" />
+      <path d="M6.6 16.5 10 13.6" />
+      <path d="M17.4 16.5 14 13.6" />
+    </Icon>
+  );
+}
+
+/** A balance. Market linkage is a comparison — what a buyer nets against what they quote. */
+export function IconScale(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 4v17" />
+      <path d="M7 21h10" />
+      <path d="M4.5 7h15" />
+      <path d="M4.5 7 2 13h5L4.5 7Z" />
+      <path d="M19.5 7 17 13h5l-2.5-6Z" />
+    </Icon>
+  );
+}
+
+/** An open book. Advisory — knowledge that someone reads, not a notification. */
+export function IconBook(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 7v14" />
+      <path d="M12 7a5 5 0 0 0-5-3H3v13h4a5 5 0 0 1 5 4" />
+      <path d="M12 7a5 5 0 0 1 5-3h4v13h-4a5 5 0 0 0-5 4" />
+    </Icon>
+  );
+}
+
+/** A document with a rosette. Schemes and entitlements — a sanctioned paper. */
+export function IconSeal(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3" />
+      <path d="M14 3v5h5" />
+      <path d="M14 3l5 5" />
+      <circle cx="17" cy="16" r="3" />
+      <path d="m15 18.6-.5 3.4 2.5-1.5 2.5 1.5-.5-3.4" />
+    </Icon>
+  );
+}
+
+/** A stamp over a line. Approval — INV-1's whole promise in one glyph. */
+export function IconApproval(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="10" r="6" />
+      <path d="m9 10 2 2 4-4" />
+      <path d="M5 20h14" />
+    </Icon>
+  );
+}
